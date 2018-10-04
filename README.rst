@@ -1,3 +1,4 @@
+=========
 DiskArray
 =========
 
@@ -8,10 +9,10 @@ importance. But of course there are other situations it which it can be useful.
 
 DiskArray avoids tool- or library-specific data formats, aiming to make your
 numeric data easily readable by others, or by yourself in the distant future
-when you will likely use data tools. In addition to storing the data in an
-accessible way, it saves a clear text description of how exactly the data is
-stored, and provides example code to read the data in a variety of current
-analysis tools.
+when you will likely use other data tools. In addition to storing the data
+in an accessible way, it saves a clear text description of how exactly the
+data is stored, and provides example code to read the data in a variety of
+current analysis tools.
 
 Further, DiskArray provides easy and fast memory-mapped read/write access
 to such disk-based data, using `NumPy indexing`_, and allows for the
@@ -22,10 +23,13 @@ terms.
 
 Version: 0.1
 
+.. contents::
+
+
 Features
 --------
-Pros:
-*****
+Pros
+****
 
 - Very **simple data format** based on **flat binary** and **text**
   files. This maximizes readability by other software and analysis tools,
@@ -47,8 +51,8 @@ Pros:
 - **Small** library. Just one module file that can be easily included in your
   own code if you want to avoid dependence on external libraries.
 
-Cons:
-*****
+Cons
+****
 
 - **No compression**. This to keep things as simple and accessible as
   possible. For archiving the data, you can of course simply compress the file
@@ -58,6 +62,7 @@ Cons:
 - **Inefficient for very small arrays**. Do use other approaches if you have
   a zillion small arrays. A DiskArrayList is being developed to deal with
   the latter, but it is still experimental.
+
 
 
 Examples
