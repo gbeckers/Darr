@@ -1,0 +1,12 @@
+Should be checked implemented:
+
+- What if an error occurs during writing? Try to save as much data correctly
+- flush file after writing block?
+
+Nice to have:
+- axis labels
+- compound types (recarrays)?
+- character strings?
+- unicode strings?
+
+

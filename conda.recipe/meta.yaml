@@ -1,0 +1,22 @@
+package:
+  name: diskarray
+  version: "0.1.0"
+
+source:
+  path: ..
+
+requirements:
+  build:
+    - python
+    - setuptools
+  run:
+    - python
+    - numpy
+
+test:
+  imports:
+    - diskarray
+
+about:
+  license: BSD
+  license_file: LICENSE
