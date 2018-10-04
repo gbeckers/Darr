@@ -79,7 +79,7 @@ Examples
                [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
 
 
-The data is now stored on disk in a directory named 'ar1.da', containing a flat
+The data is now stored on disk in a directory named 'ar.da', containing a flat
 binary file ('arrayvalues.bin') and a human-readble
 `JSON`_ text file ('arraydescription.json'), with information on the
 array dimensionality, layout and numeric type. It also contains a 'README.txt' file
