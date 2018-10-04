@@ -399,6 +399,26 @@ Development
 This library is developed by Gabriël Beckers at Utrecht University. Any
 help / suggestions / ideas are welcome and appreciated.
 
+Code can be found on GitHub: https://github.com/gjlbeckers-uu/DiskArray
+
+Testing
+-------
+
+A framework is in place to test for correct operation.
+
+.. code-block:: python
+
+    >>> import diskarray as da
+    >>> da.test()
+    ............................
+    ----------------------------------------------------------------------
+    Ran 28 tests in 4.798s
+
+    OK
+    <unittest.runner.TextTestResult run=28 errors=0 failures=0>
+
+
+
 
 .. _New BSD License: https://opensource.org/licenses/BSD-3-Clause
 .. _NumPy indexing: https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html
