@@ -3,14 +3,14 @@ from distutils.core import setup
 import versioneer
 
 if sys.version_info < (3,6):
-    print("Diskarray requires Python 3.6 or higher please upgrade")
+    print("dArray requires Python 3.6 or higher please upgrade")
     sys.exit(1)
 
 setup(
-    name='diskarray',
+    name='darray',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
-    packages=['diskarray', 'diskarray.tests'],
+    packages=['darray', 'darray.tests'],
     url='',
     license='BSD-3',
     author='Gabriel J.L. Beckers',

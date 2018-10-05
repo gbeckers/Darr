@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>DiskArray API Documentation &#8212; diskarray 0.1a1 documentation</title>
+    <title>DiskArray API Documentation &#8212; darray 0.1a1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="DiskArray" href="index.html" />
+    <link rel="prev" title="dArray" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -46,9 +46,9 @@ that is as open and simple as possible. It also provides easy memory-mapped
 access to such disk-based data using numpy indexing.</p>
 <p>Diskarray objects can be created from array-like objects, such as numpy arrays
 and lists, using the <strong>asdiskarray</strong> function. Alternatively, diskarrays can be
-created from scratch by the <strong>create_diskarray</strong> function. Existing diskarray
+created from scratch by the <strong>create_diskarray</strong> function. Existing darray
 data on disk can be accessed through the <strong>DiskArray</strong> constructor.
-To remove a diskarray from disk, use <strong>delete_diskarray</strong>.</p>
+To remove a darray from disk, use <strong>delete_diskarray</strong>.</p>
 <div class="section" id="creating-diskarrays">
 <h2>Creating diskarrays<a class="headerlink" href="#creating-diskarrays" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -73,9 +73,9 @@ changed. Default <cite>r</cite>.</li>
 <li><strong>metadata</strong> (<em>{None</em><em>, </em><em>dict}</em>) – Dictionary with metadata to be saved in a separate JSON file. Default</li>
 <li><strong>chunklen</strong> (<em>&lt;int</em><em>, </em><em>None&gt;</em>) – The length of chunks (along first axis) that are read and written
 during the process. If None and the <cite>array</cite> is a numpy array or
-diskarray, it is chosen so that chunks are 10 Mb in total size. If
+darray, it is chosen so that chunks are 10 Mb in total size. If
 None and <cite>array</cite> is a generator or sequence, chunklen will be 1.</li>
-<li><strong>overwrite</strong> (<em>(</em><em>True</em><em>, </em><em>False</em><em>)</em><em>, </em><em>optional</em>) – Overwrites existing diskarray data if it exists. Note that a diskarray
+<li><strong>overwrite</strong> (<em>(</em><em>True</em><em>, </em><em>False</em><em>)</em><em>, </em><em>optional</em>) – Overwrites existing darray data if it exists. Note that a darray
 path is a directory. If that directory contains additional files,
 these will not be removed and an OSError is raised. Default is <cite>False</cite>.</li>
 </ul>
@@ -98,17 +98,17 @@ these will not be removed and an OSError is raised. Default is <cite>False</cite
 </div>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">asdiskarray</span><span class="p">(</span><span class="s1">&#39;data.da&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="go">diskarray([0, 1, 2, 3])</span>
+<span class="go">darray([0, 1, 2, 3])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">asdiskarray</span><span class="p">(</span><span class="s1">&#39;data.da&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="go">diskarray([ 0.,  1.,  2.,  3.])</span>
+<span class="go">darray([ 0.,  1.,  2.,  3.])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span> <span class="o">=</span> <span class="n">asdiskarray</span><span class="p">(</span><span class="s1">&#39;data_rw.da&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="n">accessmode</span><span class="o">=</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span>
-<span class="go">diskarray([0, 1, 2, 3, 4, 5]) (r+)</span>
+<span class="go">darray([0, 1, 2, 3, 4, 5]) (r+)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">8</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span>
-<span class="go">diskarray([0, 1, 2, 3, 4, 8]) (r+)</span>
+<span class="go">darray([0, 1, 2, 3, 4, 8]) (r+)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span>
-<span class="go">diskarray([9, 1, 9, 3, 9, 8]) (r+)</span>
+<span class="go">darray([9, 1, 9, 3, 9, 8]) (r+)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -164,7 +164,7 @@ Default is <cite>False</cite>.</li>
 </dl>
 </div>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">diskarray</span> <span class="k">as</span> <span class="nn">da</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="k">as</span> <span class="nn">da</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_diskarray</span><span class="p">(</span><span class="s1">&#39;testarray0&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 <span class="go">diskarray([[ 0.,  0.],</span>
 <span class="go">   [ 0.,  0.],</span>
@@ -210,7 +210,7 @@ into memory.</p>
 <p>Diskarray data is stored in a simple format that maximizes long-term
 readability by other software and programming languages, and has been
 designed with scientific use cases in mind.</p>
-<p>A diskarray corresponds to a directory containing 1) a binary file with
+<p>A darray corresponds to a directory containing 1) a binary file with
 the raw numeric array values, 2) a text file (json format) describing the
 numeric type, array shape, and other format information, 3) a README text
 file documenting the data format, including examples of how to read the
@@ -260,7 +260,7 @@ numpy array.</td>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">diskarray</span> <span class="k">as</span> <span class="nn">da</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="k">as</span> <span class="nn">da</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_diskarray</span><span class="p">(</span><span class="s1">&#39;test.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
@@ -278,7 +278,7 @@ numpy array.</td>
 <dl class="method">
 <dt id="diskarray.DiskArray.copy">
 <code class="descname">copy</code><span class="sig-paren">(</span><em>path</em>, <em>dtype=None</em>, <em>chunklen=None</em>, <em>accessmode='r'</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="headerlink" href="#diskarray.DiskArray.copy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copy diskarray to a different path, potentially changing its dtype.</p>
+<dd><p>Copy darray to a different path, potentially changing its dtype.</p>
 <p>The copying is performed in chunks to avoid RAM memory overflow for
 very large diskarrays.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -288,20 +288,20 @@ very large diskarrays.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>path</strong> (<em>str</em><em> or </em><em>pathlib.Path</em>) – </li>
 <li><strong>dtype</strong> (<em>&lt;dtype</em><em>, </em><em>None&gt;</em>) – Numpy data type of the copy. Default is None, which corresponds to
-the dtype of the diskarray to be copied.</li>
+the dtype of the darray to be copied.</li>
 <li><strong>chunklen</strong> (<em>&lt;int</em><em>, </em><em>None&gt;</em>) – The length of chunks (along first axis) that are written during
 creation. If None, it is chosen so that chunks are 10 Mb in total
 size.</li>
 <li><strong>accessmode</strong> (<em>{'r'</em><em>, </em><em>'r+'}</em><em>, </em><em>default 'r'</em>) – File access mode of the disk array data of the returned DiskArray
 object. <cite>r</cite> means read-only, <cite>r+</cite> means read-write.</li>
-<li><strong>overwrite</strong> (<em>(</em><em>True</em><em>, </em><em>False</em><em>)</em><em>, </em><em>optional</em>) – Overwrites existing diskarray data if it exists. Note that a
-diskarray path is a directory. If that directory contains
+<li><strong>overwrite</strong> (<em>(</em><em>True</em><em>, </em><em>False</em><em>)</em><em>, </em><em>optional</em>) – Overwrites existing darray data if it exists. Note that a
+darray path is a directory. If that directory contains
 additional files, these will not be removed and an OSError is
 raised. Default is <cite>False</cite>.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">copy of the diskarray</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">copy of the darray</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#diskarray.DiskArray" title="diskarray.DiskArray">DiskArray</a></p>
@@ -342,7 +342,7 @@ compliant with the diskarray.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">diskarray</span> <span class="k">as</span> <span class="nn">da</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="k">as</span> <span class="nn">da</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_diskarray</span><span class="p">(</span><span class="s1">&#39;test.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">ga</span><span class="p">():</span>
 <span class="go">        yield [[1,2],[3,4]]</span>
@@ -401,7 +401,7 @@ means read-write.</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">diskarray</span> <span class="k">as</span> <span class="nn">da</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="k">as</span> <span class="nn">da</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_diskarray</span><span class="p">(</span><span class="s1">&#39;test.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,),</span> <span class="n">accesmode</span><span class="o">=</span> <span class="s1">&#39;r+&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">ar</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">iterview</span><span class="p">(</span><span class="n">chunklen</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stepsize</span><span class="o">=</span><span class="mi">3</span><span class="p">)):</span>
 <span class="go">        ar[:] = i+1</span>
@@ -503,7 +503,7 @@ means read-write.</td>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">diskarray</span> <span class="k">as</span> <span class="nn">da</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="k">as</span> <span class="nn">da</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_diskarray</span><span class="p">(</span><span class="s1">&#39;test.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">d</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">accessmode</span><span class="o">=</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
 <span class="go">        s1 = v[:10,1:].sum()</span>
@@ -555,7 +555,7 @@ current length.</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">diskarray</span> <span class="k">as</span> <span class="nn">da</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="k">as</span> <span class="nn">da</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fillfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_diskarray</span><span class="p">(</span><span class="s1">&#39;testarray.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">fillfunc</span><span class="o">=</span><span class="n">fillfunc</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
@@ -589,7 +589,7 @@ current length.</li>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">DiskArray</a></li>
+      <li>Previous: <a href="index.html" title="previous chapter">dArray</a></li>
   </ul></li>
 </ul>
 </div>

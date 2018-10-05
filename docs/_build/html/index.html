@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>DiskArray &#8212; diskarray 0.1a1 documentation</title>
+    <title>dArray &#8212; darray 0.1a1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -39,46 +39,34 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="diskarray">
-<h1><a class="toc-backref" href="#id1">DiskArray</a><a class="headerlink" href="#diskarray" title="Permalink to this headline">¶</a></h1>
-<p>DiskArray is a Python library for storing numeric data arrays in a format
+  <div class="section" id="darray">
+<h1><a class="toc-backref" href="#id1">dArray</a><a class="headerlink" href="#darray" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="https://travis-ci.org/gjlbeckers-uu/dArray"><img alt="https://travis-ci.org/gjlbeckers-uu/dArray.svg?branch=master" src="https://travis-ci.org/gjlbeckers-uu/dArray.svg?branch=master" /></a>
+<p>dArray is a Python library for storing numeric data arrays in a format
 that is as open and simple as possible. It is primarily designed for
 scientific use cases, when accessibility of data is of fundamental
 importance. It also provides easy and fast memory-mapped read/write access
 to such disk-based data, using <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html">NumPy indexing</a>, and allows for the
 flexible use of metadata.</p>
-<p>To avoid tool- or library-specific data formats, DiskArray is exclusively
+<p>To avoid tool- or library-specific data formats, dArray is exclusively
 based on self-explaining flat binary and text files. It automatically
 generates and saves a clear text description of how exactly the
 data is stored, and provides example code to read the specific data in a
 variety of current scientific data tools.</p>
-<p>DiskArray is open source and freely available under the <a class="reference external" href="https://opensource.org/licenses/BSD-3-Clause">New BSD License</a>
+<p>dArray is open source and freely available under the <a class="reference external" href="https://opensource.org/licenses/BSD-3-Clause">New BSD License</a>
 terms.</p>
 <p>Version: 0.1</p>
-<p>DiskFile is BSD licensed (BSD 3-Clause License).
+<p>dArray is BSD licensed (BSD 3-Clause License).
 (c) 2018, Gabriël Beckers</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#diskarray" id="id1">DiskArray</a><ul>
-<li><a class="reference internal" href="#features" id="id2">Features</a><ul>
-<li><a class="reference internal" href="#pros" id="id3">Pros</a></li>
-<li><a class="reference internal" href="#cons" id="id4">Cons</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#examples" id="id5">Examples</a></li>
-<li><a class="reference internal" href="#rationale" id="id6">Rationale</a></li>
-<li><a class="reference internal" href="#requirements" id="id7">Requirements</a></li>
-<li><a class="reference internal" href="#development-and-contributing" id="id8">Development and Contributing</a></li>
-<li><a class="reference internal" href="#testing" id="id9">Testing</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#darray" id="id1">dArray</a></li>
 </ul>
 </div>
 <div class="section" id="features">
-<h2><a class="toc-backref" href="#id2">Features</a><a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="pros">
-<h3><a class="toc-backref" href="#id3">Pros</a><a class="headerlink" href="#pros" title="Permalink to this headline">¶</a></h3>
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>Pro’s:</p>
 <ul class="simple">
 <li>Very <strong>simple data format</strong> based on <strong>flat binary</strong> and <strong>text</strong>
 files. This maximizes readability by other software and analysis tools,
@@ -91,7 +79,7 @@ memory.</li>
 <li><strong>Human-readable explanation of how the binary data is stored</strong> is saved
 in a README text file, which also contains <strong>examples of how to read the
 specific array data in a few lines of code</strong> in popular analysis environments
-such as Python (without DiskArray), R, Julia, Octave/Matlab, GDL/IDL,
+such as Python (without dArray), R, Julia, Octave/Matlab, GDL/IDL,
 and Mathematica.</li>
 <li><strong>Many numeric types</strong> are supported:  int8, int16, int32, int64, uint8,
 uint16, uint32, uint64, float16, float32, float64, complex64, complex128.</li>
@@ -99,10 +87,10 @@ uint16, uint32, uint64, float16, float32, float64, complex64, complex128.</li>
 <li><strong>Minimal dependencies</strong>, only <a class="reference external" href="http://www.numpy.org/">NumPy</a>.</li>
 <li><strong>Small</strong> library. Just one module file that can be easily included in your
 own code if you want to avoid dependence on external libraries.</li>
+<li><strong>Integrates easily</strong> with the <a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> or <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> libraries for <strong>numeric
+computation on very large dArrays</strong>.</li>
 </ul>
-</div>
-<div class="section" id="cons">
-<h3><a class="toc-backref" href="#id4">Cons</a><a class="headerlink" href="#cons" title="Permalink to this headline">¶</a></h3>
+<p>Con’s:</p>
 <ul class="simple">
 <li><strong>No compression</strong>. This to keep things as simple and accessible as
 possible. For archiving the data, you can of course simply compress the file
@@ -110,23 +98,22 @@ with any compression tool if you wish.</li>
 <li><strong>Multiple files</strong>. The data, the data description, and the metadata are
 stored in separate files, though all within a single directory.</li>
 <li><strong>Inefficient for very small arrays</strong>. Do use other approaches if you have
-a zillion small arrays. A DiskArrayList is being developed to deal with
+a zillion small arrays. A dArrayList is being developed to deal with
 the latter, but it is still very experimental.</li>
 </ul>
 </div>
-</div>
 <div class="section" id="examples">
-<h2><a class="toc-backref" href="#id5">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<p><strong>Creating diskarray from NumPy array</strong></p>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p><strong>Creating dArray from NumPy array</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">diskarray</span> <span class="kn">as</span> <span class="nn">da</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="kn">as</span> <span class="nn">da</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span>
 <span class="go">array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
 <span class="go">       [ 1.,  1.,  1., ...,  1.,  1.,  1.]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">asdiskarray</span><span class="p">(</span><span class="s1">&#39;ar1.da&#39;</span><span class="p">,</span> <span class="n">ar</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">asdarray</span><span class="p">(</span><span class="s1">&#39;ar1.da&#39;</span><span class="p">,</span> <span class="n">ar</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span>
-<span class="go">diskarray([[ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
+<span class="go">dArray([[ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
 <span class="go">           [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)</span>
 </pre></div>
 </div>
@@ -162,7 +149,7 @@ indexing.</p>
 <span class="go">array([ 1.,  1.])</span>
 </pre></div>
 </div>
-<p>Note that reading data through indexing creates a NumPy array. The diskarray
+<p>Note that reading data through indexing creates a NumPy array. The dArray
 itself is not a NumPy array. For computation, read (or view, see below) the
 data, using indexing, first:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">*</span> <span class="n">dar</span><span class="p">[:]</span>
@@ -170,22 +157,22 @@ data, using indexing, first:</p>
 <span class="go">       [2., 2., 2., ..., 2., 2., 2.]])</span>
 </pre></div>
 </div>
-<p>If your diskarray is too large to read into RAM, you could use the <a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> or
+<p>If your dArray is too large to read into RAM, you could use the <a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> or
 the <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> library for computation (see example below).</p>
 <p><strong>Writing data</strong></p>
 <p>Writing is also done through NumPy indexing. Writing directly leads to changes
 on disk. Our example array is read-only because we did not specify otherwise
-in the ‘asdiskarray’ function above, so we’ll set it to be writable
+in the ‘asdArray’ function above, so we’ll set it to be writable
 first:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span><span class="o">.</span><span class="n">set_accessmode</span><span class="p">(</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span>
-<span class="go">diskarray([[ 1.,  2.,  1., ...,  1.,  1.,  1.],</span>
+<span class="go">dArray([[ 1.,  2.,  1., ...,  1.,  1.,  1.],</span>
 <span class="go">           [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)</span>
 </pre></div>
 </div>
 <p>Of course, you could have done that with the NumPy array before converting
-it to a diskarray, but working with a memory-mapped array on disk can be
+it to a dArray, but working with a memory-mapped array on disk can be
 advantageous when arrays are very large.</p>
 <p><strong>Efficient I/O</strong></p>
 <p>To get maximum speed when doing multiple operations open a direct view on
@@ -195,18 +182,18 @@ the disk-based array:</p>
 <span class="gp">... </span>    <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.</span>
 <span class="gp">... </span>    <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">5.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span>
-<span class="go">diskarray([[ 3.,  2.,  4., ...,  1.,  1.,  1.],</span>
+<span class="go">dArray([[ 3.,  2.,  4., ...,  1.,  1.,  1.],</span>
 <span class="go">           [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)</span>
 </pre></div>
 </div>
 <p>If not opened explicitly like this, every read and write operation will
 under the hood open and close the underlying file(s) when necessary, making
 it potentially slower.</p>
-<p><strong>Creating diskarray from scratch</strong></p>
-<p>Diskarrays can also be created de novo. We now choose a different numeric type:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_diskarray</span><span class="p">(</span><span class="s1">&#39;ar2.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+<p><strong>Creating dArray from scratch</strong></p>
+<p>dArrays can also be created de novo. We now choose a different numeric type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;ar2.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span>
-<span class="go">diskarray([[0, 0, 0, ..., 0, 0, 0],</span>
+<span class="go">dArray([[0, 0, 0, ..., 0, 0, 0],</span>
 <span class="go">           [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)</span>
 </pre></div>
 </div>
@@ -214,13 +201,13 @@ it potentially slower.</p>
 change this value. There is also a ‘fillfunc’ parameter to fill the array non-
 uniformly, in more complex ways. See the <a class="reference internal" href="api.html"><span class="doc">DiskArray API Documentation</span></a>.</p>
 <p><strong>Appending data</strong>
-You can easily append data to a diskarray, which is immediately reflected in
+You can easily append data to a dArray, which is immediately reflected in
 the disk-based files. This is big plus in many situations. Think for
 example of saving data as it is generated by an instrument. A restriction
 is that you can only append to the first axis:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">1024</span><span class="p">)))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span>
-<span class="go">diskarray([[0, 0, 0, ..., 0, 0, 0],</span>
+<span class="go">dArray([[0, 0, 0, ..., 0, 0, 0],</span>
 <span class="go">           [0, 0, 0, ..., 0, 0, 0],</span>
 <span class="go">           [1, 1, 1, ..., 1, 1, 1],</span>
 <span class="go">           [1, 1, 1, ..., 1, 1, 1],</span>
@@ -234,7 +221,7 @@ also automatically updated to reflect these changes. There is an
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar3</span> <span class="o">=</span> <span class="n">dar2</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s1">&#39;ar3.da&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar4</span> <span class="o">=</span> <span class="n">dar2</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s1">&#39;ar4.da&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float16&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar4</span>
-<span class="go">diskarray([[ 0.,  0.,  0., ...,  0.,  0.,  0.],</span>
+<span class="go">dArray([[ 0.,  0.,  0., ...,  0.,  0.,  0.],</span>
 <span class="go">           [ 0.,  0.,  0., ...,  0.,  0.,  0.],</span>
 <span class="go">           [ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
 <span class="go">           [ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
@@ -244,31 +231,31 @@ also automatically updated to reflect these changes. There is an
 <p>Note that the type of the array can be changed when copying. Data is copied
 in chunks, so very large arrays will not flood RAM memory.</p>
 <p><strong>Larger than memory computation</strong></p>
-<p>For computing with very large diskarrays, I recommend the <a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> library,
-which works nicely with diskarray. I’ll base the example on a small array
+<p>For computing with very large dArrays, I recommend the <a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> library,
+which works nicely with dArray. I’ll base the example on a small array
 though:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask.array</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar5</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_diskarray</span><span class="p">(</span><span class="s1">&#39;ar5.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dar5</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;ar5.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar5</span>
-<span class="go">diskarray([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)</span>
+<span class="go">dArray([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">dar5</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">512</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">((</span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">dar5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar5</span>
-<span class="go">diskarray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)</span>
+<span class="go">dArray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)</span>
 </pre></div>
 </div>
 <p>So in this case we overwrote the data in dar5 with the results of the computation,
-but we could have stored the result in a different diskarray of the same shape. Dask
+but we could have stored the result in a different dArray of the same shape. Dask
 can do more powerful things, for which I refer to the <a class="reference external" href="https://dask.pydata.org/en/latest/index.html">Dask documentation</a>. The
-point here is that diskarrays can be both sources and stores for Dask.</p>
-<p>Alternatively, you can use the <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> library using a view of the diskarray,
+point here is that dArrays can be both sources and stores for Dask.</p>
+<p>Alternatively, you can use the <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> library using a view of the dArray,
 like so:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numexpr</span> <span class="kn">as</span> <span class="nn">ne</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar6</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_diskarray</span><span class="p">(</span><span class="s1">&#39;ar6.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dar6</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;ar6.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">dar6</span><span class="o">.</span><span class="n">view</span><span class="p">()</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">ne</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s1">&#39;(v + 1) / 2&#39;</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">v</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dar6</span>
-<span class="go">diskarray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)</span>
+<span class="go">dArray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)</span>
 </pre></div>
 </div>
 <p><strong>Metadata</strong></p>
@@ -304,7 +291,7 @@ objects. You can only store:</p>
 </ul>
 </div>
 <div class="section" id="rationale">
-<h2><a class="toc-backref" href="#id6">Rationale</a><a class="headerlink" href="#rationale" title="Permalink to this headline">¶</a></h2>
+<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this headline">¶</a></h2>
 <p>Scientific data should preferably be stored or at least archived in a file
 format that is as simple as possible. This ensures readability by a variety
 of currently used analysis tools (Python, R, Octave/Matlab, Julia, GDL/IDL,
@@ -312,7 +299,7 @@ Mathematic, Igor Pro, etc) as well as future tools. This is in line with the
 principle of openness and facilitates re-use and reproducibility of
 scientific results. At the same time, it would be nice if data files could
 be created and accessed efficiently, also when data sets are large.</p>
-<p>DiskArray tries to address both requirements for numeric data arrays.</p>
+<p>dArray tries to address both requirements for numeric data arrays.</p>
 <p>It stores the data itself in a flat binary file. This is a future-proof way of
 storing numeric data, as long as clear information is
 provided on how the binary data is organized. Many file formats write such
@@ -321,7 +308,7 @@ reader somehow to know how long the header part of the file is and how to
 interpret it. A header is clearly not the ideal solution when maximizing
 readability, because we want to assume as little a priori knowledge as
 possible.</p>
-<p>DiskArray therefore writes the information about the organization of the data to
+<p>dArray therefore writes the information about the organization of the data to
 a separate file. In addition to getting rid of the header, this allows us to
 write the information in plain text format. An interesting other approach
 would be to simply embed this information in the name of the binary file,
@@ -329,7 +316,7 @@ see <a class="reference external" href="https://github.com/davidh-ssec/pyfbf">py
 information then could realistically fit in a file name.</p>
 <p>This approach makes it is easy to read your numeric array data with one or a
 few lines of code, or even with GUI import tools, without depending on the
-DiskArray library itself. To facilitate this process, DiskArray saves
+dArray library itself. To facilitate this process, dArray saves
 together with the data a README text file that explains the format, and that
 contains example code of how to read the specific data with common tools
 such as Python/NumPy, R, Julia, MatLab/Octave, and Mathematica. Just copy and
@@ -347,10 +334,10 @@ use it when the benefits clearly outweigh the costs, which is sometimes but
 not often the case. For an interesting view on this topic I refer to a
 <a class="reference external" href="http://cyrille.rossant.net/moving-away-hdf5/">blog of Cyrille Rossant</a>, which is in line with my own experiences.</p>
 <p>In addition to saving and reading data in a simple and durable format,
-DiskArray enables you to accesses the disk-based data in a memory-mapped
+dArray enables you to accesses the disk-based data in a memory-mapped
 way. Data arrays can thus be very large, larger than available RAM memory,
 and access is fast and efficient, based on <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html">NumPy indexing</a>.</p>
-<p>In terms of usage from a python environment , DiskArray is very similar
+<p>In terms of usage from a python environment , dArray is very similar
 to using a NumPy memory-mapped <a class="reference external" href="https://docs.scipy.org/doc/numpy-dev/neps/npy-format.html">.npy</a> file. The only differences are that the
 binary data and header info are split over different files to make the data
 more easily readable by other tools, that data can easily be appended,
@@ -362,7 +349,7 @@ programming languages, it lacks the ease of ‘double-click access’ that
 specific data file formats have. For example, if your data is a sound
 recording, saving it in ‘.wav’ format enables you to directly open it in any
 audio program.</li>
-<li>To keep things as simple as possible, DiskArray does not use compression.
+<li>To keep things as simple as possible, dArray does not use compression.
 Depending on the data, storage can thus take more disk space than
 necessary. If you are archiving your data and insist on minimizing
 disk space usage you can compress the data files with a general
@@ -380,27 +367,27 @@ text files (~150 b - 1.7 kb). This has two disadvantages:<ul>
 want to archive them into a single file first (zip, tar).</li>
 <li>In many file systems, files take up a minimum amount of disk space
 (normally 512 b - 4 kb) even if the data they contain is not that large.
-Diskarray’s way of storing data is thus space-inefficient if you have
+dArray’s way of storing data is thus space-inefficient if you have
 zillions of very small data arrays stored separately.</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="requirements">
-<h2><a class="toc-backref" href="#id7">Requirements</a><a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>DiskArray requires Python 3.6+ and NumPy.</p>
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>dArray requires Python 3.6+ and NumPy.</p>
 </div>
 <div class="section" id="development-and-contributing">
-<h2><a class="toc-backref" href="#id8">Development and Contributing</a><a class="headerlink" href="#development-and-contributing" title="Permalink to this headline">¶</a></h2>
+<h2>Development and Contributing<a class="headerlink" href="#development-and-contributing" title="Permalink to this headline">¶</a></h2>
 <p>This library is developed by Gabriël Beckers. Any help / suggestions / ideas
 / contributions are very welcome and appreciated. For any comment, question,
-or error, please open an <a class="reference external" href="https://github.com/gjlbeckers-uu/DiskArray/issue">issue</a> or propose a <a class="reference external" href="https://github.com/gjlbeckers-uu/DiskArray/pull">pull</a> request on GitHub.</p>
-<p>Code can be found on GitHub: <a class="reference external" href="https://github.com/gjlbeckers-uu/DiskArray">https://github.com/gjlbeckers-uu/DiskArray</a></p>
+or error, please open an <a class="reference external" href="https://github.com/gjlbeckers-uu/dArray/issues">issue</a> or propose a <a class="reference external" href="https://github.com/gjlbeckers-uu/dArray/pulls">pull</a> request on GitHub.</p>
+<p>Code can be found on GitHub: <a class="reference external" href="https://github.com/gjlbeckers-uu/dArray">https://github.com/gjlbeckers-uu/dArray</a></p>
 </div>
 <div class="section" id="testing">
-<h2><a class="toc-backref" href="#id9">Testing</a><a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
 <p>To run the test suite:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">diskarray</span> <span class="kn">as</span> <span class="nn">da</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="kn">as</span> <span class="nn">da</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
 <span class="go">............................</span>
 <span class="go">----------------------------------------------------------------------</span>
@@ -422,11 +409,14 @@ or error, please open an <a class="reference external" href="https://github.com/
 </li>
 </ul>
 </div>
+<div class="section" id="indices-and-tables">
+<h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
 <li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
+</div>
 </div>
 </div>
 

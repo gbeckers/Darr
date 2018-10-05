@@ -1,30 +1,30 @@
 =========
-DiskArray
+dArray
 =========
 
-.. image:: https://travis-ci.org/gjlbeckers-uu/DiskArray.svg?branch=master
-   :target: https://travis-ci.org/gjlbeckers-uu/DiskArray
+.. image:: https://travis-ci.org/gjlbeckers-uu/dArray.svg?branch=master
+   :target: https://travis-ci.org/gjlbeckers-uu/dArray
 
 
-DiskArray is a Python library for storing numeric data arrays in a format
+dArray is a Python library for storing numeric data arrays in a format
 that is as open and simple as possible. It is primarily designed for
 scientific use cases, when accessibility of data is of fundamental
 importance. It also provides easy and fast memory-mapped read/write access
 to such disk-based data, using `NumPy indexing`_, and allows for the
 flexible use of metadata.
 
-To avoid tool- or library-specific data formats, DiskArray is exclusively
+To avoid tool- or library-specific data formats, dArray is exclusively
 based on self-explaining flat binary and text files. It automatically
 generates and saves a clear text description of how exactly the
 data is stored, and provides example code to read the specific data in a
 variety of current scientific data tools.
 
-DiskArray is open source and freely available under the `New BSD License`_
+dArray is open source and freely available under the `New BSD License`_
 terms.
 
 Version: 0.1
 
-DiskArray is BSD licensed (BSD 3-Clause License).
+dArray is BSD licensed (BSD 3-Clause License).
 (c) 2018, Gabriël Beckers
 
 
@@ -47,7 +47,7 @@ Pro's:
 - **Human-readable explanation of how the binary data is stored** is saved
   in a README text file, which also contains **examples of how to read the
   specific array data in a few lines of code** in popular analysis environments
-  such as Python (without DiskArray), R, Julia, Octave/Matlab, GDL/IDL,
+  such as Python (without dArray), R, Julia, Octave/Matlab, GDL/IDL,
   and Mathematica.
 - **Many numeric types** are supported:  int8, int16, int32, int64, uint8,
   uint16, uint32, uint64, float16, float32, float64, complex64, complex128.
@@ -56,7 +56,7 @@ Pro's:
 - **Small** library. Just one module file that can be easily included in your
   own code if you want to avoid dependence on external libraries.
 - **Integrates easily** with the `Dask`_ or `NumExpr`_ libraries for **numeric
-  computation on very large diskarrays**.
+  computation on very large dArrays**.
 
 Con's:
 
@@ -66,7 +66,7 @@ Con's:
 - **Multiple files**. The data, the data description, and the metadata are
   stored in separate files, though all within a single directory.
 - **Inefficient for very small arrays**. Do use other approaches if you have
-  a zillion small arrays. A DiskArrayList is being developed to deal with
+  a zillion small arrays. A dArrayList is being developed to deal with
   the latter, but it is still very experimental.
 
 
@@ -74,19 +74,19 @@ Con's:
 Examples
 --------
 
-**Creating diskarray from NumPy array**
+**Creating dArray from NumPy array**
 
 .. code-block:: python
 
     >>> import numpy as np
-    >>> import diskarray as da
+    >>> import darray as da
     >>> ar = np.ones(2,1024)
     >>> ar
     array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
            [ 1.,  1.,  1., ...,  1.,  1.,  1.]])
-    >>> dar = da.asdiskarray('ar1.da', ar)
+    >>> dar = da.asdarray('ar1.da', ar)
     >>> dar
-    diskarray([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
+    dArray([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
                [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
 
 
@@ -132,7 +132,7 @@ indexing.
     >>> dar[:,-2]
     array([ 1.,  1.])
 
-Note that reading data through indexing creates a NumPy array. The diskarray
+Note that reading data through indexing creates a NumPy array. The dArray
 itself is not a NumPy array. For computation, read (or view, see below) the
 data, using indexing, first:
 
@@ -142,7 +142,7 @@ data, using indexing, first:
     array([[2., 2., 2., ..., 2., 2., 2.],
            [2., 2., 2., ..., 2., 2., 2.]])
 
-If your diskarray is too large to read into RAM, you could use the `Dask`_ or
+If your dArray is too large to read into RAM, you could use the `Dask`_ or
 the `NumExpr`_ library for computation (see example below).
 
 
@@ -150,7 +150,7 @@ the `NumExpr`_ library for computation (see example below).
 
 Writing is also done through NumPy indexing. Writing directly leads to changes
 on disk. Our example array is read-only because we did not specify otherwise
-in the 'asdiskarray' function above, so we'll set it to be writable
+in the 'asdArray' function above, so we'll set it to be writable
 first:
 
 .. code-block:: python
@@ -158,11 +158,11 @@ first:
     >>> dar.set_accessmode('r+')
     >>> dar[:,1] = 2.
     >>> dar
-    diskarray([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
+    dArray([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
                [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
 
 Of course, you could have done that with the NumPy array before converting
-it to a diskarray, but working with a memory-mapped array on disk can be
+it to a dArray, but working with a memory-mapped array on disk can be
 advantageous when arrays are very large.
 
 **Efficient I/O**
@@ -177,22 +177,22 @@ the disk-based array:
     ...     v[0,2] = 4.
     ...     v[1,[0,2,-1]] = 5.
     >>> dar
-    diskarray([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
+    dArray([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
                [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
 
 If not opened explicitly like this, every read and write operation will
 under the hood open and close the underlying file(s) when necessary, making
 it potentially slower.
 
-**Creating diskarray from scratch**
+**Creating dArray from scratch**
 
-Diskarrays can also be created de novo. We now choose a different numeric type:
+dArrays can also be created de novo. We now choose a different numeric type:
 
 .. code-block:: python
 
-    >>> dar2 = da.create_diskarray('ar2.da', shape=(2,1024), dtype='uint8')
+    >>> dar2 = da.create_darray('ar2.da', shape=(2,1024), dtype='uint8')
     >>> dar2
-    diskarray([[0, 0, 0, ..., 0, 0, 0],
+    dArray([[0, 0, 0, ..., 0, 0, 0],
                [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
 
 The default is to fill the array with zeros but the 'fill' parameter can
@@ -200,7 +200,7 @@ change this value. There is also a 'fillfunc' parameter to fill the array non-
 uniformly, in more complex ways. See the :doc:`api`.
 
 **Appending data**
-You can easily append data to a diskarray, which is immediately reflected in
+You can easily append data to a dArray, which is immediately reflected in
 the disk-based files. This is big plus in many situations. Think for
 example of saving data as it is generated by an instrument. A restriction
 is that you can only append to the first axis:
@@ -209,7 +209,7 @@ is that you can only append to the first axis:
 
     >>> dar2.append(np.ones((3,1024)))
     >>> dar2
-    diskarray([[0, 0, 0, ..., 0, 0, 0],
+    dArray([[0, 0, 0, ..., 0, 0, 0],
                [0, 0, 0, ..., 0, 0, 0],
                [1, 1, 1, ..., 1, 1, 1],
                [1, 1, 1, ..., 1, 1, 1],
@@ -226,7 +226,7 @@ also automatically updated to reflect these changes. There is an
     >>> dar3 = dar2.copy('ar3.da')
     >>> dar4 = dar2.copy('ar4.da', dtype='float16')
     >>> dar4
-    diskarray([[ 0.,  0.,  0., ...,  0.,  0.,  0.],
+    dArray([[ 0.,  0.,  0., ...,  0.,  0.,  0.],
                [ 0.,  0.,  0., ...,  0.,  0.,  0.],
                [ 1.,  1.,  1., ...,  1.,  1.,  1.],
                [ 1.,  1.,  1., ...,  1.,  1.,  1.],
@@ -238,37 +238,37 @@ in chunks, so very large arrays will not flood RAM memory.
 
 **Larger than memory computation**
 
-For computing with very large diskarrays, I recommend the `Dask`_ library,
-which works nicely with diskarray. I'll base the example on a small array
+For computing with very large dArrays, I recommend the `Dask`_ library,
+which works nicely with dArray. I'll base the example on a small array
 though:
 
 .. code-block:: python
 
     >>> import dask.array
-    >>> dar5 = da.create_diskarray('ar5.da', shape=(1024**2), fill=2.5)
+    >>> dar5 = da.create_darray('ar5.da', shape=(1024**2), fill=2.5)
     >>> dar5
-    diskarray([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
+    dArray([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
     >>> a = dask.array.from_array(dar5, chunks=(512))
     >>> ((a + 1) / 2).store(dar5)
     >>> dar5
-    diskarray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
+    dArray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
 So in this case we overwrote the data in dar5 with the results of the computation,
-but we could have stored the result in a different diskarray of the same shape. Dask
+but we could have stored the result in a different dArray of the same shape. Dask
 can do more powerful things, for which I refer to the `Dask documentation`_. The
-point here is that diskarrays can be both sources and stores for Dask.
+point here is that dArrays can be both sources and stores for Dask.
 
-Alternatively, you can use the `NumExpr`_ library using a view of the diskarray,
+Alternatively, you can use the `NumExpr`_ library using a view of the dArray,
 like so:
 
 .. code-block:: python
 
     >>> import numexpr as ne
-    >>> dar6 = da.create_diskarray('ar6.da', shape=(1024**2), fill=2.5)
+    >>> dar6 = da.create_darray('ar6.da', shape=(1024**2), fill=2.5)
     >>> with dar6.view() as v:
     ...     ne.evaluate('(v + 1) / 2', out=v)
     >>> dar6
-    diskarray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
+    dArray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
 **Metadata**
 
@@ -318,7 +318,7 @@ principle of openness and facilitates re-use and reproducibility of
 scientific results. At the same time, it would be nice if data files could
 be created and accessed efficiently, also when data sets are large.
 
-DiskArray tries to address both requirements for numeric data arrays.
+dArray tries to address both requirements for numeric data arrays.
 
 It stores the data itself in a flat binary file. This is a future-proof way of
 storing numeric data, as long as clear information is
@@ -329,7 +329,7 @@ interpret it. A header is clearly not the ideal solution when maximizing
 readability, because we want to assume as little a priori knowledge as
 possible.
 
-DiskArray therefore writes the information about the organization of the data to
+dArray therefore writes the information about the organization of the data to
 a separate file. In addition to getting rid of the header, this allows us to
 write the information in plain text format. An interesting other approach
 would be to simply embed this information in the name of the binary file,
@@ -338,7 +338,7 @@ information then could realistically fit in a file name.
 
 This approach makes it is easy to read your numeric array data with one or a
 few lines of code, or even with GUI import tools, without depending on the
-DiskArray library itself. To facilitate this process, DiskArray saves
+dArray library itself. To facilitate this process, dArray saves
 together with the data a README text file that explains the format, and that
 contains example code of how to read the specific data with common tools
 such as Python/NumPy, R, Julia, MatLab/Octave, and Mathematica. Just copy and
@@ -358,11 +358,11 @@ not often the case. For an interesting view on this topic I refer to a
 `blog of Cyrille Rossant`_, which is in line with my own experiences.
 
 In addition to saving and reading data in a simple and durable format,
-DiskArray enables you to accesses the disk-based data in a memory-mapped
+dArray enables you to accesses the disk-based data in a memory-mapped
 way. Data arrays can thus be very large, larger than available RAM memory,
 and access is fast and efficient, based on `NumPy indexing`_.
 
-In terms of usage from a python environment , DiskArray is very similar
+In terms of usage from a python environment , dArray is very similar
 to using a NumPy memory-mapped `.npy`_ file. The only differences are that the
 binary data and header info are split over different files to make the data
 more easily readable by other tools, that data can easily be appended,
@@ -376,7 +376,7 @@ There are of course also disadvantages to this approach.
   specific data file formats have. For example, if your data is a sound
   recording, saving it in '.wav' format enables you to directly open it in any
   audio program.
-- To keep things as simple as possible, DiskArray does not use compression.
+- To keep things as simple as possible, dArray does not use compression.
   Depending on the data, storage can thus take more disk space than
   necessary. If you are archiving your data and insist on minimizing
   disk space usage you can compress the data files with a general
@@ -395,14 +395,14 @@ There are of course also disadvantages to this approach.
     want to archive them into a single file first (zip, tar).
   - In many file systems, files take up a minimum amount of disk space
     (normally 512 b - 4 kb) even if the data they contain is not that large.
-    Diskarray's way of storing data is thus space-inefficient if you have
+    dArray's way of storing data is thus space-inefficient if you have
     zillions of very small data arrays stored separately.
 
 
 Requirements
 ------------
 
-DiskArray requires Python 3.6+ and NumPy.
+dArray requires Python 3.6+ and NumPy.
 
 Development and Contributing
 ----------------------------
@@ -411,7 +411,7 @@ This library is developed by Gabriël Beckers. Any help / suggestions / ideas
 / contributions are very welcome and appreciated. For any comment, question,
 or error, please open an `issue`_ or propose a `pull`_ request on GitHub.
 
-Code can be found on GitHub: https://github.com/gjlbeckers-uu/DiskArray
+Code can be found on GitHub: https://github.com/gjlbeckers-uu/dArray
 
 Testing
 -------
@@ -420,7 +420,7 @@ To run the test suite:
 
 .. code-block:: python
 
-    >>> import diskarray as da
+    >>> import darray as da
     >>> da.test()
     ............................
     ----------------------------------------------------------------------
@@ -447,5 +447,5 @@ To run the test suite:
 .. _pyfbf: https://github.com/davidh-ssec/pyfbf
 .. _HDF5: https://www.hdfgroup.org/
 .. _blog of Cyrille Rossant: http://cyrille.rossant.net/moving-away-hdf5/
-.. _issue: https://github.com/gjlbeckers-uu/DiskArray/issues
-.. _pull: https://github.com/gjlbeckers-uu/DiskArray/pulls
+.. _issue: https://github.com/gjlbeckers-uu/dArray/issues
+.. _pull: https://github.com/gjlbeckers-uu/dArray/pulls

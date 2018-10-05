@@ -42,8 +42,8 @@ def get_config():
     cfg.VCS = "git"
     cfg.style = "pep440"
     cfg.tag_prefix = "v"
-    cfg.parentdir_prefix = "diskarray-"
-    cfg.versionfile_source = "diskarray/_version.py"
+    cfg.parentdir_prefix = "darray-"
+    cfg.versionfile_source = "darray/_version.py"
     cfg.verbose = False
     return cfg
 

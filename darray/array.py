@@ -1,13 +1,13 @@
 """
-DiskArray is a Python library for storing numeric data arrays in a format
+dArray is a Python library for storing numeric data arrays in a format
 that is as open and simple as possible. It also provides easy memory-mapped
 access to such disk-based data using numpy indexing.
 
-Diskarray objects can be created from array-like objects, such as numpy arrays
-and lists, using the **asdiskarray** function. Alternatively, diskarrays can be
-created from scratch by the **create_diskarray** function. Existing diskarray
-data on disk can be accessed through the **DiskArray** constructor.
-To remove a diskarray from disk, use **delete_diskarray**.
+dArray objects can be created from array-like objects, such as numpy arrays
+and lists, using the **asdarray** function. Alternatively, darrays can be
+created from scratch by the **create_darray** function. Existing darray
+data on disk can be accessed through the **dArray** constructor.
+To remove a darray from disk, use **delete_darray**.
 """
 
 import json
@@ -28,8 +28,8 @@ logger = logging.getLogger(__name__)
 # - All text is written in UTF-8. This is compatible with ASCII, widely used
 #   and capable of encoding all 1,112,064 valid code points in Unicode
 
-__all__ = ['DiskArray', 'asdiskarray', 'create_diskarray', 'delete_diskarray',
-           'truncate_diskarray']
+__all__ = ['dArray', 'asdarray', 'create_darray', 'delete_darray',
+           'truncate_darray']
 
 # mathematica: https://reference.wolfram.com/language/ref/BinaryRead.html
 # Octave: https://octave.org/doc/v4.2.0/Binary-I_002fO.html
@@ -261,10 +261,10 @@ class MetaData:
 
     @property
     def accessmode(self):
-        """File access mode of the disk array data. `r` means read-only, `r+`
-        means read-write. `w` does not exist. To create new diskarrays,
-        potentially overwriting an other one, use the `asdiskarray` or
-        `create_diskarray` functions.
+        """File access mode of the darray data. `r` means read-only, `r+`
+        means read-write. `w` does not exist. To create new darrays,
+        potentially overwriting an other one, use the `asdarray` or
+        `create_darray` functions.
 
        """
         return self._accessmode
@@ -353,8 +353,8 @@ class MetaData:
 
         Examples
         --------
-        >>> import diskarray as da
-        >>> d = da.create_diskarray('test.da', shape=(12,), accesmode= 'r+')
+        >>> import darray as da
+        >>> d = da.create_darray('test.da', shape=(12,), accesmode= 'r+')
         >>> d.metadata.update({'starttime': '2017-08-31T17:00:00'})
         >>> print(d.metadata)
         {'starttime': '2017-08-31T17:00:00'}
@@ -386,17 +386,17 @@ class MetaData:
         self._accessmode = check_accessmode(accessmode)
 
 
-class DiskArray(BaseDataDir):
+class dArray(BaseDataDir):
     """Read and write numeric data from and to a memory-mapped, disk-based
     array using numpy indexing. Memory-mapped arrays are used for accessing
     segments of (very) large files on disk, without reading the entire file
     into memory.
 
-    Diskarray data is stored in a simple format that maximizes long-term
+    dArray data is stored in a simple format that maximizes long-term
     readability by other software and programming languages, and has been
     designed with scientific use cases in mind.
 
-    A diskarray corresponds to a directory containing 1) a binary file with
+    A darray corresponds to a directory containing 1) a binary file with
     the raw numeric array values, 2) a text file (json format) describing the
     numeric type, array shape, and other format information, 3) a README text
     file documenting the data format, including examples of how to read the
@@ -407,9 +407,9 @@ class DiskArray(BaseDataDir):
     path : str or pathlib.Path
         Path to disk-based array directory.
     accessmode : {'r', 'r+'}, default 'r'
-       File access mode of the disk array data. `r` means read-only, `r+` means
-       read-write. `w` does not exist. To create new diskarrays, potentially
-       overwriting an other one, use the `asdiskarray` or `create_diskarray`
+       File access mode of the darray data. `r` means read-only, `r+` means
+       read-write. `w` does not exist. To create new darrays, potentially
+       overwriting an other one, use the `asdarray` or `create_darray`
        functions.
 
     """
@@ -443,9 +443,9 @@ class DiskArray(BaseDataDir):
     @property
     def accessmode(self):
         """File access mode of the disk array data. `r` means read-only, `r+`
-        means read-write. `w` does not exist. To create new diskarrays,
-        potentially overwriting an other one, use the `asdiskarray` or
-        `create_diskarray` functions.
+        means read-write. `w` does not exist. To create new darrays,
+        potentially overwriting an other one, use the `asdarray` or
+        `create_darray` functions.
 
        """
         return self._accessmode
@@ -522,9 +522,9 @@ class DiskArray(BaseDataDir):
 
     def __repr__(self):
         with self._open_array() as (ar, fd):
-            # nextneeded because "diskarray" is longer than "memmap"
+            # nextneeded because "darray" is longer than "memmap"
             s = '\n   '.join(repr(ar).lstrip('memmap').splitlines())
-        return f"diskarray{s} ({self.accessmode})"
+        return f"darray{s} ({self.accessmode})"
 
     def __str__(self):
         with self._open_array() as (ar, fd):
@@ -574,7 +574,7 @@ class DiskArray(BaseDataDir):
         """Open a memory-mapped view of the array data.
 
         Although read and write operations can be performed conveniently using
-        indexing notation on the DiskArray object, this can be relatively slow
+        indexing notation on the dArray object, this can be relatively slow
         when performing multiple access operations in a row. To read data, the
         disk file needs to be opened, data copied into memory, and after which
         the file is closed. I such cases, it is much faster to use a *view* of
@@ -595,8 +595,8 @@ class DiskArray(BaseDataDir):
 
         Examples
         --------
-        >>> import diskarray as da
-        >>> d = da.create_diskarray('test.da', shape=(1000,3), overwrite=True)
+        >>> import darray as da
+        >>> d = da.create_darray('test.da', shape=(1000,3), overwrite=True)
         >>> with d.view(accessmode='r+') as v:
                 s1 = v[:10,1:].sum()
                 s2 = v[20:25,:2].sum()
@@ -619,7 +619,7 @@ class DiskArray(BaseDataDir):
         vlib = distutils.version.StrictVersion(self._formatversion)
         if not vlib >= vfile:
             raise ValueError(f"Format version of file ({d['version']}) "
-                             f"is too new. The installed DiskArray "
+                             f"is too new. The installed dArray "
                              f"library only handles up to version "
                              f"{self._formatversion}; please update")
         try:
@@ -649,7 +649,7 @@ class DiskArray(BaseDataDir):
         with self._open_array() as (ar, fd):
             if not ar.flags.writeable:
                 raise IOError(
-                    "diskarray not writeable; use 'set_accessmode' method to "
+                    "darray not writeable; use 'set_accessmode' method to "
                     "change this")
 
     def _update_len(self, lenincrease):
@@ -664,7 +664,7 @@ class DiskArray(BaseDataDir):
         self._update_readmetxt()
 
     def _update_readmetxt(self):
-        txt = diskarrayreadmetxt(self)
+        txt = darrayreadmetxt(self)
         self._write_txt(self._readmefilename, txt)
 
     def __append(self, array, fd):
@@ -689,7 +689,7 @@ class DiskArray(BaseDataDir):
             array = np.array(array, dtype=self._dtype, ndmin=1)
         if not array.shape[1:] == self.shape[1:]:
             raise TypeError(
-                f"array shape {array.shape} not compatible with diskarray "
+                f"array shape {array.shape} not compatible with darray "
                 f"shape {self.shape}")
         if np.product(self._shape) == 0:
             # have an empty array to append to
@@ -704,10 +704,10 @@ class DiskArray(BaseDataDir):
         return array.shape[0]
 
     def append(self, array):
-        """ Add array-like objects to diskarray to the end of the dataset.
+        """ Add array-like objects to darray to the end of the dataset.
 
         Data will be appended along the first axis. The shape of the data and
-        the diskarray must be compliant. When appending data repeatedly it is
+        the darray must be compliant. When appending data repeatedly it is
         more efficient to use `iterappend`.
 
 
@@ -723,8 +723,8 @@ class DiskArray(BaseDataDir):
 
         Examples
         --------
-        >>> import diskarray as da
-        >>> d = da.create_diskarray('test.da', shape=(4,2), overwrite=True)
+        >>> import darray as da
+        >>> d = da.create_darray('test.da', shape=(4,2), overwrite=True)
         >>> d.append([[1,2],[3,4],[5,6]])
         >>> print(d)
         [[ 0.  0.]
@@ -742,7 +742,7 @@ class DiskArray(BaseDataDir):
         """Iteratively append data from a data iterable.
 
         The iterable has to yield chunks of data that are array-like objects
-        compliant with the diskarray.
+        compliant with the darray.
 
         Parameters
         ----------
@@ -754,8 +754,8 @@ class DiskArray(BaseDataDir):
 
         Examples
         --------
-        >>> import diskarray as da
-        >>> d = da.create_diskarray('test.da', shape=(3,2), overwrite=True)
+        >>> import darray as da
+        >>> d = da.create_darray('test.da', shape=(3,2), overwrite=True)
         >>> def ga():
                 yield [[1,2],[3,4]]
                 yield [[5,6],[7,8],[9,10]]
@@ -799,12 +799,12 @@ class DiskArray(BaseDataDir):
 
     def iterview(self, chunklen, stepsize=None, startindex=None,
                  endindex=None, include_remainder=True, accessmode=None):
-        """View the data array of the disk array iteratively in chunks of a
+        """View the data array of the darray iteratively in chunks of a
         given length and with a given stepsize.
 
         This method does not copy the underlying data to a new numpy array,
         and is therefore relatively fast. It can also be used to change the
-        diskarray.
+        darray.
 
         Parameters
         ----------
@@ -829,7 +829,7 @@ class DiskArray(BaseDataDir):
             should be yielded or not. The remainder is smaller than `chunklen`.
             Default is True.
         accessmode:  {'r', 'r+'}, default 'r'
-            File access mode of the disk array data. `r` means read-only, `r+`
+            File access mode of the darray data. `r` means read-only, `r+`
             means read-write.
 
         Returns
@@ -839,8 +839,8 @@ class DiskArray(BaseDataDir):
 
         Examples
         --------
-        >>> import diskarray as da
-        >>> d = da.create_diskarray('test.da', shape=(12,), accesmode= 'r+')
+        >>> import darray as da
+        >>> d = da.create_darray('test.da', shape=(12,), accesmode= 'r+')
         >>> for i,ar in enumerate(d.iterview(chunklen=2, stepsize=3)):
                 ar[:] = i+1
         >>> print(d)
@@ -878,40 +878,40 @@ class DiskArray(BaseDataDir):
 
     def copy(self, path, dtype=None, chunklen=None, accessmode='r',
              overwrite=False):
-        """Copy diskarray to a different path, potentially changing its dtype.
+        """Copy darray to a different path, potentially changing its dtype.
 
         The copying is performed in chunks to avoid RAM memory overflow for
-        very large diskarrays.
+        very large darrays.
 
         Parameters
         ----------
         path: str or pathlib.Path
         dtype: <dtype, None>
             Numpy data type of the copy. Default is None, which corresponds to
-            the dtype of the diskarray to be copied.
+            the dtype of the darray to be copied.
         chunklen: <int, None>
             The length of chunks (along first axis) that are written during
             creation. If None, it is chosen so that chunks are 10 Mb in total
             size.
         accessmode: {'r', 'r+'}, default 'r'
-            File access mode of the disk array data of the returned DiskArray
+            File access mode of the darray data of the returned dArray
             object. `r` means read-only, `r+` means read-write.
         overwrite: (True, False), optional
-            Overwrites existing diskarray data if it exists. Note that a
-            diskarray path is a directory. If that directory contains
+            Overwrites existing darray data if it exists. Note that a
+            darray path is a directory. If that directory contains
             additional files, these will not be removed and an OSError is
             raised. Default is `False`.
 
         Returns
         -------
-        DiskArray
-           copy of the diskarray
+        dArray
+           copy of the darray
 
         """
 
-        return asdiskarray(path=path, array=self, dtype=dtype,
-                           accessmode=accessmode, metadata=dict(self.metadata),
-                           chunklen=chunklen, overwrite=overwrite)
+        return asdarray(path=path, array=self, dtype=dtype,
+                        accessmode=accessmode, metadata=dict(self.metadata),
+                        chunklen=chunklen, overwrite=overwrite)
 
     def _currentchecksums(self):
         filenames = self._filenames ^ {self._checksumsfilename}
@@ -976,7 +976,7 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
     Parameters
     ----------
     shape : int ot sequence of ints
-        Shape of the `DiskArray`.
+        Shape of the `darray`.
     dtype: <dtype>
         Numpy data type of the copy. Default is `float64`.
     fill : number, optional
@@ -1027,7 +1027,7 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
 
 
 def _archunkgenerator(array, dtype=None, chunklen=None):
-    if (chunklen is None) and isinstance(array, (DiskArray, np.ndarray)):
+    if (chunklen is None) and isinstance(array, (dArray, np.ndarray)):
         chunklen = max(int((80 * 1024 ** 2) // (np.product(array.shape[1:]) *
                                                 array.dtype.itemsize)), 1)
     else:
@@ -1035,7 +1035,7 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
     if hasattr(array, '__next__'):  # is already an iterator
         for chunk in array:
             yield np.asarray(chunk, dtype=dtype)
-    elif isinstance(array, DiskArray):
+    elif isinstance(array, dArray):
         for chunk in array.iterview(chunklen=chunklen):
             yield chunk.astype(dtype)
     elif hasattr(array, '__len__'):  # is numpy array or sequence
@@ -1058,9 +1058,9 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
                 f"cannot object of type '{type(array)}' to an array")
 
 
-def asdiskarray(path, array, dtype=None, accessmode='r',
-                metadata=None, chunklen=None, overwrite=False):
-    """Save an array or array generator as a DiskArray to file system path.
+def asdarray(path, array, dtype=None, accessmode='r',
+             metadata=None, chunklen=None, overwrite=False):
+    """Save an array or array generator as a dArray to file system path.
 
     Parameters
     ----------
@@ -1075,7 +1075,7 @@ def asdiskarray(path, array, dtype=None, accessmode='r',
         Is inferred from the data if `None`. If `dtype` is provided the data 
         will be cast to `dtype`. Default is `None`.
     accessmode : {`r`, `r+`}, optional
-        File access mode of the disk array that is returned. `r` means
+        File access mode of the darray that is returned. `r` means
         read-only, `r+` means read-write. In the latter case, data can be 
         changed. Default `r`.
     metadata: {None, dict}
@@ -1083,53 +1083,53 @@ def asdiskarray(path, array, dtype=None, accessmode='r',
     chunklen: <int, None>
         The length of chunks (along first axis) that are read and written
         during the process. If None and the `array` is a numpy array or
-        diskarray, it is chosen so that chunks are 10 Mb in total size. If
+        darray, it is chosen so that chunks are 10 Mb in total size. If
         None and `array` is a generator or sequence, chunklen will be 1.
     overwrite: (True, False), optional
-        Overwrites existing diskarray data if it exists. Note that a diskarray 
+        Overwrites existing darray data if it exists. Note that a darray
         path is a directory. If that directory contains additional files, 
         these will not be removed and an OSError is raised. Default is `False`.
 
     Returns
     -------
-    A `DiskArray` instance.
+    A `aArray` instance.
 
     See Also
     --------
-    create_diskarray : create a DiskArray from scratch.
+    create_darray : create a darray from scratch.
 
     Examples
     --------
-    >>> asdiskarray('data.da', [0,1,2,3])
-    diskarray([0, 1, 2, 3])
-    >>> asdiskarray('data.da', [0,1,2,3], dtype='float64', overwrite=True)
-    diskarray([ 0.,  1.,  2.,  3.])
-    >>> ar = asdiskarray('data_rw.da', [0,1,2,3,4,5], accessmode='r+')
+    >>> asdarray('data.da', [0,1,2,3])
+    darray([0, 1, 2, 3])
+    >>> asdarray('data.da', [0,1,2,3], dtype='float64', overwrite=True)
+    darray([ 0.,  1.,  2.,  3.])
+    >>> ar = asdarray('data_rw.da', [0,1,2,3,4,5], accessmode='r+')
     >>> ar
-    diskarray([0, 1, 2, 3, 4, 5]) (r+)
+    darray([0, 1, 2, 3, 4, 5]) (r+)
     >>> ar[-1] = 8
     >>> ar
-    diskarray([0, 1, 2, 3, 4, 8]) (r+)
+    darray([0, 1, 2, 3, 4, 8]) (r+)
     >>> ar[::2] = 9
-    diskarray([9, 1, 9, 3, 9, 8]) (r+)
+    darray([9, 1, 9, 3, 9, 8]) (r+)
 
 
     """
     path = Path(path)
-    if isinstance(array, DiskArray) and (path == array.path):
+    if isinstance(array, dArray) and (path == array.path):
         raise ValueError(f"'{path}' is the same as the path of the "
-                         f"source diskarray.")
+                         f"source darray.")
     chunkiter = _archunkgenerator(array, dtype=dtype, chunklen=chunklen)
     firstchunk = next(chunkiter)
     if firstchunk.ndim == 0:  # we received a number instead of an array
         firstchunk = np.array(firstchunk, ndmin=1, dtype=dtype)
     if firstchunk.dtype.name not in numtypes:
-        raise TypeError(f"diskarray cannot have type "
+        raise TypeError(f"darray cannot have type "
                         f"'{firstchunk.dtype.name}'")
     dtype = firstchunk.dtype
     bd = create_basedir(path=path,
                         overwrite=overwrite)
-    datapath = path.joinpath(DiskArray._datafilename)
+    datapath = path.joinpath(dArray._datafilename)
     arraylen = firstchunk.shape[0]
     with open(datapath, 'wb') as df:
         firstchunk.tofile(df)
@@ -1147,16 +1147,16 @@ def asdiskarray(path, array, dtype=None, accessmode='r',
                       "be C_CONTIGUOUS")
         datainfo['arrayorder'] = 'C'
     datainfo['shape'] = shape
-    datainfo['version'] = DiskArray._formatversion
-    bd._write_jsondict(filename=DiskArray._arraydescrfilename,
+    datainfo['version'] = dArray._formatversion
+    bd._write_jsondict(filename=dArray._arraydescrfilename,
                        d=datainfo, overwrite=overwrite)
-    metadatapath = path.joinpath(DiskArray._metadatafilename)
+    metadatapath = path.joinpath(dArray._metadatafilename)
     if metadata is not None:
-        bd._write_jsondict(filename=DiskArray._metadatafilename,
+        bd._write_jsondict(filename=dArray._metadatafilename,
                            d=metadata, overwrite=overwrite)
     elif metadatapath.exists():  # no metadata but file exists, remove it
         metadatapath.unlink()
-    d = DiskArray(path, accessmode=accessmode)
+    d = dArray(path, accessmode=accessmode)
     d._update_readmetxt()
     return d
 
@@ -1194,10 +1194,10 @@ def create_basedir(path, overwrite=False):
     return BaseDataDir(path)
 
 
-def create_diskarray(path, shape, dtype='float64', fill=None, fillfunc=None,
-                     accessmode='r+', chunklen=None, metadata=None,
-                     overwrite=False):
-    """Create a new `DiskArray` of given shape and type, filled with
+def create_darray(path, shape, dtype='float64', fill=None, fillfunc=None,
+                  accessmode='r+', chunklen=None, metadata=None,
+                  overwrite=False):
+    """Create a new `darray` of given shape and type, filled with
     predetermined values.
 
     Parameters
@@ -1206,9 +1206,9 @@ def create_diskarray(path, shape, dtype='float64', fill=None, fillfunc=None,
         File system path to which the array will be saved. Note that this will
         be a directory containing multiple files.
     shape : int ot sequence of ints
-        Shape of the `DiskArray`.
+        Shape of the `darray`.
     dtype : dtype, optional
-        The type of the `DiskArray`. Default is 'float64'
+        The type of the `darray`. Default is 'float64'
     fill : number, optional
         The value used to fill the array with. Default is `None`, which will
         lead to the array being filled with zeros.
@@ -1220,7 +1220,7 @@ def create_diskarray(path, shape, dtype='float64', fill=None, fillfunc=None,
         all dimensions (see example below). If `fillfunc` is provided, `fill`
         should be `None`.  And vice versa. Default is None.
     accessmode : <`r`, `r+`>, optional
-        File access mode of the disk array data. `r` means real-only, `r+`
+        File access mode of the darray data. `r` means real-only, `r+`
         means read-write, i.e. values can be changed. Default `r`.
     chunklen: <int, None>
         The length of chunks (along first axis) that are written during
@@ -1229,47 +1229,47 @@ def create_diskarray(path, shape, dtype='float64', fill=None, fillfunc=None,
         Dictionary with metadata to be saved in a separate JSON file. Default
         None
     overwrite: <True, False>, optional
-        Overwrites existing diskarray data if it exists. Note that a diskarray 
+        Overwrites existing darray data if it exists. Note that a darray
         paths is a directory. If that directory contains additional files, 
         these will not be removed and an OSError is raised.
         Default is `False`.
 
     Returns
     -------
-    A `DiskArray` instance.
+    A `dArray` instance.
 
     See Also
     --------
-    asdiskarray : create a DiskArray from existing array-like object or
+    asdarray : create a darray from existing array-like object or
         generator.
 
     Examples
     --------
-    >>> import diskarray as da
-    >>> da.create_diskarray('testarray0', shape=(5,2))
-    diskarray([[ 0.,  0.],
+    >>> import darray as da
+    >>> da.create_darray('testarray0', shape=(5,2))
+    darray([[ 0.,  0.],
        [ 0.,  0.],
        [ 0.,  0.],
        [ 0.,  0.],
        [ 0.,  0.]]) (r+)
-    >>> da.create_diskarray('testarray1', shape=(5,2), dtype='int16')
-    diskarray([[0, 0],
+    >>> da.create_darray('testarray1', shape=(5,2), dtype='int16')
+    darray([[0, 0],
        [0, 0],
        [0, 0],
        [0, 0],
        [0, 0]], dtype=int16) (r+)
-    >>> da.create_diskarray('testarray3', shape=(5,2), fill=23.4)
-    diskarray([[ 23.4,  23.4],
+    >>> da.create_darray('testarray3', shape=(5,2), fill=23.4)
+    darray([[ 23.4,  23.4],
        [ 23.4,  23.4],
        [ 23.4,  23.4],
        [ 23.4,  23.4],
        [ 23.4,  23.4]]) (r+)
-    >>> fillfunc = lambda i: i * 2 # i is index along first axis of diskarray
-    >>> da.create_diskarray('testarray4', shape=(5,), fillfunc=fillfunc)
-    diskarray([ 0.,  2.,  4.,  6.,  8.]) (r+)
+    >>> fillfunc = lambda i: i * 2 darray
+    >>> da.create_darray('testarray4', shape=(5,), fillfunc=fillfunc)
+    darray([ 0.,  2.,  4.,  6.,  8.]) (r+)
     >>> fillfunc = lambda i: i * [1, 2]
-    >>> da.create_diskarray('testarray4', shape=(5,2), fillfunc=fillfunc)
-    diskarray([[ 0.,  0.],
+    >>> da.create_darray('testarray4', shape=(5,2), fillfunc=fillfunc)
+    darray([[ 0.,  0.],
        [ 1.,  2.],
        [ 2.,  4.],
        [ 3.,  6.],
@@ -1278,25 +1278,25 @@ def create_diskarray(path, shape, dtype='float64', fill=None, fillfunc=None,
     """
     gen = _fillgenerator(shape=shape, dtype=dtype, fill=fill,
                          fillfunc=fillfunc, chunklen=chunklen)
-    return asdiskarray(path=path, array=gen, accessmode=accessmode,
-                       metadata=metadata, overwrite=overwrite)
+    return asdarray(path=path, array=gen, accessmode=accessmode,
+                    metadata=metadata, overwrite=overwrite)
 
 
-def delete_diskarray(da):
+def delete_darray(da):
     """
-    Delete DiskArray data from disk.
+    Delete darray data from disk.
     
     Parameters
     ----------
-    da: DiskArray or str or pathlib.Path
-        The DiskArray object to be deleted or file system path to it.
+    da: dArray or str or pathlib.Path
+        The darray object to be deleted or file system path to it.
 
     """
     try:
-        if not isinstance(da, DiskArray):
-            da = DiskArray(da)
+        if not isinstance(da, dArray):
+            da = dArray(da)
     except Exception:
-        raise TypeError(f"'{da}' not recognized as a DiskArray")
+        raise TypeError(f"'{da}' not recognized as a dArray")
     da.check_arraywriteable()
     for fn in da._filenames:
         path = da.path.joinpath(fn)
@@ -1305,53 +1305,53 @@ def delete_diskarray(da):
     try:
         da._path.rmdir()
     except OSError:
-        print(f"Error: could not fully delete diskarray directory "
+        print(f"Error: could not fully delete darray directory "
               f"'{da.path}'. It may contain additional files that are not "
-              f"part of the diskarray. If so, these should be removed "
+              f"part of the darray. If so, these should be removed "
               f"manually.")
         raise
 
 
-def truncate_diskarray(da, index):
-    """Truncate DiskArray data.
+def truncate_darray(da, index):
+    """Truncate darray data.
 
     Parameters
     ----------
-    da: DiskArray or str or pathlib.Path
-        The DiskArray object to be truncated or file system path to it.
+    da: darray or str or pathlib.Path
+        The darray object to be truncated or file system path to it.
     index: int
-        The index along the first axis at which the diskarray should be
+        The index along the first axis at which the darray should be
         truncated. Negative indices can be used but the resulting length of
-        the truncated diskarray should be larger than 0 and smaller than the
+        the truncated darray should be larger than 0 and smaller than the
         current length.
 
     Examples
     --------
-    >>> import diskarray as da
+    >>> import darray as da
     >>> fillfunc = lambda i: i
-    >>> a = da.create_diskarray('testarray.da', shape=(5,2), fillfunc=fillfunc)
+    >>> a = da.create_darray('testarray.da', shape=(5,2), fillfunc=fillfunc)
     >>> a
-    diskarray([[ 0.,  0.],
+    darray([[ 0.,  0.],
                [ 1.,  1.],
                [ 2.,  2.],
                [ 3.,  3.],
                [ 4.,  4.]]) (r+)
-    >>> da.truncate_diskarray(a, 3)
+    >>> da.truncate_darray(a, 3)
     >>> a
-    diskarray([[ 0.,  0.],
+    darray([[ 0.,  0.],
                [ 1.,  1.],
                [ 2.,  2.]]) (r+)
-    >>> da.truncate_diskarray(a, -1)
+    >>> da.truncate_darray(a, -1)
     >>> a
-    diskarray([[ 0.,  0.],
+    darray([[ 0.,  0.],
                [ 1.,  1.]]) (r+)
 
     """
     try:
-        if not isinstance(da, DiskArray):
-            da = DiskArray(da)
+        if not isinstance(da, dArray):
+            da = dArray(da)
     except Exception:
-        raise TypeError(f"'{da}' not recognized as a DiskArray")
+        raise TypeError(f"'{da}' not recognized as a darray")
     da.check_arraywriteable()
     if not isinstance(index, int):
         raise TypeError(f"'index' should be an int (is {type(index)})")
@@ -1487,7 +1487,7 @@ def readcodenumpymemmap(typedescr, shape, arrayorder, **kwargs):
 
 
 def readcodematlab(typedescr, shape, endianness, **kwargs):
-    shape = list(shape)[::-1]  # DiskArray is always C order, Matlab is F order
+    shape = list(shape)[::-1]  # darray is always C order, Matlab is F order
     size = np.product(shape)
     ndim = len(shape)
     ct = "fileid = fopen('arrayvalues.bin');\n"
@@ -1504,7 +1504,7 @@ def readcodematlab(typedescr, shape, endianness, **kwargs):
 
 def readcoder(typedescr, shape, endianness, **kwargs):
     # typedecr is a dict, with 'what', 'size' and 'n' keys
-    shape = shape[::-1]  # DiskArray is always C order, R is F order
+    shape = shape[::-1]  # darray is always C order, R is F order
     n = np.product(shape)
     ct = 'fileid = file("arrayvalues.bin", "rb")\n' \
          'a = readBin(con=fileid, what={what}, n={n}, size={size}, ' \
@@ -1518,7 +1518,7 @@ def readcoder(typedescr, shape, endianness, **kwargs):
 def readcodejulia(typedescr, shape, endianness, **kwargs):
     # this does not work if numtype is complex and byteorder is different on
     # reading machine, will generate an error, so we accept this.
-    shape = shape[::-1]  # DiskArray is always C order, Julia is F order
+    shape = shape[::-1]  # darray is always C order, Julia is F order
     return f'fileid = open("arrayvalues.bin","r");\n' \
            f'a = map({endianness}, read(fileid, {typedescr}, {shape}));\n' \
            f'close(fileid);\n'
@@ -1574,7 +1574,7 @@ def promptify_codetxt(codetxt, prompt=">>> "):
     return "\n".join([f"{prompt}{l}" for l in codetxt.splitlines()]) + '\n'
 
 
-def diskarrayreadmetxt(da):
+def darrayreadmetxt(da):
     s = formatdescriptiontxt(da)
     s += "Example code for reading the data\n" \
          "=================================\n\n"

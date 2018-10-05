@@ -5,7 +5,7 @@ import unittest
 from contextlib import contextmanager
 from numpy.testing import assert_equal, assert_array_equal
 
-from diskarray.array import asdiskarray, create_diskarray, numtypes
+from darray.array import asdarray, create_darray, numtypes
 
 
 @contextmanager
@@ -26,7 +26,7 @@ def tempdir(dirname='.', keep=False, report=False):
 
 def check_arrayequaltoasdiskarray(ndarray):
     with tempdir() as dirname:
-        dar = asdiskarray(path=dirname, array=ndarray, overwrite=True)
+        dar = asdarray(path=dirname, array=ndarray, overwrite=True)
         assert_array_equal(dar[:], ndarray)
         assert_equal(dar.dtype, ndarray.dtype)
         assert_equal(dar.shape, ndarray.shape)
@@ -34,9 +34,9 @@ def check_arrayequaltoasdiskarray(ndarray):
 def check_arrayequaltocreatediskarray(ndarray, shape, dtype=None,
                                       chunklen=None):
     with tempdir() as dirname:
-        dar = create_diskarray(path=dirname, shape=shape,
-                               dtype=dtype, chunklen=chunklen,
-                               overwrite=True)
+        dar = create_darray(path=dirname, shape=shape,
+                            dtype=dtype, chunklen=chunklen,
+                            overwrite=True)
         assert_array_equal(ndarray, dar[:])
         if ndarray.dtype != dar.dtype:
             raise TypeError(f'dtypes are different ({ndarray.dtype} vs '
@@ -145,8 +145,8 @@ class IterView(unittest.TestCase):
 
     def test_defaultparams_fit(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(12,),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(12,),
+                                dtype='int64', overwrite=True)
             l = [c for c in dar.iterview(chunklen=2)]
             assert_equal(len(l), 6)
             assert_array_equal(np.concatenate(l), dar[:])
@@ -155,8 +155,8 @@ class IterView(unittest.TestCase):
 
     def test_remainderfalse_fit(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(12,),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(12,),
+                                dtype='int64', overwrite=True)
             l = [c for c in dar.iterview(chunklen=2, include_remainder=False)]
             assert_equal(len(l), 6)
             assert_array_equal(np.concatenate(l), dar[:])
@@ -165,8 +165,8 @@ class IterView(unittest.TestCase):
 
     def test_defaultparams_nofit(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(13,),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(13,),
+                                dtype='int64', overwrite=True)
             l = [c for c in dar.iterview(chunklen=2)]
             assert_equal(len(l), 7)
             assert_array_equal(np.concatenate(l), dar[:])
@@ -175,8 +175,8 @@ class IterView(unittest.TestCase):
 
     def test_remainderfalse_nofit(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(13,),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(13,),
+                                dtype='int64', overwrite=True)
             l = [c for c in
                  dar.iterview(chunklen=2, include_remainder=False)]
             assert_equal(len(l), 6)
@@ -189,16 +189,16 @@ class AppendData(unittest.TestCase):
 
     def test_appendlist1d(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(2,),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(2,),
+                                dtype='int64', overwrite=True)
             dar.append([1,2])
             dar.append([3])
             assert_array_equal(np.array([0,0,1,2,3], dtype='int64'), dar[:])
 
     def test_appendlist2d(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(2,3),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(2, 3),
+                                dtype='int64', overwrite=True)
             dar.append([[1,2,3]])
             dar.append([[1,2,3],[4,5,6]])
             assert_array_equal(np.array([[0,0,0],[0,0,0],[1,2,3],[1,2,3],
@@ -206,15 +206,15 @@ class AppendData(unittest.TestCase):
 
     def test_appendtoempty1d(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(0,),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(0,),
+                                dtype='int64', overwrite=True)
             dar.append([1, 2, 3])
             assert_array_equal(np.array([1, 2, 3], dtype='int64'), dar[:])
 
     def test_appendtoempty2d(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(0,2),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(0, 2),
+                                dtype='int64', overwrite=True)
             dar.append([[1,2]])
             dar.append([[1,2],[3,4]])
             assert_array_equal(np.array([[1,2],[1,2],[3,4]], dtype='int64'),
@@ -222,29 +222,29 @@ class AppendData(unittest.TestCase):
 
     def test_appendempty1d(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(1,),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(1,),
+                                dtype='int64', overwrite=True)
             dar.append([])
             assert_array_equal(np.array([0], dtype='int64'), dar[:])
 
     def test_appendempty2d(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(1,2),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(1, 2),
+                                dtype='int64', overwrite=True)
             dar.append(np.zeros((0,2), dtype='int64'))
             assert_array_equal(np.array([[0,0]], dtype='int64'), dar[:])
 
     def test_appendemptytoempty1d(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(0,),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(0,),
+                                dtype='int64', overwrite=True)
             dar.append([])
             assert_array_equal(np.array([], dtype='int64'), dar[:])
 
     def test_appendemptytoempty2d(self):
         with tempdir() as dirname:
-            dar = create_diskarray(path=dirname, shape=(0,2),
-                                   dtype='int64', overwrite=True)
+            dar = create_darray(path=dirname, shape=(0, 2),
+                                dtype='int64', overwrite=True)
             dar.append(np.zeros((0, 2), dtype='int64'))
             assert_array_equal(np.zeros((0,2), dtype='int64'), dar[:])
 
