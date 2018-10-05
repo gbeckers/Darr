@@ -21,6 +21,6 @@ Deleting diskarrays
 .. autofunction:: diskarray.delete_diskarray
 
 Truncating diskarrays
--------------------
+---------------------
 
 .. autofunction:: diskarray.truncate_diskarray

@@ -92,7 +92,7 @@ these will not be removed and an OSError is raised. Default is <cite>False</cite
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-func docutils literal"><span class="pre">create_diskarray()</span></code></dt>
+<dt><a class="reference internal" href="#diskarray.create_diskarray" title="diskarray.create_diskarray"><code class="xref py py-func docutils literal"><span class="pre">create_diskarray()</span></code></a></dt>
 <dd>create a DiskArray from scratch.</dd>
 </dl>
 </div>
@@ -130,11 +130,11 @@ be a directory containing multiple files.</li>
 <li><strong>fill</strong> (<em>number</em><em>, </em><em>optional</em>) – The value used to fill the array with. Default is <cite>None</cite>, which will
 lead to the array being filled with zeros.</li>
 <li><strong>fillfunc</strong> (<em>function</em><em>, </em><em>optional</em>) – A function that generates the fill values, potentially on the basis of
-the index numbers of axis 0. This function should only have one
-argument, which will be automatically provided during filling and
-which represents the index numbers along axis 0 for all dimensions (see
-example below). If <cite>fillfunc</cite> is provided, <cite>fill</cite> should be <cite>None</cite>.
-And vice versa. Default is None.</li>
+the index numbers of the first axis of the array. This function should
+only have one argument, which will be automatically provided during
+filling and which represents the index numbers along the first axis for
+all dimensions (see example below). If <cite>fillfunc</cite> is provided, <cite>fill</cite>
+should be <cite>None</cite>.  And vice versa. Default is None.</li>
 <li><strong>accessmode</strong> (&lt;<cite>r</cite>, <cite>r+</cite>&gt;, optional) – File access mode of the disk array data. <cite>r</cite> means real-only, <cite>r+</cite>
 means read-write, i.e. values can be changed. Default <cite>r</cite>.</li>
 <li><strong>chunklen</strong> (<em>&lt;int</em><em>, </em><em>None&gt;</em>) – The length of chunks (along first axis) that are written during
@@ -159,7 +159,7 @@ Default is <cite>False</cite>.</li>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-func docutils literal"><span class="pre">asdiskarray()</span></code></dt>
+<dt><a class="reference internal" href="#diskarray.asdiskarray" title="diskarray.asdiskarray"><code class="xref py py-func docutils literal"><span class="pre">asdiskarray()</span></code></a></dt>
 <dd>create a DiskArray from existing array-like object or generator.</dd>
 </dl>
 </div>
@@ -544,7 +544,7 @@ means read-write.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>da</strong> (<a class="reference internal" href="#diskarray.DiskArray" title="diskarray.DiskArray"><em>DiskArray</em></a><em> or </em><em>str</em><em> or </em><em>pathlib.Path</em>) – The DiskArray object to be deleted or file system path to it.</li>
+<li><strong>da</strong> (<a class="reference internal" href="#diskarray.DiskArray" title="diskarray.DiskArray"><em>DiskArray</em></a><em> or </em><em>str</em><em> or </em><em>pathlib.Path</em>) – The DiskArray object to be truncated or file system path to it.</li>
 <li><strong>index</strong> (<em>int</em>) – The index along the first axis at which the diskarray should be
 truncated. Negative indices can be used but the resulting length of
 the truncated diskarray should be larger than 0 and smaller than the
@@ -611,7 +611,7 @@ current length.</li>
       &copy;2018, Gabriel Beckers.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
