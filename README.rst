@@ -2,6 +2,10 @@
 DiskArray
 =========
 
+.. image:: https://travis-ci.org/gjlbeckers-uu/DiskArray.svg?branch=master
+   :target: https://travis-ci.org/gjlbeckers-uu/DiskArray
+
+
 DiskArray is a Python library for storing numeric data arrays in a format
 that is as open and simple as possible. It is primarily designed for
 scientific use cases, when accessibility of data is of fundamental
