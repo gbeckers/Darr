@@ -1318,7 +1318,7 @@ def truncate_diskarray(da, index):
     Parameters
     ----------
     da: DiskArray or str or pathlib.Path
-        The DiskArray object to be deleted or file system path to it.
+        The DiskArray object to be truncated or file system path to it.
     index: int
         The index along the first axis at which the diskarray should be
         truncated. Negative indices can be used but the resulting length of
