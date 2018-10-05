@@ -20,7 +20,7 @@ terms.
 
 Version: 0.1
 
-DiskFile is BSD licensed (BSD 3-Clause License).
+DiskArray is BSD licensed (BSD 3-Clause License).
 (c) 2018, Gabriël Beckers
 
 .. contents::
