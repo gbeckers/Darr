@@ -441,5 +441,5 @@ To run the test suite:
 .. _pyfbf: https://github.com/davidh-ssec/pyfbf
 .. _HDF5: https://www.hdfgroup.org/
 .. _blog of Cyrille Rossant: http://cyrille.rossant.net/moving-away-hdf5/
-.. _issue: https://github.com/gjlbeckers-uu/DiskArray/issue
-.. _pull: https://github.com/gjlbeckers-uu/DiskArray/pull
+.. _issue: https://github.com/gjlbeckers-uu/DiskArray/issues
+.. _pull: https://github.com/gjlbeckers-uu/DiskArray/pulls
