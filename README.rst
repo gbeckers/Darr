@@ -51,7 +51,7 @@ Pro's:
 - **Minimal dependencies**, only `NumPy`_.
 - **Small** library. Just one module file that can be easily included in your
   own code if you want to avoid dependence on external libraries.
-- **Integrates easily** with `Dask`_ or the `NumExpr`_ libraries for **numeric
+- **Integrates easily** with the `Dask`_ or `NumExpr`_ libraries for **numeric
   computation on very large diskarrays**.
 
 Con's:
