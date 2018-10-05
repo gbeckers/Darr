@@ -5,23 +5,23 @@ DiskArray
 DiskArray is a Python library for storing numeric data arrays in a format
 that is as open and simple as possible. It is primarily designed for
 scientific use cases, when accessibility of data is of fundamental
-importance. But of course there are other situations it which it can be useful.
-
-DiskArray avoids tool- or library-specific data formats, aiming to make your
-numeric data easily readable by others, or by yourself in the distant future
-when you will likely use other data tools. In addition to storing the data
-in an accessible way, it saves a clear text description of how exactly the
-data is stored, and provides example code to read the data in a variety of
-current analysis tools.
-
-Further, DiskArray provides easy and fast memory-mapped read/write access
+importance. It also provides easy and fast memory-mapped read/write access
 to such disk-based data, using `NumPy indexing`_, and allows for the
 flexible use of metadata.
+
+To avoid tool- or library-specific data formats, DiskArray is exclusively
+based on self-explaining flat binary and text files. It automatically
+generates and saves a clear text description of how exactly the
+data is stored, and provides example code to read the specific data in a
+variety of current scientific data tools.
 
 DiskArray is open source and freely available under the `New BSD License`_
 terms.
 
 Version: 0.1
+
+DiskFile is BSD licensed (BSD 3-Clause License).
+(c) 2018, Gabriël Beckers
 
 .. contents::
 
@@ -56,12 +56,12 @@ Cons
 
 - **No compression**. This to keep things as simple and accessible as
   possible. For archiving the data, you can of course simply compress the file
-  with any compression tool you see fit.
+  with any compression tool if you wish.
 - **Multiple files**. The data, the data description, and the metadata are
   stored in separate files, though all within a single directory.
 - **Inefficient for very small arrays**. Do use other approaches if you have
   a zillion small arrays. A DiskArrayList is being developed to deal with
-  the latter, but it is still experimental.
+  the latter, but it is still very experimental.
 
 
 
@@ -398,18 +398,19 @@ Requirements
 
 DiskArray requires Python 3.6+ and NumPy.
 
-Development
------------
+Development and Contributing
+----------------------------
 
-This library is developed by Gabriël Beckers at Utrecht University. Any
-help / suggestions / ideas are welcome and appreciated.
+This library is developed by Gabriël Beckers. Any help / suggestions / ideas
+/ contributions are very welcome and appreciated. For any comment, question,
+or error, please open an `issue`_ or propose a `pull`_ request on GitHub.
 
 Code can be found on GitHub: https://github.com/gjlbeckers-uu/DiskArray
 
 Testing
 -------
 
-A framework is in place to test for correct operation.
+To run the test suite:
 
 .. code-block:: python
 
@@ -421,7 +422,6 @@ A framework is in place to test for correct operation.
 
     OK
     <unittest.runner.TextTestResult run=28 errors=0 failures=0>
-
 
 
 
@@ -441,3 +441,5 @@ A framework is in place to test for correct operation.
 .. _pyfbf: https://github.com/davidh-ssec/pyfbf
 .. _HDF5: https://www.hdfgroup.org/
 .. _blog of Cyrille Rossant: http://cyrille.rossant.net/moving-away-hdf5/
+.. _issue: https://github.com/gjlbeckers-uu/DiskArray/issue
+.. _pull: https://github.com/gjlbeckers-uu/DiskArray/pull
