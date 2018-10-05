@@ -23,13 +23,14 @@ Version: 0.1
 DiskArray is BSD licensed (BSD 3-Clause License).
 (c) 2018, Gabriël Beckers
 
-.. contents::
+
+.. contents:: Contents
+    :depth: 1
 
 
 Features
 --------
-Pros
-****
+Pro's:
 
 - Very **simple data format** based on **flat binary** and **text**
   files. This maximizes readability by other software and analysis tools,
@@ -50,9 +51,10 @@ Pros
 - **Minimal dependencies**, only `NumPy`_.
 - **Small** library. Just one module file that can be easily included in your
   own code if you want to avoid dependence on external libraries.
+- **Integrates easily** with `Dask`_ or the `NumExpr`_ libraries for **numeric
+  computation on very large diskarrays**.
 
-Cons
-****
+Con's:
 
 - **No compression**. This to keep things as simple and accessible as
   possible. For archiving the data, you can of course simply compress the file
