@@ -73,28 +73,25 @@ Con's:
 Examples
 --------
 
-**Creating dArray from NumPy array**
+**Creating a darray**
 
 .. code-block:: python
 
-    >>> import numpy as np
     >>> import darray as da
-    >>> ar = np.ones(2,1024)
-    >>> ar
-    array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
-           [ 1.,  1.,  1., ...,  1.,  1.,  1.]])
-    >>> dar = da.asdarray('ar1.da', ar)
-    >>> dar
-    dArray([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
-               [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
+    >>> a = da.create_darray('a1.da', shape=(2,1024))
+    >>> a
+    >>> darray([[0., 0., 0., ..., 0., 0., 0.],
+                   [0., 0., 0., ..., 0., 0., 0.]]) (r+)
 
+The default is to fill the array with zeros (of type float64) but this can
+be changed by the  'fill' and 'fillfunc' parameters. See the :doc:`api`.
 
-The data is now stored on disk in a directory named 'ar.da', containing a
+The data is now stored on disk in a directory named 'ar1.da', containing a
 flat binary file ('arrayvalues.bin') and a human-readble `JSON`_ text file
 ('arraydescription.json'), with information on the array dimensionality,
 layout and numeric type. It also contains a 'README.txt' file explaining the
- data format as well as providing instructions on how to read the array
- using other tools. For example, it provides the code to read the array in
+data format as well as providing instructions on how to read the array
+using other tools. For example, it provides the code to read the array in
 `Octave`_/Matlab:
 
 
@@ -121,99 +118,103 @@ Or in `Julia`_:
     x = map(ltoh, read(fid, Float64, (1024, 2)));
     close(fid);
 
+
+**Different numeric type**
+
+.. code-block:: python
+
+    >>> a = da.create_darray('a2.da', shape=(2,1024), dtype='uint8')
+    >>> a
+    darray([[0, 0, 0, ..., 0, 0, 0],
+               [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
+
+**Creating darray from NumPy array**
+
+.. code-block:: python
+
+    >>> import numpy as np
+    >>> na = np.ones((2,1024))
+    >>> a = da.asdarray('a3.da', na)
+    >>>
+    darray([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
+                [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
+
 **Reading data**
 
-The disk-based array is memory-mapped and can be used to read data using NumPy
+The disk-based array is memory-mapped and can be used to read data into
+RAM using NumPy
 indexing.
 
 .. code-block:: python
 
-    >>> dar[:,-2]
+    >>> a[:,-2]
     array([ 1.,  1.])
 
-Note that reading data through indexing creates a NumPy array. The dArray
-itself is not a NumPy array. For computation, read (or view, see below) the
-data, using indexing, first:
+Note that creates a NumPy array. The darray itself is not a NumPy array, nor
+does it behave like one except for indexing. The simples way to use the
+data for computation is to, read (or view, see below) the data first as a
+NumPy array:
 
 .. code-block:: python
 
-    >>> 2 * dar[:]
+    >>> 2 * a[:]
     array([[2., 2., 2., ..., 2., 2., 2.],
            [2., 2., 2., ..., 2., 2., 2.]])
 
-If your dArray is too large to read into RAM, you could use the `Dask`_ or
+If your data is too large to read into RAM, you could use the `Dask`_ or
 the `NumExpr`_ library for computation (see example below).
-
 
 **Writing data**
 
 Writing is also done through NumPy indexing. Writing directly leads to
 changes on disk. Our example array is read-only because we did not specify
-otherwise in the 'asdArray' function above, so we'll set it to be writable
+otherwise in the 'asdarray' function above, so we'll set it to be writable
 first:
 
 .. code-block:: python
 
-    >>> dar.set_accessmode('r+')
-    >>> dar[:,1] = 2.
-    >>> dar
-    dArray([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
-               [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
+    >>> a.set_accessmode('r+')
+    >>> a[:,1] = 2.
+    >>> a
+    darray([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
+                [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
 
 Of course, you could have done that with the NumPy array before converting
-it to a dArray, but working with a memory-mapped array on disk can be
+it to a darray, but writing to a memory-mapped array on disk can be
 advantageous when arrays are very large.
 
 **Efficient I/O**
 
 To get maximum speed when doing multiple operations open a direct view on
-the disk-based array:
+the disk-based array so as to opens the underlying files only once:
 
 .. code-block:: python
 
-    >>> with dar.view() as v:
+    >>> with a.view() as v:
     ...     v[0,0] = 3.
     ...     v[0,2] = 4.
     ...     v[1,[0,2,-1]] = 5.
-    >>> dar
-    dArray([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
-               [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
-
-If not opened explicitly like this, every read and write operation will
-under the hood open and close the underlying file(s) when necessary, making
-it potentially slower.
-
-**Creating dArray from scratch**
-
-dArrays can also be created de novo. We now choose a different numeric type:
-
-.. code-block:: python
-
-    >>> dar2 = da.create_darray('ar2.da', shape=(2,1024), dtype='uint8')
-    >>> dar2
-    dArray([[0, 0, 0, ..., 0, 0, 0],
-               [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
-
-The default is to fill the array with zeros but the 'fill' parameter can
-change this value. There is also a 'fillfunc' parameter to fill the array non-
-uniformly, in more complex ways. See the :doc:`api`.
+    >>> a
+    darray([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
+                [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
 
 **Appending data**
 
-You can easily append data to a dArray, which is immediately reflected in
+You can easily append data to a darray, which is immediately reflected in
 the disk-based files. This is big plus in many situations. Think for example
-of saving data as it is generated by an instrument. A restriction is that
-you can only append to the first axis:
+of saving data as they are generated by an instrument. A restriction is
+that you can only append to the first axis:
 
 .. code-block:: python
 
-    >>> dar2.append(np.ones((3,1024)))
-    >>> dar2
-    dArray([[0, 0, 0, ..., 0, 0, 0],
-               [0, 0, 0, ..., 0, 0, 0],
-               [1, 1, 1, ..., 1, 1, 1],
-               [1, 1, 1, ..., 1, 1, 1],
-               [1, 1, 1, ..., 1, 1, 1]], dtype=uint8) (r+)
+    >>> a.append(np.ones((3,1024)))
+    >>> a
+    darray([[3., 2., 4., ..., 1., 1., 1.],
+               [5., 2., 5., ..., 1., 1., 5.],
+               [1., 1., 1., ..., 1., 1., 1.],
+               [1., 1., 1., ..., 1., 1., 1.],
+               [1., 1., 1., ..., 1., 1., 1.]]) (r+)
+
 
 The associated 'README.txt' and 'arraydescription.json' texts files are also
  automatically updated to reflect these changes. There is an 'iterappend'
@@ -223,14 +224,15 @@ The associated 'README.txt' and 'arraydescription.json' texts files are also
 
 .. code-block:: python
 
-    >>> dar3 = dar2.copy('ar3.da')
-    >>> dar4 = dar2.copy('ar4.da', dtype='float16')
-    >>> dar4
-    dArray([[ 0.,  0.,  0., ...,  0.,  0.,  0.],
-               [ 0.,  0.,  0., ...,  0.,  0.,  0.],
-               [ 1.,  1.,  1., ...,  1.,  1.,  1.],
-               [ 1.,  1.,  1., ...,  1.,  1.,  1.],
-               [ 1.,  1.,  1., ...,  1.,  1.,  1.]], dtype=float16) (r)
+    >>> ac = a.copy('ac.da')
+    >>> acf16 = a.copy('acf16.da', dtype='float16')
+    >>> acf16
+    darray([[3., 2., 4., ..., 1., 1., 1.],
+               [5., 2., 5., ..., 1., 1., 5.],
+               [1., 1., 1., ..., 1., 1., 1.],
+               [1., 1., 1., ..., 1., 1., 1.],
+               [1., 1., 1., ..., 1., 1., 1.]], dtype=float16) (r)
+
 
 Note that the type of the array can be changed when copying. Data is copied
 in chunks, so very large arrays will not flood RAM memory.
@@ -238,37 +240,38 @@ in chunks, so very large arrays will not flood RAM memory.
 
 **Larger than memory computation**
 
-For computing with very large dArrays, I recommend the `Dask`_ library,
-which works nicely with dArray. I'll base the example on a small array
+For computing with very large darrays, I recommend the `Dask`_ library,
+which works nicely with darray. I'll base the example on a small array
 though:
 
 .. code-block:: python
 
     >>> import dask.array
-    >>> dar5 = da.create_darray('ar5.da', shape=(1024**2), fill=2.5)
-    >>> dar5
-    dArray([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
-    >>> a = dask.array.from_array(dar5, chunks=(512))
-    >>> ((a + 1) / 2).store(dar5)
-    >>> dar5
-    dArray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
+    >>> a = da.create_darray('ar1.da', shape=(1024**2), fill=2.5, overwrite=True)
+    >>> a
+    darray([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
+    >>> dara = dask.array.from_array(a, chunks=(512))
+    >>> ((dara + 1) / 2).store(a)
+    >>> a
+    darray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
-So in this case we overwrote the data in dar5 with the results of the computation,
-but we could have stored the result in a different dArray of the same shape. Dask
-can do more powerful things, for which I refer to the `Dask documentation`_. The
-point here is that dArrays can be both sources and stores for Dask.
+So in this case we overwrote the data in a with the results of the computation,
+but we could have stored the result in a different darray of the same shape.
+Dask can do more powerful things, for which I refer to the
+`Dask documentation`_. The point here is that darrays can be both sources
+and stores for Dask.
 
-Alternatively, you can use the `NumExpr`_ library using a view of the dArray,
+Alternatively, you can use the `NumExpr`_ library using a view of the darray,
 like so:
 
 .. code-block:: python
 
     >>> import numexpr as ne
-    >>> dar6 = da.create_darray('ar6.da', shape=(1024**2), fill=2.5)
-    >>> with dar6.view() as v:
+    >>> a = da.create_darray('a3.da', shape=(1024**2), fill=2.5)
+    >>> with a.view() as v:
     ...     ne.evaluate('(v + 1) / 2', out=v)
-    >>> dar6
-    dArray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
+    >>> a
+    darray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
 **Metadata**
 
@@ -277,24 +280,23 @@ changes in a human-readable JSON text file that holds the metadata on disk.
 
 .. code-block:: python
 
-    >>> dar2.metadata
+    >>> a.metadata
     {}
-    >>> dar2.metadata['samplingrate'] = 1000.
-    >>> dar2.metadata
+    >>> a.metadata['samplingrate'] = 1000.
+    >>> a.metadata
     {'samplingrate': 1000.0}
-    >>> dar2.metadata.update({'starttime': '12:00:00', 'electrodes': [2, 5]})
-    >>> dar2.metadata
+    >>> a.metadata.update({'starttime': '12:00:00', 'electrodes': [2, 5]})
+    >>> a.metadata
     {'electrodes': [2, 5], 'samplingrate': 1000.0, 'starttime': '12:00:00'}
-    >>> dar2.metadata['starttime'] = '13:00:00'
-    >>> dar2.metadata
+    >>> a.metadata['starttime'] = '13:00:00'
+    >>> a.metadata
     {'electrodes': [2, 5], 'samplingrate': 1000.0, 'starttime': '13:00:00'}
-    >>> del dar2.metadata['starttime']
-    dar2.metadata
+    >>> del a.metadata['starttime']
+    a.metadata
     {'electrodes': [2, 5], 'samplingrate': 1000.0}
 
-
 When making multiple changes it is more efficient to use the 'update' method
- to make them all at once, as shown above.
+to make them all at once, as shown above.
 
 Since JSON is used to store the metadata, you cannot store arbitrary python
 objects. You can only store:
