@@ -609,17 +609,17 @@ class dArray(BaseDataDir):
             yield memmap
 
     def _read_arraydescr(self):
-        requiredkeys = {'numtype', 'shape', 'arrayorder', 'version'}
+        requiredkeys = {'numtype', 'shape', 'arrayorder', 'darrayversion'}
         try:
             d = self._read_jsondict(filename=self._arraydescrfilename,
                                     requiredkeys=requiredkeys)
         except Exception:
             raise IOError(f"Could not read array description from "
                           f"'{self._arraydescrfilename}'")
-        vfile = distutils.version.StrictVersion(d['version'])
+        vfile = distutils.version.StrictVersion(d['darrayversion'])
         vlib = distutils.version.StrictVersion(self._formatversion)
         if not vlib >= vfile:
-            raise ValueError(f"Format version of file ({d['version']}) "
+            raise ValueError(f"Format version of file ({d['darrayversion']}) "
                              f"is too new. The installed dArray "
                              f"library only handles up to version "
                              f"{self._formatversion}; please update")
@@ -1148,7 +1148,7 @@ def asdarray(path, array, dtype=None, accessmode='r',
                       "be C_CONTIGUOUS")
         datainfo['arrayorder'] = 'C'
     datainfo['shape'] = shape
-    datainfo['version'] = dArray._formatversion
+    datainfo['darrayversion'] = dArray._formatversion
     bd._write_jsondict(filename=dArray._arraydescrfilename,
                        d=datainfo, overwrite=overwrite)
     metadatapath = path.joinpath(dArray._metadatafilename)
