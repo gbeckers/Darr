@@ -135,7 +135,7 @@ Or in `Julia`_:
     >>> import numpy as np
     >>> na = np.ones((2,1024))
     >>> a = da.asdarray('a3.da', na)
-    >>>
+    >>> a
     darray([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
             [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
 
