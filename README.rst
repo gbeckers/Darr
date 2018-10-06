@@ -1,23 +1,23 @@
-=========
+======
 dArray
-=========
+======
 
 .. image:: https://travis-ci.org/gjlbeckers-uu/dArray.svg?branch=master
    :target: https://travis-ci.org/gjlbeckers-uu/dArray
 
 
-dArray is a Python library for storing numeric data arrays in a format
-that is as open and simple as possible. It is primarily designed for
-scientific use cases, when accessibility of data is of fundamental
-importance. It also provides easy and fast memory-mapped read/write access
-to such disk-based data, using `NumPy indexing`_, and allows for the
+dArray is a Python library for storing numeric data arrays in a format that
+is as open and simple as possible. It is primarily designed for scientific
+use cases, when accessibility of data is of fundamental importance. It also
+provides easy and fast memory-mapped read/write access to such disk-based
+data, using `NumPy indexing`_, and allows for the
 flexible use of metadata.
 
-To avoid tool- or library-specific data formats, dArray is exclusively
-based on self-explaining flat binary and text files. It automatically
-generates and saves a clear text description of how exactly the
-data is stored, and provides example code to read the specific data in a
-variety of current scientific data tools.
+To avoid tool- or library-specific data formats, dArray is exclusively based
+on self-explaining flat binary and text files. It automatically generates
+and saves a clear text description of how exactly the data is stored, and
+provides example code to read the specific data in a variety of current
+scientific data tools.
 
 dArray is open source and freely available under the `New BSD License`_
 terms.
@@ -36,19 +36,19 @@ Features
 --------
 Pro's:
 
-- Very **simple data format** based on **flat binary** and **text**
-  files. This maximizes readability by other software and analysis tools,
-  now and in many years to come.
+- Very **simple data format** based on **flat binary** and **text** files.
+  This maximizes readability by other software and analysis tools, now and
+  in many years to come.
 - Numeric data is accessed through a **memory-mapped** file, allowing for
   direct access to **very large data arrays**, even larger than available RAM
   memory.
 - Data is selected for reading/writing through **NumPy indexing** (see
   `here`_) and is easily **appendable**.
-- **Human-readable explanation of how the binary data is stored** is saved
-  in a README text file, which also contains **examples of how to read the
+- **Human-readable explanation of how the binary data is stored** is saved in
+  a README text file, which also contains **examples of how to read the
   specific array data in a few lines of code** in popular analysis environments
-  such as Python (without dArray), R, Julia, Octave/Matlab, GDL/IDL,
-  and Mathematica.
+  such as Python (without dArray), R, Julia, Octave/Matlab, GDL/IDL, and
+  Mathematica.
 - **Many numeric types** are supported:  int8, int16, int32, int64, uint8,
   uint16, uint32, uint64, float16, float32, float64, complex64, complex128.
 - Easy use of **metadata**, stored in a separate text file.
@@ -90,12 +90,12 @@ Examples
                [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
 
 
-The data is now stored on disk in a directory named 'ar.da', containing a flat
-binary file ('arrayvalues.bin') and a human-readble
-`JSON`_ text file ('arraydescription.json'), with information on the
-array dimensionality, layout and numeric type. It also contains a 'README.txt' file
-explaining the data format as well as providing instructions on how to read the
-array using other tools. For example, it provides the code to read the array in
+The data is now stored on disk in a directory named 'ar.da', containing a
+flat binary file ('arrayvalues.bin') and a human-readble `JSON`_ text file
+('arraydescription.json'), with information on the array dimensionality,
+layout and numeric type. It also contains a 'README.txt' file explaining the
+ data format as well as providing instructions on how to read the array
+ using other tools. For example, it provides the code to read the array in
 `Octave`_/Matlab:
 
 
@@ -148,9 +148,9 @@ the `NumExpr`_ library for computation (see example below).
 
 **Writing data**
 
-Writing is also done through NumPy indexing. Writing directly leads to changes
-on disk. Our example array is read-only because we did not specify otherwise
-in the 'asdArray' function above, so we'll set it to be writable
+Writing is also done through NumPy indexing. Writing directly leads to
+changes on disk. Our example array is read-only because we did not specify
+otherwise in the 'asdArray' function above, so we'll set it to be writable
 first:
 
 .. code-block:: python
@@ -200,10 +200,11 @@ change this value. There is also a 'fillfunc' parameter to fill the array non-
 uniformly, in more complex ways. See the :doc:`api`.
 
 **Appending data**
+
 You can easily append data to a dArray, which is immediately reflected in
-the disk-based files. This is big plus in many situations. Think for
-example of saving data as it is generated by an instrument. A restriction
-is that you can only append to the first axis:
+the disk-based files. This is big plus in many situations. Think for example
+of saving data as it is generated by an instrument. A restriction is that
+you can only append to the first axis:
 
 .. code-block:: python
 
@@ -215,9 +216,9 @@ is that you can only append to the first axis:
                [1, 1, 1, ..., 1, 1, 1],
                [1, 1, 1, ..., 1, 1, 1]], dtype=uint8) (r+)
 
-The associated 'README.txt' and 'arraydescription.json' texts files are
-also automatically updated to reflect these changes. There is an
-'iterappend' method for efficient serial appending. See the :doc:`api`.
+The associated 'README.txt' and 'arraydescription.json' texts files are also
+ automatically updated to reflect these changes. There is an 'iterappend'
+ method for efficient serial appending. See the :doc:`api`.
 
 **Copying and type casting data**
 
@@ -293,8 +294,8 @@ changes in a human-readable JSON text file that holds the metadata on disk.
     {'electrodes': [2, 5], 'samplingrate': 1000.0}
 
 
-When making multiple changes it is more
-efficient to use the 'update' method to make them all at once, as shown above.
+When making multiple changes it is more efficient to use the 'update' method
+ to make them all at once, as shown above.
 
 Since JSON is used to store the metadata, you cannot store arbitrary python
 objects. You can only store:
@@ -320,36 +321,36 @@ be created and accessed efficiently, also when data sets are large.
 
 dArray tries to address both requirements for numeric data arrays.
 
-It stores the data itself in a flat binary file. This is a future-proof way of
-storing numeric data, as long as clear information is
-provided on how the binary data is organized. Many file formats write such
-information as a header in front of the numeric data. However, that requires the
-reader somehow to know how long the header part of the file is and how to
+It stores the data itself in a flat binary file. This is a future-proof way
+of storing numeric data, as long as clear information is provided on how the
+binary data is organized. Many file formats write such information as a
+header in front of the numeric data. However, that requires the reader
+somehow to know how long the header part of the file is and how to
 interpret it. A header is clearly not the ideal solution when maximizing
 readability, because we want to assume as little a priori knowledge as
 possible.
 
-dArray therefore writes the information about the organization of the data to
-a separate file. In addition to getting rid of the header, this allows us to
-write the information in plain text format. An interesting other approach
-would be to simply embed this information in the name of the binary file,
-see `pyfbf`_. Nevertheless, I prefer providing more comprehensive
+dArray therefore writes the information about the organization of the data
+to a separate file. In addition to getting rid of the header, this allows us
+to write the information in plain text format. An interesting other
+approach would be to simply embed this information in the name of the
+binary file, see `pyfbf`_. Nevertheless, I prefer providing more comprehensive
 information then could realistically fit in a file name.
 
 This approach makes it is easy to read your numeric array data with one or a
 few lines of code, or even with GUI import tools, without depending on the
-dArray library itself. To facilitate this process, dArray saves
-together with the data a README text file that explains the format, and that
+dArray library itself. To facilitate this process, dArray saves together
+with the data a README text file that explains the format, and that
 contains example code of how to read the specific data with common tools
-such as Python/NumPy, R, Julia, MatLab/Octave, and Mathematica. Just copy and
-paste to read the data. Sharing your data is now very easy because
+such as Python/NumPy, R, Julia, MatLab/Octave, and Mathematica. Just copy
+and paste to read the data. Sharing your data is now very easy because
 every array that you save can be simply be provided as such to your
-colleagues. It already contains a text document that explains how to read the
-data, in many cases with minimal effort.
+colleagues. It already contains a text document that explains how to read
+the data, in many cases with minimal effort.
 
 The choice of storing the actual data in a flat binary file may at first
-seem odd given that there exist nice and broadly supported solutions
-for binary scientific data, such as `HDF5`_, which feature access time and
+seem odd given that there exist nice and broadly supported solutions for
+binary scientific data, such as `HDF5`_, which feature access time and
 storage space optimizations. I have used and use HDF5 a lot, and I like it,
 but in my own work I find that in many cases this solution can be too complex
 for my needs. Complexity has costs as well as benefits, and I now only
@@ -358,12 +359,12 @@ not often the case. For an interesting view on this topic I refer to a
 `blog of Cyrille Rossant`_, which is in line with my own experiences.
 
 In addition to saving and reading data in a simple and durable format,
-dArray enables you to accesses the disk-based data in a memory-mapped
-way. Data arrays can thus be very large, larger than available RAM memory,
-and access is fast and efficient, based on `NumPy indexing`_.
+dArray enables you to accesses the disk-based data in a memory-mapped way.
+Data arrays can thus be very large, larger than available RAM memory, and
+access is fast and efficient, based on `NumPy indexing`_.
 
-In terms of usage from a python environment , dArray is very similar
-to using a NumPy memory-mapped `.npy`_ file. The only differences are that the
+In terms of usage from a python environment , dArray is very similar to
+using a NumPy memory-mapped `.npy`_ file. The only differences are that the
 binary data and header info are split over different files to make the data
 more easily readable by other tools, that data can easily be appended,
 and that you can flexibly use and store arbitrary metadata.
@@ -391,12 +392,12 @@ There are of course also disadvantages to this approach.
   3-4 files (depending if you save metadata), at least 2 of which are small
   text files (~150 b - 1.7 kb). This has two disadvantages:
 
-  - It is less ideal when transferring data, for example by email. You may
-    want to archive them into a single file first (zip, tar).
-  - In many file systems, files take up a minimum amount of disk space
-    (normally 512 b - 4 kb) even if the data they contain is not that large.
-    dArray's way of storing data is thus space-inefficient if you have
-    zillions of very small data arrays stored separately.
+- It is less ideal when transferring data, for example by email. You may
+  want to archive them into a single file first (zip, tar).
+- In many file systems, files take up a minimum amount of disk space
+  (normally 512 b - 4 kb) even if the data they contain is not that large.
+  dArray's way of storing data is thus space-inefficient if you have
+  zillions of very small data arrays stored separately.
 
 
 Requirements
@@ -407,9 +408,11 @@ dArray requires Python 3.6+ and NumPy.
 Development and Contributing
 ----------------------------
 
-This library is developed by Gabriël Beckers. Any help / suggestions / ideas
-/ contributions are very welcome and appreciated. For any comment, question,
-or error, please open an `issue`_ or propose a `pull`_ request on GitHub.
+This library is developed by Gabriël Beckers. It is being used in practice
+in the lab, but a formal first release will be done when there are more unit
+tests. Any help / suggestions / ideas / contributions are very welcome and
+appreciated. For any comment, question, or error, please open an `issue`_ or
+propose a `pull`_ request on GitHub.
 
 Code can be found on GitHub: https://github.com/gjlbeckers-uu/dArray
 
