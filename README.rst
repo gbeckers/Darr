@@ -7,16 +7,16 @@ dArray
 
 
 dArray is a Python library for storing numeric data arrays in a format that
-is as open and simple as possible. It is primarily designed for scientific
-use cases, when accessibility of data is of fundamental importance. It also
-provides easy and fast memory-mapped read/write access to such disk-based
-data, using `NumPy indexing`_, and allows for the
-flexible use of metadata.
+is open, simple, and self-explanatory. It also enables fast memory-mapped
+read/write access to such disk-based data, using `NumPy indexing`_, the
+ability to append data, and the flexible use of metadata. It is primarily
+designed for scientific use cases, when long-term and tool-independent
+accessibility of data arrays is of fundamental importance.
 
 To avoid tool- or library-specific data formats, dArray is exclusively based
 on self-explaining flat binary and text files. It automatically generates
-and saves a clear text description of how exactly the data is stored, and
-provides example code to read the specific data in a variety of current
+and saves a clear text description of how exactly the data is stored, as
+well as example code to read the specific data in a variety of current
 scientific data tools.
 
 dArray is open source and freely available under the `New BSD License`_
@@ -61,8 +61,8 @@ Pro's:
 Con's:
 
 - **No compression**. This to keep things as simple and accessible as
-  possible. For archiving the data, you can of course simply compress the file
-  with any compression tool if you wish.
+  possible. For archiving purposes it is of course always possible to simply
+  compress the darray files with a compression tool.
 - **Multiple files**. The data, the data description, and the metadata are
   stored in separate files, though all within a single directory.
 - **Inefficient for very small arrays**. Do use other approaches if you have
