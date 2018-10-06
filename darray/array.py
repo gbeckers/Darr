@@ -1467,8 +1467,8 @@ def formatdescriptiontxt(da):
          f"information.\n\n" \
          f"Format details are also stored in json format in the separate " \
          f"UTF-8 text file, 'arraydescription.json'.\n\n" \
-         f"The file 'metadata.json' contains metadata in json UTF-8 text " \
-         f"format.\n\n"
+         f"If present, the file 'metadata.json' contains metadata in json " \
+         f"UTF-8 text format.\n\n"
     return d
 
 
