@@ -126,7 +126,7 @@ Or in `Julia`_:
     >>> a = da.create_darray('a2.da', shape=(2,1024), dtype='uint8')
     >>> a
     darray([[0, 0, 0, ..., 0, 0, 0],
-               [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
+            [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
 
 **Creating darray from NumPy array**
 
@@ -137,7 +137,7 @@ Or in `Julia`_:
     >>> a = da.asdarray('a3.da', na)
     >>>
     darray([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
-                [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
+            [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
 
 **Reading data**
 
@@ -177,7 +177,7 @@ first:
     >>> a[:,1] = 2.
     >>> a
     darray([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
-                [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
+            [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
 
 Of course, you could have done that with the NumPy array before converting
 it to a darray, but writing to a memory-mapped array on disk can be
@@ -196,7 +196,7 @@ the disk-based array so as to opens the underlying files only once:
     ...     v[1,[0,2,-1]] = 5.
     >>> a
     darray([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
-                [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
+            [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
 
 **Appending data**
 
@@ -210,15 +210,15 @@ that you can only append to the first axis:
     >>> a.append(np.ones((3,1024)))
     >>> a
     darray([[3., 2., 4., ..., 1., 1., 1.],
-               [5., 2., 5., ..., 1., 1., 5.],
-               [1., 1., 1., ..., 1., 1., 1.],
-               [1., 1., 1., ..., 1., 1., 1.],
-               [1., 1., 1., ..., 1., 1., 1.]]) (r+)
+            [5., 2., 5., ..., 1., 1., 5.],
+            [1., 1., 1., ..., 1., 1., 1.],
+            [1., 1., 1., ..., 1., 1., 1.],
+            [1., 1., 1., ..., 1., 1., 1.]]) (r+)
 
 
 The associated 'README.txt' and 'arraydescription.json' texts files are also
- automatically updated to reflect these changes. There is an 'iterappend'
- method for efficient serial appending. See the :doc:`api`.
+automatically updated to reflect these changes. There is an 'iterappend'
+method for efficient serial appending. See the :doc:`api`.
 
 **Copying and type casting data**
 
@@ -228,10 +228,10 @@ The associated 'README.txt' and 'arraydescription.json' texts files are also
     >>> acf16 = a.copy('acf16.da', dtype='float16')
     >>> acf16
     darray([[3., 2., 4., ..., 1., 1., 1.],
-               [5., 2., 5., ..., 1., 1., 5.],
-               [1., 1., 1., ..., 1., 1., 1.],
-               [1., 1., 1., ..., 1., 1., 1.],
-               [1., 1., 1., ..., 1., 1., 1.]], dtype=float16) (r)
+            [5., 2., 5., ..., 1., 1., 5.],
+            [1., 1., 1., ..., 1., 1., 1.],
+            [1., 1., 1., ..., 1., 1., 1.],
+            [1., 1., 1., ..., 1., 1., 1.]], dtype=float16) (r)
 
 
 Note that the type of the array can be changed when copying. Data is copied
