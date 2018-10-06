@@ -1,8 +1,10 @@
 # EXPERIMENTAL! This code is still experimental, and is probably going to
 # change
 
-import numpy as np
 from pathlib import Path
+
+import numpy as np
+
 from .array import BaseDataDir, dArray, MetaData, asdarray, \
     create_basedir, check_accessmode, delete_darray
 

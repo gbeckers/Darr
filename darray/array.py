@@ -10,14 +10,15 @@ data on disk can be accessed through the **dArray** constructor.
 To remove a darray from disk, use **delete_darray**.
 """
 
+import distutils.version
+import hashlib
 import json
+import logging
 import sys
 import warnings
 from contextlib import contextmanager
 from pathlib import Path
-import hashlib
-import distutils.version
-import logging
+
 import numpy as np
 
 logger = logging.getLogger(__name__)
