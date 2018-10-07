@@ -95,7 +95,6 @@ data format as well as providing instructions on how to read the array
 using other tools. For example, it provides the code to read the array in
 `Octave`_/Matlab:
 
-
 .. code-block:: octave
 
     fileid = fopen('arrayvalues.bin');
@@ -118,6 +117,9 @@ Or in `Julia`_:
     fid = open("arrayvalues.bin","r");
     x = map(ltoh, read(fid, Float64, (1024, 2)));
     close(fid);
+
+To see the files that correspond to a darray, see 'examplearray.da' in the
+source `repo`_.
 
 
 **Different numeric type**
@@ -455,3 +457,4 @@ To run the test suite:
 .. _blog of Cyrille Rossant: http://cyrille.rossant.net/moving-away-hdf5/
 .. _issue: https://github.com/gjlbeckers-uu/dArray/issues
 .. _pull: https://github.com/gjlbeckers-uu/dArray/pulls
+.. _repo: https://github.com/gjlbeckers-uu/dArray
