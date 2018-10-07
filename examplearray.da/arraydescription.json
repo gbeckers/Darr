@@ -1,0 +1,10 @@
+{
+    "arrayorder": "C",
+    "byteorder": "little",
+    "darrayversion": "0.1.0",
+    "numtype": "float64",
+    "shape": [
+        2,
+        1024
+    ]
+}
