@@ -316,12 +316,13 @@ Rationale
 ---------
 
 Scientific data should preferably be stored or at least archived in a file
-format that is as simple as possible. This ensures readability by a variety
-of currently used analysis tools (Python, R, Octave/Matlab, Julia, GDL/IDL,
-Mathematic, Igor Pro, etc) as well as future tools. This is in line with the
-principle of openness and facilitates re-use and reproducibility of
-scientific results. At the same time, it would be nice if data files could
-be created and accessed efficiently, also when data sets are large.
+format that is as simple and self-explanatrory. This ensures readability by
+a variety of currently used analysis tools (Python, R, Octave/Matlab, Julia,
+GDL/IDL, Mathematic, Igor Pro, etc) as well as future tools. This is in
+line with the principle of openness and facilitates re-use and
+reproducibility of scientific results. At the same time, it would be nice
+if data files could still be created and accessed efficiently, also when
+data sets are large.
 
 dArray tries to address both requirements for numeric data arrays.
 
@@ -362,11 +363,6 @@ use it when the benefits clearly outweigh the costs, which is sometimes but
 not often the case. For an interesting view on this topic I refer to a
 `blog of Cyrille Rossant`_, which is in line with my own experiences.
 
-In addition to saving and reading data in a simple and durable format,
-dArray enables you to accesses the disk-based data in a memory-mapped way.
-Data arrays can thus be very large, larger than available RAM memory, and
-access is fast and efficient, based on `NumPy indexing`_.
-
 In terms of usage from a python environment , dArray is very similar to
 using a NumPy memory-mapped `.npy`_ file. The only differences are that the
 binary data and header info are split over different files to make the data
@@ -396,12 +392,12 @@ There are of course also disadvantages to this approach.
   3-4 files (depending if you save metadata), at least 2 of whicSh are small
   text files (~150 b - 1.7 kb). This has two disadvantages:
 
-    - It is less ideal when transferring data, for example by email. You may
-      want to archive them into a single file first (zip, tar).
-    - In many file systems, files take up a minimum amount of disk space
-      (normally 512 b - 4 kb) even if the data they contain is not that large.
-      dArray's way of storing data is thus space-inefficient if you have
-      zillions of very small data arrays stored separately.
+  - It is less ideal when transferring data, for example by email. You may
+    want to archive them into a single file first (zip, tar).
+  - In many file systems, files take up a minimum amount of disk space
+    (normally 512 b - 4 kb) even if the data they contain is not that large.
+    dArray's way of storing data is thus space-inefficient if you have
+    zillions of very small data arrays stored separately.
 
 
 Requirements
