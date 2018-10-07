@@ -3,7 +3,7 @@ dArray
 ======
 
 .. image:: https://travis-ci.org/gjlbeckers-uu/dArray.svg?branch=master
-   :target: https://travis-ci.org/gjlbeckers-uu/dArray
+   :target: https://travis-ci.org/gbeckers/dArray
 
 
 dArray is a Python library for storing numeric data arrays in a way that is
@@ -316,7 +316,7 @@ Rationale
 ---------
 
 Scientific data should preferably be stored or at least archived in a file
-format that is as simple and self-explanatrory. This ensures readability by
+format that is as simple and self-explanatory. This ensures readability by
 a variety of currently used analysis tools (Python, R, Octave/Matlab, Julia,
 GDL/IDL, Mathematic, Igor Pro, etc) as well as future tools. This is in
 line with the principle of openness and facilitates re-use and
