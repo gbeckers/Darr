@@ -55,7 +55,7 @@ Pro's:
 - **Small** library. Just one module file that can be easily included in your
   own code if you want to avoid dependence on external libraries.
 - **Integrates easily** with the `Dask`_ or `NumExpr`_ libraries for **numeric
-  computation on very large dArrays**.
+  computation on very large darrays**.
 
 Con's:
 
@@ -393,15 +393,15 @@ There are of course also disadvantages to this approach.
   parameters depending on how you typically read and write the data, and
   failing to do so may lead to access that is in fact slower.
 - Your data is not stored in one file, but in a directory that contains
-  3-4 files (depending if you save metadata), at least 2 of which are small
+  3-4 files (depending if you save metadata), at least 2 of whicSh are small
   text files (~150 b - 1.7 kb). This has two disadvantages:
 
-- It is less ideal when transferring data, for example by email. You may
-  want to archive them into a single file first (zip, tar).
-- In many file systems, files take up a minimum amount of disk space
-  (normally 512 b - 4 kb) even if the data they contain is not that large.
-  dArray's way of storing data is thus space-inefficient if you have
-  zillions of very small data arrays stored separately.
+    - It is less ideal when transferring data, for example by email. You may
+      want to archive them into a single file first (zip, tar).
+    - In many file systems, files take up a minimum amount of disk space
+      (normally 512 b - 4 kb) even if the data they contain is not that large.
+      dArray's way of storing data is thus space-inefficient if you have
+      zillions of very small data arrays stored separately.
 
 
 Requirements
