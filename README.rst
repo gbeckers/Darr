@@ -24,7 +24,7 @@ dArray is open source and freely available under the `New BSD License`_ terms.
 Version: 0.1a, not officially released yet.
 
 dArray is BSD licensed (BSD 3-Clause License).
-(c) 2018, Gabriël Beckers
+(c) 2017-2018, Gabriël Beckers
 
 
 .. contents:: Contents
