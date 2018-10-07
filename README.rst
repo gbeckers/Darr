@@ -21,7 +21,7 @@ variety of current scientific data tools.
 
 dArray is open source and freely available under the `New BSD License`_ terms.
 
-Version: 0.1
+Version: 0.1a, not officially released yet.
 
 dArray is BSD licensed (BSD 3-Clause License).
 (c) 2018, Gabriël Beckers
@@ -64,9 +64,10 @@ Con's:
   compress the darray files with a compression tool.
 - **Multiple files**. The data, the data description, and the metadata are
   stored in separate files, though all within a single directory.
-- **Inefficient for very small arrays**. Do use other approaches if you have
-  a zillion small arrays. A dArrayList is being developed to deal with
-  the latter, but it is still very experimental.
+- **Inefficient (storage-wise) for very small arrays**. If you have a
+  zillion small arrays, and storage space in a concern, use other approaches.
+  A dArrayList is being developed to deal with the latter, but it is still
+  very experimental.
 
 
 
