@@ -154,7 +154,7 @@ indexing.
     array([ 1.,  1.])
 
 Note that creates a NumPy array. The darray itself is not a NumPy array, nor
-does it behave like one except for indexing. The simples way to use the
+does it behave like one except for indexing. The simplest way to use the
 data for computation is to, read (or view, see below) the data first as a
 NumPy array:
 
@@ -181,10 +181,6 @@ first:
     >>> a
     darray([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
             [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
-
-Of course, you could have done that with the NumPy array before converting
-it to a darray, but writing to a memory-mapped array on disk can be
-advantageous when arrays are very large.
 
 **Efficient I/O**
 
