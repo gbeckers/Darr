@@ -2,7 +2,7 @@
 dArray
 ======
 
-.. image:: https://travis-ci.com/gjlbeckers-uu/dArray.svg?branch=master
+.. image:: https://travis-ci.com/gbeckers/dArray.svg?branch=master
    :target: https://travis-ci.com/gbeckers/dArray?branch=master
 
 
