@@ -2,8 +2,8 @@
 dArray
 ======
 
-.. image:: https://travis-ci.com/gbeckers/dArray.svg?branch=master
-   :target: https://travis-ci.com/gbeckers/dArray?branch=master
+.. image:: https://travis-ci.org/gbeckers/dArray.svg?branch=master
+   :target: https://travis-ci.org/gbeckers/dArray?branch=master
 
 
 dArray is a Python library for storing numeric data arrays in a way that is
