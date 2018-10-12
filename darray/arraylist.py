@@ -148,7 +148,7 @@ def create_darraylist(path, shape, dtype, metadata=None,
     # but we want an empty diskarraylist => we should get rid of the indices
     indices = asdarray(path=dal._indicespath, array=np.zeros((0, 2)),
                        dtype=np.int64, accessmode='r+', overwrite=True)
-    return dArrayList(dal.path)
+    return dArrayList(dal.path, accessmode=accessmode)
 
 
 
