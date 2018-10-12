@@ -36,8 +36,7 @@ Pro's:
 
 - Very **simple data format** based on **flat binary** and **text** files.
 - Numeric data is accessed through a **memory-mapped** file, allowing for
-  direct access to **very large data arrays**, even larger than available RAM
-  memory.
+  direct access to **very large, out-of-memory data arrays**.
 - Data is selected for reading/writing through **NumPy indexing** (see
   `here`_) and is easily **appendable**.
 - **Human-readable explanation of how the binary data is stored** is saved in
@@ -49,8 +48,7 @@ Pro's:
   uint16, uint32, uint64, float16, float32, float64, complex64, complex128.
 - Easy use of **metadata**, stored in a separate text file.
 - **Minimal dependencies**, only `NumPy`_.
-- **Small** library. Just one module file that can be easily included in your
-  own code if you want to avoid dependence on external libraries.
+- **Small** library.
 - **Integrates easily** with the `Dask`_ or `NumExpr`_ libraries for **numeric
   computation on very large darrays**.
 
