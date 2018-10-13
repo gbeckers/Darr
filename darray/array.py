@@ -1042,7 +1042,7 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
     elif hasattr(array, '__len__'):  # is numpy array or sequence
         totallen = len(array)
         if totallen == 0:
-            yield array
+            yield array.astype(dtype)
         else:
             nchunks, newsize, remainder = fit_chunks(totallen=totallen,
                                                      chunklen=chunklen)
