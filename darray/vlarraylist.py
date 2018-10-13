@@ -9,7 +9,7 @@ from .array import BaseDataDir, dArray, MetaData, asdarray, \
     create_basedir, check_accessmode, delete_darray
 
 __all__ = ['dVLArrayList', 'asdvlarraylist', 'create_dvlarraylist',
-           'delete_darraylist']
+           'delete_dvlarraylist']
 
 
 class dVLArrayList(BaseDataDir):
@@ -170,7 +170,7 @@ This directory and subdirectories contain a list of numeric data arrays, stored
 """
 
 
-def delete_darraylist(dal):
+def delete_dvlarraylist(dal):
     """
     Delete DiskArrayList data from disk.
 
