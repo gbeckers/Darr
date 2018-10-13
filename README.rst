@@ -34,20 +34,20 @@ Features
 --------
 Pro's:
 
-- Very **simple data format** based on **flat binary** and **text** files.
+- **Simple data format** based on **flat binary** and **text** files.
 - Supports **very large data arrays**, through **memory-mapped** file access.
 - Data read/write access through **NumPy indexing** (see
   `here`_).
 - Data is easily **appendable**.
 - **Human-readable explanation of how the binary data is stored** is
   saved in a README text file.
-- README which also contains **examples of how to read the
-  specific array data in a few lines of code** in popular analysis environments
+- README also contains **examples of how to read the
+  specific array data** in popular analysis environments
   such as Python (without dArray), R, Julia, Octave/Matlab, GDL/IDL, and
   Mathematica.
 - **Many numeric types** are supported:  int8, int16, int32, int64, uint8,
   uint16, uint32, uint64, float16, float32, float64, complex64, complex128.
-- Easy use of **metadata**, stored in a separate text file.
+- Easy use of **metadata**, stored in a separate `JSON`_ text file.
 - **Minimal dependencies**, only `NumPy`_.
 - **Small** library.
 - **Integrates easily** with the `Dask`_ or `NumExpr`_ libraries for **numeric
