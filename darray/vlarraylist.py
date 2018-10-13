@@ -5,14 +5,14 @@ from pathlib import Path
 
 import numpy as np
 
-from .array import BaseDataDir, dArray, MetaData, asdarray, \
-    create_basedir, check_accessmode, delete_darray
+from .array import BaseDataDir, Array, MetaData, asarray, \
+    create_basedir, check_accessmode, delete_array
 
-__all__ = ['dVLArrayList', 'asdvlarraylist', 'create_dvlarraylist',
-           'delete_dvlarraylist']
+__all__ = ['VLArrayList', 'asvlarraylist', 'create_vlarraylist',
+           'delete_vlarraylist']
 
 
-class dVLArrayList(BaseDataDir):
+class VLArrayList(BaseDataDir):
     """
     Disk-based list of variable-length arrays.
 
@@ -30,8 +30,8 @@ class dVLArrayList(BaseDataDir):
         self._accessmode = check_accessmode(accessmode)
         self._valuespath = self.path.joinpath(self._valuesdirname)
         self._indicespath = self.path.joinpath(self._indicesdirname)
-        self._values = dArray(self._valuespath, accessmode=self._accessmode)
-        self._indices = dArray(self._indicespath, accessmode=self._accessmode)
+        self._values = Array(self._valuespath, accessmode=self._accessmode)
+        self._indices = Array(self._indicespath, accessmode=self._accessmode)
         self._metadata = MetaData(self._path.joinpath(self._metadatafilename),
                                   accessmode=accessmode)
 
@@ -94,28 +94,28 @@ class dVLArrayList(BaseDataDir):
 
     def copy(self, path, mode='r'):
         arrayiterable = (self[i] for i in range(len(self)))
-        return asdvlarraylist(path=path, arrayiterable=arrayiterable,
-                              dtype=self.dtype,
-                              metadata=self.metadata, mode=mode)
+        return asvlarraylist(path=path, arrayiterable=arrayiterable,
+                             dtype=self.dtype,
+                             metadata=self.metadata, mode=mode)
 
 
 # FIXME empty arrayiterable
-def asdvlarraylist(path, arrayiterable, dtype=None, metadata=None,
-                   accessmode='r+', overwrite=False):
+def asvlarraylist(path, arrayiterable, dtype=None, metadata=None,
+                  accessmode='r+', overwrite=False):
     path = Path(path)
     if not hasattr(arrayiterable, 'next'):
         arrayiterable = (a for a in arrayiterable)
     bd = create_basedir(path=path, overwrite=overwrite)
     firstarray = np.asarray(next(arrayiterable), dtype=dtype)
     dtype = firstarray.dtype
-    valuespath = bd.path.joinpath(dVLArrayList._valuesdirname)
-    indicespath = bd.path.joinpath(dVLArrayList._indicesdirname)
-    valuesda = asdarray(path=valuespath, array=firstarray, dtype=dtype,
-                        accessmode='r+', overwrite=overwrite)
+    valuespath = bd.path.joinpath(VLArrayList._valuesdirname)
+    indicespath = bd.path.joinpath(VLArrayList._indicesdirname)
+    valuesda = asarray(path=valuespath, array=firstarray, dtype=dtype,
+                       accessmode='r+', overwrite=overwrite)
     firstindices = [[0, len(firstarray)]]
-    indicesda = asdarray(path=indicespath, array=firstindices,
-                         dtype=np.int64, accessmode='r+',
-                         overwrite=overwrite)
+    indicesda = asarray(path=indicespath, array=firstindices,
+                        dtype=np.int64, accessmode='r+',
+                        overwrite=overwrite)
     valueslen = firstindices[0][1]
     indiceslen = 1
     with valuesda.view(accessmode='r+'), indicesda.view(accessmode='r+'):
@@ -129,30 +129,30 @@ def asdvlarraylist(path, arrayiterable, dtype=None, metadata=None,
     indicesda._update_len(lenincrease=indiceslen-1)
     indicesda._update_readmetxt()
 
-    metadatapath = path.joinpath(dArray._metadatafilename)
+    metadatapath = path.joinpath(Array._metadatafilename)
     if metadata is not None:
-        bd._write_jsondict(filename=dArray._metadatafilename,
+        bd._write_jsondict(filename=Array._metadatafilename,
                            d=metadata, overwrite=overwrite)
     elif metadatapath.exists():  # no metadata but file exists, remove it
         metadatapath.unlink()
-    bd._write_txt(dVLArrayList._readmefilename, readmetxt)
-    return dVLArrayList(path=path, accessmode=accessmode)
+    bd._write_txt(VLArrayList._readmefilename, readmetxt)
+    return VLArrayList(path=path, accessmode=accessmode)
 
 
-def create_dvlarraylist(path, shape, dtype, metadata=None,
-                        accessmode='r+', overwrite=False):
+def create_vlarraylist(path, shape, dtype, metadata=None,
+                       accessmode='r+', overwrite=False):
     if not hasattr(shape, '__len__'):
         raise TypeError(f'shape "{shape}" is not a sequence of dimensions.\n'
                         f'If you want just a 1-dimesional appendable array, '
                         f'use (0,)"')
     ar = np.zeros(shape, dtype=dtype)
-    dal = asdvlarraylist(path=path, arrayiterable=[ar], metadata=metadata,
-                         accessmode=accessmode, overwrite=overwrite)
+    dal = asvlarraylist(path=path, arrayiterable=[ar], metadata=metadata,
+                        accessmode=accessmode, overwrite=overwrite)
     # the current diskarraylist has one element, which is an empty array
     # but we want an empty diskarraylist => we should get rid of the indices
-    indices = asdarray(path=dal._indicespath, array=np.zeros((0, 2)),
-                       dtype=np.int64, accessmode='r+', overwrite=True)
-    return dVLArrayList(dal.path, accessmode=accessmode)
+    indices = asarray(path=dal._indicespath, array=np.zeros((0, 2)),
+                      dtype=np.int64, accessmode='r+', overwrite=True)
+    return VLArrayList(dal.path, accessmode=accessmode)
 
 
 
@@ -170,7 +170,7 @@ This directory and subdirectories contain a list of numeric data arrays, stored
 """
 
 
-def delete_dvlarraylist(dal):
+def delete_vlarraylist(dal):
     """
     Delete DiskArrayList data from disk.
 
@@ -180,8 +180,8 @@ def delete_dvlarraylist(dal):
 
     """
     try:
-        if not isinstance(dal, dVLArrayList):
-            dal = dVLArrayList(dal)
+        if not isinstance(dal, VLArrayList):
+            dal = VLArrayList(dal)
     except:
         raise TypeError(f"'{dal}' not recognized as a DiskArrayList")
 
@@ -189,8 +189,8 @@ def delete_dvlarraylist(dal):
         path = dal.path.joinpath(fn)
         if path.exists():
             path.unlink()
-    delete_darray(dal._values)
-    delete_darray(dal._indices)
+    delete_array(dal._values)
+    delete_array(dal._indices)
     try:
         dal._path.rmdir()
     except OSError:

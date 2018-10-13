@@ -75,9 +75,9 @@ Examples
 .. code-block:: python
 
     >>> import darray as da
-    >>> a = da.create_darray('a1.da', shape=(2,1024))
+    >>> a = da.create_array('a1.da', shape=(2,1024))
     >>> a
-    >>> darray([[0., 0., 0., ..., 0., 0., 0.],
+    >>> array([[0., 0., 0., ..., 0., 0., 0.],
                    [0., 0., 0., ..., 0., 0., 0.]]) (r+)
 
 The default is to fill the array with zeros (of type float64) but this can
@@ -114,18 +114,18 @@ Or in `Julia`_:
     x = map(ltoh, read(fid, Float64, (1024, 2)));
     close(fid);
 
-To see the files that correspond to a darray, see 'examplearray.da' in the
-source `repo`_.
+To see the files that correspond to a dArray array, see 'examplearray.da' in
+the source `repo`_.
 
 
 **Different numeric type**
 
 .. code-block:: python
 
-    >>> a = da.create_darray('a2.da', shape=(2,1024), dtype='uint8')
+    >>> a = da.create_array('a2.da', shape=(2,1024), dtype='uint8')
     >>> a
-    darray([[0, 0, 0, ..., 0, 0, 0],
-            [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
+    array([[0, 0, 0, ..., 0, 0, 0],
+           [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
 
 **Creating darray from NumPy array**
 
@@ -133,10 +133,10 @@ source `repo`_.
 
     >>> import numpy as np
     >>> na = np.ones((2,1024))
-    >>> a = da.asdarray('a3.da', na)
+    >>> a = da.asarray('a3.da', na)
     >>> a
-    darray([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
-            [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
+    array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
+           [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
 
 **Reading data**
 
@@ -175,8 +175,8 @@ first:
     >>> a.set_accessmode('r+')
     >>> a[:,1] = 2.
     >>> a
-    darray([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
-            [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
+    array([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
+           [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
 
 **Efficient I/O**
 
@@ -190,8 +190,8 @@ the disk-based array so as to opens the underlying files only once:
     ...     v[0,2] = 4.
     ...     v[1,[0,2,-1]] = 5.
     >>> a
-    darray([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
-            [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
+    array([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
+          [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
 
 **Appending data**
 
@@ -204,11 +204,11 @@ that you can only append to the first axis:
 
     >>> a.append(np.ones((3,1024)))
     >>> a
-    darray([[3., 2., 4., ..., 1., 1., 1.],
-            [5., 2., 5., ..., 1., 1., 5.],
-            [1., 1., 1., ..., 1., 1., 1.],
-            [1., 1., 1., ..., 1., 1., 1.],
-            [1., 1., 1., ..., 1., 1., 1.]]) (r+)
+    array([[3., 2., 4., ..., 1., 1., 1.],
+           [5., 2., 5., ..., 1., 1., 5.],
+           [1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.]]) (r+)
 
 
 The associated 'README.txt' and 'arraydescription.json' texts files are also
@@ -222,11 +222,11 @@ method for efficient serial appending. See the :doc:`api`.
     >>> ac = a.copy('ac.da')
     >>> acf16 = a.copy('acf16.da', dtype='float16')
     >>> acf16
-    darray([[3., 2., 4., ..., 1., 1., 1.],
-            [5., 2., 5., ..., 1., 1., 5.],
-            [1., 1., 1., ..., 1., 1., 1.],
-            [1., 1., 1., ..., 1., 1., 1.],
-            [1., 1., 1., ..., 1., 1., 1.]], dtype=float16) (r)
+    array([[3., 2., 4., ..., 1., 1., 1.],
+           [5., 2., 5., ..., 1., 1., 5.],
+           [1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.],
+           [1., 1., 1., ..., 1., 1., 1.]], dtype=float16) (r)
 
 
 Note that the type of the array can be changed when copying. Data is copied
@@ -242,13 +242,13 @@ though:
 .. code-block:: python
 
     >>> import dask.array
-    >>> a = da.create_darray('ar1.da', shape=(1024**2), fill=2.5, overwrite=True)
+    >>> a = da.create_array('ar1.da', shape=(1024**2), fill=2.5, overwrite=True)
     >>> a
-    darray([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
+    array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
     >>> dara = dask.array.from_array(a, chunks=(512))
     >>> ((dara + 1) / 2).store(a)
     >>> a
-    darray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
+    array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
 So in this case we overwrote the data in a with the results of the computation,
 but we could have stored the result in a different darray of the same shape.
@@ -262,11 +262,11 @@ like so:
 .. code-block:: python
 
     >>> import numexpr as ne
-    >>> a = da.create_darray('a3.da', shape=(1024**2), fill=2.5)
+    >>> a = da.create_array('a3.da', shape=(1024**2), fill=2.5)
     >>> with a.view() as v:
     ...     ne.evaluate('(v + 1) / 2', out=v)
     >>> a
-    darray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
+    array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
 **Metadata**
 

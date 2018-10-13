@@ -29,8 +29,8 @@ logger = logging.getLogger(__name__)
 # - All text is written in UTF-8. This is compatible with ASCII, widely used
 #   and capable of encoding all 1,112,064 valid code points in Unicode
 
-__all__ = ['dArray', 'asdarray', 'create_darray', 'delete_darray',
-           'truncate_darray']
+__all__ = ['Array', 'asarray', 'create_array', 'delete_array',
+           'truncate_array']
 
 # mathematica: https://reference.wolfram.com/language/ref/BinaryRead.html
 # Octave: https://octave.org/doc/v4.2.0/Binary-I_002fO.html
@@ -355,7 +355,7 @@ class MetaData:
         Examples
         --------
         >>> import darray as da
-        >>> d = da.create_darray('test.da', shape=(12,), accesmode= 'r+')
+        >>> d = da.create_array('test.da', shape=(12,), accesmode= 'r+')
         >>> d.metadata.update({'starttime': '2017-08-31T17:00:00'})
         >>> print(d.metadata)
         {'starttime': '2017-08-31T17:00:00'}
@@ -387,7 +387,7 @@ class MetaData:
         self._accessmode = check_accessmode(accessmode)
 
 
-class dArray(BaseDataDir):
+class Array(BaseDataDir):
     """Read and write numeric data from and to a memory-mapped, disk-based
     array using numpy indexing. Memory-mapped arrays are used for accessing
     segments of (very) large files on disk, without reading the entire file
@@ -597,7 +597,7 @@ class dArray(BaseDataDir):
         Examples
         --------
         >>> import darray as da
-        >>> d = da.create_darray('test.da', shape=(1000,3), overwrite=True)
+        >>> d = da.create_array('test.da', shape=(1000,3), overwrite=True)
         >>> with d.view(accessmode='r+') as v:
                 s1 = v[:10,1:].sum()
                 s2 = v[20:25,:2].sum()
@@ -665,7 +665,7 @@ class dArray(BaseDataDir):
         self._update_readmetxt()
 
     def _update_readmetxt(self):
-        txt = darrayreadmetxt(self)
+        txt = arrayreadmetxt(self)
         self._write_txt(self._readmefilename, txt)
 
     def __append(self, array, fd):
@@ -725,7 +725,7 @@ class dArray(BaseDataDir):
         Examples
         --------
         >>> import darray as da
-        >>> d = da.create_darray('test.da', shape=(4,2), overwrite=True)
+        >>> d = da.create_array('test.da', shape=(4,2), overwrite=True)
         >>> d.append([[1,2],[3,4],[5,6]])
         >>> print(d)
         [[ 0.  0.]
@@ -756,7 +756,7 @@ class dArray(BaseDataDir):
         Examples
         --------
         >>> import darray as da
-        >>> d = da.create_darray('test.da', shape=(3,2), overwrite=True)
+        >>> d = da.create_array('test.da', shape=(3,2), overwrite=True)
         >>> def ga():
                 yield [[1,2],[3,4]]
                 yield [[5,6],[7,8],[9,10]]
@@ -841,7 +841,7 @@ class dArray(BaseDataDir):
         Examples
         --------
         >>> import darray as da
-        >>> d = da.create_darray('test.da', shape=(12,), accesmode= 'r+')
+        >>> d = da.create_array('test.da', shape=(12,), accesmode= 'r+')
         >>> for i,ar in enumerate(d.iterview(chunklen=2, stepsize=3)):
                 ar[:] = i+1
         >>> print(d)
@@ -905,14 +905,14 @@ class dArray(BaseDataDir):
 
         Returns
         -------
-        dArray
+        Array
            copy of the darray
 
         """
 
-        return asdarray(path=path, array=self, dtype=dtype,
-                        accessmode=accessmode, metadata=dict(self.metadata),
-                        chunklen=chunklen, overwrite=overwrite)
+        return asarray(path=path, array=self, dtype=dtype,
+                       accessmode=accessmode, metadata=dict(self.metadata),
+                       chunklen=chunklen, overwrite=overwrite)
 
     def _currentchecksums(self):
         filenames = self._filenames ^ {self._checksumsfilename}
@@ -1028,7 +1028,7 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
 
 
 def _archunkgenerator(array, dtype=None, chunklen=None):
-    if (chunklen is None) and isinstance(array, (dArray, np.ndarray)):
+    if (chunklen is None) and isinstance(array, (Array, np.ndarray)):
         chunklen = max(int((80 * 1024 ** 2) // (np.product(array.shape[1:]) *
                                                 array.dtype.itemsize)), 1)
     else:
@@ -1036,7 +1036,7 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
     if hasattr(array, '__next__'):  # is already an iterator
         for chunk in array:
             yield np.asarray(chunk, dtype=dtype)
-    elif isinstance(array, dArray):
+    elif isinstance(array, Array):
         for chunk in array.iterview(chunklen=chunklen):
             yield chunk.astype(dtype)
     elif hasattr(array, '__len__'):  # is numpy array or sequence
@@ -1059,8 +1059,8 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
                 f"cannot object of type '{type(array)}' to an array")
 
 
-def asdarray(path, array, dtype=None, accessmode='r',
-             metadata=None, chunklen=None, overwrite=False):
+def asarray(path, array, dtype=None, accessmode='r',
+            metadata=None, chunklen=None, overwrite=False):
     """Save an array or array generator as a dArray to file system path.
 
     Parameters
@@ -1093,7 +1093,7 @@ def asdarray(path, array, dtype=None, accessmode='r',
 
     Returns
     -------
-    A `aArray` instance.
+    A dArray `array` instance.
 
     See Also
     --------
@@ -1101,11 +1101,11 @@ def asdarray(path, array, dtype=None, accessmode='r',
 
     Examples
     --------
-    >>> asdarray('data.da', [0,1,2,3])
+    >>> asarray('data.da', [0,1,2,3])
     darray([0, 1, 2, 3])
-    >>> asdarray('data.da', [0,1,2,3], dtype='float64', overwrite=True)
+    >>> asarray('data.da', [0,1,2,3], dtype='float64', overwrite=True)
     darray([ 0.,  1.,  2.,  3.])
-    >>> ar = asdarray('data_rw.da', [0,1,2,3,4,5], accessmode='r+')
+    >>> ar = asarray('data_rw.da', [0,1,2,3,4,5], accessmode='r+')
     >>> ar
     darray([0, 1, 2, 3, 4, 5]) (r+)
     >>> ar[-1] = 8
@@ -1117,7 +1117,7 @@ def asdarray(path, array, dtype=None, accessmode='r',
 
     """
     path = Path(path)
-    if isinstance(array, dArray) and (path == array.path):
+    if isinstance(array, Array) and (path == array.path):
         raise ValueError(f"'{path}' is the same as the path of the "
                          f"source darray.")
     chunkiter = _archunkgenerator(array, dtype=dtype, chunklen=chunklen)
@@ -1130,7 +1130,7 @@ def asdarray(path, array, dtype=None, accessmode='r',
     dtype = firstchunk.dtype
     bd = create_basedir(path=path,
                         overwrite=overwrite)
-    datapath = path.joinpath(dArray._datafilename)
+    datapath = path.joinpath(Array._datafilename)
     arraylen = firstchunk.shape[0]
     with open(datapath, 'wb') as df:
         firstchunk.tofile(df)
@@ -1148,16 +1148,16 @@ def asdarray(path, array, dtype=None, accessmode='r',
                       "be C_CONTIGUOUS")
         datainfo['arrayorder'] = 'C'
     datainfo['shape'] = shape
-    datainfo['darrayversion'] = dArray._formatversion
-    bd._write_jsondict(filename=dArray._arraydescrfilename,
+    datainfo['darrayversion'] = Array._formatversion
+    bd._write_jsondict(filename=Array._arraydescrfilename,
                        d=datainfo, overwrite=overwrite)
-    metadatapath = path.joinpath(dArray._metadatafilename)
+    metadatapath = path.joinpath(Array._metadatafilename)
     if metadata is not None:
-        bd._write_jsondict(filename=dArray._metadatafilename,
+        bd._write_jsondict(filename=Array._metadatafilename,
                            d=metadata, overwrite=overwrite)
     elif metadatapath.exists():  # no metadata but file exists, remove it
         metadatapath.unlink()
-    d = dArray(path, accessmode=accessmode)
+    d = Array(path, accessmode=accessmode)
     d._update_readmetxt()
     return d
 
@@ -1195,9 +1195,9 @@ def create_basedir(path, overwrite=False):
     return BaseDataDir(path)
 
 
-def create_darray(path, shape, dtype='float64', fill=None, fillfunc=None,
-                  accessmode='r+', chunklen=None, metadata=None,
-                  overwrite=False):
+def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
+                 accessmode='r+', chunklen=None, metadata=None,
+                 overwrite=False):
     """Create a new `darray` of given shape and type, filled with
     predetermined values.
 
@@ -1279,23 +1279,23 @@ def create_darray(path, shape, dtype='float64', fill=None, fillfunc=None,
     """
     gen = _fillgenerator(shape=shape, dtype=dtype, fill=fill,
                          fillfunc=fillfunc, chunklen=chunklen)
-    return asdarray(path=path, array=gen, accessmode=accessmode,
-                    metadata=metadata, overwrite=overwrite)
+    return asarray(path=path, array=gen, accessmode=accessmode,
+                   metadata=metadata, overwrite=overwrite)
 
 
-def delete_darray(da):
+def delete_array(da):
     """
     Delete darray data from disk.
     
     Parameters
     ----------
-    da: dArray or str or pathlib.Path
+    da: Array or str or pathlib.Path
         The darray object to be deleted or file system path to it.
 
     """
     try:
-        if not isinstance(da, dArray):
-            da = dArray(da)
+        if not isinstance(da, Array):
+            da = Array(da)
     except Exception:
         raise TypeError(f"'{da}' not recognized as a dArray")
     da.check_arraywriteable()
@@ -1313,13 +1313,13 @@ def delete_darray(da):
         raise
 
 
-def truncate_darray(da, index):
+def truncate_array(a, index):
     """Truncate darray data.
 
     Parameters
     ----------
-    da: darray or str or pathlib.Path
-        The darray object to be truncated or file system path to it.
+    a: array or str or pathlib.Path
+       The darray object to be truncated or file system path to it.
     index: int
         The index along the first axis at which the darray should be
         truncated. Negative indices can be used but the resulting length of
@@ -1330,44 +1330,44 @@ def truncate_darray(da, index):
     --------
     >>> import darray as da
     >>> fillfunc = lambda i: i
-    >>> a = da.create_darray('testarray.da', shape=(5,2), fillfunc=fillfunc)
+    >>> a = da.create_array('testarray.da', shape=(5,2), fillfunc=fillfunc)
     >>> a
     darray([[ 0.,  0.],
                [ 1.,  1.],
                [ 2.,  2.],
                [ 3.,  3.],
                [ 4.,  4.]]) (r+)
-    >>> da.truncate_darray(a, 3)
+    >>> da.truncate_array(a, 3)
     >>> a
     darray([[ 0.,  0.],
                [ 1.,  1.],
                [ 2.,  2.]]) (r+)
-    >>> da.truncate_darray(a, -1)
+    >>> da.truncate_array(a, -1)
     >>> a
     darray([[ 0.,  0.],
                [ 1.,  1.]]) (r+)
 
     """
     try:
-        if not isinstance(da, dArray):
-            da = dArray(da)
+        if not isinstance(a, Array):
+            a = Array(a)
     except Exception:
-        raise TypeError(f"'{da}' not recognized as a darray")
-    da.check_arraywriteable()
+        raise TypeError(f"'{a}' not recognized as a darray")
+    a.check_arraywriteable()
     if not isinstance(index, int):
         raise TypeError(f"'index' should be an int (is {type(index)})")
-    with da.view() as v:
+    with a.view() as v:
         newlen = len(v[:index])
-    lenincrease = newlen - len(da)
-    if 0 < newlen < len(da):
-        i = newlen * np.product(da.shape[1:]) * da.dtype.itemsize
-        with da._open_array() as (v, fd):
+    lenincrease = newlen - len(a)
+    if 0 < newlen < len(a):
+        i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize
+        with a._open_array() as (v, fd):
             fd.truncate(i)
-        da._update_len(lenincrease)
+        a._update_len(lenincrease)
     else:
         raise ValueError(f"'index' {index} would yield an array of length "
                          f"{newlen}, which is invalid (current length is "
-                         f"{len(da)})")
+                         f"{len(a)})")
 
 
 def fit_chunks(totallen, chunklen, steplen=None):
@@ -1575,7 +1575,7 @@ def promptify_codetxt(codetxt, prompt=">>> "):
     return "\n".join([f"{prompt}{l}" for l in codetxt.splitlines()]) + '\n'
 
 
-def darrayreadmetxt(da):
+def arrayreadmetxt(da):
     s = formatdescriptiontxt(da)
     s += "Example code for reading the data\n" \
          "=================================\n\n"
