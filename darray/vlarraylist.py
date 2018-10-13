@@ -194,7 +194,7 @@ def delete_vlarraylist(dal):
     try:
         dal._path.rmdir()
     except OSError:
-        print(f"Error: could not fully delete diskarraylist directory "
+        print(f"Error: could not fully delete vlarraylist directory "
               f"'{dal.path}'. It may contain additional files that are not "
               f"part of the diskarraylist. If so, these should be removed "
               f"manually.")

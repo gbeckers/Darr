@@ -6,12 +6,13 @@ dArray
    :target: https://travis-ci.org/gbeckers/dArray?branch=master
 
 
-dArray is a Python library for storing numeric data arrays in a way that is
-open, simple, and self-explanatory. It also enables fast memory-mapped
-read/write access to such disk-based data, the ability to append data, and the
-flexible use of metadata. It is primarily designed for scientific use cases.
-Save and use your numeric arrays and metadata with one line of code
-while making sure that long-term and tool-independent accessibility in ensured.
+dArray is a Python library for storing multidimensional numeric data arrays
+in a way that is open, simple, and self-explanatory. It also enables fast
+memory-mapped read/write access to such disk-based data, the ability to
+append data, and the flexible use of metadata. It is primarily designed for
+scientific use cases. Save and use your numeric arrays and metadata with one
+line of code while making sure that long-term and tool-independent
+accessibility in ensured.
 
 To avoid tool-specific data formats, dArray is exclusively based
 on a combination of flat binary and text files. It automatically saves a clear
@@ -78,7 +79,7 @@ Examples
     >>> a = da.create_array('a1.da', shape=(2,1024))
     >>> a
     >>> array([[0., 0., 0., ..., 0., 0., 0.],
-                   [0., 0., 0., ..., 0., 0., 0.]]) (r+)
+               [0., 0., 0., ..., 0., 0., 0.]]) (r+)
 
 The default is to fill the array with zeros (of type float64) but this can
 be changed by the  'fill' and 'fillfunc' parameters. See the :doc:`api`.
