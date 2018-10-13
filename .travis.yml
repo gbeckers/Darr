@@ -6,4 +6,5 @@ python:
 sudo: false
 
 script:
-  -  python -m darray.tests.test_diskarray
+  -  python -m darray.tests.test_darray
+  -  python -m darray.tests.test_darraylist

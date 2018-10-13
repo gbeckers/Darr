@@ -8,11 +8,15 @@ import numpy as np
 from .array import BaseDataDir, dArray, MetaData, asdarray, \
     create_basedir, check_accessmode, delete_darray
 
-__all__ = ['dArrayList', 'asdarraylist', 'create_darraylist',
+__all__ = ['dVLArrayList', 'asdvlarraylist', 'create_dvlarraylist',
            'delete_darraylist']
 
 
-class dArrayList(BaseDataDir):
+class dVLArrayList(BaseDataDir):
+    """
+    Disk-based list of variable-length arrays.
+
+    """
     _valuesdirname = 'values'
     _indicesdirname = 'indices'
     _version = '0.1.0'
@@ -90,22 +94,22 @@ class dArrayList(BaseDataDir):
 
     def copy(self, path, mode='r'):
         arrayiterable = (self[i] for i in range(len(self)))
-        return asdarraylist(path=path, arrayiterable=arrayiterable,
-                            dtype=self.dtype,
-                            metadata=self.metadata, mode=mode)
+        return asdvlarraylist(path=path, arrayiterable=arrayiterable,
+                              dtype=self.dtype,
+                              metadata=self.metadata, mode=mode)
 
 
 # FIXME empty arrayiterable
-def asdarraylist(path, arrayiterable, dtype=None, metadata=None,
-                 accessmode='r+', overwrite=False):
+def asdvlarraylist(path, arrayiterable, dtype=None, metadata=None,
+                   accessmode='r+', overwrite=False):
     path = Path(path)
     if not hasattr(arrayiterable, 'next'):
         arrayiterable = (a for a in arrayiterable)
     bd = create_basedir(path=path, overwrite=overwrite)
     firstarray = np.asarray(next(arrayiterable), dtype=dtype)
     dtype = firstarray.dtype
-    valuespath = bd.path.joinpath(dArrayList._valuesdirname)
-    indicespath = bd.path.joinpath(dArrayList._indicesdirname)
+    valuespath = bd.path.joinpath(dVLArrayList._valuesdirname)
+    indicespath = bd.path.joinpath(dVLArrayList._indicesdirname)
     valuesda = asdarray(path=valuespath, array=firstarray, dtype=dtype,
                         accessmode='r+', overwrite=overwrite)
     firstindices = [[0, len(firstarray)]]
@@ -131,24 +135,24 @@ def asdarraylist(path, arrayiterable, dtype=None, metadata=None,
                            d=metadata, overwrite=overwrite)
     elif metadatapath.exists():  # no metadata but file exists, remove it
         metadatapath.unlink()
-    bd._write_txt(dArrayList._readmefilename, readmetxt)
-    return dArrayList(path=path, accessmode=accessmode)
+    bd._write_txt(dVLArrayList._readmefilename, readmetxt)
+    return dVLArrayList(path=path, accessmode=accessmode)
 
 
-def create_darraylist(path, shape, dtype, metadata=None,
-                      accessmode='r+', overwrite=False):
+def create_dvlarraylist(path, shape, dtype, metadata=None,
+                        accessmode='r+', overwrite=False):
     if not hasattr(shape, '__len__'):
         raise TypeError(f'shape "{shape}" is not a sequence of dimensions.\n'
                         f'If you want just a 1-dimesional appendable array, '
                         f'use (0,)"')
     ar = np.zeros(shape, dtype=dtype)
-    dal = asdarraylist(path=path, arrayiterable=[ar], metadata=metadata,
-                       accessmode=accessmode, overwrite=overwrite)
+    dal = asdvlarraylist(path=path, arrayiterable=[ar], metadata=metadata,
+                         accessmode=accessmode, overwrite=overwrite)
     # the current diskarraylist has one element, which is an empty array
     # but we want an empty diskarraylist => we should get rid of the indices
     indices = asdarray(path=dal._indicespath, array=np.zeros((0, 2)),
                        dtype=np.int64, accessmode='r+', overwrite=True)
-    return dArrayList(dal.path, accessmode=accessmode)
+    return dVLArrayList(dal.path, accessmode=accessmode)
 
 
 
@@ -156,8 +160,8 @@ def create_darraylist(path, shape, dtype, metadata=None,
 
 
 
-readmetxt = """Disk array list data storage
-============================
+readmetxt = """Disk-based storage of variable-length arrays
+               ============================================
 
 This directory and subdirectories contain a list of numeric data arrays, stored
  in a simple format that maximizes portability and archivability.
@@ -176,8 +180,8 @@ def delete_darraylist(dal):
 
     """
     try:
-        if not isinstance(dal, dArrayList):
-            dal = dArrayList(dal)
+        if not isinstance(dal, dVLArrayList):
+            dal = dVLArrayList(dal)
     except:
         raise TypeError(f"'{dal}' not recognized as a DiskArrayList")
 
