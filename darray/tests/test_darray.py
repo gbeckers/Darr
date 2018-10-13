@@ -1,30 +1,10 @@
-import shutil
-import tempfile
 import unittest
-from contextlib import contextmanager
 
 import numpy as np
 from numpy.testing import assert_equal, assert_array_equal
 
 from darray.array import asdarray, create_darray, numtypes
-
-
-@contextmanager
-def tempdir(dirname='.', keep=False, report=False):
-    """Yields a temporary directory which is removed when context is closed."""
-    try:
-        tempdirname = tempfile.mkdtemp(dir=dirname)
-        if report:
-            print('created tempdir {}'.format(tempdirname))
-        yield tempdirname
-    except:
-        raise
-    finally:
-        if not keep:
-            shutil.rmtree(tempdirname)
-            if report:
-                print('removed temp dir {}'.format(tempdirname))
-
+from .utils import tempdir
 
 def check_arrayequaltoasdarray(ndarray):
     """Tests if asdarray creates an array of same shape and dtype and same
@@ -40,6 +20,8 @@ def check_arrayequaltocreatedarray(ndarray, shape, dtype=None, chunklen=None):
         dar = create_darray(path=dirname, shape=shape,
                             dtype=dtype, chunklen=chunklen,
                             overwrite=True)
+        if dtype is not None:
+            ndarray = ndarray.astype(dtype)
         assert_array_equal(ndarray, dar[:])
         assert_equal(dar.dtype, ndarray.dtype)
         assert_equal(dar.shape, ndarray.shape)
@@ -81,6 +63,11 @@ class AsDiskArray(unittest.TestCase):
         ndarray = np.zeros(0, dtype='float64')
         check_arrayequaltocreatedarray(ndarray=ndarray, shape=(0,),
                                        dtype='float64')
+
+    def test_emptyarraydifferentdtype(self):
+        ndarray = np.zeros(0, dtype='float64')
+        check_arrayequaltocreatedarray(ndarray=ndarray, shape=(0,),
+                                       dtype='int64')
 
 
 class CreateDiskArray(unittest.TestCase):
