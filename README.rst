@@ -71,7 +71,7 @@ Con's:
 Examples
 --------
 
-**Creating a darray**
+**Creating an array**
 
 .. code-block:: python
 
@@ -128,7 +128,7 @@ the source `repo`_.
     array([[0, 0, 0, ..., 0, 0, 0],
            [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
 
-**Creating darray from NumPy array**
+**Creating array from NumPy array**
 
 .. code-block:: python
 
