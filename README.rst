@@ -35,12 +35,13 @@ Features
 Pro's:
 
 - Very **simple data format** based on **flat binary** and **text** files.
-- Numeric data is accessed through a **memory-mapped** file, allowing for
-  direct access to **very large, out-of-memory data arrays**.
-- Data is selected for reading/writing through **NumPy indexing** (see
-  `here`_) and is easily **appendable**.
-- **Human-readable explanation of how the binary data is stored** is saved in
-  a README text file, which also contains **examples of how to read the
+- Supports **very large data arrays**, through **memory-mapped** file access.
+- Data read/write access through **NumPy indexing** (see
+  `here`_).
+- Data is easily **appendable**.
+- **Human-readable explanation of how the binary data is stored** is
+  saved in a README text file.
+- README which also contains **examples of how to read the
   specific array data in a few lines of code** in popular analysis environments
   such as Python (without dArray), R, Julia, Octave/Matlab, GDL/IDL, and
   Mathematica.
