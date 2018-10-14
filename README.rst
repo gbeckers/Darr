@@ -307,61 +307,42 @@ objects. You can only store:
 
 Rationale
 ---------
+There are many great formats for storing scientific data. Nevertheless,
+the advantages they offer often go hand in hand with complexity and
+dependence on external libraries or specific knowledge that is not included
+with the data.  Preferably, scientific data is stored in a way that is
+simple and self-explanatory. For one thing, this is in line with the
+principle of openness and facilitates re-use and reproducibility of
+scientific results by others. Additionally, during the many years of
+experience with using large numeric data sets, I have become more and more
+convinced that simple formats and independence of specific tools are a
+very good idea, even when data never leaves your own lab (see this `blog of
+Cyrille Rossant`_ that echos my own experiences). Data can have a long life,
+analysis tools much less so.
 
-Scientific data should preferably be stored or at least archived in a file
-format that is as simple and self-explanatory. This ensures readability by
-a variety of currently used analysis tools (Python, R, Octave/Matlab, Julia,
-GDL/IDL, Mathematic, Igor Pro, etc) as well as future tools. This is in
-line with the principle of openness and facilitates re-use and
-reproducibility of scientific results. At the same time, it would be nice
-if data files could still be created and accessed efficiently, also when
-data sets are large.
-
-dArray tries to address both requirements for numeric data arrays.
+The goal of dArray is to help you save and use numeric data arrays from
+within Python in a way that is consistent with this idea.
 
 It stores the data itself in a flat binary file. This is a future-proof way
 of storing numeric data, as long as clear information is provided on how the
-binary data is organized. Many file formats write such information as a
-header in front of the numeric data. However, that requires the reader
-somehow to know how long the header part of the file is and how to
-interpret it. A header is clearly not the ideal solution when maximizing
-readability, because we want to assume as little a priori knowledge as
-possible.
+binary data is organized. There is no header, because we want to assume as
+little a priori knowledge as possible. Instead, dArray writes the
+information about the organization of the data to separate text files.
 
-dArray therefore writes the information about the organization of the data
-to a separate file. In addition to getting rid of the header, this allows us
-to write the information in plain text format. An interesting other
-approach would be to simply embed this information in the name of the
-binary file, see `pyfbf`_. Nevertheless, I prefer providing more comprehensive
-information then could realistically fit in a file name.
+The combination of flat binary and text files leads to a self-documenting
+format that anyone can easily explore on any computer, operating system,
+and programming language, without installing anything, and without any
+specific pre-existing knowledge on the format. In decades to come, your files
+are much more likely to be readable in this format than in specific formats
+such as `HDF5`_ or `.npy`_. Even by yourself.
 
-This approach makes it is easy to read your numeric array data with one or a
-few lines of code, or even with GUI import tools, without depending on the
-dArray library itself. To facilitate this process, dArray saves together
-with the data a README text file that explains the format, and that
-contains example code of how to read the specific data with common tools
-such as Python/NumPy, R, Julia, MatLab/Octave, and Mathematica. Just copy
-and paste to read the data. Sharing your data is now very easy because
-every array that you save can be simply be provided as such to your
-colleagues. It already contains a text document that explains how to read
-the data, in many cases with minimal effort.
-
-The choice of storing the actual data in a flat binary file may at first
-seem odd given that there exist nice and broadly supported solutions for
-binary scientific data, such as `HDF5`_, which feature access time and
-storage space optimizations. I have used and use HDF5 a lot, and I like it,
-but in my own work I find that in many cases this solution can be too complex
-for my needs. Complexity has costs as well as benefits, and I now only
-use it when the benefits clearly outweigh the costs, which is sometimes but
-not often the case. For an interesting view on this topic I refer to a
-`blog of Cyrille Rossant`_, which is in line with my own experiences.
-
-In terms of usage from a python environment , dArray is very similar to
-using a NumPy memory-mapped `.npy`_ file. The only differences are that the
-binary data and header info are split over different files to make the data
-more easily readable by other tools, that data can easily be appended,
-and that you can flexibly use and store arbitrary metadata.
-
+For a variety of current analysis tools dArray helps you make your data
+even more accessible as it generates a README text file that, in addition to
+explaining the format, contains example code of how to read the
+data. E.g. Python/NumPy (without the dArray library), R, Julia, MatLab/Octave,
+and Mathematica. Just copy and paste the code in the README to read the data.
+Every array that you save can be simply be provided as such to your
+colleagues with minimal explanation.
 
 There are of course also disadvantages to this approach.
 
@@ -382,7 +363,7 @@ There are of course also disadvantages to this approach.
   parameters depending on how you typically read and write the data, and
   failing to do so may lead to access that is in fact slower.
 - Your data is not stored in one file, but in a directory that contains
-  3-4 files (depending if you save metadata), at least 2 of whicSh are small
+  3-4 files (depending if you save metadata), at least 2 of which are small
   text files (~150 b - 1.7 kb). This has two disadvantages:
 
   - It is less ideal when transferring data, for example by email. You may
