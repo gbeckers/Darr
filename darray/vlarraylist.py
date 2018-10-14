@@ -53,6 +53,20 @@ class VLArrayList(BaseDataDir):
         return self._values._dtype
 
     @property
+    def atom(self):
+        """Dimensions of the non-variable axes of the arrays.
+
+        """
+        return tuple(self._values._shape[1:])
+
+    @property
+    def narrays(self):
+        """Numpy data type of the array values.
+
+        """
+        return self._indices.shape[0]
+
+    @property
     def metadata(self):
         """
         Dictionary of meta data.
@@ -60,7 +74,6 @@ class VLArrayList(BaseDataDir):
         """
         return self._metadata
 
-    # FIXME should we just look up what os says?
     @property
     def mb(self):
         """Size in megabytes of the data array.
