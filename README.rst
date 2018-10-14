@@ -63,8 +63,8 @@ Con's:
   stored in separate files, though all within a single directory.
 - **Inefficient (storage-wise) for very small arrays**. If you have a
   zillion small arrays, and storage space in a concern, use other approaches.
-  A dArrayList is being developed to deal with the latter, but it is still
-  very experimental.
+  A special type of array is developed to deal with this (VLArrayList), but it
+  is still very experimental.
 
 
 
