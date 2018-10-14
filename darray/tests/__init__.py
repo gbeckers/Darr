@@ -1,9 +1,9 @@
 from unittest import TestLoader, TextTestRunner, TestSuite
 
-from . import test_darray
-from . import test_darraylist
+from . import test_array
+from . import test_vlarraylist
 
-modules = [test_darray, test_darraylist]
+modules = [test_array, test_vlarraylist]
 
 def test(verbosity=1):
     suite =TestSuite()
