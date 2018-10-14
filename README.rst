@@ -419,12 +419,12 @@ To run the test suite:
 
     >>> import darray as da
     >>> da.test()
-    ............................
+    ..............................
     ----------------------------------------------------------------------
-    Ran 28 tests in 4.798s
+    Ran 30 tests in 1.627s
 
     OK
-    <unittest.runner.TextTestResult run=28 errors=0 failures=0>
+    <unittest.runner.TextTestResult run=30 errors=0 failures=0>
 
 
 

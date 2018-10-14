@@ -139,12 +139,13 @@ def asvlarraylist(path, arrayiterable, dtype=None, metadata=None,
     return VLArrayList(path=path, accessmode=accessmode)
 
 
-def create_vlarraylist(path, shape, dtype, metadata=None,
+def create_vlarraylist(path, atom=(), dtype='float64', metadata=None,
                        accessmode='r+', overwrite=False):
-    if not hasattr(shape, '__len__'):
-        raise TypeError(f'shape "{shape}" is not a sequence of dimensions.\n'
-                        f'If you want just a 1-dimesional appendable array, '
-                        f'use (0,)"')
+    if not hasattr(atom, '__len__'):
+        raise TypeError(f'shape "{atom}" is not a sequence of dimensions.\n'
+                        f'If you want just a list of 1-dimensional arrays, '
+                        f'use "()"')
+    shape = [0] + list(atom)
     ar = np.zeros(shape, dtype=dtype)
     dal = asvlarraylist(path=path, arrayiterable=[ar], metadata=metadata,
                         accessmode=accessmode, overwrite=overwrite)
@@ -159,12 +160,24 @@ def create_vlarraylist(path, shape, dtype, metadata=None,
 
 
 
-
+# FIXME this should be a lot clearer
 readmetxt = """Disk-based storage of variable-length arrays
                ============================================
 
-This directory and subdirectories contain a list of numeric data arrays, stored
- in a simple format that maximizes portability and archivability.
+This directory is a data store for a list of variable length arrays. There 
+are two subdirectories, each containing an array stored in a simple format 
+that should be easy to read. To do so, see the READMEs in these directories.
+
+The subdirectory 'values' holds the actual numerical data, where arrays are 
+simply appended along their variable length dimension (first axis).
+
+The subdirectory 'indices' holds 2D array data that represent the first 
+axis start and end indices (counting from 0) to read corresponding arrays 
+in the list.
+
+So to read the n-th array in the list, read the nt-h start and end indices 
+from the indices array ('starti, endi = indices[n]') and use these to read the 
+array data from the values array (array = values[starti:endi]).
 
 
 """
