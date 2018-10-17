@@ -313,12 +313,11 @@ dependence on external libraries or specific knowledge that is not included
 with the data.  Preferably, scientific data is stored in a way that is
 simple and self-explanatory. For one thing, this is in line with the
 principle of openness and facilitates re-use and reproducibility of
-scientific results by others. Additionally, during the many years of
-experience with using large numeric data sets, I have become more and more
-convinced that simple formats and independence of specific tools are a
-very good idea, even when data never leaves your own lab (see this `blog of
-Cyrille Rossant`_ that echos my own experiences). Data can have a long life,
-analysis tools much less so.
+scientific results by others. Additionally, many years of experience teaches
+that simple formats and independence of specific tools are a
+very good idea, even when data never leaves your own hands (see this `blog of
+Cyrille Rossant`_ that echos my own experiences). Your data can have a long
+life, analysis tools much less so.
 
 The goal of dArray is to help you save and use numeric data arrays from
 within Python in a way that is consistent with this idea.
