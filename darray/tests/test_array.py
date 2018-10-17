@@ -6,6 +6,12 @@ from numpy.testing import assert_equal, assert_array_equal
 from darray.array import asarray, create_array, numtypes
 from .utils import tempdir
 
+
+def assert_array_identical(x, y):
+    assert_array_equal(x, y)
+    assert_equal(x.dtype, y.dtype)
+    assert_equal(x.shape, y.shape)
+
 def check_arrayequaltoasdarray(ndarray):
     """Tests if asdarray creates an array of same shape and dtype and same
     contents as input."""
@@ -22,10 +28,7 @@ def check_arrayequaltocreatedarray(ndarray, shape, dtype=None, chunklen=None):
                            overwrite=True)
         if dtype is not None:
             ndarray = ndarray.astype(dtype)
-        assert_array_equal(ndarray, dar[:])
-        assert_equal(dar.dtype, ndarray.dtype)
-        assert_equal(dar.shape, ndarray.shape)
-
+        assert_array_identical(ndarray, dar[:])
 
 class AsDiskArray(unittest.TestCase):
 
@@ -51,6 +54,10 @@ class AsDiskArray(unittest.TestCase):
         ndarray = np.asarray(np.arange(24, dtype='float64'), order='F')
         check_arrayequaltoasdarray(ndarray)
 
+    def test_corder(self):
+        ndarray = np.asarray(np.arange(24, dtype='float64'), order='C')
+        check_arrayequaltoasdarray(ndarray)
+
     def test_littleendian(self):
         ndarray = np.arange(24, dtype='<f4')
         check_arrayequaltoasdarray(ndarray)
@@ -68,6 +75,14 @@ class AsDiskArray(unittest.TestCase):
         ndarray = np.zeros(0, dtype='float64')
         check_arrayequaltocreatedarray(ndarray=ndarray, shape=(0,),
                                        dtype='int64')
+
+    def test_overwritearray(self):
+        with tempdir() as dirname:
+            a = np.zeros((5,), dtype='float64')
+            dar = asarray(path=dirname, array=a, overwrite=True)
+            b = np.ones((4,2), dtype='uint8')
+            dar = asarray(path=dirname, array=b, overwrite=True)
+            assert_array_identical(dar[:], b)
 
 
 class CreateDiskArray(unittest.TestCase):
