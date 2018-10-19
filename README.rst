@@ -311,9 +311,10 @@ just working with your own data (see this `blog by Cyrille Rossant`_ that
 echos my own experiences).
 
 The goal of dArray is to help you save and use numeric data arrays from
-within Python in a way that is consistent with this idea.
+within Python in a way that is consistent with this idea. It is not a
+file format, but a standardized way of saving data that maximizes readability.
 
-It stores the data itself in a flat binary file. This is a future-proof way
+dArray stores the data itself in a flat binary file. This is a future-proof way
 of storing numeric data, as long as clear information is provided on how the
 binary data is organized. There is no header, because we want to assume as
 little a priori knowledge as possible. Instead, dArray writes the
@@ -398,6 +399,15 @@ To run the test suite:
     <unittest.runner.TextTestResult run=31 errors=0 failures=0>
 
 
+Other interesting solutions
+---------------------------
+
+- `exdir`_
+- `h5py`_
+- `pytables`_
+- `zarr`_
+
+
 
 .. _New BSD License: https://opensource.org/licenses/BSD-3-Clause
 .. _NumPy indexing: https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html
@@ -418,3 +428,7 @@ To run the test suite:
 .. _issue: https://github.com/gjlbeckers-uu/dArray/issues
 .. _pull: https://github.com/gjlbeckers-uu/dArray/pulls
 .. _repo: https://github.com/gjlbeckers-uu/dArray
+.. _exdir: https://github.com/CINPLA/exdir/
+.. _zarr: https://github.com/zarr-developers/zarr
+.. _pytables: https://github.com/PyTables/PyTables
+.. _h5py: https://github.com/h5py/h5py
