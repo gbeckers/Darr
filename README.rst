@@ -12,7 +12,7 @@ memory-mapped read/write access to such disk-based data, the ability to
 append data, and the flexible use of metadata. It is primarily designed for
 scientific use cases. Save and use your numeric arrays and metadata with one
 line of code while making sure that long-term and tool-independent
-accessibility in ensured.
+accessibility is ensured.
 
 To avoid tool-specific data formats, dArray is exclusively based
 on a combination of flat binary and text files. It automatically saves a clear
@@ -43,29 +43,24 @@ Pro's:
 - **Human-readable explanation of how the binary data is stored** is
   saved in a README text file.
 - README also contains **examples of how to read the
-  specific array data** in popular analysis environments
+  array** in popular analysis environments
   such as Python (without dArray), R, Julia, Octave/Matlab, GDL/IDL, and
   Mathematica.
-- **Many numeric types** are supported:  int8, int16, int32, int64, uint8,
-  uint16, uint32, uint64, float16, float32, float64, complex64, complex128.
+- **Many numeric types** are supported:  (u)int8-(u)int64, float16-float64,
+  complex64, complex128.
 - Easy use of **metadata**, stored in a separate `JSON`_ text file.
 - **Minimal dependencies**, only `NumPy`_.
-- **Small** library.
 - **Integrates easily** with the `Dask`_ or `NumExpr`_ libraries for **numeric
   computation on very large darrays**.
 
 Con's:
 
-- **No compression**. This to keep things as simple and accessible as
-  possible. For archiving purposes it is of course always possible to simply
+- **No compression**. For archiving purposes it is of course possible to simply
   compress the darray files with a compression tool.
 - **Multiple files**. The data, the data description, and the metadata are
   stored in separate files, though all within a single directory.
 - **Inefficient (storage-wise) for very small arrays**. If you have a
   zillion small arrays, and storage space in a concern, use other approaches.
-  A special type of array is developed to deal with this (VLArrayList), but it
-  is still very experimental.
-
 
 
 Examples
@@ -82,7 +77,7 @@ Examples
                [0., 0., 0., ..., 0., 0., 0.]]) (r+)
 
 The default is to fill the array with zeros (of type float64) but this can
-be changed by the  'fill' and 'fillfunc' parameters. See the :doc:`api`.
+be changed by the 'fill' and 'fillfunc' parameters. See the :doc:`api`.
 
 The data is now stored on disk in a directory named 'ar1.da', containing a
 flat binary file ('arrayvalues.bin') and a human-readble `JSON`_ text file
@@ -142,8 +137,7 @@ the source `repo`_.
 **Reading data**
 
 The disk-based array is memory-mapped and can be used to read data into
-RAM using NumPy
-indexing.
+RAM using NumPy indexing.
 
 .. code-block:: python
 
@@ -271,8 +265,9 @@ like so:
 
 **Metadata**
 
-Metadata can be read and written as a dictionary. Changes correspond to
-changes in a human-readable JSON text file that holds the metadata on disk.
+Metadata can be read and written like a dictionary. Changes correspond to
+changes in a human-readable and editable JSON text file that holds the metadata
+on disk.
 
 .. code-block:: python
 
@@ -291,9 +286,6 @@ changes in a human-readable JSON text file that holds the metadata on disk.
     a.metadata
     {'electrodes': [2, 5], 'samplingrate': 1000.0}
 
-When making multiple changes it is more efficient to use the 'update' method
-to make them all at once, as shown above.
-
 Since JSON is used to store the metadata, you cannot store arbitrary python
 objects. You can only store:
 
@@ -309,15 +301,14 @@ Rationale
 ---------
 There are many great formats for storing scientific data. Nevertheless,
 the advantages they offer often go hand in hand with complexity and
-dependence on external libraries or specific knowledge that is not included
-with the data.  Preferably, scientific data is stored in a way that is
+dependence on external libraries, or on specific knowledge that is not included
+with the data.  Preferably, however, scientific data is stored in a way that is
 simple and self-explanatory. For one thing, this is in line with the
 principle of openness and facilitates re-use and reproducibility of
-scientific results by others. Additionally, many years of experience teaches
-that simple formats and independence of specific tools are a
-very good idea, even when data never leaves your own hands (see this `blog of
-Cyrille Rossant`_ that echos my own experiences). Your data can have a long
-life, analysis tools much less so.
+scientific results by others. Additionally, experience teaches that simple
+formats and independence of specific tools are a very good idea, even when
+just working with your own data (see this `blog by Cyrille Rossant`_ that
+echos my own experiences).
 
 The goal of dArray is to help you save and use numeric data arrays from
 within Python in a way that is consistent with this idea.
@@ -330,10 +321,10 @@ information about the organization of the data to separate text files.
 
 The combination of flat binary and text files leads to a self-documenting
 format that anyone can easily explore on any computer, operating system,
-and programming language, without installing anything, and without any
+and programming language, without installing dependencies, and without any
 specific pre-existing knowledge on the format. In decades to come, your files
 are much more likely to be readable in this format than in specific formats
-such as `HDF5`_ or `.npy`_. Even by yourself.
+such as `HDF5`_ or `.npy`_.
 
 For a variety of current analysis tools dArray helps you make your data
 even more accessible as it generates a README text file that, in addition to
