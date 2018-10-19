@@ -36,7 +36,7 @@ Features
 Pro's:
 
 - **Simple data format** based on **flat binary** and **text** files.
-- Supports **very large data arrays**, through **memory-mapped** file access.
+- Supports **very large data arrays** through **memory-mapped** file access.
 - Data read/write access through **NumPy indexing** (see
   `here`_).
 - Data is easily **appendable**.
@@ -55,8 +55,8 @@ Pro's:
 
 Con's:
 
-- **No compression**. For archiving purposes it is of course possible to simply
-  compress the darray files with a compression tool.
+- **No compression**, although it is of course possible to simply
+  compress the darray files with a compression tool for archiving purposes.
 - **Multiple files**. The data, the data description, and the metadata are
   stored in separate files, though all within a single directory.
 - **Inefficient (storage-wise) for very small arrays**. If you have a
