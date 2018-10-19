@@ -414,7 +414,7 @@ To run the test suite:
 .. _blosc: https://github.com/Blosc/c-blosc
 .. _pyfbf: https://github.com/davidh-ssec/pyfbf
 .. _HDF5: https://www.hdfgroup.org/
-.. _blog of Cyrille Rossant: http://cyrille.rossant.net/moving-away-hdf5/
+.. _blog by Cyrille Rossant: http://cyrille.rossant.net/moving-away-hdf5/
 .. _issue: https://github.com/gjlbeckers-uu/dArray/issues
 .. _pull: https://github.com/gjlbeckers-uu/dArray/pulls
 .. _repo: https://github.com/gjlbeckers-uu/dArray
