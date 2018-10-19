@@ -11,8 +11,8 @@ in a way that is open, simple, and self-explanatory. It also enables fast
 memory-mapped read/write access to such disk-based data, the ability to
 append data, and the flexible use of metadata. It is primarily designed for
 scientific use cases. Save and use your numeric arrays and metadata with one
-line of code while making sure that long-term and tool-independent
-accessibility is ensured.
+line of code while easy, long-term and tool-independent accessibility is
+ensured.
 
 To avoid tool-specific data formats, dArray is exclusively based
 on a combination of flat binary and text files. It automatically saves a clear
@@ -338,7 +338,7 @@ There are of course also disadvantages to this approach.
 
 - Although the data is widely readable by many scientific analysis tools and
   programming languages, it lacks the ease of 'double-click access' that
-  specific data file formats have. For example, if your data is a sound
+  specific data file formats may have. For example, if your data is a sound
   recording, saving it in '.wav' format enables you to directly open it in any
   audio program.
 - To keep things as simple as possible, dArray does not use compression.
