@@ -525,8 +525,7 @@ class Array(BaseDataDir):
         with self._open_array() as (ar, fd):
             # next needed because class name may be longer than "memmap"
             s = '\n   '.join(repr(ar).lstrip('memmap').splitlines())
-        classname = self.__class__.__name__.lower()
-        return f"{classname} {s} ({self.accessmode})"
+        return f"darray {s} ({self.accessmode})"
 
     def __str__(self):
         with self._open_array() as (ar, fd):
