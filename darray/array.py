@@ -909,9 +909,9 @@ class Array(BaseDataDir):
            copy of the darray
 
         """
-
+        metadata = dict(self.metadata)
         return asarray(path=path, array=self, dtype=dtype,
-                       accessmode=accessmode, metadata=dict(self.metadata),
+                       accessmode=accessmode, metadata=metadata,
                        chunklen=chunklen, overwrite=overwrite)
 
     def _currentchecksums(self):
@@ -1152,7 +1152,7 @@ def asarray(path, array, dtype=None, accessmode='r',
     bd._write_jsondict(filename=Array._arraydescrfilename,
                        d=datainfo, overwrite=overwrite)
     metadatapath = path.joinpath(Array._metadatafilename)
-    if metadata is not None:
+    if (metadata is not None) and (metadata != {}):
         bd._write_jsondict(filename=Array._metadatafilename,
                            d=metadata, overwrite=overwrite)
     elif metadatapath.exists():  # no metadata but file exists, remove it

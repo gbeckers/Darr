@@ -399,8 +399,8 @@ To run the test suite:
     <unittest.runner.TextTestResult run=31 errors=0 failures=0>
 
 
-Other interesting solutions
----------------------------
+Other interesting projects
+--------------------------
 
 - `exdir`_
 - `h5py`_
