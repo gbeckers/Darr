@@ -180,7 +180,7 @@ class BaseDataDir(object):
     def __init__(self, path):
         path = Path(path)
         if not path.exists():
-            raise IOError(f"'{path}' does not exist")
+            raise OSError(f"'{path}' does not exist")
         self._path = path
 
     @property
@@ -365,7 +365,7 @@ class MetaData:
 
         """
         if self._accessmode == 'r':
-            raise IOError("metadata not writeable; use 'set_accessmode' "
+            raise OSError("metadata not writeable; use 'set_accessmode' "
                           "method to change this")
         metadata = self._read()
         metadata.update(*arg, **kwargs)
@@ -614,7 +614,7 @@ class Array(BaseDataDir):
             d = self._read_jsondict(filename=self._arraydescrfilename,
                                     requiredkeys=requiredkeys)
         except Exception:
-            raise IOError(f"Could not read array description from "
+            raise OSError(f"Could not read array description from "
                           f"'{self._arraydescrfilename}'")
         vfile = distutils.version.StrictVersion(d['darrayversion'])
         vlib = distutils.version.StrictVersion(self._formatversion)
@@ -649,7 +649,7 @@ class Array(BaseDataDir):
     def check_arraywriteable(self):
         with self._open_array() as (ar, fd):
             if not ar.flags.writeable:
-                raise IOError(
+                raise OSError(
                     "darray not writeable; use 'set_accessmode' method to "
                     "change this")
 
@@ -773,7 +773,7 @@ class Array(BaseDataDir):
 
         """
         if self._accessmode != 'r+':
-            raise IOError(f"Accesmode should be 'r+' "
+            raise OSError(f"Accesmode should be 'r+' "
                           f"(now is '{self._accessmode}')")
         if not hasattr(arrayiterable, '__iter__'):
             raise TypeError("'arrayiterable' is not iterable")
@@ -1186,7 +1186,7 @@ def create_basedir(path, overwrite=False):
     """
     path = Path(path)
     if path.exists() and not overwrite:
-        raise IOError(f"'{path}' directory already exists; "
+        raise OSError(f"'{path}' directory already exists; "
                       f"use `overwrite` parameter to overwrite")
     else:
         if not path.exists():
@@ -1598,7 +1598,7 @@ def write_jsonfile(path, data, sort_keys=True, indent=4, ensure_ascii=True,
                    overwrite=False):
     path = Path(path)
     if path.exists() and not overwrite:
-        raise IOError(f"'{path}' exists, use 'overwrite' argument")
+        raise OSError(f"'{path}' exists, use 'overwrite' argument")
     try:
         json_string = json.dumps(data, sort_keys=sort_keys,
                                  ensure_ascii=ensure_ascii, indent=indent)
