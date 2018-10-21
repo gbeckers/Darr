@@ -3,8 +3,17 @@ language: python
 python:
   - "3.6"
 
+install:
+  - pip install pytest
+  - pip install pytest-cov
+  - pip install coveralls
+
 sudo: false
 
 script:
   -  python -m darray.tests.test_array
   -  python -m darray.tests.test_vlarraylist
+  -  pytest --cov=darray/
+
+after_success:
+  - coveralls
