@@ -386,8 +386,8 @@ Development and Contributing
 ----------------------------
 
 This library is developed by Gabriël Beckers. It is being used in
-practice in the lab, but a formal first release will be done when there
-are more unit tests. Also, the naming of some functions/methods may
+practice in the lab, but first beta release will be done when there
+are more unit tests. The naming of some functions/methods may
 still change. Any help / suggestions / ideas / contributions are very
 welcome and appreciated. For any comment, question, or error, please
 open an [issue](https://github.com/gjlbeckers-uu/dArray/issues) or
