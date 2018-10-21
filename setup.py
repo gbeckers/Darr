@@ -26,9 +26,9 @@ setup(
     requires=['numpy'],
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: BSD-3 License",
+        "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
-        'Development Status :: 4 - Beta',
+        'Development Status :: 3 - Aplha',
         'Intended Audience :: Scientists',
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
