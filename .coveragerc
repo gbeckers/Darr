@@ -1,0 +1,6 @@
+[run]
+source = darray
+
+[report]
+omit =
+    */_version.py
