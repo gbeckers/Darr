@@ -23,7 +23,7 @@ scientific data tools.
 dArray is open source and freely available under the [New BSD
 License](https://opensource.org/licenses/BSD-3-Clause) terms.
 
-Version: 0.1.0
+Version: 0.1.0 Alpha
 
 dArray is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
 Beckers
