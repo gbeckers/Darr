@@ -7,7 +7,7 @@ if sys.version_info < (3,6):
     print("dArray requires Python 3.6 or higher please upgrade")
     sys.exit(1)
 
-with open("README.rst", "r") as fh:
+with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
@@ -22,7 +22,7 @@ setup(
     description='dArray is a Python science library for storing numeric data '
                 'arrays in a format that is open, simple, and self-explanatory',
     long_description=long_description,
-    long_description_content_type="text/x-rst",
+    long_description_content_type="text/markdown",
     requires=['numpy'],
     classifiers=[
         "Programming Language :: Python :: 3",
