@@ -1,26 +1,26 @@
-DiskArray API Documentation
+dArray API Documentation
 ===========================
 
 
-.. automodule:: diskarray.diskarray
+.. automodule:: darray.array
 
-Creating diskarrays
--------------------
+Creating arrays
+---------------
 
-.. autofunction:: diskarray.asdiskarray
-.. autofunction:: diskarray.create_diskarray
+.. autofunction:: darray.asarray
+.. autofunction:: darray.create_array
 
-Accessing existing diskarrays
------------------------------
-.. autoclass:: diskarray.DiskArray
+Accessing existing arrays
+-------------------------
+.. autoclass:: darray.array
    :members:
 
-Deleting diskarrays
--------------------
+Deleting arrays
+---------------
 
-.. autofunction:: diskarray.delete_diskarray
+.. autofunction:: darray.delete_array
 
-Truncating diskarrays
----------------------
+Truncating arrays
+-----------------
 
-.. autofunction:: diskarray.truncate_diskarray
+.. autofunction:: darray.truncate_array

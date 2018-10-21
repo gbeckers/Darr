@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="DiskArray API Documentation" href="api.html" />
+    <link rel="next" title="dArray API Documentation" href="api.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -41,23 +41,22 @@
             
   <div class="section" id="darray">
 <h1><a class="toc-backref" href="#id1">dArray</a><a class="headerlink" href="#darray" title="Permalink to this headline">¶</a></h1>
-<a class="reference external image-reference" href="https://travis-ci.org/gjlbeckers-uu/dArray"><img alt="https://travis-ci.org/gjlbeckers-uu/dArray.svg?branch=master" src="https://travis-ci.org/gjlbeckers-uu/dArray.svg?branch=master" /></a>
-<p>dArray is a Python library for storing numeric data arrays in a format
-that is as open and simple as possible. It is primarily designed for
-scientific use cases, when accessibility of data is of fundamental
-importance. It also provides easy and fast memory-mapped read/write access
-to such disk-based data, using <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html">NumPy indexing</a>, and allows for the
-flexible use of metadata.</p>
-<p>To avoid tool- or library-specific data formats, dArray is exclusively
-based on self-explaining flat binary and text files. It automatically
-generates and saves a clear text description of how exactly the
-data is stored, and provides example code to read the specific data in a
-variety of current scientific data tools.</p>
-<p>dArray is open source and freely available under the <a class="reference external" href="https://opensource.org/licenses/BSD-3-Clause">New BSD License</a>
-terms.</p>
-<p>Version: 0.1</p>
+<a class="reference external image-reference" href="https://travis-ci.org/gbeckers/dArray?branch=master"><img alt="https://travis-ci.org/gbeckers/dArray.svg?branch=master" src="https://travis-ci.org/gbeckers/dArray.svg?branch=master" /></a>
+<p>dArray is a Python library for storing multidimensional numeric data arrays
+in a way that is open, simple, and self-explanatory. It also enables fast
+memory-mapped read/write access to such disk-based data, the ability to
+append data, and the flexible use of metadata. It is primarily designed for
+scientific use cases. Save and use your numeric arrays and metadata with one
+line of code while easy, long-term and tool-independent accessibility is
+ensured.</p>
+<p>To avoid tool-specific data formats, dArray is exclusively based
+on a combination of flat binary and text files. It automatically saves a clear
+text description of how exactly the data is stored, as well as example code
+to read the specific data in a variety of current scientific data tools.</p>
+<p>dArray is open source and freely available under the <a class="reference external" href="https://opensource.org/licenses/BSD-3-Clause">New BSD License</a> terms.</p>
+<p>Version: 0.1a, not released yet.</p>
 <p>dArray is BSD licensed (BSD 3-Clause License).
-(c) 2018, Gabriël Beckers</p>
+(c) 2017-2018, Gabriël Beckers</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
@@ -68,61 +67,52 @@ terms.</p>
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
 <p>Pro’s:</p>
 <ul class="simple">
-<li>Very <strong>simple data format</strong> based on <strong>flat binary</strong> and <strong>text</strong>
-files. This maximizes readability by other software and analysis tools,
-now and in many years to come.</li>
-<li>Numeric data is accessed through a <strong>memory-mapped</strong> file, allowing for
-direct access to <strong>very large data arrays</strong>, even larger than available RAM
-memory.</li>
-<li>Data is selected for reading/writing through <strong>NumPy indexing</strong> (see
-<a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html">here</a>) and is easily <strong>appendable</strong>.</li>
-<li><strong>Human-readable explanation of how the binary data is stored</strong> is saved
-in a README text file, which also contains <strong>examples of how to read the
-specific array data in a few lines of code</strong> in popular analysis environments
-such as Python (without dArray), R, Julia, Octave/Matlab, GDL/IDL,
-and Mathematica.</li>
-<li><strong>Many numeric types</strong> are supported:  int8, int16, int32, int64, uint8,
-uint16, uint32, uint64, float16, float32, float64, complex64, complex128.</li>
-<li>Easy use of <strong>metadata</strong>, stored in a separate text file.</li>
+<li><strong>Simple data format</strong> based on <strong>flat binary</strong> and <strong>text</strong> files.</li>
+<li>Supports <strong>very large data arrays</strong> through <strong>memory-mapped</strong> file access.</li>
+<li>Data read/write access through <strong>NumPy indexing</strong> (see
+<a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html">here</a>).</li>
+<li>Data is easily <strong>appendable</strong>.</li>
+<li><strong>Human-readable explanation of how the binary data is stored</strong> is
+saved in a README text file.</li>
+<li>README also contains <strong>examples of how to read the
+array</strong> in popular analysis environments
+such as Python (without dArray), R, Julia, Octave/Matlab, GDL/IDL, and
+Mathematica.</li>
+<li><strong>Many numeric types</strong> are supported:  (u)int8-(u)int64, float16-float64,
+complex64, complex128.</li>
+<li>Easy use of <strong>metadata</strong>, stored in a separate <a class="reference external" href="https://en.wikipedia.org/wiki/JSON">JSON</a> text file.</li>
 <li><strong>Minimal dependencies</strong>, only <a class="reference external" href="http://www.numpy.org/">NumPy</a>.</li>
-<li><strong>Small</strong> library. Just one module file that can be easily included in your
-own code if you want to avoid dependence on external libraries.</li>
 <li><strong>Integrates easily</strong> with the <a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> or <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> libraries for <strong>numeric
-computation on very large dArrays</strong>.</li>
+computation on very large darrays</strong>.</li>
 </ul>
 <p>Con’s:</p>
 <ul class="simple">
-<li><strong>No compression</strong>. This to keep things as simple and accessible as
-possible. For archiving the data, you can of course simply compress the file
-with any compression tool if you wish.</li>
+<li><strong>No compression</strong>, although it is of course possible to simply
+compress the darray files with a compression tool for archiving purposes.</li>
 <li><strong>Multiple files</strong>. The data, the data description, and the metadata are
 stored in separate files, though all within a single directory.</li>
-<li><strong>Inefficient for very small arrays</strong>. Do use other approaches if you have
-a zillion small arrays. A dArrayList is being developed to deal with
-the latter, but it is still very experimental.</li>
+<li><strong>Inefficient (storage-wise) for very small arrays</strong>. If you have a
+zillion small arrays, and storage space in a concern, use other approaches.</li>
 </ul>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<p><strong>Creating dArray from NumPy array</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="kn">as</span> <span class="nn">da</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ar</span>
-<span class="go">array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
-<span class="go">       [ 1.,  1.,  1., ...,  1.,  1.,  1.]])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">asdarray</span><span class="p">(</span><span class="s1">&#39;ar1.da&#39;</span><span class="p">,</span> <span class="n">ar</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span>
-<span class="go">dArray([[ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
-<span class="go">           [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)</span>
+<p><strong>Creating an array</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="kn">as</span> <span class="nn">da</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;a1.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+<span class="go">           [0., 0., 0., ..., 0., 0., 0.]]) (r+)</span>
 </pre></div>
 </div>
-<p>The data is now stored on disk in a directory named ‘ar.da’, containing a flat
-binary file (‘arrayvalues.bin’) and a human-readble
-<a class="reference external" href="https://en.wikipedia.org/wiki/JSON">JSON</a> text file (‘arraydescription.json’), with information on the
-array dimensionality, layout and numeric type. It also contains a ‘README.txt’ file
-explaining the data format as well as providing instructions on how to read the
-array using other tools. For example, it provides the code to read the array in
+<p>The default is to fill the array with zeros (of type float64) but this can
+be changed by the ‘fill’ and ‘fillfunc’ parameters. See the <a class="reference internal" href="api.html"><span class="doc">dArray API Documentation</span></a>.</p>
+<p>The data is now stored on disk in a directory named ‘ar1.da’, containing a
+flat binary file (‘arrayvalues.bin’) and a human-readble <a class="reference external" href="https://en.wikipedia.org/wiki/JSON">JSON</a> text file
+(‘arraydescription.json’), with information on the array dimensionality,
+layout and numeric type. It also contains a ‘README.txt’ file explaining the
+data format as well as providing instructions on how to read the array
+using other tools. For example, it provides the code to read the array in
 <a class="reference external" href="https://www.gnu.org/software/octave/">Octave</a>/Matlab:</p>
 <div class="highlight-octave"><div class="highlight"><pre><span></span><span class="n">fileid</span> <span class="p">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="s">&#39;arrayvalues.bin&#39;</span><span class="p">);</span>
 <span class="n">a</span> <span class="p">=</span> <span class="nb">fread</span><span class="p">(</span><span class="n">fileid</span><span class="p">,</span> <span class="p">[</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s">&#39;*float64&#39;</span><span class="p">,</span> <span class="s">&#39;ieee-le&#39;</span><span class="p">);</span>
@@ -142,143 +132,145 @@ a <span class="o">=</span> <span class="kt">array</span><span class="p">(</span>
 <span class="n">close</span><span class="p">(</span><span class="n">fid</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>To see the files that correspond to a dArray array, see ‘examplearray.da’ in
+the source <a class="reference external" href="https://github.com/gjlbeckers-uu/dArray">repo</a>.</p>
+<p><strong>Different numeric type</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;a2.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([[0, 0, 0, ..., 0, 0, 0],</span>
+<span class="go">       [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)</span>
+</pre></div>
+</div>
+<p><strong>Creating array from NumPy array</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">na</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="s1">&#39;a3.da&#39;</span><span class="p">,</span> <span class="n">na</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
+<span class="go">       [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)</span>
+</pre></div>
+</div>
 <p><strong>Reading data</strong></p>
-<p>The disk-based array is memory-mapped and can be used to read data using NumPy
-indexing.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span><span class="p">[:,</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<p>The disk-based array is memory-mapped and can be used to read data into
+RAM using NumPy indexing.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[:,</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
 <span class="go">array([ 1.,  1.])</span>
 </pre></div>
 </div>
-<p>Note that reading data through indexing creates a NumPy array. The dArray
-itself is not a NumPy array. For computation, read (or view, see below) the
-data, using indexing, first:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">*</span> <span class="n">dar</span><span class="p">[:]</span>
+<p>Note that that creates a NumPy array. The darray itself is not a NumPy array,
+nor does it behave like one except for indexing. The simplest way to use the
+data for computation is to, read (or view, see below) the data first as a
+NumPy array:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">[:]</span>
 <span class="go">array([[2., 2., 2., ..., 2., 2., 2.],</span>
 <span class="go">       [2., 2., 2., ..., 2., 2., 2.]])</span>
 </pre></div>
 </div>
-<p>If your dArray is too large to read into RAM, you could use the <a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> or
+<p>If your data is too large to read into RAM, you could use the <a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> or
 the <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> library for computation (see example below).</p>
 <p><strong>Writing data</strong></p>
-<p>Writing is also done through NumPy indexing. Writing directly leads to changes
-on disk. Our example array is read-only because we did not specify otherwise
-in the ‘asdArray’ function above, so we’ll set it to be writable
+<p>Writing is also done through NumPy indexing. Writing directly leads to
+changes on disk. Our example array is read-only because we did not specify
+otherwise in the ‘asdarray’ function above, so we’ll set it to be writable
 first:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span><span class="o">.</span><span class="n">set_accessmode</span><span class="p">(</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span>
-<span class="go">dArray([[ 1.,  2.,  1., ...,  1.,  1.,  1.],</span>
-<span class="go">           [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">set_accessmode</span><span class="p">(</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([[ 1.,  2.,  1., ...,  1.,  1.,  1.],</span>
+<span class="go">       [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)</span>
 </pre></div>
 </div>
-<p>Of course, you could have done that with the NumPy array before converting
-it to a dArray, but working with a memory-mapped array on disk can be
-advantageous when arrays are very large.</p>
 <p><strong>Efficient I/O</strong></p>
 <p>To get maximum speed when doing multiple operations open a direct view on
-the disk-based array:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">dar</span><span class="o">.</span><span class="n">view</span><span class="p">()</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
+the disk-based array so as to opens the underlying files only once:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">a</span><span class="o">.</span><span class="n">view</span><span class="p">()</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.</span>
 <span class="gp">... </span>    <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.</span>
 <span class="gp">... </span>    <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">5.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar</span>
-<span class="go">dArray([[ 3.,  2.,  4., ...,  1.,  1.,  1.],</span>
-<span class="go">           [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([[ 3.,  2.,  4., ...,  1.,  1.,  1.],</span>
+<span class="go">      [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)</span>
 </pre></div>
 </div>
-<p>If not opened explicitly like this, every read and write operation will
-under the hood open and close the underlying file(s) when necessary, making
-it potentially slower.</p>
-<p><strong>Creating dArray from scratch</strong></p>
-<p>dArrays can also be created de novo. We now choose a different numeric type:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;ar2.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span>
-<span class="go">dArray([[0, 0, 0, ..., 0, 0, 0],</span>
-<span class="go">           [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)</span>
+<p><strong>Appending data</strong></p>
+<p>You can easily append data to a darray, which is immediately reflected in
+the disk-based files. This is a big plus in many situations. Think for example
+of saving data as they are generated by an instrument. A restriction is
+that you can only append to the first axis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">1024</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([[3., 2., 4., ..., 1., 1., 1.],</span>
+<span class="go">       [5., 2., 5., ..., 1., 1., 5.],</span>
+<span class="go">       [1., 1., 1., ..., 1., 1., 1.],</span>
+<span class="go">       [1., 1., 1., ..., 1., 1., 1.],</span>
+<span class="go">       [1., 1., 1., ..., 1., 1., 1.]]) (r+)</span>
 </pre></div>
 </div>
-<p>The default is to fill the array with zeros but the ‘fill’ parameter can
-change this value. There is also a ‘fillfunc’ parameter to fill the array non-
-uniformly, in more complex ways. See the <a class="reference internal" href="api.html"><span class="doc">DiskArray API Documentation</span></a>.</p>
-<p><strong>Appending data</strong>
-You can easily append data to a dArray, which is immediately reflected in
-the disk-based files. This is big plus in many situations. Think for
-example of saving data as it is generated by an instrument. A restriction
-is that you can only append to the first axis:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">1024</span><span class="p">)))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span>
-<span class="go">dArray([[0, 0, 0, ..., 0, 0, 0],</span>
-<span class="go">           [0, 0, 0, ..., 0, 0, 0],</span>
-<span class="go">           [1, 1, 1, ..., 1, 1, 1],</span>
-<span class="go">           [1, 1, 1, ..., 1, 1, 1],</span>
-<span class="go">           [1, 1, 1, ..., 1, 1, 1]], dtype=uint8) (r+)</span>
-</pre></div>
-</div>
-<p>The associated ‘README.txt’ and ‘arraydescription.json’ texts files are
-also automatically updated to reflect these changes. There is an
-‘iterappend’ method for efficient serial appending. See the <a class="reference internal" href="api.html"><span class="doc">DiskArray API Documentation</span></a>.</p>
+<p>The associated ‘README.txt’ and ‘arraydescription.json’ texts files are also
+automatically updated to reflect these changes. There is an ‘iterappend’
+method for efficient serial appending. See the <a class="reference internal" href="api.html"><span class="doc">dArray API Documentation</span></a>.</p>
 <p><strong>Copying and type casting data</strong></p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar3</span> <span class="o">=</span> <span class="n">dar2</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s1">&#39;ar3.da&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar4</span> <span class="o">=</span> <span class="n">dar2</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s1">&#39;ar4.da&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float16&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar4</span>
-<span class="go">dArray([[ 0.,  0.,  0., ...,  0.,  0.,  0.],</span>
-<span class="go">           [ 0.,  0.,  0., ...,  0.,  0.,  0.],</span>
-<span class="go">           [ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
-<span class="go">           [ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
-<span class="go">           [ 1.,  1.,  1., ...,  1.,  1.,  1.]], dtype=float16) (r)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ac</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s1">&#39;ac.da&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acf16</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s1">&#39;acf16.da&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float16&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">acf16</span>
+<span class="go">array([[3., 2., 4., ..., 1., 1., 1.],</span>
+<span class="go">       [5., 2., 5., ..., 1., 1., 5.],</span>
+<span class="go">       [1., 1., 1., ..., 1., 1., 1.],</span>
+<span class="go">       [1., 1., 1., ..., 1., 1., 1.],</span>
+<span class="go">       [1., 1., 1., ..., 1., 1., 1.]], dtype=float16) (r)</span>
 </pre></div>
 </div>
 <p>Note that the type of the array can be changed when copying. Data is copied
 in chunks, so very large arrays will not flood RAM memory.</p>
 <p><strong>Larger than memory computation</strong></p>
-<p>For computing with very large dArrays, I recommend the <a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> library,
-which works nicely with dArray. I’ll base the example on a small array
+<p>For computing with very large darrays, I recommend the <a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> library,
+which works nicely with darray. I’ll base the example on a small array
 though:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask.array</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar5</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;ar5.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar5</span>
-<span class="go">dArray([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">dar5</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">512</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">((</span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">dar5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar5</span>
-<span class="go">dArray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;ar1.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dara</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">512</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">((</span><span class="n">dara</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)</span>
 </pre></div>
 </div>
-<p>So in this case we overwrote the data in dar5 with the results of the computation,
-but we could have stored the result in a different dArray of the same shape. Dask
-can do more powerful things, for which I refer to the <a class="reference external" href="https://dask.pydata.org/en/latest/index.html">Dask documentation</a>. The
-point here is that dArrays can be both sources and stores for Dask.</p>
-<p>Alternatively, you can use the <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> library using a view of the dArray,
+<p>So in this case we overwrote the data in a with the results of the computation,
+but we could have stored the result in a different darray of the same shape.
+Dask can do more powerful things, for which I refer to the
+<a class="reference external" href="https://dask.pydata.org/en/latest/index.html">Dask documentation</a>. The point here is that darrays can be both sources
+and stores for Dask.</p>
+<p>Alternatively, you can use the <a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> library using a view of the darray,
 like so:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numexpr</span> <span class="kn">as</span> <span class="nn">ne</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar6</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;ar6.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">dar6</span><span class="o">.</span><span class="n">view</span><span class="p">()</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;a3.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">a</span><span class="o">.</span><span class="n">view</span><span class="p">()</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">ne</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s1">&#39;(v + 1) / 2&#39;</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">v</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar6</span>
-<span class="go">dArray([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)</span>
 </pre></div>
 </div>
 <p><strong>Metadata</strong></p>
-<p>Metadata can be read and written as a dictionary. Changes correspond to
-changes in a human-readable JSON text file that holds the metadata on disk.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span><span class="o">.</span><span class="n">metadata</span>
+<p>Metadata can be read and written like a dictionary. Changes correspond to
+changes in a human-readable and editable JSON text file that holds the metadata
+on disk.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span>
 <span class="go">{}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;samplingrate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1000.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span><span class="o">.</span><span class="n">metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;samplingrate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1000.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span>
 <span class="go">{&#39;samplingrate&#39;: 1000.0}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;starttime&#39;</span><span class="p">:</span> <span class="s1">&#39;12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;electrodes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span><span class="o">.</span><span class="n">metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;starttime&#39;</span><span class="p">:</span> <span class="s1">&#39;12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;electrodes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span>
 <span class="go">{&#39;electrodes&#39;: [2, 5], &#39;samplingrate&#39;: 1000.0, &#39;starttime&#39;: &#39;12:00:00&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;starttime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;13:00:00&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dar2</span><span class="o">.</span><span class="n">metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;starttime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;13:00:00&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span>
 <span class="go">{&#39;electrodes&#39;: [2, 5], &#39;samplingrate&#39;: 1000.0, &#39;starttime&#39;: &#39;13:00:00&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">dar2</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;starttime&#39;</span><span class="p">]</span>
-<span class="go">dar2.metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">a</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;starttime&#39;</span><span class="p">]</span>
+<span class="go">a.metadata</span>
 <span class="go">{&#39;electrodes&#39;: [2, 5], &#39;samplingrate&#39;: 1000.0}</span>
 </pre></div>
 </div>
-<p>When making multiple changes it is more
-efficient to use the ‘update’ method to make them all at once, as shown above.</p>
 <p>Since JSON is used to store the metadata, you cannot store arbitrary python
 objects. You can only store:</p>
 <ul class="simple">
@@ -292,61 +284,42 @@ objects. You can only store:</p>
 </div>
 <div class="section" id="rationale">
 <h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this headline">¶</a></h2>
-<p>Scientific data should preferably be stored or at least archived in a file
-format that is as simple as possible. This ensures readability by a variety
-of currently used analysis tools (Python, R, Octave/Matlab, Julia, GDL/IDL,
-Mathematic, Igor Pro, etc) as well as future tools. This is in line with the
+<p>There are many great formats for storing scientific data. Nevertheless,
+the advantages they offer often go hand in hand with complexity and
+dependence on external libraries, or on specific knowledge that is not included
+with the data.  Preferably, however, scientific data is stored in a way that is
+simple and self-explanatory. For one thing, this is in line with the
 principle of openness and facilitates re-use and reproducibility of
-scientific results. At the same time, it would be nice if data files could
-be created and accessed efficiently, also when data sets are large.</p>
-<p>dArray tries to address both requirements for numeric data arrays.</p>
-<p>It stores the data itself in a flat binary file. This is a future-proof way of
-storing numeric data, as long as clear information is
-provided on how the binary data is organized. Many file formats write such
-information as a header in front of the numeric data. However, that requires the
-reader somehow to know how long the header part of the file is and how to
-interpret it. A header is clearly not the ideal solution when maximizing
-readability, because we want to assume as little a priori knowledge as
-possible.</p>
-<p>dArray therefore writes the information about the organization of the data to
-a separate file. In addition to getting rid of the header, this allows us to
-write the information in plain text format. An interesting other approach
-would be to simply embed this information in the name of the binary file,
-see <a class="reference external" href="https://github.com/davidh-ssec/pyfbf">pyfbf</a>. Nevertheless, I prefer providing more comprehensive
-information then could realistically fit in a file name.</p>
-<p>This approach makes it is easy to read your numeric array data with one or a
-few lines of code, or even with GUI import tools, without depending on the
-dArray library itself. To facilitate this process, dArray saves
-together with the data a README text file that explains the format, and that
-contains example code of how to read the specific data with common tools
-such as Python/NumPy, R, Julia, MatLab/Octave, and Mathematica. Just copy and
-paste to read the data. Sharing your data is now very easy because
-every array that you save can be simply be provided as such to your
-colleagues. It already contains a text document that explains how to read the
-data, in many cases with minimal effort.</p>
-<p>The choice of storing the actual data in a flat binary file may at first
-seem odd given that there exist nice and broadly supported solutions
-for binary scientific data, such as <a class="reference external" href="https://www.hdfgroup.org/">HDF5</a>, which feature access time and
-storage space optimizations. I have used and use HDF5 a lot, and I like it,
-but in my own work I find that in many cases this solution can be too complex
-for my needs. Complexity has costs as well as benefits, and I now only
-use it when the benefits clearly outweigh the costs, which is sometimes but
-not often the case. For an interesting view on this topic I refer to a
-<a class="reference external" href="http://cyrille.rossant.net/moving-away-hdf5/">blog of Cyrille Rossant</a>, which is in line with my own experiences.</p>
-<p>In addition to saving and reading data in a simple and durable format,
-dArray enables you to accesses the disk-based data in a memory-mapped
-way. Data arrays can thus be very large, larger than available RAM memory,
-and access is fast and efficient, based on <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html">NumPy indexing</a>.</p>
-<p>In terms of usage from a python environment , dArray is very similar
-to using a NumPy memory-mapped <a class="reference external" href="https://docs.scipy.org/doc/numpy-dev/neps/npy-format.html">.npy</a> file. The only differences are that the
-binary data and header info are split over different files to make the data
-more easily readable by other tools, that data can easily be appended,
-and that you can flexibly use and store arbitrary metadata.</p>
+scientific results by others. Additionally, experience teaches that simple
+formats and independence of specific tools are a very good idea, even when
+just working with your own data (see this <a class="reference external" href="http://cyrille.rossant.net/moving-away-hdf5/">blog by Cyrille Rossant</a> that
+echos my own experiences).</p>
+<p>The goal of dArray is to help you save and use numeric data arrays from
+within Python in a way that is consistent with this idea. It is not a
+file format, but a standardized way of saving data that maximizes readability.</p>
+<p>dArray stores the data itself in a flat binary file. This is a future-proof way
+of storing numeric data, as long as clear information is provided on how the
+binary data is organized. There is no header, because we want to assume as
+little a priori knowledge as possible. Instead, dArray writes the
+information about the organization of the data to separate text files.</p>
+<p>The combination of flat binary and text files leads to a self-documenting
+format that anyone can easily explore on any computer, operating system,
+and programming language, without installing dependencies, and without any
+specific pre-existing knowledge on the format. In decades to come, your files
+are much more likely to be readable in this format than in specific formats
+such as <a class="reference external" href="https://www.hdfgroup.org/">HDF5</a> or <a class="reference external" href="https://docs.scipy.org/doc/numpy-dev/neps/npy-format.html">.npy</a>.</p>
+<p>For a variety of current analysis tools dArray helps you make your data
+even more accessible as it generates a README text file that, in addition to
+explaining the format, contains example code of how to read the
+data. E.g. Python/NumPy (without the dArray library), R, Julia, MatLab/Octave,
+and Mathematica. Just copy and paste the code in the README to read the data.
+Every array that you save can be simply be provided as such to your
+colleagues with minimal explanation.</p>
 <p>There are of course also disadvantages to this approach.</p>
 <ul class="simple">
 <li>Although the data is widely readable by many scientific analysis tools and
 programming languages, it lacks the ease of ‘double-click access’ that
-specific data file formats have. For example, if your data is a sound
+specific data file formats may have. For example, if your data is a sound
 recording, saving it in ‘.wav’ format enables you to directly open it in any
 audio program.</li>
 <li>To keep things as simple as possible, dArray does not use compression.
@@ -379,9 +352,12 @@ zillions of very small data arrays stored separately.</li>
 </div>
 <div class="section" id="development-and-contributing">
 <h2>Development and Contributing<a class="headerlink" href="#development-and-contributing" title="Permalink to this headline">¶</a></h2>
-<p>This library is developed by Gabriël Beckers. Any help / suggestions / ideas
-/ contributions are very welcome and appreciated. For any comment, question,
-or error, please open an <a class="reference external" href="https://github.com/gjlbeckers-uu/dArray/issues">issue</a> or propose a <a class="reference external" href="https://github.com/gjlbeckers-uu/dArray/pulls">pull</a> request on GitHub.</p>
+<p>This library is developed by Gabriël Beckers. It is being used in practice
+in the lab, but a formal first release will be done when there are more unit
+tests. Also, the naming of some functions/methods may still change. Any help /
+suggestions / ideas / contributions are very welcome and
+appreciated. For any comment, question, or error, please open an <a class="reference external" href="https://github.com/gjlbeckers-uu/dArray/issues">issue</a> or
+propose a <a class="reference external" href="https://github.com/gjlbeckers-uu/dArray/pulls">pull</a> request on GitHub.</p>
 <p>Code can be found on GitHub: <a class="reference external" href="https://github.com/gjlbeckers-uu/dArray">https://github.com/gjlbeckers-uu/dArray</a></p>
 </div>
 <div class="section" id="testing">
@@ -389,22 +365,31 @@ or error, please open an <a class="reference external" href="https://github.com/
 <p>To run the test suite:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darray</span> <span class="kn">as</span> <span class="nn">da</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
-<span class="go">............................</span>
+<span class="go">..............................</span>
 <span class="go">----------------------------------------------------------------------</span>
-<span class="go">Ran 28 tests in 4.798s</span>
+<span class="go">Ran 31 tests in 1.627s</span>
 
 <span class="go">OK</span>
-<span class="go">&lt;unittest.runner.TextTestResult run=28 errors=0 failures=0&gt;</span>
+<span class="go">&lt;unittest.runner.TextTestResult run=31 errors=0 failures=0&gt;</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="other-interesting-projects">
+<h2>Other interesting projects<a class="headerlink" href="#other-interesting-projects" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/CINPLA/exdir/">exdir</a></li>
+<li><a class="reference external" href="https://github.com/h5py/h5py">h5py</a></li>
+<li><a class="reference external" href="https://github.com/PyTables/PyTables">pytables</a></li>
+<li><a class="reference external" href="https://github.com/zarr-developers/zarr">zarr</a></li>
+</ul>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api.html">DiskArray API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#creating-diskarrays">Creating diskarrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#accessing-existing-diskarrays">Accessing existing diskarrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#deleting-diskarrays">Deleting diskarrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#truncating-diskarrays">Truncating diskarrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">dArray API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#creating-arrays">Creating arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#accessing-existing-arrays">Accessing existing arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#deleting-arrays">Deleting arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#truncating-arrays">Truncating arrays</a></li>
 </ul>
 </li>
 </ul>
@@ -429,7 +414,7 @@ or error, please open an <a class="reference external" href="https://github.com/
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="api.html" title="next chapter">DiskArray API Documentation</a></li>
+      <li>Next: <a href="api.html" title="next chapter">dArray API Documentation</a></li>
   </ul></li>
 </ul>
 </div>

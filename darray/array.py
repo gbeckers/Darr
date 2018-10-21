@@ -1097,7 +1097,7 @@ def asarray(path, array, dtype=None, accessmode='r',
 
     See Also
     --------
-    create_darray : create a darray from scratch.
+    create_array : create an array from scratch.
 
     Examples
     --------
@@ -1241,7 +1241,7 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
 
     See Also
     --------
-    asdarray : create a darray from existing array-like object or
+    asarray : create a darray from existing array-like object or
         generator.
 
     Examples
@@ -1385,6 +1385,7 @@ def fit_chunks(totallen, chunklen, steplen=None):
         Step size, defaults to chunksize (i.e. no overlap)
 
     Returns a tuple (nchunks, newsize, remainder)
+    
     """
 
     if ((totallen % 1) != 0) or (totallen < 1):
