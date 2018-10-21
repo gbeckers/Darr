@@ -1364,6 +1364,7 @@ def truncate_array(a, index):
         i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize
         with a._open_array() as (v, fd):
             fd.truncate(i)
+            fd.close()
         a._update_len(lenincrease)
     else:
         raise ValueError(f"'index' {index} would yield an array of length "
