@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 from numpy.testing import assert_equal, assert_array_equal, assert_raises
 
-from darray.array import asarray, create_array, numtypes, Array
+from darray.array import asarray, create_array, numtypes, Array, truncate_array
 from .utils import tempdir
 
 
@@ -297,6 +297,16 @@ class MetaData(unittest.TestCase):
                                dtype='int64', metadata=md, overwrite=True)
             assert_equal(dict(dar.metadata), md)
 
+class TruncateData(unittest.TestCase):
+
+    def test_truncate1d(self):
+        with tempdir() as dirname:
+            a = np.array([0,1,2,3,4], dtype='int64')
+            dar = asarray(path=dirname, array=a, overwrite=True,
+                          accessmode='r+')
+            assert_equal(a, dar[:])
+            truncate_array(dar, 2)
+            assert_equal(a[:2], dar[:])
 
 
 
