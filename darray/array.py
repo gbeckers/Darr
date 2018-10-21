@@ -700,6 +700,7 @@ class Array(BaseDataDir):
             fd.close()
             array.tofile(str(self._datapath))
         else:
+            fd.seek(0, 2) # move to end
             array.tofile(fd)
             fd.flush()
         return array.shape[0]
