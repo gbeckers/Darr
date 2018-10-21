@@ -4,6 +4,7 @@ dArray
 [![image](https://travis-ci.org/gbeckers/dArray.svg?branch=master)](https://travis-ci.org/gbeckers/dArray?branch=master)
 [![image](https://img.shields.io/badge/pypi-v0.1.0-orange.svg)](https://pypi.org/project/darray/)
 [![Coverage Status](https://coveralls.io/repos/github/gbeckers/dArray/badge.svg?branch=master)](https://coveralls.io/github/gbeckers/dArray?branch=master)
+[![image](https://ci.appveyor.com/api/projects/status/github/gbeckers/darray?svg=true)](https://ci.appveyor.com/project/gbeckers/darray)
 
 dArray is a Python science library for storing numeric data arrays in a
 way that is open, simple, and self-explanatory. It also enables fast
