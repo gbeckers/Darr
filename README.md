@@ -2,6 +2,7 @@ dArray
 ======
 
 [![image](https://travis-ci.org/gbeckers/dArray.svg?branch=master)](https://travis-ci.org/gbeckers/dArray?branch=master)
+[![image](https://img.shields.io/badge/pypi-v0.1.0-orange.svg)](https://pypi.org/project/darray/)
 
 dArray is a Python science library for storing numeric data arrays in a
 way that is open, simple, and self-explanatory. It also enables fast
@@ -20,7 +21,7 @@ scientific data tools.
 dArray is open source and freely available under the [New BSD
 License](https://opensource.org/licenses/BSD-3-Clause) terms.
 
-Version: 0.1a, not released yet.
+Version: 0.1.0
 
 dArray is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
 Beckers
