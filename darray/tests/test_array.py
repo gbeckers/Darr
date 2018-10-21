@@ -1,9 +1,9 @@
 import unittest
 
 import numpy as np
-from numpy.testing import assert_equal, assert_array_equal
+from numpy.testing import assert_equal, assert_array_equal, assert_raises
 
-from darray.array import asarray, create_array, numtypes
+from darray.array import asarray, create_array, numtypes, Array
 from .utils import tempdir
 
 
@@ -139,6 +139,21 @@ class CreateDiskArray(unittest.TestCase):
         ndarray = np.zeros((0,3,7), dtype='float64')
         check_arrayequaltocreatedarray(ndarray=ndarray, shape=(0, 3, 7),
                                        chunklen=1)
+
+
+class dArray(unittest.TestCase):
+
+    def test_instantiatefromexistingpath(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(12,),
+                               dtype='int64', overwrite=True)
+            dar = Array(path=dirname)
+
+    def test_instantiatefromnonexistingpath(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(12,),
+                               dtype='int64', overwrite=True)
+        assert_raises(OSError, Array, path=dirname)
 
 
 class IterView(unittest.TestCase):
