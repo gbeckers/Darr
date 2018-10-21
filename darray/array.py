@@ -1384,8 +1384,6 @@ def fit_chunks(totallen, chunklen, steplen=None):
     steplen: int
         Step size, defaults to chunksize (i.e. no overlap)
 
-    Returns a tuple (nchunks, newsize, remainder)
-    
     """
 
     if ((totallen % 1) != 0) or (totallen < 1):

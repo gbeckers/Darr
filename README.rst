@@ -6,8 +6,8 @@ dArray
    :target: https://travis-ci.org/gbeckers/dArray?branch=master
 
 
-dArray is a Python library for storing multidimensional numeric data arrays
-in a way that is open, simple, and self-explanatory. It also enables fast
+dArray is a Python science library for storing numeric data arrays in a way
+that is open, simple, and self-explanatory. It also enables fast
 memory-mapped read/write access to such disk-based data, the ability to
 append data, and the flexible use of metadata. It is primarily designed for
 scientific use cases. Save and use your numeric arrays and metadata with one
