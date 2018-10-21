@@ -287,5 +287,18 @@ class AppendData(unittest.TestCase):
             dar.append(np.zeros((0, 2), dtype='int64'))
             assert_array_equal(np.zeros((0,2), dtype='int64'), dar[:])
 
+
+class MetaData(unittest.TestCase):
+
+    def test_createwithmetadata(self):
+        with tempdir() as dirname:
+            md = {'fs':20000, 'x': 33.3}
+            dar = create_array(path=dirname, shape=(0, 2),
+                               dtype='int64', metadata=md, overwrite=True)
+            assert_equal(dict(dar.metadata), md)
+
+
+
+
 if __name__ == '__main__':
     unittest.main()
