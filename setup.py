@@ -1,6 +1,7 @@
 import sys
 from distutils.core import setup
 import versioneer
+import setuptools
 
 if sys.version_info < (3,6):
     print("dArray requires Python 3.6 or higher please upgrade")
@@ -27,5 +28,10 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: BSD-3 License",
         "Operating System :: OS Independent",
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Scientists',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: Science/Research',
     ],
 )
