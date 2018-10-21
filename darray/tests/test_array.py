@@ -155,6 +155,14 @@ class dArray(unittest.TestCase):
                                dtype='int64', overwrite=True)
         assert_raises(OSError, Array, path=dirname)
 
+    def test_setvalues(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(12,), fill=0,
+                               dtype='int64', overwrite=True)
+            assert_equal(dar[2:4],[0,0])
+            dar[2:4] = 1
+            assert_equal(dar[2:4], [1,1])
+
 
 class IterView(unittest.TestCase):
 
