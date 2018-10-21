@@ -406,10 +406,10 @@ To run the test suite:
 >>> da.test()
 ..............................
 ----------------------------------------------------------------------
-Ran 31 tests in 1.627s
+Ran 38 tests in 1.827s
 
 OK
-<unittest.runner.TextTestResult run=31 errors=0 failures=0>
+<unittest.runner.TextTestResult run=38 errors=0 failures=0>
 ```
 
 Other interesting projects
