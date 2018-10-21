@@ -1,5 +1,4 @@
-Should be checked or implemented:
-
-data class in json info file
+- Change readme back to rst and have alternative long description in setup
+  file.
 
 
