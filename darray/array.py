@@ -567,10 +567,11 @@ class Array(BaseDataDir):
             except Exception:
                 raise
             finally:
-                #self._memmap._mmap.close() # need this explicitly for Windows
-                del self._memmap
+                #self._memmap._mmap.close() # may need this for Windows
                 self._memmap = None
                 self._valuesfd = None
+
+
 
     @contextmanager
     def view(self, accessmode=None):
@@ -609,7 +610,6 @@ class Array(BaseDataDir):
 
         with self._open_array(accessmode=accessmode) as (memmap, fp):
             yield memmap
-        #memmap._mmap.close() # may need this for Windows
 
     def _read_arraydescr(self):
         requiredkeys = {'numtype', 'shape', 'arrayorder', 'darrayversion'}
@@ -671,43 +671,6 @@ class Array(BaseDataDir):
         txt = arrayreadmetxt(self)
         self._write_txt(self._readmefilename, txt)
 
-    def __append(self, array, fd):
-        """Private function that appends values but does not update array
-        description and readme files. Do not use unless you know 
-        what you are doing. Use `append' method for normal appending 
-        of data.
-        
-        Parameters
-        ----------
-        array: array or object that can be converted into a numpy array
-
-        Returns
-        -------
-        Length of the first axis of the appended array
-        
-        """
-        self.check_arraywriteable()
-        if hasattr(array, '__len__'):
-            array = np.asarray(array, dtype=self._dtype)
-        else:
-            array = np.array(array, dtype=self._dtype, ndmin=1)
-        if not array.shape[1:] == self.shape[1:]:
-            raise TypeError(
-                f"array shape {array.shape} not compatible with darray "
-                f"shape {self.shape}")
-        if np.product(self._shape) == 0:
-            # have an empty array to append to
-            # somehow we get a segfault if we want to write to a fd of an empty
-            # file. Hence we do it this way: we overwrite the file. It is not
-            # beautiful but it works. This should really be fixed in numpy.
-            fd.close()
-            array.tofile(str(self._datapath))
-        else:
-            fd.seek(0, 2) # move to end
-            array.tofile(fd)
-            fd.flush()
-        return array.shape[0]
-
     def append(self, array):
         """ Add array-like objects to darray to the end of the dataset.
 
@@ -742,6 +705,21 @@ class Array(BaseDataDir):
 
         """
         self.iterappend([array])
+
+    def _checkarrayforappend(self, array):
+        """Private function to format input arrays correctly for append.
+
+        """
+        if hasattr(array, '__len__'):
+            array = np.asarray(array, dtype=self._dtype)
+        else:
+            array = np.array(array, dtype=self._dtype, ndmin=1)
+        if not array.shape[1:] == self.shape[1:]:
+            raise TypeError(
+                f"array shape {array.shape} not compatible with darray "
+                f"shape {self.shape}")
+        return array
+
 
     def iterappend(self, arrayiterable):
         """Iteratively append data from a data iterable.
@@ -781,12 +759,24 @@ class Array(BaseDataDir):
                           f"(now is '{self._accessmode}')")
         if not hasattr(arrayiterable, '__iter__'):
             raise TypeError("'arrayiterable' is not iterable")
+        self.check_arraywriteable()
+        arrayiterable = iter(arrayiterable)
+        if np.product(self._shape) == 0:
+            # numpy cannot write to a fd of an empty file.
+            # Hence we overwrite the file. It is not beautiful but it works.
+            array = self._checkarrayforappend(next(arrayiterable))
+            array.tofile(str(self._datapath))
+            self._update_len(lenincrease=array.shape[0])
         with self._open_array() as (v, fd):
             oldshape = v.shape
             lenincrease = 0
             try:
                 for i, array in enumerate(arrayiterable):
-                    lenincrease += self.__append(array, fd)
+                    array = self._checkarrayforappend(array)
+                    fd.seek(0, 2)  # move to end
+                    array.tofile(fd)
+                    fd.flush()
+                    lenincrease += array.shape[0]
             except Exception as exception:
                 if fd.closed:
                     fd = open(file=self._datapath, mode=self._accessmode)
@@ -1352,7 +1342,7 @@ def truncate_array(a, index):
                [ 1.,  1.]]) (r+)
 
     """
-    import gc
+
     try:
         if not isinstance(a, Array):
             a = Array(a)
@@ -1363,11 +1353,10 @@ def truncate_array(a, index):
         raise TypeError(f"'index' should be an int (is {type(index)})")
     with a.view() as v:
         newlen = len(v[:index])
-    gc.collect()
     lenincrease = newlen - len(a)
     if 0 < newlen < len(a):
         i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize
-        with open(a._datapath, 'br+') as fd:
+        with open(a._datapath, 'r+b') as fd:
             fd.truncate(i)
         a._update_len(lenincrease)
     else:
