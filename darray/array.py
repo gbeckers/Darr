@@ -608,6 +608,7 @@ class Array(BaseDataDir):
 
         with self._open_array(accessmode=accessmode) as (memmap, fp):
             yield memmap
+        memmap._mmap.close() # may need this for Windows
 
     def _read_arraydescr(self):
         requiredkeys = {'numtype', 'shape', 'arrayorder', 'darrayversion'}
@@ -1363,7 +1364,7 @@ def truncate_array(a, index):
     lenincrease = newlen - len(a)
     if 0 < newlen < len(a):
         i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize
-        with open(a._datapath, 'r+') as fd:
+        with open(a._datapath, 'br+') as fd:
             fd.truncate(i)
         a._update_len(lenincrease)
     else:
