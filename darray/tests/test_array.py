@@ -3,7 +3,8 @@ import unittest
 import numpy as np
 from numpy.testing import assert_equal, assert_array_equal, assert_raises
 
-from darray.array import asarray, create_array, numtypes, Array, truncate_array
+from darray.array import asarray, create_array, numtypes, Array, \
+    truncate_array, delete_array
 from .utils import tempdir
 
 
@@ -307,6 +308,7 @@ class TruncateData(unittest.TestCase):
             assert_equal(a, dar[:])
             truncate_array(dar, 2)
             assert_equal(a[:2], dar[:])
+
 
 
 
