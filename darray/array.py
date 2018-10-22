@@ -4,10 +4,10 @@ that is as open and simple as possible. It also provides easy memory-mapped
 access to such disk-based data using numpy indexing.
 
 dArray objects can be created from array-like objects, such as numpy arrays
-and lists, using the **asdarray** function. Alternatively, darrays can be
-created from scratch by the **create_darray** function. Existing darray
-data on disk can be accessed through the **dArray** constructor.
-To remove a darray from disk, use **delete_darray**.
+and lists, using the **asarray** function. Alternatively, darrays can be
+created from scratch by the **create_array** function. Existing darray
+data on disk can be accessed through the **Array** constructor.
+To remove a darray from disk, use **delete_array**.
 """
 
 import distutils.version
