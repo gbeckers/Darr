@@ -3,6 +3,10 @@ language: python
 python:
   - "3.6"
 
+os:
+  - linux
+  - osx
+
 install:
   - pip install pytest
   - pip install pytest-cov
@@ -17,3 +21,4 @@ script:
 
 after_success:
   - coveralls
+  
