@@ -567,6 +567,7 @@ class Array(BaseDataDir):
             except Exception:
                 raise
             finally:
+                self._memmap._mmap.close() # need this explicitly for Windows
                 self._memmap = None
                 self._valuesfd = None
 
