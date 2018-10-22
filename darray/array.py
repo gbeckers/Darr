@@ -1515,7 +1515,7 @@ def readcoder(typedescr, shape, endianness, **kwargs):
                                            **typedescr)
     if len(shape) > 1:
         ct += f'a = array(data=a, dim=c{shape}, dimnames=NULL)\n'
-    return ct + 'close(to.read)\n'
+    return ct + 'close(fileid)\n'
 
 
 def readcodejulia(typedescr, shape, endianness, **kwargs):
