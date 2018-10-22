@@ -1351,6 +1351,7 @@ def truncate_array(a, index):
                [ 1.,  1.]]) (r+)
 
     """
+    import gc
     try:
         if not isinstance(a, Array):
             a = Array(a)
@@ -1361,6 +1362,7 @@ def truncate_array(a, index):
         raise TypeError(f"'index' should be an int (is {type(index)})")
     with a.view() as v:
         newlen = len(v[:index])
+    gc.collect()
     lenincrease = newlen - len(a)
     if 0 < newlen < len(a):
         i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize
