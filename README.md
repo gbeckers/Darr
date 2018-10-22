@@ -3,7 +3,7 @@ dArray
 
 [![image](https://travis-ci.org/gbeckers/dArray.svg?branch=master)](https://travis-ci.org/gbeckers/dArray?branch=master)
 [![image](https://ci.appveyor.com/api/projects/status/github/gbeckers/darray?svg=true)](https://ci.appveyor.com/project/gbeckers/darray)
-[![image](https://img.shields.io/badge/pypi-v0.1.1-orange.svg)](https://pypi.org/project/darray/)
+[![image](https://img.shields.io/badge/pypi-v0.1.2-orange.svg)](https://pypi.org/project/darray/)
 [![Coverage Status](https://coveralls.io/repos/github/gbeckers/dArray/badge.svg?branch=master)](https://coveralls.io/github/gbeckers/dArray?branch=master)
 
 dArray is a Python science library for storing numeric data arrays in a
@@ -23,7 +23,7 @@ R, Julia, Matlab and Mathematica.
 dArray is open source and freely available under the [New BSD
 License](https://opensource.org/licenses/BSD-3-Clause) terms.
 
-Version: 0.1.1 alpha
+Version: 0.1.2 alpha
 
 dArray is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
 Beckers
@@ -406,7 +406,7 @@ To run the test suite:
 >>> da.test()
 ..............................
 ----------------------------------------------------------------------
-Ran 40 tests in 1.827s
+Ran 40 tests in 1.939s
 
 OK
 <unittest.runner.TextTestResult run=40 errors=0 failures=0>
