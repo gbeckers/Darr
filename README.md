@@ -14,16 +14,16 @@ for scientific use cases. Save and use your numeric arrays and metadata
 with one line of code while easy, long-term and tool-independent
 accessibility is ensured.
 
-To avoid tool-specific data formats, dArray is exclusively based on a
-combination of flat binary and text files. It automatically saves a
-clear text description of how exactly the data is stored, as well as
-example code to read the specific data in a variety of current
-scientific data tools.
+To avoid dependency on specific tools, dArray is based on a combination of 
+flat binary and human-readable text files. It automatically saves a clear text 
+description of how the data is stored, with example code for reading the 
+specific data in a variety of current scientific data tools such as Python, 
+R, Julia, Matlab and Mathematica.
 
 dArray is open source and freely available under the [New BSD
 License](https://opensource.org/licenses/BSD-3-Clause) terms.
 
-Version: 0.1.1 Alpha
+Version: 0.1.1 alpha
 
 dArray is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
 Beckers
@@ -33,7 +33,7 @@ Features
 
 Pro's:
 
--   **Simple data format** based on **flat binary** and **text** files.
+-   **Transparent data format** based on **flat binary** and **text** files.
 -   Supports **very large data arrays** through **memory-mapped** file
     access.
 -   Data read/write access through **NumPy indexing** (see

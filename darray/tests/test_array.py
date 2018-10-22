@@ -304,7 +304,7 @@ class TruncateData(unittest.TestCase):
             a = np.array([0,1,2,3,4], dtype='int64')
             dar = asarray(path=dirname, array=a, overwrite=True,
                           accessmode='r+')
-            #assert_equal(a, dar[:])
+            assert_equal(a, dar[:])
             truncate_array(dar, 2)
             assert_equal(a[:2], dar[:])
 
