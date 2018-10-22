@@ -7,7 +7,7 @@ if sys.version_info < (3,6):
     print("dArray requires Python 3.6 or higher please upgrade")
     sys.exit(1)
 
-with open("README.md", "r") as fh:
+with open("longdescription.md", "r") as fh:
     long_description = fh.read()
 
 setup(
