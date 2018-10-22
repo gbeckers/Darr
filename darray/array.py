@@ -568,6 +568,7 @@ class Array(BaseDataDir):
                 raise
             finally:
                 #self._memmap._mmap.close() # need this explicitly for Windows
+                del self._memmap
                 self._memmap = None
                 self._valuesfd = None
 
