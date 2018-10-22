@@ -608,7 +608,7 @@ class Array(BaseDataDir):
 
         with self._open_array(accessmode=accessmode) as (memmap, fp):
             yield memmap
-        memmap._mmap.close() # may need this for Windows
+        #memmap._mmap.close() # may need this for Windows
 
     def _read_arraydescr(self):
         requiredkeys = {'numtype', 'shape', 'arrayorder', 'darrayversion'}
