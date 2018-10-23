@@ -98,10 +98,10 @@ Or in `R <https://cran.r-project.org/>`__:
 
 .. code:: R
 
-    to.read = file("arrayvalues.bin", "rb")
-    a = readBin(con=to.read, what=numeric(), n=2048, size=8, endian="little")
+    fileid = file("arrayvalues.bin", "rb")
+    a = readBin(con=fileid, what=numeric(), n=2048, size=8, endian="little")
     a = array(data=a, dim=c(1024, 2), dimnames=NULL)
-    close(to.read)
+    close(fileid)
 
 Or in `Julia <https://julialang.org/>`__:
 
