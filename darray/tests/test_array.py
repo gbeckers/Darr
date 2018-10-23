@@ -4,7 +4,7 @@ import numpy as np
 from numpy.testing import assert_equal, assert_array_equal, assert_raises
 
 from darray.array import asarray, create_array, numtypes, Array, \
-    truncate_array, delete_array
+    truncate_array, BaseDataDir
 from .utils import tempdir
 
 
@@ -330,7 +330,24 @@ class TruncateData(unittest.TestCase):
             truncate_array(dar, 2)
             assert_equal(a[:2], dar[:])
 
+class TestBaseDataDir(unittest.TestCase):
 
+    def test_writejsondictcorrectinput(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            bd._write_jsondict('test1.json', {'a': 1})
+
+    def test_writejsondictincorrectinput(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            assert_raises(TypeError, bd._write_jsondict, 'test1.json', 3)
+            assert_raises(TypeError, bd._write_jsondict, 'test1.json', 'a')
+
+    def test_updatejsondictcorrect(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            bd._write_jsondict('test1.json', {'a': 1})
+            bd._update_jsondict('test1.json', {'a': 2, 'b':3})
 
 
 if __name__ == '__main__':
