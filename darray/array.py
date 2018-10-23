@@ -323,9 +323,8 @@ class MetaData:
         return val
 
     def popitem(self):
-        """D.pop(k[,d]) -> v, remove specified key and return the corresponding
-        value.If key is not found, d is returned if given, otherwise KeyError
-        is raised
+        """D.pop() -> k, v, returns and removes an arbitrary element (key,
+        value) pair from the dictionary.
         """
         metadata = self._read()
         key, val = metadata.popitem()
