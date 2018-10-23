@@ -298,6 +298,27 @@ class MetaData(unittest.TestCase):
                                dtype='int64', metadata=md, overwrite=True)
             assert_equal(dict(dar.metadata), md)
 
+    def test_changemetadata(self):
+        with tempdir() as dirname:
+            md = {'fs': 20000, 'x': 33.3}
+            dar = create_array(path=dirname, shape=(0, 2),
+                               dtype='int64', metadata=md, overwrite=True)
+            dar.metadata['fs'] = 40000
+            assert_equal(dict(dar.metadata), {'fs': 40000, 'x': 33.3})
+            dar.metadata.update({'x': 34.4})
+            assert_equal(dict(dar.metadata), {'fs': 40000, 'x': 34.4})
+
+    def test_popmetadata(self):
+        with tempdir() as dirname:
+            md = {'fs': 20000, 'x': 33.3}
+            dar = create_array(path=dirname, shape=(0, 2),
+                               dtype='int64', metadata=md, overwrite=True)
+            dar.metadata.pop('x')
+            assert_equal(dict(dar.metadata), {'fs': 20000})
+            dar.metadata.pop('fs')
+            assert_equal(dict(dar.metadata), {})
+
+
 class TruncateData(unittest.TestCase):
 
     def test_truncate1d(self):
