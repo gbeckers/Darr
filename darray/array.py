@@ -190,8 +190,6 @@ class BaseDataDir(object):
 
     def _read_jsonfile(self, filename):
         path = self._path.joinpath(filename)
-        if not path.exists():
-            raise FileNotFoundError(f"'{path}' does not exist")
         with open(path, 'r') as fp:
             return json.load(fp)
 
