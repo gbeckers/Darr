@@ -180,6 +180,19 @@ class dArray(unittest.TestCase):
             assert_equal({'README.txt', 'arraydescription.json',
                           'arrayvalues.bin', 'metadata.json'}, s)
 
+    def test_str(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            assert str(dar) == '[0 0]'
+
+    def test_repr(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            assert repr(dar) == 'darray ([0, 0]) (r+)'
+
+
 
 class IterView(unittest.TestCase):
 
@@ -317,6 +330,18 @@ class MetaData(unittest.TestCase):
             assert_equal(dict(dar.metadata), {'fs': 20000})
             dar.metadata.pop('fs')
             assert_equal(dict(dar.metadata), {})
+
+    def test_popitmemetadata(self):
+        with tempdir() as dirname:
+            md = {'fs': 20000, 'x': 33.3}
+            dar = create_array(path=dirname, shape=(0, 2),
+                               dtype='int64', metadata=md, overwrite=True)
+            k, v = dar.metadata.popitem()
+            keys = dar.metadata.keys()
+            assert k not in keys
+            k, v = dar.metadata.popitem()
+            assert not dar._metadata.path.exists()
+
 
 
 class TruncateData(unittest.TestCase):
