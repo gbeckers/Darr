@@ -2,25 +2,25 @@ dArray API Documentation
 ===========================
 
 
-.. automodule:: darray.array
+.. automodule:: darr.array
 
 Creating arrays
 ---------------
 
-.. autofunction:: darray.asarray
-.. autofunction:: darray.create_array
+.. autofunction:: darr.asarray
+.. autofunction:: darr.create_array
 
 Accessing existing arrays
 -------------------------
-.. autoclass:: darray.array
+.. autoclass:: darr.array
    :members:
 
 Deleting arrays
 ---------------
 
-.. autofunction:: darray.delete_array
+.. autofunction:: darr.delete_array
 
 Truncating arrays
 -----------------
 
-.. autofunction:: darray.truncate_array
+.. autofunction:: darr.truncate_array

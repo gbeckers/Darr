@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 from numpy.testing import assert_equal, assert_array_equal
 
-from darray.array import asarray, create_array, numtypes, Array, \
+from darr.array import asarray, create_array, numtypes, Array, \
     truncate_array, BaseDataDir
 from .utils import tempdir
 
@@ -31,7 +31,7 @@ def check_arrayequaltocreatedarray(ndarray, shape, dtype=None, chunklen=None):
             ndarray = ndarray.astype(dtype)
         assert_array_identical(ndarray, dar[:])
 
-class AsDiskArray(unittest.TestCase):
+class AsArray(unittest.TestCase):
 
     def test_onedimensional(self):
         ndarray = np.arange(24)
@@ -192,7 +192,7 @@ class dArray(unittest.TestCase):
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             # linux and windows have different numpy memmap reprs...
-            assert_equal(repr(dar)[:14], 'darray ([0, 0]')
+            assert_equal(repr(dar)[:12], 'darr ([0, 0]')
 
 
 

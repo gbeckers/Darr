@@ -3,7 +3,7 @@ import numpy as np
 from numpy.testing import assert_equal, assert_array_equal
 
 
-from darray.vlarraylist import create_vlarraylist
+from darr.vlarraylist import create_vlarraylist
 from .utils import tempdir
 
 

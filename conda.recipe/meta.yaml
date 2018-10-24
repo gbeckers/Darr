@@ -1,6 +1,6 @@
 package:
-  name: diskarray
-  version: "0.1.0"
+  name: darr
+  version: "0.1.2"
 
 source:
   path: ..
@@ -15,7 +15,7 @@ requirements:
 
 test:
   imports:
-    - diskarray
+    - darr
 
 about:
   license: BSD

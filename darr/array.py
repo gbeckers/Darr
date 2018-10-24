@@ -5,9 +5,9 @@ access to such disk-based data using numpy indexing.
 
 dArray objects can be created from array-like objects, such as numpy arrays
 and lists, using the **asarray** function. Alternatively, darrays can be
-created from scratch by the **create_array** function. Existing darray
+created from scratch by the **create_array** function. Existing darr
 data on disk can be accessed through the **Array** constructor.
-To remove a darray from disk, use **delete_array**.
+To remove a darr from disk, use **delete_array**.
 """
 
 import distutils.version
@@ -261,7 +261,7 @@ class MetaData:
 
     @property
     def accessmode(self):
-        """File access mode of the darray data. `r` means read-only, `r+`
+        """File access mode of the darr data. `r` means read-only, `r+`
         means read-write. `w` does not exist. To create new darrays,
         potentially overwriting an other one, use the `asdarray` or
         `create_darray` functions.
@@ -352,7 +352,7 @@ class MetaData:
 
         Examples
         --------
-        >>> import darray as da
+        >>> import darr as da
         >>> d = da.create_array('test.da', shape=(12,), accesmode= 'r+')
         >>> d.metadata.update({'starttime': '2017-08-31T17:00:00'})
         >>> print(d.metadata)
@@ -391,11 +391,11 @@ class Array(BaseDataDir):
     segments of (very) large files on disk, without reading the entire file
     into memory.
 
-    dArray data is stored in a simple format that maximizes long-term
+    Darr data is stored in a simple format that maximizes long-term
     readability by other software and programming languages, and has been
     designed with scientific use cases in mind.
 
-    A darray corresponds to a directory containing 1) a binary file with
+    A darr corresponds to a directory containing 1) a binary file with
     the raw numeric array values, 2) a text file (json format) describing the
     numeric type, array shape, and other format information, 3) a README text
     file documenting the data format, including examples of how to read the
@@ -406,9 +406,9 @@ class Array(BaseDataDir):
     path : str or pathlib.Path
         Path to disk-based array directory.
     accessmode : {'r', 'r+'}, default 'r'
-       File access mode of the darray data. `r` means read-only, `r+` means
-       read-write. `w` does not exist. To create new darrays, potentially
-       overwriting an other one, use the `asdarray` or `create_darray`
+       File access mode of the darr data. `r` means read-only, `r+` means
+       read-write. `w` does not exist. To create new darr arrays, potentially
+       overwriting an other one, use the `asarray` or `create_array`
        functions.
 
     """
@@ -442,9 +442,9 @@ class Array(BaseDataDir):
     @property
     def accessmode(self):
         """File access mode of the disk array data. `r` means read-only, `r+`
-        means read-write. `w` does not exist. To create new darrays,
-        potentially overwriting an other one, use the `asdarray` or
-        `create_darray` functions.
+        means read-write. `w` does not exist. To create new darr arrays,
+        potentially overwriting an other one, use the `asarray` or
+        `create_array` functions.
 
        """
         return self._accessmode
@@ -523,7 +523,7 @@ class Array(BaseDataDir):
         with self._open_array() as (ar, fd):
             # next needed because class name may be longer than "memmap"
             s = '\n   '.join(repr(ar).lstrip('memmap').splitlines())
-        return f"darray {s} ({self.accessmode})"
+        return f"darr {s} ({self.accessmode})"
 
     def __str__(self):
         with self._open_array() as (ar, fd):
@@ -576,7 +576,7 @@ class Array(BaseDataDir):
         """Open a memory-mapped view of the array data.
 
         Although read and write operations can be performed conveniently using
-        indexing notation on the dArray object, this can be relatively slow
+        indexing notation on the Darr object, this can be relatively slow
         when performing multiple access operations in a row. To read data, the
         disk file needs to be opened, data copied into memory, and after which
         the file is closed. I such cases, it is much faster to use a *view* of
@@ -597,7 +597,7 @@ class Array(BaseDataDir):
 
         Examples
         --------
-        >>> import darray as da
+        >>> import darr as da
         >>> d = da.create_array('test.da', shape=(1000,3), overwrite=True)
         >>> with d.view(accessmode='r+') as v:
                 s1 = v[:10,1:].sum()
@@ -610,18 +610,18 @@ class Array(BaseDataDir):
             yield memmap
 
     def _read_arraydescr(self):
-        requiredkeys = {'numtype', 'shape', 'arrayorder', 'darrayversion'}
+        requiredkeys = {'numtype', 'shape', 'arrayorder', 'darrversion'}
         try:
             d = self._read_jsondict(filename=self._arraydescrfilename,
                                     requiredkeys=requiredkeys)
         except Exception:
             raise OSError(f"Could not read array description from "
                           f"'{self._arraydescrfilename}'")
-        vfile = distutils.version.StrictVersion(d['darrayversion'])
+        vfile = distutils.version.StrictVersion(d['darrversion'])
         vlib = distutils.version.StrictVersion(self._formatversion)
         if not vlib >= vfile:
-            raise ValueError(f"Format version of file ({d['darrayversion']}) "
-                             f"is too new. The installed dArray "
+            raise ValueError(f"Format version of file ({d['darrversion']}) "
+                             f"is too new. The installed Darr "
                              f"library only handles up to version "
                              f"{self._formatversion}; please update")
         try:
@@ -651,7 +651,7 @@ class Array(BaseDataDir):
         with self._open_array() as (ar, fd):
             if not ar.flags.writeable:
                 raise OSError(
-                    "darray not writeable; use 'set_accessmode' method to "
+                    "darr not writeable; use 'set_accessmode' method to "
                     "change this")
 
     def _update_len(self, lenincrease):
@@ -670,10 +670,10 @@ class Array(BaseDataDir):
         self._write_txt(self._readmefilename, txt)
 
     def append(self, array):
-        """ Add array-like objects to darray to the end of the dataset.
+        """ Add array-like objects to darr to the end of the dataset.
 
         Data will be appended along the first axis. The shape of the data and
-        the darray must be compliant. When appending data repeatedly it is
+        the darr must be compliant. When appending data repeatedly it is
         more efficient to use `iterappend`.
 
 
@@ -689,7 +689,7 @@ class Array(BaseDataDir):
 
         Examples
         --------
-        >>> import darray as da
+        >>> import darr as da
         >>> d = da.create_array('test.da', shape=(4,2), overwrite=True)
         >>> d.append([[1,2],[3,4],[5,6]])
         >>> print(d)
@@ -714,7 +714,7 @@ class Array(BaseDataDir):
             array = np.array(array, dtype=self._dtype, ndmin=1)
         if not array.shape[1:] == self.shape[1:]:
             raise TypeError(
-                f"array shape {array.shape} not compatible with darray "
+                f"array shape {array.shape} not compatible with darr "
                 f"shape {self.shape}")
         return array
 
@@ -723,7 +723,7 @@ class Array(BaseDataDir):
         """Iteratively append data from a data iterable.
 
         The iterable has to yield chunks of data that are array-like objects
-        compliant with the darray.
+        compliant with the darr.
 
         Parameters
         ----------
@@ -735,7 +735,7 @@ class Array(BaseDataDir):
 
         Examples
         --------
-        >>> import darray as da
+        >>> import darr as da
         >>> d = da.create_array('test.da', shape=(3,2), overwrite=True)
         >>> def ga():
                 yield [[1,2],[3,4]]
@@ -792,12 +792,12 @@ class Array(BaseDataDir):
 
     def iterview(self, chunklen, stepsize=None, startindex=None,
                  endindex=None, include_remainder=True, accessmode=None):
-        """View the data array of the darray iteratively in chunks of a
+        """View the data array of the darr iteratively in chunks of a
         given length and with a given stepsize.
 
         This method does not copy the underlying data to a new numpy array,
         and is therefore relatively fast. It can also be used to change the
-        darray.
+        darr.
 
         Parameters
         ----------
@@ -822,7 +822,7 @@ class Array(BaseDataDir):
             should be yielded or not. The remainder is smaller than `chunklen`.
             Default is True.
         accessmode:  {'r', 'r+'}, default 'r'
-            File access mode of the darray data. `r` means read-only, `r+`
+            File access mode of the darr data. `r` means read-only, `r+`
             means read-write.
 
         Returns
@@ -832,7 +832,7 @@ class Array(BaseDataDir):
 
         Examples
         --------
-        >>> import darray as da
+        >>> import darr as da
         >>> d = da.create_array('test.da', shape=(12,), accesmode= 'r+')
         >>> for i,ar in enumerate(d.iterview(chunklen=2, stepsize=3)):
                 ar[:] = i+1
@@ -871,34 +871,34 @@ class Array(BaseDataDir):
 
     def copy(self, path, dtype=None, chunklen=None, accessmode='r',
              overwrite=False):
-        """Copy darray to a different path, potentially changing its dtype.
+        """Copy darr to a different path, potentially changing its dtype.
 
         The copying is performed in chunks to avoid RAM memory overflow for
-        very large darrays.
+        very large darr arrays.
 
         Parameters
         ----------
         path: str or pathlib.Path
         dtype: <dtype, None>
             Numpy data type of the copy. Default is None, which corresponds to
-            the dtype of the darray to be copied.
+            the dtype of the darr to be copied.
         chunklen: <int, None>
             The length of chunks (along first axis) that are written during
             creation. If None, it is chosen so that chunks are 10 Mb in total
             size.
         accessmode: {'r', 'r+'}, default 'r'
-            File access mode of the darray data of the returned dArray
+            File access mode of the darr data of the returned Darr
             object. `r` means read-only, `r+` means read-write.
         overwrite: (True, False), optional
-            Overwrites existing darray data if it exists. Note that a
-            darray path is a directory. If that directory contains
+            Overwrites existing darr data if it exists. Note that a
+            darr path is a directory. If that directory contains
             additional files, these will not be removed and an OSError is
             raised. Default is `False`.
 
         Returns
         -------
         Array
-           copy of the darray
+           copy of the darr
 
         """
         metadata = dict(self.metadata)
@@ -969,7 +969,7 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
     Parameters
     ----------
     shape : int ot sequence of ints
-        Shape of the `darray`.
+        Shape of the `darr`.
     dtype: <dtype>
         Numpy data type of the copy. Default is `float64`.
     fill : number, optional
@@ -1053,7 +1053,7 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
 
 def asarray(path, array, dtype=None, accessmode='r',
             metadata=None, chunklen=None, overwrite=False):
-    """Save an array or array generator as a dArray to file system path.
+    """Save an array or array generator as a Darr array to file system path.
 
     Parameters
     ----------
@@ -1068,7 +1068,7 @@ def asarray(path, array, dtype=None, accessmode='r',
         Is inferred from the data if `None`. If `dtype` is provided the data 
         will be cast to `dtype`. Default is `None`.
     accessmode : {`r`, `r+`}, optional
-        File access mode of the darray that is returned. `r` means
+        File access mode of the darr that is returned. `r` means
         read-only, `r+` means read-write. In the latter case, data can be 
         changed. Default `r`.
     metadata: {None, dict}
@@ -1076,16 +1076,16 @@ def asarray(path, array, dtype=None, accessmode='r',
     chunklen: <int, None>
         The length of chunks (along first axis) that are read and written
         during the process. If None and the `array` is a numpy array or
-        darray, it is chosen so that chunks are 10 Mb in total size. If
+        darr, it is chosen so that chunks are 10 Mb in total size. If
         None and `array` is a generator or sequence, chunklen will be 1.
     overwrite: (True, False), optional
-        Overwrites existing darray data if it exists. Note that a darray
+        Overwrites existing darr data if it exists. Note that a darr
         path is a directory. If that directory contains additional files, 
         these will not be removed and an OSError is raised. Default is `False`.
 
     Returns
     -------
-    A dArray `array` instance.
+    A Darr `array` instance.
 
     See Also
     --------
@@ -1094,30 +1094,30 @@ def asarray(path, array, dtype=None, accessmode='r',
     Examples
     --------
     >>> asarray('data.da', [0,1,2,3])
-    darray([0, 1, 2, 3])
+    darr([0, 1, 2, 3])
     >>> asarray('data.da', [0,1,2,3], dtype='float64', overwrite=True)
-    darray([ 0.,  1.,  2.,  3.])
+    darr([ 0.,  1.,  2.,  3.])
     >>> ar = asarray('data_rw.da', [0,1,2,3,4,5], accessmode='r+')
     >>> ar
-    darray([0, 1, 2, 3, 4, 5]) (r+)
+    darr([0, 1, 2, 3, 4, 5]) (r+)
     >>> ar[-1] = 8
     >>> ar
-    darray([0, 1, 2, 3, 4, 8]) (r+)
+    darr([0, 1, 2, 3, 4, 8]) (r+)
     >>> ar[::2] = 9
-    darray([9, 1, 9, 3, 9, 8]) (r+)
+    darr([9, 1, 9, 3, 9, 8]) (r+)
 
 
     """
     path = Path(path)
     if isinstance(array, Array) and (path == array.path):
         raise ValueError(f"'{path}' is the same as the path of the "
-                         f"source darray.")
+                         f"source darr.")
     chunkiter = _archunkgenerator(array, dtype=dtype, chunklen=chunklen)
     firstchunk = next(chunkiter)
     if firstchunk.ndim == 0:  # we received a number instead of an array
         firstchunk = np.array(firstchunk, ndmin=1, dtype=dtype)
     if firstchunk.dtype.name not in numtypes:
-        raise TypeError(f"darray cannot have type "
+        raise TypeError(f"darr cannot have type "
                         f"'{firstchunk.dtype.name}'")
     dtype = firstchunk.dtype
     bd = create_basedir(path=path,
@@ -1140,7 +1140,7 @@ def asarray(path, array, dtype=None, accessmode='r',
                       "be C_CONTIGUOUS")
         datainfo['arrayorder'] = 'C'
     datainfo['shape'] = shape
-    datainfo['darrayversion'] = Array._formatversion
+    datainfo['darrversion'] = Array._formatversion
     bd._write_jsondict(filename=Array._arraydescrfilename,
                        d=datainfo, overwrite=overwrite)
     metadatapath = path.joinpath(Array._metadatafilename)
@@ -1190,7 +1190,7 @@ def create_basedir(path, overwrite=False):
 def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
                  accessmode='r+', chunklen=None, metadata=None,
                  overwrite=False):
-    """Create a new `darray` of given shape and type, filled with
+    """Create a new `darr` of given shape and type, filled with
     predetermined values.
 
     Parameters
@@ -1199,9 +1199,9 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
         File system path to which the array will be saved. Note that this will
         be a directory containing multiple files.
     shape : int ot sequence of ints
-        Shape of the `darray`.
+        Shape of the `darr`.
     dtype : dtype, optional
-        The type of the `darray`. Default is 'float64'
+        The type of the `darr`. Default is 'float64'
     fill : number, optional
         The value used to fill the array with. Default is `None`, which will
         lead to the array being filled with zeros.
@@ -1213,7 +1213,7 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
         all dimensions (see example below). If `fillfunc` is provided, `fill`
         should be `None`.  And vice versa. Default is None.
     accessmode : <`r`, `r+`>, optional
-        File access mode of the darray data. `r` means real-only, `r+`
+        File access mode of the darr data. `r` means real-only, `r+`
         means read-write, i.e. values can be changed. Default `r`.
     chunklen: <int, None>
         The length of chunks (along first axis) that are written during
@@ -1222,47 +1222,47 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
         Dictionary with metadata to be saved in a separate JSON file. Default
         None
     overwrite: <True, False>, optional
-        Overwrites existing darray data if it exists. Note that a darray
+        Overwrites existing darr data if it exists. Note that a darr
         paths is a directory. If that directory contains additional files, 
         these will not be removed and an OSError is raised.
         Default is `False`.
 
     Returns
     -------
-    A `dArray` instance.
+    A Darr `array` instance.
 
     See Also
     --------
-    asarray : create a darray from existing array-like object or
+    asarray : create a darr from existing array-like object or
         generator.
 
     Examples
     --------
-    >>> import darray as da
-    >>> da.create_darray('testarray0', shape=(5,2))
-    darray([[ 0.,  0.],
+    >>> import darr as da
+    >>> da.create_array('testarray0', shape=(5,2))
+    darr([[ 0.,  0.],
        [ 0.,  0.],
        [ 0.,  0.],
        [ 0.,  0.],
        [ 0.,  0.]]) (r+)
-    >>> da.create_darray('testarray1', shape=(5,2), dtype='int16')
-    darray([[0, 0],
+    >>> da.create_array('testarray1', shape=(5,2), dtype='int16')
+    darr([[0, 0],
        [0, 0],
        [0, 0],
        [0, 0],
        [0, 0]], dtype=int16) (r+)
-    >>> da.create_darray('testarray3', shape=(5,2), fill=23.4)
-    darray([[ 23.4,  23.4],
+    >>> da.create_array('testarray3', shape=(5,2), fill=23.4)
+    darr([[ 23.4,  23.4],
        [ 23.4,  23.4],
        [ 23.4,  23.4],
        [ 23.4,  23.4],
        [ 23.4,  23.4]]) (r+)
-    >>> fillfunc = lambda i: i * 2 darray
-    >>> da.create_darray('testarray4', shape=(5,), fillfunc=fillfunc)
-    darray([ 0.,  2.,  4.,  6.,  8.]) (r+)
+    >>> fillfunc = lambda i: i * 2 darr
+    >>> da.create_array('testarray4', shape=(5,), fillfunc=fillfunc)
+    darr([ 0.,  2.,  4.,  6.,  8.]) (r+)
     >>> fillfunc = lambda i: i * [1, 2]
-    >>> da.create_darray('testarray4', shape=(5,2), fillfunc=fillfunc)
-    darray([[ 0.,  0.],
+    >>> da.create_array('testarray4', shape=(5,2), fillfunc=fillfunc)
+    darr([[ 0.,  0.],
        [ 1.,  2.],
        [ 2.,  4.],
        [ 3.,  6.],
@@ -1277,19 +1277,19 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
 
 def delete_array(da):
     """
-    Delete darray data from disk.
+    Delete darr data from disk.
     
     Parameters
     ----------
     da: Array or str or pathlib.Path
-        The darray object to be deleted or file system path to it.
+        The darr object to be deleted or file system path to it.
 
     """
     try:
         if not isinstance(da, Array):
             da = Array(da)
     except Exception:
-        raise TypeError(f"'{da}' not recognized as a dArray")
+        raise TypeError(f"'{da}' not recognized as a Darr array")
     da.check_arraywriteable()
     for fn in da._filenames:
         path = da.path.joinpath(fn)
@@ -1298,45 +1298,45 @@ def delete_array(da):
     try:
         da._path.rmdir()
     except OSError:
-        print(f"Error: could not fully delete darray directory "
+        print(f"Error: could not fully delete Darr array directory "
               f"'{da.path}'. It may contain additional files that are not "
-              f"part of the darray. If so, these should be removed "
+              f"part of the darr. If so, these should be removed "
               f"manually.")
         raise
 
 
 def truncate_array(a, index):
-    """Truncate darray data.
+    """Truncate darr data.
 
     Parameters
     ----------
     a: array or str or pathlib.Path
-       The darray object to be truncated or file system path to it.
+       The darr object to be truncated or file system path to it.
     index: int
-        The index along the first axis at which the darray should be
+        The index along the first axis at which the darr should be
         truncated. Negative indices can be used but the resulting length of
-        the truncated darray should be larger than 0 and smaller than the
+        the truncated darr should be larger than 0 and smaller than the
         current length.
 
     Examples
     --------
-    >>> import darray as da
+    >>> import darr as da
     >>> fillfunc = lambda i: i
     >>> a = da.create_array('testarray.da', shape=(5,2), fillfunc=fillfunc)
     >>> a
-    darray([[ 0.,  0.],
+    darr([[ 0.,  0.],
                [ 1.,  1.],
                [ 2.,  2.],
                [ 3.,  3.],
                [ 4.,  4.]]) (r+)
     >>> da.truncate_array(a, 3)
     >>> a
-    darray([[ 0.,  0.],
+    darr([[ 0.,  0.],
                [ 1.,  1.],
                [ 2.,  2.]]) (r+)
     >>> da.truncate_array(a, -1)
     >>> a
-    darray([[ 0.,  0.],
+    darr([[ 0.,  0.],
                [ 1.,  1.]]) (r+)
 
     """
@@ -1345,7 +1345,7 @@ def truncate_array(a, index):
         if not isinstance(a, Array):
             a = Array(a)
     except Exception:
-        raise TypeError(f"'{a}' not recognized as a darray")
+        raise TypeError(f"'{a}' not recognized as a darr")
     a.check_arraywriteable()
     if not isinstance(index, int):
         raise TypeError(f"'index' should be an int (is {type(index)})")
@@ -1479,7 +1479,7 @@ def readcodenumpymemmap(typedescr, shape, arrayorder, **kwargs):
 
 
 def readcodematlab(typedescr, shape, endianness, **kwargs):
-    shape = list(shape)[::-1]  # darray is always C order, Matlab is F order
+    shape = list(shape)[::-1]  # darr is always C order, Matlab is F order
     size = np.product(shape)
     ndim = len(shape)
     ct = "fileid = fopen('arrayvalues.bin');\n"
@@ -1496,7 +1496,7 @@ def readcodematlab(typedescr, shape, endianness, **kwargs):
 
 def readcoder(typedescr, shape, endianness, **kwargs):
     # typedecr is a dict, with 'what', 'size' and 'n' keys
-    shape = shape[::-1]  # darray is always C order, R is F order
+    shape = shape[::-1]  # darr is always C order, R is F order
     n = np.product(shape)
     ct = 'fileid = file("arrayvalues.bin", "rb")\n' \
          'a = readBin(con=fileid, what={what}, n={n}, size={size}, ' \
@@ -1510,7 +1510,7 @@ def readcoder(typedescr, shape, endianness, **kwargs):
 def readcodejulia(typedescr, shape, endianness, **kwargs):
     # this does not work if numtype is complex and byteorder is different on
     # reading machine, will generate an error, so we accept this.
-    shape = shape[::-1]  # darray is always C order, Julia is F order
+    shape = shape[::-1]  # darr is always C order, Julia is F order
     return f'fileid = open("arrayvalues.bin","r");\n' \
            f'a = map({endianness}, read(fileid, {typedescr}, {shape}));\n' \
            f'close(fileid);\n'

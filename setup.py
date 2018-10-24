@@ -4,12 +4,12 @@ import versioneer
 import setuptools
 
 if sys.version_info < (3,6):
-    print("dArray requires Python 3.6 or higher please upgrade")
+    print("Darr requires Python 3.6 or higher please upgrade")
     sys.exit(1)
 
 long_description = \
 """
-dArray is a Python science library for storing numeric data arrays in a
+Darr is a Python science library for storing numeric data arrays in a
 way that is open, simple, and self-explanatory. It also enables fast
 memory-mapped read/write access to such disk-based data, the ability to
 append data, and the flexible use of metadata. It is primarily designed
@@ -17,7 +17,7 @@ for scientific use cases. Save and use your numeric arrays and metadata
 with one line of code while easy, long-term and tool-independent
 accessibility is ensured.
 
-To avoid dependency on specific tools, dArray is based on a combination of 
+To avoid dependency on specific tools, darr is based on a combination of 
 flat binary and human-readable text files. It automatically saves a clear text 
 description of how the data is stored, with example code for reading the 
 specific data in a variety of current scientific data tools such as Python, 
@@ -40,7 +40,7 @@ Features
 -   Easy use of **metadata**, stored in a separate JSON text file.
 -   **Minimal dependencies**, only NumPy.
 -   **Integrates easily** with the Dask or NumExpr libraries for 
-    **numeric computation on very large darrays**.
+    **numeric computation on very large Darr arrays**.
     
 Latest Changes
 --------------
@@ -50,15 +50,15 @@ Version 0.1.2: Fixed truncate bug on Windows
 """
 
 setup(
-    name='darray',
+    name='Darr',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
-    packages=['darray', 'darray.tests'],
-    url='https://github.com/gbeckers/dArray',
+    packages=['darr', 'darr.tests'],
+    url='https://github.com/gbeckers/darr',
     license='BSD-3',
     author='Gabriel J.L. Beckers',
     author_email='gabriel@gbeckers.nl',
-    description='dArray is a Python science library for storing numeric data '
+    description='Darr is a Python science library for storing numeric data '
                 'arrays in a format that is open, simple, and self-explanatory',
     long_description=long_description,
     long_description_content_type="text/markdown",

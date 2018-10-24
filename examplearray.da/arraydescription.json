@@ -1,7 +1,7 @@
 {
     "arrayorder": "C",
     "byteorder": "little",
-    "darrayversion": "0.1.0",
+    "darrversion": "0.1.2",
     "numtype": "float64",
     "shape": [
         2,
