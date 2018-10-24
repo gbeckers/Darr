@@ -1,7 +1,7 @@
 import unittest
 
 import numpy as np
-from numpy.testing import assert_equal, assert_array_equal, assert_raises
+from numpy.testing import assert_equal, assert_array_equal
 
 from darray.array import asarray, create_array, numtypes, Array, \
     truncate_array, BaseDataDir
@@ -154,7 +154,8 @@ class dArray(unittest.TestCase):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(12,),
                                dtype='int64', overwrite=True)
-        assert_raises(OSError, Array, path=dirname)
+        with self.assertRaises(OSError):
+            Array(path=dirname)
 
     def test_setvalues(self):
         with tempdir() as dirname:
@@ -366,8 +367,10 @@ class TestBaseDataDir(unittest.TestCase):
     def test_writejsondictincorrectinput(self):
         with tempdir() as dirname:
             bd = BaseDataDir(dirname)
-            assert_raises(TypeError, bd._write_jsondict, 'test1.json', 3)
-            assert_raises(TypeError, bd._write_jsondict, 'test1.json', 'a')
+            with self.assertRaises(TypeError):
+                bd._write_jsondict('test1.json', 3)
+            with self.assertRaises(TypeError):
+                bd._write_jsondict('test1.json', 'a')
 
     def test_updatejsondictcorrect(self):
         with tempdir() as dirname:
