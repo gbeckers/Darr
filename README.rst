@@ -404,7 +404,7 @@ To run the test suite:
     ................................................
     ----------------------------------------------------------------------
     Ran 48 tests in 2.018s
-    
+
     OK
 
     <unittest.runner.TextTestResult run=40 errors=0 failures=0>

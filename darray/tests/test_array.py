@@ -190,7 +190,8 @@ class dArray(unittest.TestCase):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
-            assert_equal(repr(dar), 'darray ([0, 0]) (r+)')
+            # linux and windows have different numpy memmap reprs...
+            assert_equal(repr(dar)[:14], 'darray ([0, 0]')
 
 
 
