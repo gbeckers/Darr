@@ -1,13 +1,13 @@
 """
-dArray is a Python library for storing numeric data arrays in a format
+Darr is a Python library for storing numeric data arrays in a format
 that is as open and simple as possible. It also provides easy memory-mapped
 access to such disk-based data using numpy indexing.
 
-dArray objects can be created from array-like objects, such as numpy arrays
+Darr objects can be created from array-like objects, such as numpy arrays
 and lists, using the **asarray** function. Alternatively, darrays can be
-created from scratch by the **create_array** function. Existing darr
+created from scratch by the **create_array** function. Existing Darr
 data on disk can be accessed through the **Array** constructor.
-To remove a darr from disk, use **delete_array**.
+To remove a Darr array from disk, use **delete_array**.
 """
 
 import distutils.version

@@ -1,5 +1,5 @@
-dArray API Documentation
-===========================
+Darr API Documentation
+======================
 
 
 .. automodule:: darr.array

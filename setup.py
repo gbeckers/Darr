@@ -33,7 +33,7 @@ Features
 -   **Human-readable explanation of how the binary data is stored** is saved 
     in a README text file.
 -   README also contains **examples of how to read the array** in popular 
-    analysis environments such as Python (without dArray), R, Julia, 
+    analysis environments such as Python (without Darr), R, Julia, 
     Octave/Matlab, GDL/IDL, and Mathematica.
 -   **Many numeric types** are supported: (u)int8-(u)int64, float16-float64, 
     complex64, complex128.
