@@ -433,5 +433,5 @@ Other interesting projects
    :target: https://ci.appveyor.com/project/gbeckers/darr
 .. |PyPy version| image:: https://img.shields.io/badge/pypi-v0.1.2-orange.svg
    :target: https://pypi.org/project/darr/
-.. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/darr/badge.svg?branch=master
+.. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
    :target: https://coveralls.io/github/gbeckers/Darr?branch=master
