@@ -184,13 +184,13 @@ class dArray(unittest.TestCase):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
-            assert str(dar) == '[0 0]'
+            assert_equal(str(dar),'[0 0]')
 
     def test_repr(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
-            assert repr(dar) == 'darray ([0, 0]) (r+)'
+            assert_equal(repr(dar), 'darray ([0, 0]) (r+)')
 
 
 
