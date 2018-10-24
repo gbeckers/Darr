@@ -331,7 +331,7 @@ self-documenting format that anyone can easily explore on any computer,
 operating system, and programming language, without installing
 dependencies, and without any specific pre-existing knowledge on the
 format. In decades to come, your files are much more likely to be
-readable in this format than in specific formats such as
+widely readable in this format than in specific formats such as
 `HDF5 <https://www.hdfgroup.org/>`__ or
 `.npy <https://docs.scipy.org/doc/numpy-dev/neps/npy-format.html>`__.
 
