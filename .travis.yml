@@ -1,23 +1,28 @@
 language: python
 
-python:
-  - "3.6"
-  #- "3.7"
-
-os:
-  - linux
-
-install:
-  - pip install pytest
-  - pip install pytest-cov
-  - pip install coveralls
+branches:
+  only:
+    - master
 
 sudo: false
 
+#addons:
+#  apt:
+#    packages:
+#    - libdb-dev
+
+matrix:
+  include:
+    - python: 3.6
+    - python: 3.7
+      dist: xenial
+      sudo: true
+
+install:
+  - pip install -U pip setuptools wheel tox-travis coveralls
+
 script:
-  -  python -m darray.tests.test_array
-  -  python -m darray.tests.test_vlarraylist
-  -  pytest --cov=darray/
+  - tox
 
 after_success:
-  - coveralls
+- coveralls
