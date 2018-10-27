@@ -395,7 +395,7 @@ class Array(BaseDataDir):
     readability by other software and programming languages, and has been
     designed with scientific use cases in mind.
 
-    A darr corresponds to a directory containing 1) a binary file with
+    A darr array corresponds to a directory containing 1) a binary file with
     the raw numeric array values, 2) a text file (json format) describing the
     numeric type, array shape, and other format information, 3) a README text
     file documenting the data format, including examples of how to read the
