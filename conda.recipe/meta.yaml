@@ -1,22 +1,31 @@
+{% set name = "Darr" %}
+{% set version = "0.1.3" %}
+
+
 package:
-  name: darr
-  version: "0.1.3a3"
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
-  git_rev: v0.1.3a3
-  git_url: https://github.com/gbeckers/darr.git
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 0aad67e8e27b7636a6af8723a0228cf5edfc661269a6e2a25bf617df2fec606d
 
 requirements:
   build:
     - python >=3.6
-    - numpy >=1.13
-
+    - numpy >=1.12
+  host:
+    - python >=3.6
+    - numpy >=1.12
   run:
     - python >=3.6
-    - numpy >=1.13
+    - numpy >=1.12
 
 build:
   noarch: python
+  number: 0
+  skip: True  # [py<36]
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
 
 test:
   imports:
@@ -24,5 +33,12 @@ test:
 
 about:
   home: https://github.com/gbeckers/darr
-  license: BSD
+  license: BSD-3-Clause
+  license_family: BSD
   license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
+  summary: 'science library for storing numeric data arrays in a format that is open, simple, and self-explanatory.'
+  dev_url: https://github.com/gbeckers/darr
+
+extra:
+  recipe-maintainers:
+    - gbeckers
