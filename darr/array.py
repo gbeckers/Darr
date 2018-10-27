@@ -1307,12 +1307,12 @@ def delete_array(da):
             path.unlink()
     try:
         da._path.rmdir()
-    except OSError:
-        print(f"Error: could not fully delete Darr array directory "
-              f"'{da.path}'. It may contain additional files that are not "
-              f"part of the darr. If so, these should be removed "
-              f"manually.")
-        raise
+    except OSError as error:
+        message = f"Error: could not fully delete Darr array directory " \
+                  f"'{da.path}'. It may contain additional files that are " \
+                  f"not part of the darr. If so, these should be removed " \
+                  f"manually."
+        raise OSError(message) from error
 
 
 def truncate_array(a, index):

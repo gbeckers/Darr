@@ -11,7 +11,6 @@ from .array import BaseDataDir, Array, MetaData, asarray, \
 __all__ = ['VLArrayList', 'asvlarraylist', 'create_vlarraylist',
            'delete_vlarraylist']
 
-
 class VLArrayList(BaseDataDir):
     """
     Disk-based list of variable-length arrays.
@@ -221,9 +220,9 @@ def delete_vlarraylist(dal):
     delete_array(dal._indices)
     try:
         dal._path.rmdir()
-    except OSError:
-        print(f"Error: could not fully delete vlarraylist directory "
-              f"'{dal.path}'. It may contain additional files that are not "
-              f"part of the diskarraylist. If so, these should be removed "
-              f"manually.")
-        raise
+    except OSError as error:
+        message = f"Error: could not fully delete Darr array list directory " \
+                  f"'{da.path}'. It may contain additional files that are " \
+                  f"not part of the darr. If so, these should be removed " \
+                  f"manually."
+        raise OSError(message) from error
