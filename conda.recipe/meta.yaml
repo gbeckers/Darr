@@ -15,6 +15,9 @@ requirements:
     - python >=3.6
     - numpy >=1.13
 
+build:
+  noarch: python
+
 test:
   imports:
     - darr
