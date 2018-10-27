@@ -1,6 +1,7 @@
 import sys
 from distutils.core import setup
 import versioneer
+import setuptools
 
 if sys.version_info < (3,6):
     print("Darr requires Python 3.6 or higher please upgrade")

@@ -9,12 +9,10 @@ source:
 requirements:
   build:
     - python >=3.6
-    #- setuptools
+
   run:
     - python >=3.6
     - numpy >=1.13
-build:
-  noarch: python
 
 test:
   imports:
