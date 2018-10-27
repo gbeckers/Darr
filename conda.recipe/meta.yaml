@@ -3,20 +3,24 @@ package:
   version: "0.1.2"
 
 source:
-  path: ..
+  git_rev: v0.1.2
+  git_url: https://github.com/gbeckers/darr.git
 
 requirements:
   build:
-    - python
-    - setuptools
+    - python >=3.6
+    #- setuptools
   run:
-    - python
-    - numpy
+    - python >=3.6
+    - numpy >=1.13
+build:
+  noarch: python
 
 test:
   imports:
     - darr
 
 about:
+  home: https://github.com/gbeckers/darr
   license: BSD
   license_file: LICENSE
