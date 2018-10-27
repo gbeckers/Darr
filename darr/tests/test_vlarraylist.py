@@ -3,11 +3,11 @@ import numpy as np
 from numpy.testing import assert_equal, assert_array_equal
 
 
-from darr.vlarraylist import create_vlarraylist
+from darr.vlarraylist import create_vlarraylist, asvlarraylist
 from .utils import tempdir
 
 
-class CreatedArrayList(unittest.TestCase):
+class CreateArrayList(unittest.TestCase):
 
     def test_1darray(self):
         with tempdir() as dirname:
@@ -35,4 +35,13 @@ class CreatedArrayList(unittest.TestCase):
             assert len(dal) == 1
             assert_equal(dal[0], a)
 
+
+class ClassAsArrayList(unittest.TestCase):
+
+    def test_1darray(self):
+        with tempdir() as dirname:
+            na = [[1,2,3],[4,5,6]]
+            dal = asvlarraylist(dirname, na, overwrite=True)
+            assert_array_equal(dal[0], na[0])
+            assert_array_equal(dal[1], na[1])
 

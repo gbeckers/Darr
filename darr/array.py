@@ -718,6 +718,20 @@ class Array(BaseDataDir):
                 f"shape {self.shape}")
         return array
 
+    def _append(self, array, fd):
+        """
+        Private method to append data. Does *not* update attributes, json
+        array info file, or readme file.
+
+        """
+        array = self._checkarrayforappend(array)
+        fd.seek(0, 2)  # move to end
+        array.tofile(fd)
+        fd.flush()
+        return array.shape[0]
+
+
+
 
     def iterappend(self, arrayiterable):
         """Iteratively append data from a data iterable.
@@ -770,11 +784,7 @@ class Array(BaseDataDir):
             lenincrease = 0
             try:
                 for i, array in enumerate(arrayiterable):
-                    array = self._checkarrayforappend(array)
-                    fd.seek(0, 2)  # move to end
-                    array.tofile(fd)
-                    fd.flush()
-                    lenincrease += array.shape[0]
+                    lenincrease += self._append(array=array, fd=fd)
             except Exception as exception:
                 if fd.closed:
                     fd = open(file=self._datapath, mode=self._accessmode)

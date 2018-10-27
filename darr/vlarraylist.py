@@ -131,10 +131,12 @@ def asvlarraylist(path, arrayiterable, dtype=None, metadata=None,
                         overwrite=overwrite)
     valueslen = firstindices[0][1]
     indiceslen = 1
-    with valuesda.view(accessmode='r+'), indicesda.view(accessmode='r+'):
+    with valuesda._open_array(accessmode='r+') as (vv, vfd), \
+         indicesda._open_array(accessmode='r+') as (iv, ifd):
         for array in arrayiterable:
-            lenincreasevalues = valuesda._append(array)
-            lenincreaseindices = indicesda._append([[valueslen, valueslen + lenincreasevalues]])
+            lenincreasevalues = valuesda._append(array, fd=vfd)
+            starti, endi = valueslen, valueslen + lenincreasevalues
+            lenincreaseindices = indicesda._append([[starti, endi]], fd=ifd)
             valueslen += lenincreasevalues
             indiceslen += lenincreaseindices
     valuesda._update_len(lenincrease=valueslen-firstindices[0][1])
