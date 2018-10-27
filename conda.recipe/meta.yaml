@@ -1,9 +1,9 @@
 package:
   name: darr
-  version: "0.1.2"
+  version: "0.1.3a1"
 
 source:
-  git_rev: v0.1.2
+  git_rev: v0.1.3a1
   git_url: https://github.com/gbeckers/darr.git
 
 requirements:
