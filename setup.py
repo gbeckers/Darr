@@ -53,7 +53,7 @@ Version 0.1.2: Fixed truncate bug on Windows
 """
 
 setup(
-    name='Darr',
+    name='darr',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     packages=['darr', 'darr.tests'],
