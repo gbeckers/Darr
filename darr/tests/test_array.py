@@ -1,10 +1,12 @@
+import os
 import unittest
+from pathlib import Path
 
 import numpy as np
 from numpy.testing import assert_equal, assert_array_equal
 
 from darr.array import asarray, create_array, numtypes, Array, \
-    truncate_array, BaseDataDir
+    truncate_array, BaseDataDir, delete_array
 from .utils import tempdir
 
 
@@ -345,7 +347,6 @@ class MetaData(unittest.TestCase):
             assert not dar._metadata.path.exists()
 
 
-
 class TruncateData(unittest.TestCase):
 
     def test_truncate1d(self):
@@ -356,6 +357,34 @@ class TruncateData(unittest.TestCase):
             assert_equal(a, dar[:])
             truncate_array(dar, 2)
             assert_equal(a[:2], dar[:])
+
+
+class DeleteArray(unittest.TestCase):
+
+    def test_simpledeletearray(self):
+        with tempdir() as dirname:
+            dalpath = Path(dirname).joinpath('temp.dal')
+            dar = create_array(path=dalpath, shape=(0, 2), dtype='int64')
+            delete_array(dar)
+            assert_equal(len(os.listdir(dirname)), 0)
+
+    def test_simpledeletearraypath(self):
+        with tempdir() as dirname:
+            dalpath = Path(dirname).joinpath('temp.dal')
+            dar = create_array(path=dalpath, shape=(0, 2), dtype='int64')
+            delete_array(dalpath)
+            assert_equal(len(os.listdir(dirname)), 0)
+
+    def test_donotdeletenondarrfile(self):
+        with tempdir() as dirname:
+            dalpath = Path(dirname).joinpath('temp.dal')
+            dar = create_array(path=dalpath, shape=(0, 2), dtype='int64')
+            dar._write_jsondict('test.json', {'a': 1})
+            testpath = dar._path.joinpath('test.json')
+            self.assertRaises(OSError, delete_array, dar)
+            self.assertEqual(testpath.exists(), True)
+
+
 
 class TestBaseDataDir(unittest.TestCase):
 

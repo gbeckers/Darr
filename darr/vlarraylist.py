@@ -215,7 +215,7 @@ def delete_vlarraylist(dal):
 
     for fn in dal._filenames:
         path = dal.path.joinpath(fn)
-        if path.exists():
+        if path.exists() and not path.is_dir():
             path.unlink()
     delete_array(dal._values)
     delete_array(dal._indices)
