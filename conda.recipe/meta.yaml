@@ -9,6 +9,7 @@ source:
 requirements:
   build:
     - python >=3.6
+    - numpy >=1.13
 
   run:
     - python >=3.6
