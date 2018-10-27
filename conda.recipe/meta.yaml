@@ -25,4 +25,4 @@ test:
 about:
   home: https://github.com/gbeckers/darr
   license: BSD
-  license_file: LICENSE
+  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'

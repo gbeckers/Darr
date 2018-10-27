@@ -20,7 +20,7 @@ Python, R, Julia, Matlab and Mathematica.
 Darr is open source and freely available under the `New BSD
 License <https://opensource.org/licenses/BSD-3-Clause>`__ terms.
 
-Version: 0.1.2 alpha
+Version: 0.1.3 alpha
 
 Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
 Beckers
@@ -432,7 +432,7 @@ Other interesting projects
    :target: https://travis-ci.org/gbeckers/Darr?branch=master
 .. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
    :target: https://ci.appveyor.com/project/gbeckers/darr
-.. |PyPy version| image:: https://img.shields.io/badge/pypi-v0.1.2-orange.svg
+.. |PyPy version| image:: https://img.shields.io/badge/pypi-v0.1.3-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
    :target: https://coveralls.io/github/gbeckers/Darr?branch=master
