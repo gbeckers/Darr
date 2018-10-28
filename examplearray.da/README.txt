@@ -47,8 +47,8 @@ fileid = open("arrayvalues.bin","r");
 a = map(ltoh, read(fileid, Float64, (1024, 2)));
 close(fileid);
 
-ID/GDL:
--------
+IDL/GDL:
+--------
 a = read_binary("arrayvalues.bin", data_type=5, data_dims=[1024, 2], endian="little")
 
 Mathematica:

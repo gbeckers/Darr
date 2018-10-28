@@ -1586,7 +1586,7 @@ def arrayreadmetxt(da):
         ("R:", "R"),
         ("Matlab/Octave:", "matlab"),
         ("Julia:", "julia"),
-        ("ID/GDL:", "idl"),
+        ("IDL/GDL:", "idl"),
         ("Mathematica:", "mathematica")
     )
     for heading, language in languages:
