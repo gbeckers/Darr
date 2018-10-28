@@ -43,8 +43,7 @@ Features
 -   **Integrates easily** with the Dask or NumExpr libraries for 
     **numeric computation on very large Darr arrays**.
 
-
-See the `documentation <http://darr.readthedocs.io/>`_ for more information.
+See the [documentation](http://darr.readthedocs.io/) for more information.
 
 """
 
