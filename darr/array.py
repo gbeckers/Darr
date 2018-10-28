@@ -1197,6 +1197,7 @@ def create_basedir(path, overwrite=False):
     return BaseDataDir(path)
 
 
+#FIXME non-first axis len 0
 def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
                  accessmode='r+', chunklen=None, metadata=None,
                  overwrite=False):

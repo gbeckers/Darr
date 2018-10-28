@@ -194,7 +194,7 @@ class dArray(unittest.TestCase):
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             # linux and windows have different numpy memmap reprs...
-            assert_equal(repr(dar)[:12], 'darr array ([0, 0]')
+            assert_equal(repr(dar)[:18], 'darr array ([0, 0]')
 
 
 
@@ -384,6 +384,29 @@ class DeleteArray(unittest.TestCase):
             self.assertRaises(OSError, delete_array, dar)
             self.assertEqual(testpath.exists(), True)
 
+class TestMd5Checksums(unittest.TestCase):
+
+    def test_storemd5checksums(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2, 2), dtype='int64',
+                               overwrite=True)
+            scs = dar.store_md5checksums()
+            ccs = dar.currentchecksums
+            self.assertEqual(scs, ccs)
+
+    def test_assertmd5checksumsvalues(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2, 2), dtype='int64',
+                               overwrite=True)
+            self.assertRaises(FileNotFoundError, dar.assert_md5checksums)
+            scs = dar.store_md5checksums()
+            ccs = dar.currentchecksums
+            self.assertEqual(scs, ccs)
+            dar[0] = 1
+            self.assertRaises(ValueError, dar.assert_md5checksums)
+            scs = dar.store_md5checksums()
+            ccs = dar.currentchecksums
+            self.assertEqual(scs, ccs)
 
 
 class TestBaseDataDir(unittest.TestCase):

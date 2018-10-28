@@ -411,14 +411,12 @@ To run the test suite:
 
     >>> import darr as da
     >>> da.test()
-        .....................................................
-        ----------------------------------------------------------------------
-        Ran 53 tests in 2.196s
+    .......................................................
+    ----------------------------------------------------------------------
+    Ran 55 tests in 2.181s
 
-        OK
-
-
-        <unittest.runner.TextTestResult run=53 errors=0 failures=0>
+    OK
+    <unittest.runner.TextTestResult run=53 errors=0 failures=0>
 
 Other interesting projects
 --------------------------
