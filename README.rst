@@ -59,7 +59,24 @@ Con's:
    zillion small arrays, and storage space in a concern, use other
    approaches.
 
+
+Installation
+------------
+
+Darr depends on Python 3.6 or higher and NumPy 1.12 or higher.
+
+Install Darr from PyPI::
+
+    $ pip install darr
+
+
+Documentation
+-------------
 See the `documentation <http://darr.readthedocs.io/>`_ for more information.
+
+
+Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
+Beckers
 
 .. |Travis Status| image:: https://travis-ci.org/gbeckers/Darr.svg?branch=master
    :target: https://travis-ci.org/gbeckers/Darr?branch=master
@@ -73,5 +90,3 @@ See the `documentation <http://darr.readthedocs.io/>`_ for more information.
    :target: https://darr.readthedocs.io/en/latest/
 
 
-Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
-Beckers
