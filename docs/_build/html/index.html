@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Darr API Documentation" href="api.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -41,24 +41,21 @@
             
   <div class="section" id="darr">
 <h1>Darr<a class="headerlink" href="#darr" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://travis-ci.org/gbeckers/Darr?branch=master"><img alt="Travis Status" src="https://travis-ci.org/gbeckers/Darr.svg?branch=master" /></a> <a class="reference external" href="https://ci.appveyor.com/project/gbeckers/darr"><img alt="Appveyor Status" src="https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true" /></a> <a class="reference external" href="https://pypi.org/project/darr/"><img alt="PyPy version" src="https://img.shields.io/badge/pypi-v0.1.2-orange.svg" /></a> <a class="reference external" href="https://coveralls.io/github/gbeckers/Darr?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/gbeckers/darr/badge.svg?branch=master" /></a></p>
-<p>Darr is a Python science library for storing numeric data arrays in a
-way that is open, simple, and self-explanatory. It also enables fast
-memory-mapped read/write access to such disk-based data, the ability to
-append data, and the flexible use of metadata. It is primarily designed
-for scientific use cases. Save and use your numeric arrays and metadata
-with one line of code while easy, long-term and tool-independent
-accessibility is ensured.</p>
-<p>To avoid dependency on specific tools, Darr is based on a combination
-of flat binary and human-readable text files. It automatically saves a
-clear text description of how the data is stored, with example code for
-reading the specific data in a variety of current scientific data tools
-such as Python, R, Julia, Matlab and Mathematica.</p>
+<p><a class="reference external" href="https://travis-ci.org/gbeckers/Darr?branch=master"><img alt="Travis Status" src="https://travis-ci.org/gbeckers/Darr.svg?branch=master" /></a> <a class="reference external" href="https://ci.appveyor.com/project/gbeckers/darr"><img alt="Appveyor Status" src="https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true" /></a> <a class="reference external" href="https://pypi.org/project/darr/"><img alt="PyPy version" src="https://img.shields.io/badge/pypi-v0.1.3-orange.svg" /></a> <a class="reference external" href="https://coveralls.io/github/gbeckers/Darr?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master" /></a></p>
+<p>Darr is a Python science library for storing numeric data arrays in a way
+that is open, simple, and self-explanatory. It enables fast memory-mapped
+read/write access to such disk-based data, the ability to append data, and
+the flexible use of metadata. It is primarily designed for scientific use
+cases. Save and use your numeric arrays and metadata with one line of code
+while long-term and tool-independent accessibility and easy shareability
+is ensured.</p>
+<p>To avoid dependency on specific tools, Darr is based on a combination of
+flat binary and human-readable text files. It automatically saves a clear
+text description of how the data is stored, together with code for reading
+the specific data in a variety of current scientific data tools such as
+Python, R, Julia, Matlab and Mathematica.</p>
 <p>Darr is open source and freely available under the <a class="reference external" href="https://opensource.org/licenses/BSD-3-Clause">New BSD
 License</a> terms.</p>
-<p>Version: 0.1.2 alpha</p>
-<p>Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
-Beckers</p>
 <div class="section" id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
 <p>Pro’s:</p>
@@ -97,322 +94,43 @@ zillion small arrays, and storage space in a concern, use other
 approaches.</li>
 </ul>
 </div>
-<div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<p><strong>Creating an array</strong></p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darr</span> <span class="k">as</span> <span class="nn">da</span>
-<span class="go">    &gt;&gt;&gt; a = da.create_array(&#39;a1.da&#39;, shape=(2,1024))</span>
-<span class="go">    &gt;&gt;&gt; a</span>
-<span class="go">    &gt;&gt;&gt; array([[0., 0., 0., ..., 0., 0., 0.],</span>
-<span class="go">               [0., 0., 0., ..., 0., 0., 0.]]) (r+)</span>
-
-<span class="go">The default is to fill the array with zeros (of type float64) but this</span>
-<span class="go">can be changed by the &#39;fill&#39; and &#39;fillfunc&#39; parameters. See the api.</span>
-
-<span class="go">The data is now stored on disk in a directory named &#39;ar1.da&#39;, containing</span>
-<span class="go">a flat binary file (&#39;arrayvalues.bin&#39;) and a human-readble</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;a1.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
-<span class="go">           [0., 0., 0., ..., 0., 0., 0.]]) (r+)</span>
-</pre></div>
-</div>
-<p>The default is to fill the array with zeros (of type float64) but this
-can be changed by the ‘fill’ and ‘fillfunc’ parameters. See the api.</p>
-<p>The data is now stored on disk in a directory named ‘ar1.da’, containing
-a flat binary file (‘arrayvalues.bin’) and a human-readble
-<a class="reference external" href="https://en.wikipedia.org/wiki/JSON">JSON</a> text file
-(‘arraydescription.json’), with information on the array dimensionality,
-layout and numeric type. It also contains a ‘README.txt’ file explaining
-the data format as well as providing instructions on how to read the
-array using other tools. For example, it provides the code to read the
-array in <a class="reference external" href="https://www.gnu.org/software/octave/">Octave</a>/Matlab:</p>
-<div class="code octave highlight-default"><div class="highlight"><pre><span></span><span class="n">fileid</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s1">&#39;arrayvalues.bin&#39;</span><span class="p">);</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">fread</span><span class="p">(</span><span class="n">fileid</span><span class="p">,</span> <span class="p">[</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;*float64&#39;</span><span class="p">,</span> <span class="s1">&#39;ieee-le&#39;</span><span class="p">);</span>
-<span class="n">fclose</span><span class="p">(</span><span class="n">fileid</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Or in <a class="reference external" href="https://cran.r-project.org/">R</a>:</p>
-<div class="code R highlight-default"><div class="highlight"><pre><span></span><span class="n">fileid</span> <span class="o">=</span> <span class="n">file</span><span class="p">(</span><span class="s2">&quot;arrayvalues.bin&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">readBin</span><span class="p">(</span><span class="n">con</span><span class="o">=</span><span class="n">fileid</span><span class="p">,</span> <span class="n">what</span><span class="o">=</span><span class="n">numeric</span><span class="p">(),</span> <span class="n">n</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;little&quot;</span><span class="p">)</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dimnames</span><span class="o">=</span><span class="n">NULL</span><span class="p">)</span>
-<span class="n">close</span><span class="p">(</span><span class="n">fileid</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Or in <a class="reference external" href="https://julialang.org/">Julia</a>:</p>
-<div class="code julia highlight-default"><div class="highlight"><pre><span></span><span class="n">fid</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;arrayvalues.bin&quot;</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">);</span>
-<span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">ltoh</span><span class="p">,</span> <span class="n">read</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">Float64</span><span class="p">,</span> <span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">)));</span>
-<span class="n">close</span><span class="p">(</span><span class="n">fid</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>To see the files that correspond to a Darr array, see
-‘examplearray.da’ in the source
-<a class="reference external" href="https://github.com/gjlbeckers-uu/Darr">repo</a>.</p>
-<p><strong>Different numeric type</strong></p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;a2.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">array([[0, 0, 0, ..., 0, 0, 0],</span>
-<span class="go">       [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)</span>
-</pre></div>
-</div>
-<p><strong>Creating array from NumPy array</strong></p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">na</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="s1">&#39;a3.da&#39;</span><span class="p">,</span> <span class="n">na</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],</span>
-<span class="go">       [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)</span>
-</pre></div>
-</div>
-<p><strong>Reading data</strong></p>
-<p>The disk-based array is memory-mapped and can be used to read data into
-RAM using NumPy indexing.</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[:,</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-<span class="go">array([ 1.,  1.])</span>
-</pre></div>
-</div>
-<p>Note that that creates a NumPy array. The darr array itself is not a NumPy
-array, nor does it behave like one except for indexing. The simplest way
-to use the data for computation is to, read (or view, see below) the
-data first as a NumPy array:</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span><span class="p">[:]</span>
-<span class="go">array([[2., 2., 2., ..., 2., 2., 2.],</span>
-<span class="go">       [2., 2., 2., ..., 2., 2., 2.]])</span>
-</pre></div>
-</div>
-<p>If your data is too large to read into RAM, you could use the
-<a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> or the
-<a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> library for
-computation (see example below).</p>
-<p><strong>Writing data</strong></p>
-<p>Writing is also done through NumPy indexing. Writing directly leads to
-changes on disk. Our example array is read-only because we did not
-specify otherwise in the ‘asarray’ function above, so we’ll set it to
-be writable first:</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">set_accessmode</span><span class="p">(</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">array([[ 1.,  2.,  1., ...,  1.,  1.,  1.],</span>
-<span class="go">       [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)</span>
-</pre></div>
-</div>
-<p><strong>Efficient I/O</strong></p>
-<p>To get maximum speed when doing multiple operations open a direct view
-on the disk-based array so as to opens the underlying files only once:</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">a</span><span class="o">.</span><span class="n">view</span><span class="p">()</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.</span>
-<span class="gp">... </span>    <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.</span>
-<span class="gp">... </span>    <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">5.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">array([[ 3.,  2.,  4., ...,  1.,  1.,  1.],</span>
-<span class="go">      [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)</span>
-</pre></div>
-</div>
-<p><strong>Appending data</strong></p>
-<p>You can easily append data to a Darr array, which is immediately reflected
-in the disk-based files. This is a big plus in many situations. Think
-for example of saving data as they are generated by an instrument. A
-restriction is that you can only append to the first axis:</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">1024</span><span class="p">)))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">array([[3., 2., 4., ..., 1., 1., 1.],</span>
-<span class="go">       [5., 2., 5., ..., 1., 1., 5.],</span>
-<span class="go">       [1., 1., 1., ..., 1., 1., 1.],</span>
-<span class="go">       [1., 1., 1., ..., 1., 1., 1.],</span>
-<span class="go">       [1., 1., 1., ..., 1., 1., 1.]]) (r+)</span>
-</pre></div>
-</div>
-<p>The associated ‘README.txt’ and ‘arraydescription.json’ texts files are
-also automatically updated to reflect these changes. There is an
-‘iterappend’ method for efficient serial appending. See the api.</p>
-<p><strong>Copying and type casting data</strong></p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ac</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s1">&#39;ac.da&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">acf16</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="s1">&#39;acf16.da&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float16&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">acf16</span>
-<span class="go">array([[3., 2., 4., ..., 1., 1., 1.],</span>
-<span class="go">       [5., 2., 5., ..., 1., 1., 5.],</span>
-<span class="go">       [1., 1., 1., ..., 1., 1., 1.],</span>
-<span class="go">       [1., 1., 1., ..., 1., 1., 1.],</span>
-<span class="go">       [1., 1., 1., ..., 1., 1., 1.]], dtype=float16) (r)</span>
-</pre></div>
-</div>
-<p>Note that the type of the array can be changed when copying. Data is
-copied in chunks, so very large arrays will not flood RAM memory.</p>
-<p><strong>Larger than memory computation</strong></p>
-<p>For computing with very large darr arrays, I recommend the
-<a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> library, which works
-nicely with darr. I’ll base the example on a small array though:</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dask.array</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;ar1.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dara</span> <span class="o">=</span> <span class="n">dask</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">from_array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">512</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="p">((</span><span class="n">dara</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)</span>
-</pre></div>
-</div>
-<p>So in this case we overwrote the data in a with the results of the
-computation, but we could have stored the result in a different darr array
-of the same shape. Dask can do more powerful things, for which I refer
-to the <a class="reference external" href="https://dask.pydata.org/en/latest/index.html">Dask
-documentation</a>. The
-point here is that darr arrays can be both sources and stores for Dask.</p>
-<p>Alternatively, you can use the
-<a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> library using a
-view of the Darr array, like so:</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numexpr</span> <span class="k">as</span> <span class="nn">ne</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;a3.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">a</span><span class="o">.</span><span class="n">view</span><span class="p">()</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">ne</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="s1">&#39;(v + 1) / 2&#39;</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">v</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
-<span class="go">array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)</span>
-</pre></div>
-</div>
-<p><strong>Metadata</strong></p>
-<p>Metadata can be read and written like a dictionary. Changes correspond
-to changes in a human-readable and editable JSON text file that holds
-the metadata on disk.</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span>
-<span class="go">{}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;samplingrate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1000.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span>
-<span class="go">{&#39;samplingrate&#39;: 1000.0}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;starttime&#39;</span><span class="p">:</span> <span class="s1">&#39;12:00:00&#39;</span><span class="p">,</span> <span class="s1">&#39;electrodes&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span>
-<span class="go">{&#39;electrodes&#39;: [2, 5], &#39;samplingrate&#39;: 1000.0, &#39;starttime&#39;: &#39;12:00:00&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;starttime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;13:00:00&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">metadata</span>
-<span class="go">{&#39;electrodes&#39;: [2, 5], &#39;samplingrate&#39;: 1000.0, &#39;starttime&#39;: &#39;13:00:00&#39;}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">a</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;starttime&#39;</span><span class="p">]</span>
-<span class="go">a.metadata</span>
-<span class="go">{&#39;electrodes&#39;: [2, 5], &#39;samplingrate&#39;: 1000.0}</span>
-</pre></div>
-</div>
-<p>Since JSON is used to store the metadata, you cannot store arbitrary
-python objects. You can only store:</p>
-<ul class="simple">
-<li>strings</li>
-<li>numbers</li>
-<li>booleans (True/False)</li>
-<li>None</li>
-<li>lists</li>
-<li>dictionaries with string keys</li>
-</ul>
-</div>
-<div class="section" id="rationale">
-<h2>Rationale<a class="headerlink" href="#rationale" title="Permalink to this headline">¶</a></h2>
-<p>There are many great formats for storing scientific data. Nevertheless,
-the advantages they offer often go hand in hand with complexity and
-dependence on external libraries, or on specific knowledge that is not
-included with the data. Preferably, however, scientific data is stored
-in a way that is simple and self-explanatory. For one thing, this is in
-line with the principle of openness and facilitates re-use and
-reproducibility of scientific results by others. Additionally,
-experience teaches that simple formats and independence of specific
-tools are a very good idea, even when just working with your own data
-(see this <a class="reference external" href="http://cyrille.rossant.net/moving-away-hdf5/">blog by Cyrille
-Rossant</a> that echos my
-own experiences).</p>
-<p>The goal of Darr is to help you save and use numeric data arrays from
-within Python in a way that is consistent with this idea. It is not a
-file format, but a standardized way of saving data that maximizes
-readability.</p>
-<p>Darr stores the data itself in a flat binary file. This is a
-future-proof way of storing numeric data, as long as clear information
-is provided on how the binary data is organized. There is no header,
-because we want to assume as little a priori knowledge as possible.
-Instead, Darr writes the information about the organization of the
-data to separate text files.</p>
-<p>The combination of flat binary and text files leads to a
-self-documenting format that anyone can easily explore on any computer,
-operating system, and programming language, without installing
-dependencies, and without any specific pre-existing knowledge on the
-format. In decades to come, your files are much more likely to be
-widely readable in this format than in specific formats such as
-<a class="reference external" href="https://www.hdfgroup.org/">HDF5</a> or
-<a class="reference external" href="https://docs.scipy.org/doc/numpy-dev/neps/npy-format.html">.npy</a>.</p>
-<p>For a variety of current analysis tools Darr helps you make your data
-even more accessible as it generates a README text file that, in
-addition to explaining the format, contains example code of how to read
-the data. E.g. Python/NumPy (without the Darr library), R, Julia,
-MatLab/Octave, and Mathematica. Just copy and paste the code in the
-README to read the data. Every array that you save can be simply be
-provided as such to your colleagues with minimal explanation.</p>
-<p>There are of course also disadvantages to this approach.</p>
-<ul class="simple">
-<li>Although the data is widely readable by many scientific analysis
-tools and programming languages, it lacks the ease of ‘double-click
-access’ that specific data file formats may have. For example, if
-your data is a sound recording, saving it in ‘.wav’ format enables
-you to directly open it in any audio program.</li>
-<li>To keep things as simple as possible, Darr does not use
-compression. Depending on the data, storage can thus take more disk
-space than necessary. If you are archiving your data and insist on
-minimizing disk space usage you can compress the data files with a
-general compression tool that is likely to be still supported in the
-distant future, such as bzip2. Sometimes, compression is used to
-speed up data transmission to the processor cache (see for example
-<a class="reference external" href="https://github.com/Blosc/c-blosc">blosc</a>). You are missing out on
-that as well. However, in addition to making your data less easy to
-read, this type of compression may require careful tweaking of
-parameters depending on how you typically read and write the data,
-and failing to do so may lead to access that is in fact slower.</li>
-<li>Your data is not stored in one file, but in a directory that contains
-3-4 files (depending if you save metadata), at least 2 of which are
-small text files (~150 b - 1.7 kb). This has two disadvantages:<ul>
-<li>It is less ideal when transferring data, for example by email. You
-may want to archive them into a single file first (zip, tar).</li>
-<li>In many file systems, files take up a minimum amount of disk space
-(normally 512 b - 4 kb) even if the data they contain is not that
-large. Darr’s way of storing data is thus space-inefficient if
-you have zillions of very small data arrays stored separately.</li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>Darr requires Python 3.6+ and NumPy.</p>
-</div>
-<div class="section" id="development-and-contributing">
-<h2>Development and Contributing<a class="headerlink" href="#development-and-contributing" title="Permalink to this headline">¶</a></h2>
-<p>This library is developed by Gabriël Beckers. It is being used in
-practice in the lab, but first beta release will be done when there are
-more unit tests. The naming of some functions/methods may still change.
-Any help / suggestions / ideas / contributions are very welcome and
-appreciated. For any comment, question, or error, please open an
-<a class="reference external" href="https://github.com/gjlbeckers-uu/Darr/issues">issue</a> or propose a
-<a class="reference external" href="https://github.com/gjlbeckers-uu/Darr/pulls">pull</a> request on
-GitHub.</p>
-<p>Code can be found on GitHub: <a class="reference external" href="https://github.com/gjlbeckers-uu/Darr">https://github.com/gjlbeckers-uu/Darr</a></p>
-</div>
-<div class="section" id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
-<p>To run the test suite:</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darr</span> <span class="k">as</span> <span class="nn">da</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
-<span class="go">    ................................................</span>
-<span class="go">    ----------------------------------------------------------------------</span>
-<span class="go">    Ran 48 tests in 2.018s</span>
-
-<span class="go">    OK</span>
-
-<span class="go">    &lt;unittest.runner.TextTestResult run=40 errors=0 failures=0&gt;</span>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Darr depends on Python 3.6 or higher and NumPy 1.12 or higher.</p>
+<p>Install Darr from PyPI:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ pip install darr
 </pre></div>
 </div>
 </div>
-<div class="section" id="other-interesting-projects">
-<h2>Other interesting projects<a class="headerlink" href="#other-interesting-projects" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/CINPLA/exdir/">exdir</a></li>
-<li><a class="reference external" href="https://github.com/h5py/h5py">h5py</a></li>
-<li><a class="reference external" href="https://github.com/PyTables/PyTables">pytables</a></li>
-<li><a class="reference external" href="https://github.com/zarr-developers/zarr">zarr</a></li>
-</ul>
+<div class="section" id="status">
+<h2>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
+<p>Darr is relatively new, and therefore in its alpha stage. It is being used in
+practice in the lab, and test coverage is over 90%, but first beta release will
+have to wait until test coverage is near 100% and the API is more stable. The
+naming of some functions/methods may still change.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#creating-an-array">Creating an array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#different-numeric-type">Different numeric type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#creating-array-from-numpy-array">Creating array from NumPy array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#reading-data">Reading data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#writing-data">Writing data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#efficient-i-o">Efficient I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#appending-data">Appending data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#copying-and-type-casting-data">Copying and type casting data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#larger-than-memory-computation">Larger than memory computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#metadata">Metadata</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rationale.html">Rationale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Darr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-3">Version 0.1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-2">Version 0.1.2</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Darr API Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api.html#creating-arrays">Creating arrays</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api.html#accessing-existing-arrays">Accessing existing arrays</a></li>
@@ -431,6 +149,8 @@ GitHub.</p>
 <li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
+<p>Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
+Beckers</p>
 </div>
 
 
@@ -442,7 +162,7 @@ GitHub.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="api.html" title="next chapter">Darr API Documentation</a></li>
+      <li>Next: <a href="tutorial.html" title="next chapter">Tutorial</a></li>
   </ul></li>
 </ul>
 </div>

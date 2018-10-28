@@ -12,7 +12,7 @@ Creating arrays
 
 Accessing existing arrays
 -------------------------
-.. autoclass:: darr.array
+.. autoclass:: darr.Array
    :members:
 
 Deleting arrays

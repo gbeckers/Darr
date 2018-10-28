@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Darr" href="index.html" />
+    <link rel="prev" title="Release notes" href="releasenotes.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -41,20 +41,20 @@
             
   <div class="section" id="module-darr.array">
 <span id="darr-api-documentation"></span><h1>Darr API Documentation<a class="headerlink" href="#module-darr.array" title="Permalink to this headline">¶</a></h1>
-<p>dArray is a Python library for storing numeric data arrays in a format
+<p>Darr is a Python library for storing numeric data arrays in a format
 that is as open and simple as possible. It also provides easy memory-mapped
 access to such disk-based data using numpy indexing.</p>
-<p>dArray objects can be created from array-like objects, such as numpy arrays
+<p>Darr objects can be created from array-like objects, such as numpy arrays
 and lists, using the <strong>asarray</strong> function. Alternatively, darrays can be
-created from scratch by the <strong>create_array</strong> function. Existing darr
+created from scratch by the <strong>create_array</strong> function. Existing Darr
 data on disk can be accessed through the <strong>Array</strong> constructor.
-To remove a darr from disk, use <strong>delete_array</strong>.</p>
+To remove a Darr array from disk, use <strong>delete_array</strong>.</p>
 <div class="section" id="creating-arrays">
 <h2>Creating arrays<a class="headerlink" href="#creating-arrays" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="darr.asarray">
 <code class="descclassname">darr.</code><code class="descname">asarray</code><span class="sig-paren">(</span><em>path</em>, <em>array</em>, <em>dtype=None</em>, <em>accessmode='r'</em>, <em>metadata=None</em>, <em>chunklen=None</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.asarray" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save an array or array generator as a dArray to file system path.</p>
+<dd><p>Save an array or array generator as a Darr array to file system path.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -84,7 +84,7 @@ these will not be removed and an OSError is raised. Default is <cite>False</cite
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">A dArray <cite>array</cite> instance.</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">A Darr <cite>array</cite> instance.</p>
 </td>
 </tr>
 </tbody>
@@ -126,7 +126,7 @@ predetermined values.</p>
 <li><strong>path</strong> (<em>str</em><em> or </em><em>pathlib.Path</em>) – File system path to which the array will be saved. Note that this will
 be a directory containing multiple files.</li>
 <li><strong>shape</strong> (<em>int ot sequence of ints</em>) – Shape of the <cite>darr</cite>.</li>
-<li><strong>dtype</strong> (<em>dtype</em><em>, </em><em>optional</em>) – The type of the <cite>darr</cite>. Default is ‘float64’</li>
+<li><strong>dtype</strong> (<a class="reference internal" href="#darr.Array.dtype" title="darr.Array.dtype"><em>dtype</em></a><em>, </em><em>optional</em>) – The type of the <cite>darr</cite>. Default is ‘float64’</li>
 <li><strong>fill</strong> (<em>number</em><em>, </em><em>optional</em>) – The value used to fill the array with. Default is <cite>None</cite>, which will
 lead to the array being filled with zeros.</li>
 <li><strong>fillfunc</strong> (<em>function</em><em>, </em><em>optional</em>) – A function that generates the fill values, potentially on the basis of
@@ -151,7 +151,7 @@ Default is <cite>False</cite>.</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">A <cite>dArray</cite> instance.</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">A Darr <cite>array</cite> instance.</p>
 </td>
 </tr>
 </tbody>
@@ -165,29 +165,29 @@ Default is <cite>False</cite>.</li>
 </div>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darr</span> <span class="k">as</span> <span class="nn">da</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;testarray0&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;testarray0&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 <span class="go">darr([[ 0.,  0.],</span>
 <span class="go">   [ 0.,  0.],</span>
 <span class="go">   [ 0.,  0.],</span>
 <span class="go">   [ 0.,  0.],</span>
 <span class="go">   [ 0.,  0.]]) (r+)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;testarray1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;testarray1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>
 <span class="go">darr([[0, 0],</span>
 <span class="go">   [0, 0],</span>
 <span class="go">   [0, 0],</span>
 <span class="go">   [0, 0],</span>
 <span class="go">   [0, 0]], dtype=int16) (r+)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;testarray3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">23.4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;testarray3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="mf">23.4</span><span class="p">)</span>
 <span class="go">darr([[ 23.4,  23.4],</span>
 <span class="go">   [ 23.4,  23.4],</span>
 <span class="go">   [ 23.4,  23.4],</span>
 <span class="go">   [ 23.4,  23.4],</span>
 <span class="go">   [ 23.4,  23.4]]) (r+)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fillfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="n">darr</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;testarray4&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,),</span> <span class="n">fillfunc</span><span class="o">=</span><span class="n">fillfunc</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;testarray4&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,),</span> <span class="n">fillfunc</span><span class="o">=</span><span class="n">fillfunc</span><span class="p">)</span>
 <span class="go">darr([ 0.,  2.,  4.,  6.,  8.]) (r+)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fillfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span> <span class="o">*</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_darray</span><span class="p">(</span><span class="s1">&#39;testarray4&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">fillfunc</span><span class="o">=</span><span class="n">fillfunc</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;testarray4&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">fillfunc</span><span class="o">=</span><span class="n">fillfunc</span><span class="p">)</span>
 <span class="go">darr([[ 0.,  0.],</span>
 <span class="go">   [ 1.,  2.],</span>
 <span class="go">   [ 2.,  4.],</span>
@@ -200,10 +200,319 @@ Default is <cite>False</cite>.</li>
 </div>
 <div class="section" id="accessing-existing-arrays">
 <h2>Accessing existing arrays<a class="headerlink" href="#accessing-existing-arrays" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="darr.Array">
+<em class="property">class </em><code class="descclassname">darr.</code><code class="descname">Array</code><span class="sig-paren">(</span><em>path</em>, <em>accessmode='r'</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read and write numeric data from and to a memory-mapped, disk-based
+array using numpy indexing. Memory-mapped arrays are used for accessing
+segments of (very) large files on disk, without reading the entire file
+into memory.</p>
+<p>Darr data is stored in a simple format that maximizes long-term
+readability by other software and programming languages, and has been
+designed with scientific use cases in mind.</p>
+<p>A darr array corresponds to a directory containing 1) a binary file with
+the raw numeric array values, 2) a text file (json format) describing the
+numeric type, array shape, and other format information, 3) a README text
+file documenting the data format, including examples of how to read the
+data in Python or Matlab.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> (<em>str</em><em> or </em><em>pathlib.Path</em>) – Path to disk-based array directory.</li>
+<li><strong>accessmode</strong> (<em>{'r'</em><em>, </em><em>'r+'}</em><em>, </em><em>default 'r'</em>) – File access mode of the darr data. <cite>r</cite> means read-only, <cite>r+</cite> means
+read-write. <cite>w</cite> does not exist. To create new darr arrays, potentially
+overwriting an other one, use the <cite>asarray</cite> or <cite>create_array</cite>
+functions.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="attribute">
-<dt id="darr.array">
-<code class="descclassname">darr.</code><code class="descname">array</code><a class="headerlink" href="#darr.array" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#darr.array" title="darr.array"><code class="xref py py-class docutils literal"><span class="pre">darr.array</span></code></a></p>
+<dt id="darr.Array.accessmode">
+<code class="descname">accessmode</code><a class="headerlink" href="#darr.Array.accessmode" title="Permalink to this definition">¶</a></dt>
+<dd><p>File access mode of the disk array data. <cite>r</cite> means read-only, <cite>r+</cite>
+means read-write. <cite>w</cite> does not exist. To create new darr arrays,
+potentially overwriting an other one, use the <cite>asarray</cite> or
+<cite>create_array</cite> functions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="darr.Array.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>array</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add array-like objects to darr to the end of the dataset.</p>
+<p>Data will be appended along the first axis. The shape of the data and
+the darr must be compliant. When appending data repeatedly it is
+more efficient to use <cite>iterappend</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>array</strong> (<em>array-like object</em>) – This can be a numpy array, a sequence that can be converted into a
+numpy array.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darr</span> <span class="k">as</span> <span class="nn">da</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;test.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">[[ 0.  0.]</span>
+<span class="go"> [ 0.  0.]</span>
+<span class="go"> [ 0.  0.]</span>
+<span class="go"> [ 0.  0.]</span>
+<span class="go"> [ 1.  2.]</span>
+<span class="go"> [ 3.  4.]</span>
+<span class="go"> [ 5.  6.]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="darr.Array.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><em>path</em>, <em>dtype=None</em>, <em>chunklen=None</em>, <em>accessmode='r'</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy darr to a different path, potentially changing its dtype.</p>
+<p>The copying is performed in chunks to avoid RAM memory overflow for
+very large darr arrays.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>str</em><em> or </em><em>pathlib.Path</em>) – </li>
+<li><strong>dtype</strong> (<em>&lt;dtype</em><em>, </em><em>None&gt;</em>) – Numpy data type of the copy. Default is None, which corresponds to
+the dtype of the darr to be copied.</li>
+<li><strong>chunklen</strong> (<em>&lt;int</em><em>, </em><em>None&gt;</em>) – The length of chunks (along first axis) that are written during
+creation. If None, it is chosen so that chunks are 10 Mb in total
+size.</li>
+<li><strong>accessmode</strong> (<em>{'r'</em><em>, </em><em>'r+'}</em><em>, </em><em>default 'r'</em>) – File access mode of the darr data of the returned Darr
+object. <cite>r</cite> means read-only, <cite>r+</cite> means read-write.</li>
+<li><strong>overwrite</strong> (<em>(</em><em>True</em><em>, </em><em>False</em><em>)</em><em>, </em><em>optional</em>) – Overwrites existing darr data if it exists. Note that a
+darr path is a directory. If that directory contains
+additional files, these will not be removed and an OSError is
+raised. Default is <cite>False</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">copy of the darr</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#darr.Array" title="darr.Array">Array</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="darr.Array.currentchecksums">
+<code class="descname">currentchecksums</code><a class="headerlink" href="#darr.Array.currentchecksums" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current md5 checksums of data and datadescription files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="darr.Array.dtype">
+<code class="descname">dtype</code><a class="headerlink" href="#darr.Array.dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numpy data type of the array values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="darr.Array.iterappend">
+<code class="descname">iterappend</code><span class="sig-paren">(</span><em>arrayiterable</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.iterappend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iteratively append data from a data iterable.</p>
+<p>The iterable has to yield chunks of data that are array-like objects
+compliant with the darr.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arrayiterable</strong> (<em>an iterable that yield array-like objects</em>) – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darr</span> <span class="k">as</span> <span class="nn">da</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;test.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">ga</span><span class="p">():</span>
+<span class="go">        yield [[1,2],[3,4]]</span>
+<span class="go">        yield [[5,6],[7,8],[9,10]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">iterappend</span><span class="p">(</span><span class="n">ga</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">[[  0.   0.]</span>
+<span class="go"> [  0.   0.]</span>
+<span class="go"> [  0.   0.]</span>
+<span class="go"> [  1.   2.]</span>
+<span class="go"> [  3.   4.]</span>
+<span class="go"> [  5.   6.]</span>
+<span class="go"> [  7.   8.]</span>
+<span class="go"> [  9.  10.]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="darr.Array.iterview">
+<code class="descname">iterview</code><span class="sig-paren">(</span><em>chunklen</em>, <em>stepsize=None</em>, <em>startindex=None</em>, <em>endindex=None</em>, <em>include_remainder=True</em>, <em>accessmode=None</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.iterview" title="Permalink to this definition">¶</a></dt>
+<dd><p>View the data array of the darr iteratively in chunks of a
+given length and with a given stepsize.</p>
+<p>This method does not copy the underlying data to a new numpy array,
+and is therefore relatively fast. It can also be used to change the
+darr.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>chunklen</strong> (<em>int</em>) – Size of chunk for across the first axis. Note that the last chunk
+may be smaller than <cite>chunklen</cite>, depending on the size of the
+first axis.</li>
+<li><strong>stepsize</strong> (<em>&lt;int</em><em>, </em><em>None&gt;</em>) – Size of the shift per iteration across the first axis.
+Default is None, which means that <cite>stepsize</cite> equals <cite>chunklen</cite>.</li>
+<li><strong>include_remainder</strong> (<em>&lt;True</em><em>, </em><em>False&gt;</em>) – Determines whether remainder (&lt; chunklen) should be included.</li>
+<li><strong>startindex</strong> (<em>&lt;int</em><em>, </em><em>None&gt;</em>) – Start index value.
+Default is None, which means to start at the beginning.</li>
+<li><strong>endindex</strong> (<em>&lt;int</em><em>, </em><em>None&gt;</em>) – End index value.
+Default is None, which means to end at the end.</li>
+<li><strong>include_remainder</strong> – Determines if the remainder at the end of the array, if it exist,
+should be yielded or not. The remainder is smaller than <cite>chunklen</cite>.
+Default is True.</li>
+<li><strong>accessmode</strong> (<em>{'r'</em><em>, </em><em>'r+'}</em><em>, </em><em>default 'r'</em>) – File access mode of the darr data. <cite>r</cite> means read-only, <cite>r+</cite>
+means read-write.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a generator that produces numpy array chunks.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">generator</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darr</span> <span class="k">as</span> <span class="nn">da</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;test.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,),</span> <span class="n">accesmode</span><span class="o">=</span> <span class="s1">&#39;r+&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">ar</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">iterview</span><span class="p">(</span><span class="n">chunklen</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stepsize</span><span class="o">=</span><span class="mi">3</span><span class="p">)):</span>
+<span class="go">        ar[:] = i+1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="go">[ 1.  1.  0.  2.  2.  0.  3.  3.  0.  4.  4.  0.]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="darr.Array.mb">
+<code class="descname">mb</code><a class="headerlink" href="#darr.Array.mb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Size in megabytes of the data array.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="darr.Array.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#darr.Array.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary of meta data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="darr.Array.ndim">
+<code class="descname">ndim</code><a class="headerlink" href="#darr.Array.ndim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of dimensions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="darr.Array.set_accessmode">
+<code class="descname">set_accessmode</code><span class="sig-paren">(</span><em>accessmode</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.set_accessmode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set data access mode of data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>accessmode</strong> (<em>{'r'</em><em>, </em><em>'r+'}</em><em>, </em><em>default 'r'</em>) – File access mode of the data. <cite>r</cite> means read-only, <cite>r+</cite>
+means read-write.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="darr.Array.shape">
+<code class="descname">shape</code><a class="headerlink" href="#darr.Array.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tuple with sizes of each axis of the data array.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="darr.Array.size">
+<code class="descname">size</code><a class="headerlink" href="#darr.Array.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total number of values in the data array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="darr.Array.store_md5checksums">
+<code class="descname">store_md5checksums</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.store_md5checksums" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates md5 checksums of current data and stores them in a file
+‘md5checksums.json’.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A dictionary with the checksums</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="darr.Array.storedmd5checksums">
+<code class="descname">storedmd5checksums</code><a class="headerlink" href="#darr.Array.storedmd5checksums" title="Permalink to this definition">¶</a></dt>
+<dd><p>Previously stored md5 checksums of data and datadescription files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="darr.Array.view">
+<code class="descname">view</code><span class="sig-paren">(</span><em>accessmode=None</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a memory-mapped view of the array data.</p>
+<p>Although read and write operations can be performed conveniently using
+indexing notation on the Darr object, this can be relatively slow
+when performing multiple access operations in a row. To read data, the
+disk file needs to be opened, data copied into memory, and after which
+the file is closed. I such cases, it is much faster to use a <em>view</em> of
+the disk-based data. Whenever possible, indexing operations on this
+view return new views on the data, not copies. These views are lost
+when the context closes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>accessmode</strong> (<em>{'r'</em><em>, </em><em>'r+'}</em><em>, </em><em>default 'r'</em>) – File access mode of the disk array data. <cite>r</cite> means read-only, <cite>r+</cite>
+means read-write.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Yields:</th><td class="field-body"><em>ndarray</em> – view of disk-based array</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darr</span> <span class="k">as</span> <span class="nn">da</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;test.da&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">d</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">accessmode</span><span class="o">=</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
+<span class="go">        s1 = v[:10,1:].sum()</span>
+<span class="go">        s2 = v[20:25,:2].sum()</span>
+<span class="go">        v[500:] = 3.33</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -217,7 +526,7 @@ Default is <cite>False</cite>.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>da</strong> (<em>Array</em><em> or </em><em>str</em><em> or </em><em>pathlib.Path</em>) – The darr object to be deleted or file system path to it.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>da</strong> (<a class="reference internal" href="#darr.Array" title="darr.Array"><em>Array</em></a><em> or </em><em>str</em><em> or </em><em>pathlib.Path</em>) – The darr object to be deleted or file system path to it.</td>
 </tr>
 </tbody>
 </table>
@@ -235,7 +544,7 @@ Default is <cite>False</cite>.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>a</strong> (<a class="reference internal" href="#darr.array" title="darr.array"><em>array</em></a><em> or </em><em>str</em><em> or </em><em>pathlib.Path</em>) – The darr object to be truncated or file system path to it.</li>
+<li><strong>a</strong> (<a class="reference internal" href="#module-darr.array" title="darr.array"><em>array</em></a><em> or </em><em>str</em><em> or </em><em>pathlib.Path</em>) – The darr object to be truncated or file system path to it.</li>
 <li><strong>index</strong> (<em>int</em>) – The index along the first axis at which the darr should be
 truncated. Negative indices can be used but the resulting length of
 the truncated darr should be larger than 0 and smaller than the
@@ -280,7 +589,7 @@ current length.</li>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Darr</a></li>
+      <li>Previous: <a href="releasenotes.html" title="previous chapter">Release notes</a></li>
   </ul></li>
 </ul>
 </div>
