@@ -3,6 +3,7 @@ Darr
 
 |Travis Status| |Appveyor Status| |PyPy version| |Coverage Status|
 
+
 Darr is a Python science library for storing numeric data arrays in a way
 that is open, simple, and self-explanatory. It enables fast memory-mapped
 read/write access to such disk-based data, the ability to append data, and
@@ -24,6 +25,9 @@ Version: 0.1.3 alpha
 
 Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
 Beckers
+
+.. contents:: Contents
+    :depth: 2
 
 Features
 --------
@@ -308,33 +312,60 @@ python objects. You can only store:
 -  lists
 -  dictionaries with string keys
 
+
+Installation
+------------
+
+Darr depends on Python 3.6 or higher and NumPy 1.12 or higher.
+
+Install Darr from PyPI::
+
+    $ pip install darr
+
+
+
+Status
+------
+Darr is relatively new, and therefore in its alpha stage. It is being used in
+practice in the lab, and test coverage is over 90%, but first beta release will
+have to wait until test coverage is near 100% and the API is more stable. The
+naming of some functions/methods may still change.
+
+
 Rationale
 ---------
+There are many great formats for storing scientific data. However, the
+advantages they offer go hand in hand with complexity and dependence
+on external libraries, or on specific knowledge that is not included with
+the data. This is necessary and tolerable in specific use cases. Yet based on
+my own experience, in many cases life is a lot easier if data is stored in a
+way that is simple and self-explanatory. You want to be able to use the data
+without  complications in different environments, without having to install
+special libraries or having to look up things. You also want to share data
+without any hassle with your colleagues, who work with, say, R instead of
+Python. Sometimes you want to try out an algorithm that someone wrote in
+Matlab, and you do not want to have to start exporting large data sets into
+some different format. These things happen all the time and should be simple
+and painless. Unfortunately they are not (see this `blog by Cyrille Rossant
+<http://cyrille.rossant.net/moving-away-hdf5/>`__ that echos my own
+experiences), which is why I wrote Darr.
 
-There are many great formats for storing scientific data. Nevertheless,
-the advantages they offer often go hand in hand with complexity and
-dependence on external libraries, or on specific knowledge that is not
-included with the data. Preferably, however, scientific data is stored
-in a way that is simple and self-explanatory. For one thing, this is in
-line with the principle of openness and facilitates re-use and
-reproducibility of scientific results by others. Additionally,
-experience teaches that simple formats and independence of specific
-tools are a very good idea, even when just working with your own data
-(see this `blog by Cyrille
-Rossant <http://cyrille.rossant.net/moving-away-hdf5/>`__ that echos my
-own experiences).
+The **first objective of Darr** is to help you save and use numeric data
+arrays from within Python in a way that makes them trivially easy to use in
+different analysis environments. Darr is not a file format, but a way of saving
+numerical data arrays that maximizes readability.
 
-The goal of Darr is to help you save and use numeric data arrays from
-within Python in a way that is consistent with this idea. It is not a
-file format, but a standardized way of saving data that maximizes
-readability.
-
-Darr stores the data itself in a flat binary file. This is a
-future-proof way of storing numeric data, as long as clear information
-is provided on how the binary data is organized. There is no header,
-because we want to assume as little a priori knowledge as possible.
-Instead, Darr writes the information about the organization of the
-data to separate text files.
+Darr stores the data itself in a flat binary file. This is a future-proof
+way of storing numeric data, as long as clear information is provided on how
+the binary data is organized. There is no header; information about the
+organization of the data is provided in separate text files that are both
+human- and computer-readable. For a variety of current analysis tools Darr
+helps you make your data even more accessible as it generates a README text
+file that, in addition to explaining the format, contains example code of how
+to read the data. E.g. Python/NumPy (without the Darr library), R, Julia,
+MatLab/Octave, and Mathematica. Just copy and paste the code in the README to
+read the data. Every array that you save can be simply be provided as such to
+your colleagues with minimal explanation.
 
 The combination of flat binary and text files leads to a
 self-documenting format that anyone can easily explore on any computer,
@@ -345,15 +376,14 @@ widely readable in this format than in specific formats such as
 `HDF5 <https://www.hdfgroup.org/>`__ or
 `.npy <https://docs.scipy.org/doc/numpy-dev/neps/npy-format.html>`__.
 
-For a variety of current analysis tools Darr helps you make your data
-even more accessible as it generates a README text file that, in
-addition to explaining the format, contains example code of how to read
-the data. E.g. Python/NumPy (without the Darr library), R, Julia,
-MatLab/Octave, and Mathematica. Just copy and paste the code in the
-README to read the data. Every array that you save can be simply be
-provided as such to your colleagues with minimal explanation.
+The **second objective of Darr** is to provide memmory-mapped access to these
+stored arrays. In many science applications data arrays can be very large.
+It is not always neccesary or even possible to load the whole array in RAM for
+analysis. For example, long sound or electrophysiology recordings.
+Memmory-mapped arrays provide a very fast, easy and efficient way of working
+with such data.
 
-There are of course also disadvantages to this approach.
+There are of course also disadvantages to Darr's approach.
 
 -  Although the data is widely readable by many scientific analysis
    tools and programming languages, it lacks the ease of 'double-click
@@ -361,17 +391,9 @@ There are of course also disadvantages to this approach.
    your data is a sound recording, saving it in '.wav' format enables
    you to directly open it in any audio program.
 -  To keep things as simple as possible, Darr does not use
-   compression. Depending on the data, storage can thus take more disk
-   space than necessary. If you are archiving your data and insist on
-   minimizing disk space usage you can compress the data files with a
-   general compression tool that is likely to be still supported in the
-   distant future, such as bzip2. Sometimes, compression is used to
-   speed up data transmission to the processor cache (see for example
-   `blosc <https://github.com/Blosc/c-blosc>`__). You are missing out on
-   that as well. However, in addition to making your data less easy to
-   read, this type of compression may require careful tweaking of
-   parameters depending on how you typically read and write the data,
-   and failing to do so may lead to access that is in fact slower.
+   compression. If you are archiving your data and want to minimize disk
+   space usage you can compress the data files with a general compression
+   tool.
 -  Your data is not stored in one file, but in a directory that contains
    3-4 files (depending if you save metadata), at least 2 of which are
    small text files (~150 b - 1.7 kb). This has two disadvantages:
@@ -383,17 +405,10 @@ There are of course also disadvantages to this approach.
       large. Darr's way of storing data is thus space-inefficient if
       you have zillions of very small data arrays stored separately.
 
-Requirements
+
+Contributing
 ------------
 
-Darr requires Python 3.6+ and NumPy.
-
-Development and Contributing
-----------------------------
-
-This library is developed by Gabriël Beckers. It is being used in
-practice in the lab, but first beta release will be done when there are
-more unit tests. The naming of some functions/methods may still change.
 Any help / suggestions / ideas / contributions are very welcome and
 appreciated. For any comment, question, or error, please open an
 `issue <https://github.com/gjlbeckers-uu/Darr/issues>`__ or propose a
