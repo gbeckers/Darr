@@ -6,7 +6,7 @@ import numpy as np
 from numpy.testing import assert_equal, assert_array_equal
 
 from darr.array import asarray, create_array, numtypes, Array, \
-    truncate_array, BaseDataDir, delete_array
+    truncate_array, BaseDataDir, delete_array, AppendDataError
 from .utils import tempdir
 
 
@@ -304,6 +304,18 @@ class AppendData(unittest.TestCase):
                                dtype='int64', overwrite=True)
             dar.append(np.zeros((0, 2), dtype='int64'))
             assert_array_equal(np.zeros((0,2), dtype='int64'), dar[:])
+
+    def test_appenddataerror(self):
+        def testiter():
+            yield [1, 2, 3]
+            yield [4, 5, 6]
+            raise ValueError
+        g = (f for f in testiter())
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,),
+                               dtype='int64', overwrite=True)
+            self.assertRaises(AppendDataError, dar.iterappend, g)
+            assert_equal(dar[:], [0,0,1,2,3,4,5,6])
 
 
 class MetaData(unittest.TestCase):

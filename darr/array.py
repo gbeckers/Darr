@@ -13,7 +13,6 @@ To remove a Darr array from disk, use **delete_array**.
 import distutils.version
 import hashlib
 import json
-import logging
 import os
 import sys
 import warnings
@@ -22,7 +21,6 @@ from pathlib import Path
 
 import numpy as np
 
-logger = logging.getLogger(__name__)
 
 
 # Design considerations
@@ -161,6 +159,8 @@ endiannesstypes = {
                'numpymemmap': 'little'}
 }
 
+class AppendDataError(Exception):
+    pass
 
 class BaseDataDir(object):
     """Use a directory for managing data of a subclass. Has methods for reading
@@ -796,8 +796,7 @@ class Array(BaseDataDir):
                     f"succeed. Shape of array was {oldshape} and is now " \
                     f"{self._shape} after an increase in length " \
                     f"(along first dimension) of {lenincrease}."
-                logger.error(s)
-                raise
+                raise AppendDataError(s)
         self._update_len(lenincrease=lenincrease)
 
     def iterview(self, chunklen, stepsize=None, startindex=None,
