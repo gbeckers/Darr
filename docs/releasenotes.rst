@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Version 0.1.4
+-------------
+More tests and documentation
+
 Version 0.1.3
 -------------
 Fixed delete bug array list

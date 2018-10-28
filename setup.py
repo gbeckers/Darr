@@ -42,13 +42,9 @@ Features
 -   **Minimal dependencies**, only NumPy.
 -   **Integrates easily** with the Dask or NumExpr libraries for 
     **numeric computation on very large Darr arrays**.
-    
-Latest Changes
---------------
 
-Version 0.1.3: Fixed delete bug array list
- 
-Version 0.1.2: Fixed truncate bug on Windows 
+
+See the `documentation <http://darr.readthedocs.io/>`_ for more information.
 
 """
 
