@@ -71,3 +71,10 @@ There are of course also disadvantages to Darr's approach.
       (normally 512 b - 4 kb) even if the data they contain is not that
       large. Darr's way of storing data is thus space-inefficient if
       you have zillions of very small data arrays stored separately.
+
+**Other interesting projects**
+
+-  `exdir <https://github.com/CINPLA/exdir/>`__
+-  `h5py <https://github.com/h5py/h5py>`__
+-  `pytables <https://github.com/PyTables/PyTables>`__
+-  `zarr <https://github.com/zarr-developers/zarr>`__

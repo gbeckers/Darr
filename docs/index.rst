@@ -91,6 +91,7 @@ naming of some functions/methods may still change.
    tutorial
    rationale
    contributing
+   testing
    releasenotes
    api
 

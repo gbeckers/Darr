@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Darr &#8212; darr 0.1a1 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,16 +23,24 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Tutorial" href="tutorial.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="next" title="Tutorial" href="tutorial.html" /> 
   </head>
   <body>
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">darr 0.1a1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -41,7 +49,7 @@
             
   <div class="section" id="darr">
 <h1>Darr<a class="headerlink" href="#darr" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://travis-ci.org/gbeckers/Darr?branch=master"><img alt="Travis Status" src="https://travis-ci.org/gbeckers/Darr.svg?branch=master" /></a> <a class="reference external" href="https://ci.appveyor.com/project/gbeckers/darr"><img alt="Appveyor Status" src="https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true" /></a> <a class="reference external" href="https://pypi.org/project/darr/"><img alt="PyPy version" src="https://img.shields.io/badge/pypi-v0.1.3-orange.svg" /></a> <a class="reference external" href="https://coveralls.io/github/gbeckers/Darr?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master" /></a></p>
+<p><a class="reference external" href="https://travis-ci.org/gbeckers/Darr?branch=master"><img alt="Travis Status" src="https://travis-ci.org/gbeckers/Darr.svg?branch=master" /></a> <a class="reference external" href="https://ci.appveyor.com/project/gbeckers/darr"><img alt="Appveyor Status" src="https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true" /></a> <a class="reference external" href="https://pypi.org/project/darr/"><img alt="PyPy version" src="https://img.shields.io/badge/pypi-v0.1.3-orange.svg" /></a> <a class="reference external" href="https://coveralls.io/github/gbeckers/Darr?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master" /></a> <a class="reference external" href="https://darr.readthedocs.io/en/latest/"><img alt="Docs Status" src="https://readthedocs.org/projects/darr/badge/?version=latest" /></a></p>
 <p>Darr is a Python science library for storing numeric data arrays in a way
 that is open, simple, and self-explanatory. It enables fast memory-mapped
 read/write access to such disk-based data, the ability to append data, and
@@ -126,6 +134,7 @@ naming of some functions/methods may still change.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="rationale.html">Rationale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Darr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-3">Version 0.1.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-2">Version 0.1.2</a></li>
@@ -158,14 +167,10 @@ Beckers</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="tutorial.html" title="next chapter">Tutorial</a></li>
-  </ul></li>
-</ul>
-</div>
+        <div class="sphinxsidebarwrapper">
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="next chapter">Tutorial</a></p>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -180,20 +185,24 @@ Beckers</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2018, Gabriel Beckers.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
-      
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">darr 0.1a1 documentation</a> &#187;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Gabriel Beckers.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
   </body>
 </html>
