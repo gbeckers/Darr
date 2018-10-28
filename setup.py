@@ -62,6 +62,7 @@ setup(
     long_description_content_type="text/markdown",
     requires=['numpy'],
     install_requires=['numpy'],
+    data_files = [("", ["LICENSE"])],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: BSD License",

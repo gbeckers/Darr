@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Version 0.1.7
+-------------
+License file included, necessary for conda-forge
+
 Version 0.1.6
 -------------
 More tests and documentation
