@@ -1,7 +1,7 @@
 Darr
 ====
 
-|Travis Status| |Appveyor Status| |PyPy version| |Coverage Status|
+|Travis Status| |Appveyor Status| |PyPy version| |Coverage Status| |Docs Status|
 
 
 Darr is a Python science library for storing numeric data arrays in a way
@@ -449,3 +449,5 @@ Other interesting projects
    :target: https://pypi.org/project/darr/
 .. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
    :target: https://coveralls.io/github/gbeckers/Darr?branch=master
+.. |Docs Status| image:: https://readthedocs.org/projects/darr/badge/?version=latest
+   :target: https://darr.readthedocs.io/en/latest/
