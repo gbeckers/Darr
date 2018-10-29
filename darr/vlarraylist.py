@@ -199,8 +199,8 @@ array data from the values array (array = values[starti:endi]).
 
 def delete_vlarraylist(dal):
     """
-    Delete DiskArrayList data from disk.
-
+    Delete Darr array list data from disk.
+    
     Parameters
     ----------
     path: path to data directory
@@ -210,7 +210,7 @@ def delete_vlarraylist(dal):
         if not isinstance(dal, VLArrayList):
             dal = VLArrayList(dal)
     except:
-        raise TypeError(f"'{dal}' not recognized as a DiskArrayList")
+        raise TypeError(f"'{dal}' not recognized as a Darr array list")
 
     for fn in dal._filenames:
         path = dal.path.joinpath(fn)

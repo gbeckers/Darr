@@ -1287,7 +1287,7 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
 
 def delete_array(da):
     """
-    Delete darr data from disk.
+    Delete Darr array data from disk.
     
     Parameters
     ----------
