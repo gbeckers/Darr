@@ -47,6 +47,7 @@ class ClassAsArrayList(unittest.TestCase):
             assert_array_equal(dal[0], na[0])
             assert_array_equal(dal[1], na[1])
 
+
 class ClassCopyArrayList(unittest.TestCase):
 
     def test_simplecopy1d(self):
