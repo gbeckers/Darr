@@ -104,11 +104,12 @@ class VLArrayList(BaseDataDir):
         self._values.append(np.asarray(array, dtype=self.dtype))
         self._indices.append([[endindex, endindex + size]])
 
-    def copy(self, path, mode='r'):
+    def copy(self, path, accessmode='r', overwrite=False):
         arrayiterable = (self[i] for i in range(len(self)))
+        metadata = dict(self.metadata)
         return asvlarraylist(path=path, arrayiterable=arrayiterable,
-                             dtype=self.dtype,
-                             metadata=self.metadata, mode=mode)
+                             dtype=self.dtype, metadata=metadata,
+                             accessmode=accessmode, overwrite=overwrite)
 
 
 # FIXME empty arrayiterable
@@ -200,7 +201,7 @@ array data from the values array (array = values[starti:endi]).
 def delete_vlarraylist(dal):
     """
     Delete Darr array list data from disk.
-    
+
     Parameters
     ----------
     path: path to data directory

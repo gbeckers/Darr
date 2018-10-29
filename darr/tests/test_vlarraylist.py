@@ -47,6 +47,22 @@ class ClassAsArrayList(unittest.TestCase):
             assert_array_equal(dal[0], na[0])
             assert_array_equal(dal[1], na[1])
 
+class ClassCopyArrayList(unittest.TestCase):
+
+    def test_simplecopy1d(self):
+        with tempdir() as dirname1:
+            dal1 = create_vlarraylist(dirname1, atom=(), dtype='float64',
+                                     metadata=None, accessmode='r+',
+                                     overwrite=True)
+            a = np.array([0, 1, 2, 3], dtype='float64')
+            dal1.append(a)
+            with tempdir() as dirname2:
+                dal2 = dal1.copy(path=dirname2, overwrite=True)
+                assert_array_equal(dal1[0], dal2[0])
+                assert dal1.dtype == dal2.dtype
+
+
+
 
 class DeleteArrayList(unittest.TestCase):
 
