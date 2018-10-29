@@ -21,7 +21,7 @@ from pathlib import Path
 
 import numpy as np
 
-
+from ._version import get_versions
 
 # Design considerations
 # ---------------------
@@ -420,7 +420,7 @@ class Array(BaseDataDir):
     _filenames = {_arraydescrfilename, _datafilename,
                   _readmefilename, _checksumsfilename,
                   _metadatafilename} | BaseDataDir._filenames
-    _formatversion = "0.1.0"
+    _formatversion = get_versions()['version']
 
     def __init__(self, path, accessmode='r'):
         BaseDataDir.__init__(self, path=path)
@@ -617,8 +617,8 @@ class Array(BaseDataDir):
         except Exception:
             raise OSError(f"Could not read array description from "
                           f"'{self._arraydescrfilename}'")
-        vfile = distutils.version.StrictVersion(d['darrversion'])
-        vlib = distutils.version.StrictVersion(self._formatversion)
+        vfile = distutils.version.LooseVersion(d['darrversion'])
+        vlib = distutils.version.LooseVersion(self._formatversion)
         if not vlib >= vfile:
             raise ValueError(f"Format version of file ({d['darrversion']}) "
                              f"is too new. The installed Darr "
