@@ -62,8 +62,6 @@ class ClassCopyArrayList(unittest.TestCase):
                 assert dal1.dtype == dal2.dtype
 
 
-
-
 class DeleteArrayList(unittest.TestCase):
 
     def test_simpledeletevlarray(self):
@@ -74,3 +72,14 @@ class DeleteArrayList(unittest.TestCase):
             assert_equal(len(os.listdir(dirname)), 0)
 
 
+# this is already tested with simple Arrays, so a brief check will suffice
+class MetaData(unittest.TestCase):
+
+    def test_createwithmetadata(self):
+        with tempdir() as dirname:
+            md = {'fs': 20000, 'x': 33.3}
+            dal = create_vlarraylist(dirname, atom=(), dtype='float64',
+                                      metadata=md, accessmode='r+',
+                                      overwrite=True)
+
+            assert_equal(dict(dal.metadata), md)
