@@ -359,6 +359,7 @@ class MetaData(unittest.TestCase):
             assert not dar._metadata.path.exists()
 
 
+
 class TruncateData(unittest.TestCase):
 
     def test_truncate1d(self):
@@ -441,6 +442,37 @@ class TestBaseDataDir(unittest.TestCase):
             bd = BaseDataDir(dirname)
             bd._write_jsondict('test1.json', {'a': 1})
             bd._update_jsondict('test1.json', {'a': 2, 'b':3})
+
+    def test_readjsondict(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            wd = {'a': 1, 'b': [1,2,3], 'c': 'k'}
+            bd._write_jsondict('test1.json', wd)
+            rd = bd._read_jsondict('test1.json')
+            assert_equal(wd, rd)
+
+    def test_readjsondictrequiredkeypresent(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            wd = {'a': 1, 'b': [1,2,3], 'c': 'k'}
+            bd._write_jsondict('test1.json', wd)
+            rd = bd._read_jsondict('test1.json', requiredkeys=('a', 'c'))
+            assert_equal(wd, rd)
+
+    def test_readjsondictrequiredkeynotpresent(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            wd = {'a': 1, 'b': [1,2,3], 'c': 'k'}
+            bd._write_jsondict('test1.json', wd)
+            self.assertRaises(ValueError, bd._read_jsondict, 'test1.json',
+                              requiredkeys=('a', 'd'))
+
+    def test_readjsondictnotdict(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            wd = {'a': 1, 'b': [1, 2, 3], 'c': 'k'}
+            bd._write_jsonfile('test1.json', [1,2,3])
+            self.assertRaises(TypeError, bd._read_jsondict, 'test1.json')
 
 
 if __name__ == '__main__':
