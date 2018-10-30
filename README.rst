@@ -2,6 +2,7 @@ Darr
 ====
 
 |Travis Status| |Appveyor Status| |PyPy version| |Coverage Status| |Docs Status|
+|Repo Status|
 
 
 Darr is a Python science library for storing numeric data arrays in a way
@@ -89,5 +90,6 @@ Beckers
    :target: https://coveralls.io/github/gbeckers/Darr?branch=master
 .. |Docs Status| image:: https://readthedocs.org/projects/darr/badge/?version=latest
    :target: https://darr.readthedocs.io/en/latest/
-
-
+.. |Repo Status| image:: https://www.repostatus.org/badges/latest/active.svg
+   :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
+   :target: https://www.repostatus.org/#active

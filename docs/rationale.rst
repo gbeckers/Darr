@@ -13,7 +13,7 @@ any hassle with your colleagues, who work with, say, R instead of Python.
 Sometimes you want to try out an algorithm that someone wrote in Matlab,
 and you do not want to have to start exporting large data sets into some
 different format. These things should be simple and painless. Unfortunately
-they are not (see this `blog by Cyrille Rossant <http://cyrille.rossant
+they often are not (see this `blog by Cyrille Rossant <http://cyrille.rossant
 .net/moving-away-hdf5/>`__ that echos my own experiences), which is why I
 wrote Darr.
 
@@ -55,7 +55,7 @@ There are of course also disadvantages to Darr's approach.
 -  Although the data is widely readable by many scientific analysis
    tools and programming languages, it lacks the ease of 'double-click
    access' that specific data file formats may have. For example, if
-   your data is a sound recording, saving it in '.wav' format enables
+   your data is a sound recording, saving it in a '.wav' file enables
    you to directly open it in any audio program.
 -  To keep things as simple as possible, Darr does not use
    compression. If you are archiving your data and want to minimize disk
@@ -76,5 +76,6 @@ There are of course also disadvantages to Darr's approach.
 
 -  `exdir <https://github.com/CINPLA/exdir/>`__
 -  `h5py <https://github.com/h5py/h5py>`__
+-  `pyfbf <https://github.com/davidh-ssec/pyfbf>`__
 -  `pytables <https://github.com/PyTables/PyTables>`__
 -  `zarr <https://github.com/zarr-developers/zarr>`__
