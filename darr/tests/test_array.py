@@ -358,6 +358,24 @@ class MetaData(unittest.TestCase):
             k, v = dar.metadata.popitem()
             assert not dar._metadata.path.exists()
 
+    def test_metadataaccessmodereadwrite(self):
+        with tempdir() as dirname:
+            md = {'fs': 20000, 'x': 33.3}
+            dar = create_array(path=dirname, shape=(0, 2),
+                               dtype='int64', metadata=md, overwrite=True,
+                               accessmode='r+')
+            self.assertEqual(dar.metadata.accessmode, 'r+')
+            dar.metadata['x'] = 22.2
+
+    def test_metadataaccessmodereadonly(self):
+        with tempdir() as dirname:
+            md = {'fs': 20000, 'x': 33.3}
+            dar = create_array(path=dirname, shape=(0, 2),
+                               dtype='int64', metadata=md, overwrite=True,
+                               accessmode='r')
+            self.assertEqual(dar.metadata.accessmode, 'r')
+            self.assertRaises(OSError, dar.metadata.popitem)
+
 
 
 class TruncateData(unittest.TestCase):
@@ -473,6 +491,7 @@ class TestBaseDataDir(unittest.TestCase):
             wd = {'a': 1, 'b': [1, 2, 3], 'c': 'k'}
             bd._write_jsonfile('test1.json', [1,2,3])
             self.assertRaises(TypeError, bd._read_jsondict, 'test1.json')
+
 
 
 if __name__ == '__main__':

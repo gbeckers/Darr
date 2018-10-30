@@ -311,6 +311,9 @@ class MetaData:
         value. If key is not found, d is returned if given, otherwise KeyError
         is raised
         """
+        if self._accessmode == 'r':
+            raise OSError("metadata not writeable; use 'set_accessmode' "
+                          "method to change this")
         metadata = self._read()
         val = metadata.pop(*args)
         if metadata:
@@ -324,6 +327,9 @@ class MetaData:
         """D.pop() -> k, v, returns and removes an arbitrary element (key,
         value) pair from the dictionary.
         """
+        if self._accessmode == 'r':
+            raise OSError("metadata not writeable; use 'set_accessmode' "
+                          "method to change this")
         metadata = self._read()
         key, val = metadata.popitem()
         if metadata:
