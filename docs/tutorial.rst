@@ -7,16 +7,6 @@ Creating an array
 .. code:: python
 
     >>> import darr as da
-        >>> a = da.create_array('a1.da', shape=(2,1024))
-        >>> a
-        >>> array([[0., 0., 0., ..., 0., 0., 0.],
-                   [0., 0., 0., ..., 0., 0., 0.]]) (r+)
-
-    The default is to fill the array with zeros (of type float64) but this
-    can be changed by the 'fill' and 'fillfunc' parameters. See the api.
-
-    The data is now stored on disk in a directory named 'ar1.da', containing
-    a flat binary file ('arrayvalues.bin') and a human-readble
     >>> a = da.create_array('a1.da', shape=(2,1024))
     >>> a
     >>> array([[0., 0., 0., ..., 0., 0., 0.],
