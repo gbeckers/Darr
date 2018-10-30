@@ -376,6 +376,22 @@ class MetaData(unittest.TestCase):
             self.assertEqual(dar.metadata.accessmode, 'r')
             self.assertRaises(OSError, dar.metadata.popitem)
 
+    def test_delitem(self):
+        with tempdir() as dirname:
+            md = {'fs': 20000, 'x': 33.3}
+            dar = create_array(path=dirname, shape=(0, 2),
+                               dtype='int64', metadata=md, overwrite=True,
+                               accessmode='r+')
+            del dar.metadata['x']
+            self.assertEqual(dict(dar.metadata), {'fs': 20000})
+
+    def test_metadatarepr(self):
+        with tempdir() as dirname:
+            md = {'a': 1}
+            dar = create_array(path=dirname, shape=(0, 2),
+                               dtype='int64', metadata=md, overwrite=True,
+                               accessmode='r+')
+            self.assertEqual(repr(dar.metadata), "{'a': 1}")
 
 
 class TruncateData(unittest.TestCase):

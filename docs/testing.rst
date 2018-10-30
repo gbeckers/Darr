@@ -7,9 +7,8 @@ To run the test suite:
 
     >>> import darr as da
     >>> da.test()
-    .......................................................
     ----------------------------------------------------------------------
-    Ran 55 tests in 2.181s
+    Ran 66 tests in 6.773s
 
     OK
-    <unittest.runner.TextTestResult run=53 errors=0 failures=0>
+    <unittest.runner.TextTestResult run=66 errors=0 failures=0>
