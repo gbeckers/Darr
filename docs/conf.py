@@ -115,7 +115,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'diskarraydoc'
+htmlhelp_basename = 'darrdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
