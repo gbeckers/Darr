@@ -87,6 +87,20 @@ class AsArray(unittest.TestCase):
             dar = asarray(path=dirname, array=b, overwrite=True)
             assert_array_identical(dar[:], b)
 
+    def test_writingsmallerchunks(self):
+        with tempdir() as dirname:
+            a = np.arange(1024, dtype='int64').reshape(2,-1)
+            dar = asarray(path=dirname, array=a, chunklen=4, overwrite=True)
+            assert_equal(a, dar[:])
+            dar = asarray(path=dirname, array=a, chunklen=5, overwrite=True)
+            assert_equal(a, dar[:])
+
+    def test_writinglargerthanlenchunks(self):
+        with tempdir() as dirname:
+            a = np.arange(1024, dtype='int64').reshape(2, -1)
+            dar = asarray(path=dirname, array=a, chunklen=4096, overwrite=True)
+            assert_equal(a, dar[:])
+
 
 class CreateDiskArray(unittest.TestCase):
 
