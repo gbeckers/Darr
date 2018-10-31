@@ -77,6 +77,18 @@ Documentation
 See the `documentation <http://darr.readthedocs.io/>`_ for more information.
 
 
+Other interesting projects
+--------------------------
+If Darr is not exactly what you are looking for, have a look at these projects:
+
+-  `exdir <https://github.com/CINPLA/exdir/>`__
+-  `h5py <https://github.com/h5py/h5py>`__
+-  `pyfbf <https://github.com/davidh-ssec/pyfbf>`__
+-  `pytables <https://github.com/PyTables/PyTables>`__
+-  `zarr <https://github.com/zarr-developers/zarr>`__
+
+
+
 Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
 Beckers
 

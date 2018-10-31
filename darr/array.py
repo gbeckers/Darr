@@ -1087,7 +1087,9 @@ def asarray(path, array, dtype=None, accessmode='r',
         read-only, `r+` means read-write. In the latter case, data can be 
         changed. Default `r`.
     metadata: {None, dict}
-        Dictionary with metadata to be saved in a separate JSON file. Default
+        Dictionary with metadata to be saved in a separate JSON file.
+        Default is None. If so, and the array has a 'metadata' attribute,
+        Darr will try to use it as metadata of the output array.
     chunklen: <int, None>
         The length of chunks (along first axis) that are read and written
         during the process. If None and the `array` is a numpy array or
@@ -1124,6 +1126,13 @@ def asarray(path, array, dtype=None, accessmode='r',
 
     """
     path = Path(path)
+    if metadata is None and hasattr(array, 'attrs'): # e.g. zarr array
+        try: # see if we can use it as json dict
+            metadata = dict(array.attrs)
+            json.dumps(metadata, ensure_ascii=True)
+        except:
+            warnings.warn("Found metadata but could not read it as a "
+                          "dictionary. Not saving it as part of darr array")
     if isinstance(array, Array) and (path == array.path):
         raise ValueError(f"'{path}' is the same as the path of the "
                          f"source darr.")
