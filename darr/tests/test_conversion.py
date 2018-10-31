@@ -11,11 +11,18 @@ from .utils import tempdir
 
 class AsZarrArray(unittest.TestCase):
 
-    def test_simplezarrconversiontofile(self):
+    def test_darrtozarrconversiontofile(self):
         with tempdir() as dirname:
             a = np.arange(10, dtype='float64')
             da = asarray(path=dirname, array=a, overwrite=True)
             za = aszarrarray(da, store=f'{dirname}/array.zarr')
+            assert_array_equal(za[:], da[:])
+
+    def test_darrpathtozarrconversiontofile(self):
+        with tempdir() as dirname:
+            a = np.arange(10, dtype='float64')
+            da = asarray(path=dirname, array=a, overwrite=True)
+            za = aszarrarray(dirname, store=f'{dirname}/array.zarr')
             assert_array_equal(za[:], da[:])
 
     def test_simplezarrconversionmetadata(self):
