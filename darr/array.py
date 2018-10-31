@@ -1035,12 +1035,14 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
 
 
 def _archunkgenerator(array, dtype=None, chunklen=None):
-    if (chunklen is None) and isinstance(array, (Array, np.ndarray)):
-        chunklen = max(int((80 * 1024 ** 2) // (np.product(array.shape[1:]) *
-                                                array.dtype.itemsize)), 1)
-    else:
-        chunklen = 1
-    if hasattr(array, '__next__'):  # is already an iterator
+    if chunklen is None: # we try to make a reasonable guess
+        if hasattr(array, 'shape') and hasattr(array, 'dtype'):
+            chunklen = int((80 * 1024 ** 2) // (np.product(array.shape[1:]) *
+                                                array.dtype.itemsize))
+        else:
+            chunklen = (1024 ** 2)
+    chunklen = max(chunklen, 1)
+    if hasattr(array, '__next__'):  # is already an iterator, we ignore chunklen
         for chunk in array:
             yield np.asarray(chunk, dtype=dtype)
     elif isinstance(array, Array):

@@ -1,3 +1,7 @@
+"""
+
+"""
+
 from .array import Array
 
 __all__ = ['aszarrarray']
@@ -69,7 +73,7 @@ def aszarrarray(da, chunks=True, dtype=None, compressor='default',
     -----
     See https://zarr.readthedocs.io/en/stable/tutorial.html for more info on
     Zarr
-    
+
     The doc string here is largely copied from that of zarr.core.Array
 
     """
@@ -84,8 +88,8 @@ def aszarrarray(da, chunks=True, dtype=None, compressor='default',
             da = Array(da)
     except Exception:
         raise TypeError(f"'{da}' not recognized as a Darr array")
-    # should check if this is wise when da is very large; does zarr cope
-    # with this?
+    # zarr apparently nicely takes chunks of data so that RAM does not get
+    # flooded when arrays are very large.
     za = zarr.creation.array(data=da, chunks=chunks, dtype=dtype,
                              compressor=compressor, order=order, store=store,
                              synchronizer=synchronizer, overwrite=overwrite,
@@ -96,3 +100,5 @@ def aszarrarray(da, chunks=True, dtype=None, compressor='default',
     for k, v in da.metadata.items():
         za.attrs[k] = v
     return za
+
+
