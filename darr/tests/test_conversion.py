@@ -25,7 +25,7 @@ class AsZarrArray(unittest.TestCase):
             za = aszarrarray(dirname, store=f'{dirname}/array.zarr')
             assert_array_equal(za[:], da[:])
 
-    def test_simplezarrconversionmetadata(self):
+    def test_darrtozarrconversionmetadata(self):
         with tempdir() as dirname:
             metadata = {'a': 1, 'b': [1, 3, 4.0], 'c': "hi"}
             da = create_array(path=dirname, shape=(2,), fill=0,
@@ -34,3 +34,5 @@ class AsZarrArray(unittest.TestCase):
             za = aszarrarray(da, store=f'{dirname}/array.zarr')
             self.assertEqual(dict(za.attrs), metadata)
 
+    def test_darrtozarrwronginput(self):
+        self.assertRaises(Exception, aszarrarray, [1,2,3], store='array.zarr')
