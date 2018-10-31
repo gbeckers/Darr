@@ -56,7 +56,6 @@ def aszarrarray(da, chunks=True, dtype=None, compressor='default',
 
     Examples
     --------
-    Create an array with default settings::
     >>> import darr
     >>> da = darr.create_array('test.darr', shape=(2,1024), metadata={'a':1})
     >>> from darr.conversion import aszarrarray
@@ -70,6 +69,8 @@ def aszarrarray(da, chunks=True, dtype=None, compressor='default',
     -----
     See https://zarr.readthedocs.io/en/stable/tutorial.html for more info on
     Zarr
+    
+    The doc string here is largely copied from that of zarr.core.Array
 
     """
 
