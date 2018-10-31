@@ -49,14 +49,14 @@
             
   <div class="section" id="module-darr.array">
 <span id="darr-api-documentation"></span><h1>Darr API Documentation<a class="headerlink" href="#module-darr.array" title="Permalink to this headline">¶</a></h1>
-<p>Darr is a Python library for storing numeric data arrays in a format
-that is as open and simple as possible. It also provides easy memory-mapped
+<p>Darr is a Python library for storing numeric data arrays in a format that
+is as open and simple as possible. It also provides easy memory-mapped
 access to such disk-based data using numpy indexing.</p>
 <p>Darr objects can be created from array-like objects, such as numpy arrays
-and lists, using the <strong>asarray</strong> function. Alternatively, darrays can be
-created from scratch by the <strong>create_array</strong> function. Existing Darr
-data on disk can be accessed through the <strong>Array</strong> constructor.
-To remove a Darr array from disk, use <strong>delete_array</strong>.</p>
+and lists, using the <strong>asarray</strong> function. Alternatively, darr arrays can be
+created from scratch by the <strong>create_array</strong> function. Existing Darr data on
+disk can be accessed through the <strong>Array</strong> constructor. To remove a Darr
+array from disk, use <strong>delete_array</strong>.</p>
 <div class="section" id="creating-arrays">
 <h2>Creating arrays<a class="headerlink" href="#creating-arrays" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -78,7 +78,9 @@ will be cast to <cite>dtype</cite>. Default is <cite>None</cite>.</li>
 <li><strong>accessmode</strong> ({<cite>r</cite>, <cite>r+</cite>}, optional) – File access mode of the darr that is returned. <cite>r</cite> means
 read-only, <cite>r+</cite> means read-write. In the latter case, data can be
 changed. Default <cite>r</cite>.</li>
-<li><strong>metadata</strong> (<em>{None</em><em>, </em><em>dict}</em>) – Dictionary with metadata to be saved in a separate JSON file. Default</li>
+<li><strong>metadata</strong> (<em>{None</em><em>, </em><em>dict}</em>) – Dictionary with metadata to be saved in a separate JSON file.
+Default is None. If so, and the array has a ‘metadata’ attribute,
+Darr will try to use it as metadata of the output array.</li>
 <li><strong>chunklen</strong> (<em>&lt;int</em><em>, </em><em>None&gt;</em>) – The length of chunks (along first axis) that are read and written
 during the process. If None and the <cite>array</cite> is a numpy array or
 darr, it is chosen so that chunks are 10 Mb in total size. If
@@ -100,7 +102,7 @@ these will not be removed and an OSError is raised. Default is <cite>False</cite
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><a class="reference internal" href="#darr.create_array" title="darr.create_array"><code class="xref py py-func docutils literal"><span class="pre">create_array()</span></code></a></dt>
+<dt><code class="xref py py-func docutils literal"><span class="pre">create_array()</span></code></dt>
 <dd>create an array from scratch.</dd>
 </dl>
 </div>
@@ -167,7 +169,7 @@ Default is <cite>False</cite>.</li>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><a class="reference internal" href="#darr.asarray" title="darr.asarray"><code class="xref py py-func docutils literal"><span class="pre">asarray()</span></code></a></dt>
+<dt><code class="xref py py-func docutils literal"><span class="pre">asarray()</span></code></dt>
 <dd>create a darr from existing array-like object or generator.</dd>
 </dl>
 </div>
@@ -529,7 +531,7 @@ means read-write.</td>
 <dl class="function">
 <dt id="darr.delete_array">
 <code class="descclassname">darr.</code><code class="descname">delete_array</code><span class="sig-paren">(</span><em>da</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.delete_array" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete darr data from disk.</p>
+<dd><p>Delete Darr array data from disk.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -586,6 +588,70 @@ current length.</li>
 </dd></dl>
 
 </div>
+<div class="section" id="exporting-to-other-formats">
+<h2>Exporting to other formats<a class="headerlink" href="#exporting-to-other-formats" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="darr.conversion.aszarrarray">
+<code class="descclassname">darr.conversion.</code><code class="descname">aszarrarray</code><span class="sig-paren">(</span><em>da</em>, <em>chunks=True</em>, <em>dtype=None</em>, <em>compressor='default'</em>, <em>order='C'</em>, <em>store=None</em>, <em>synchronizer=None</em>, <em>overwrite=False</em>, <em>path=None</em>, <em>chunk_store=None</em>, <em>filters=None</em>, <em>cache_metadata=True</em>, <em>cache_attrs=True</em>, <em>read_only=False</em>, <em>object_codec=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.conversion.aszarrarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a Darr array to a Zarr array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>da</strong> (<em>Darr Array</em><em> or </em><em>Path to it</em>) – </li>
+<li><strong>chunks</strong> (<em>int</em><em> or </em><em>tuple of ints</em><em>, </em><em>optional</em>) – Chunk shape. If True, will be guessed from <cite>shape</cite> and <cite>dtype</cite>. If
+False, will be set to <cite>shape</cite>, i.e., single chunk for the whole array.</li>
+<li><strong>dtype</strong> (<em>string</em><em> or </em><a class="reference internal" href="#darr.Array.dtype" title="darr.Array.dtype"><em>dtype</em></a><em>, </em><em>optional</em>) – NumPy dtype.</li>
+<li><strong>compressor</strong> (<em>Codec</em><em>, </em><em>optional</em>) – Primary compressor.</li>
+<li><strong>fill_value</strong> (<em>object</em>) – Default value to use for uninitialized portions of the array.</li>
+<li><strong>order</strong> (<em>{'C'</em><em>, </em><em>'F'}</em><em>, </em><em>optional</em>) – Memory layout to be used within each chunk.</li>
+<li><strong>store</strong> (<em>MutableMapping</em><em> or </em><em>string</em>) – Store or path to directory in file system or name of zip file.</li>
+<li><strong>synchronizer</strong> (<em>object</em><em>, </em><em>optional</em>) – Array synchronizer.</li>
+<li><strong>overwrite</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, delete all pre-existing data in <cite>store</cite> at <cite>path</cite> before
+creating the array.</li>
+<li><strong>path</strong> (<em>string</em><em>, </em><em>optional</em>) – Path under which array is stored.</li>
+<li><strong>chunk_store</strong> (<em>MutableMapping</em><em>, </em><em>optional</em>) – Separate storage for chunks. If not provided, <cite>store</cite> will be used
+for storage of both chunks and metadata.</li>
+<li><strong>filters</strong> (<em>sequence of Codecs</em><em>, </em><em>optional</em>) – Sequence of filters to use to encode chunk data prior to compression.</li>
+<li><strong>cache_metadata</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, array configuration metadata will be cached for the
+lifetime of the object. If False, array metadata will be reloaded
+prior to all data access and modification operations (may incur
+overhead depending on storage and data access pattern).</li>
+<li><strong>cache_attrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True (default), user attributes will be cached for attribute read
+operations. If False, user attributes are reloaded from the store prior
+to all attribute read operations.</li>
+<li><strong>read_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – True if array should be protected against modification.</li>
+<li><strong>object_codec</strong> (<em>Codec</em><em>, </em><em>optional</em>) – A codec to encode object arrays, only needed if dtype=object.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>z</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">zarr.core.Array</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span> <span class="o">=</span> <span class="n">darr</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;test.darr&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">),</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">darr.conversion</span> <span class="k">import</span> <span class="n">aszarrarray</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">za</span> <span class="o">=</span> <span class="n">aszarrarray</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="s1">&#39;test.zarr&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">za</span>
+<span class="go">&lt;zarr.core.Array (2, 1024) float64&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">(</span><span class="n">za</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span> <span class="c1"># metadata is preserved as attrs</span>
+<span class="go">{&#39;a&#39;: 1}</span>
+</pre></div>
+</div>
+<p class="rubric">Notes</p>
+<p>See <a class="reference external" href="https://zarr.readthedocs.io/en/stable/tutorial.html">https://zarr.readthedocs.io/en/stable/tutorial.html</a> for more info on
+Zarr</p>
+<p>The doc string here is largely copied from that of zarr.core.Array</p>
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -628,7 +694,7 @@ current length.</li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Gabriel Beckers.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
     </div>
   </body>
 </html>

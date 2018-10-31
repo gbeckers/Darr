@@ -56,7 +56,7 @@ def aszarrarray(da, chunks=True, dtype=None, compressor='default',
 
     Returns
     -------
-    z : zarr.core.Array
+    zarr.core.Array
 
     Examples
     --------

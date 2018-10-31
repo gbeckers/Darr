@@ -24,3 +24,9 @@ Truncating arrays
 -----------------
 
 .. autofunction:: darr.truncate_array
+
+
+Exporting to other formats
+--------------------------
+
+.. autofunction:: darr.conversion.aszarrarray
