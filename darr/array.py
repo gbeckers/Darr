@@ -144,13 +144,21 @@ class MetaData:
 
     @property
     def accessmode(self):
-        """File access mode of the darr data. `r` means read-only, `r+`
-        means read-write. `w` does not exist. To create new darrays,
-        potentially overwriting an other one, use the `asdarray` or
-        `create_darray` functions.
+        """
+        Set data access mode of metadata.
 
-       """
+        Parameters
+        ----------
+        accessmode: {'r', 'r+'}, default 'r'
+            File access mode of the data. `r` means read-only, `r+`
+            means read-write.
+
+        """
         return self._accessmode
+
+    @accessmode.setter
+    def accessmode(self, value):
+        self._accessmode = check_accessmode(value)
 
     def __getitem__(self, item):
         return self._read()[item]
@@ -195,8 +203,7 @@ class MetaData:
         is raised
         """
         if self._accessmode == 'r':
-            raise OSError("metadata not writeable; use 'set_accessmode' "
-                          "method to change this")
+            raise OSError("metadata not writeable; change 'accessmode' to 'r+'")
         metadata = self._read()
         val = metadata.pop(*args)
         if metadata:
@@ -211,8 +218,7 @@ class MetaData:
         value) pair from the dictionary.
         """
         if self._accessmode == 'r':
-            raise OSError("metadata not writeable; use 'set_accessmode' "
-                          "method to change this")
+            raise OSError("metadata not writeable; change 'accessmode' to 'r+'")
         metadata = self._read()
         key, val = metadata.popitem()
         if metadata:
@@ -252,26 +258,13 @@ class MetaData:
 
         """
         if self._accessmode == 'r':
-            raise OSError("metadata not writeable; use 'set_accessmode' "
-                          "method to change this")
+            raise OSError("metadata not writeable; change 'accessmode' to 'r+'")
         metadata = self._read()
         metadata.update(*arg, **kwargs)
 
         write_jsonfile(self.path, data=metadata, sort_keys=True,
                        ensure_ascii=True, overwrite=True)
 
-    def set_accessmode(self, accessmode):
-        """
-        Set data access mode of data.
-
-        Parameters
-        ----------
-        accessmode: {'r', 'r+'}, default 'r'
-            File access mode of the data. `r` means read-only, `r+`
-            means read-write.
-
-        """
-        self._accessmode = check_accessmode(accessmode)
 
 
 class Array(BaseDataDir):
@@ -330,13 +323,23 @@ class Array(BaseDataDir):
 
     @property
     def accessmode(self):
-        """File access mode of the disk array data. `r` means read-only, `r+`
-        means read-write. `w` does not exist. To create new darr arrays,
-        potentially overwriting an other one, use the `asarray` or
-        `create_array` functions.
+        """
+        Set data access mode of metadata.
 
-       """
+        Parameters
+        ----------
+        accessmode: {'r', 'r+'}, default 'r'
+            File access mode of the data. `r` means read-only, `r+`
+            means read-write.
+
+        """
         return self._accessmode
+
+    @accessmode.setter
+    def accessmode(self, value):
+        self._accessmode = check_accessmode(value)
+        self._metadata.accessmode = value
+
 
     @property
     def dtype(self):
@@ -553,9 +556,8 @@ class Array(BaseDataDir):
     def check_arraywriteable(self):
         with self._open_array() as (ar, fd):
             if not ar.flags.writeable:
-                raise OSError(
-                    "darr not writeable; use 'set_accessmode' method to "
-                    "change this")
+                raise OSError("darr not writeable; change 'accessmode' "
+                              "attribute to 'r+'")
 
     def _update_len(self, lenincrease):
         newshape = list(self.shape)
@@ -857,19 +859,6 @@ class Array(BaseDataDir):
                                  f"previously: {lastchecksums[fname]}\n"
                                  f"now: {md5}\n")
 
-    def set_accessmode(self, accessmode):
-        """
-        Set data access mode of data.
-
-        Parameters
-        ----------
-        accessmode: {'r', 'r+'}, default 'r'
-            File access mode of the data. `r` means read-only, `r+`
-            means read-write.
-
-        """
-        self._accessmode = check_accessmode(accessmode)
-        self._metadata.set_accessmode(accessmode)
 
 
 def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
