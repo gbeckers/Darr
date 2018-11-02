@@ -6,6 +6,7 @@ Version 0.1.8
 - added possibility to export to `zarr <https://github.com/zarr-developers/zarr>`__
 - asarray works on zarr arrays more efficiently
 - added support for Maple
+- removed set_accessmode method, now set accessmode attribute directly
 
 Version 0.1.7
 -------------
