@@ -1,10 +1,10 @@
 {
     "arrayorder": "C",
     "byteorder": "little",
-    "darrversion": "0.1.2",
+    "darrversion": "0.1.7+28.gf8c63bf",
     "numtype": "float64",
     "shape": [
-        2,
-        1024
+        1024,
+        2
     ]
 }

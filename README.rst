@@ -18,7 +18,7 @@ flat binary and human-readable text files. It automatically saves a clear
 text description of how the data is stored, together with code for reading
 the specific data in a variety of current scientific data tools such as
 Python, R, Julia, IDL, Matlab, Maple, and Mathematica (see `example array
-<https://github.com/gbeckers/Darr/tree/master/examplearray.da>`__).
+<https://github.com/gbeckers/Darr/tree/master/examplearray.darr>`__).
 
 Darr is open source and freely available under the `New BSD
 License <https://opensource.org/licenses/BSD-3-Clause>`__ terms.
