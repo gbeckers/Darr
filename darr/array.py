@@ -14,14 +14,18 @@ import distutils.version
 import hashlib
 import json
 import os
-import sys
+
 import warnings
 from contextlib import contextmanager
 from pathlib import Path
 
 import numpy as np
 
+from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypes, \
+    endiannesstypes
+from .readcode import readcode
 from ._version import get_versions
+
 
 # Design considerations
 # ---------------------
@@ -37,127 +41,6 @@ __all__ = ['Array', 'asarray', 'create_array', 'delete_array',
 # R: https://www.rdocumentation.org/packages/base/versions/3.4.3/topics/readBin
 # Julia: https://docs.julialang.org/en/release-0.4/manual/integers-and-
 #        floating-point-numbers/
-
-numtypes = {
-    'int8': {'descr': '8-bit signed integer (-128 to 127)',
-             'numpy': 'i1',
-             'matlab': 'int8',
-             'R': {'what': 'integer()', 'size': 1, 'signed': 'TRUE'},
-             'julia': 'Int8',
-             'idl': None,
-             'mathematica': "Integer8"},
-    'int16': {'descr': '16‐bit signed integer (-32768 to 32767)',
-              'numpy': 'i2',
-              'matlab': 'int16',
-              'R': {'what': 'integer()', 'size': 2, 'signed': 'TRUE'},
-              'julia': 'Int16',
-              'idl': 2,
-              'mathematica': "Integer16"},
-    'int32': {'descr': '32‐bit signed integer (-2147483648 to 2147483647)',
-              'numpy': 'i4',
-              'matlab': 'int32',
-              'R': {'what': 'integer()', 'size': 4, 'signed': 'TRUE'},
-              'julia': 'Int32',
-              'idl': 3,
-              'mathematica': "Integer32"},
-    'int64': {'descr': '64‐bit signed integer (-9223372036854775808 to '
-                       '9223372036854775807)',
-              'numpy': 'i8',
-              'matlab': 'int64',
-              'R': {'what': 'integer()', 'size': 8, 'signed': 'TRUE'},
-              'julia': 'Int64',
-              'idl': 14,
-              'mathematica': "Integer64"},
-    'uint8': {'descr': '8‐bit unsigned integer (0 to 255)',
-              'numpy': 'u1',
-              'matlab': 'uint8',
-              'R': {'what': 'integer()', 'size': 1, 'signed': 'FALSE'},
-              'julia': 'UInt8',
-              'idl': 1,
-              'mathematica': "UnsignedInteger8"},
-    'uint16': {'descr': '16‐bit unsigned integer (0 to 65535)',
-               'numpy': 'u2',
-               'matlab': 'uint16',
-               'R': {'what': 'integer()', 'size': 2, 'signed': 'FALSE'},
-               'julia': 'UInt16',
-               'idl': 12,
-               'mathematica': "UnsignedInteger16"},
-    'uint32': {'descr': '32‐bit unsigned integer (0 to 4294967295)',
-               'numpy': 'u4',
-               'matlab': 'uint32',
-               'R': {'what': 'integer()', 'size': 4, 'signed': 'FALSE'},
-               'julia': 'UInt32',
-               'idl': 13,
-               'mathematica': "UnsignedInteger32"},
-    'uint64': {'descr': '64‐bit unsigned integer (0 to 18446744073709551615)',
-               'numpy': 'u8',
-               'matlab': 'uint64',
-               'R': {'what': 'integer()', 'size': 8, 'signed': 'FALSE'},
-               'julia': 'UInt64',
-               'idl': 15,
-               'mathematica': "UnsignedInteger64"},
-    'float16': {'descr': '16-bit half precision float (sign bit, 5 bits '
-                         'exponent, 10 bits mantissa)',
-                'numpy': 'f2',
-                'matlab': None,
-                'R': {'what': 'numeric()', 'size': 2, 'signed': 'TRUE'},
-                'julia': 'Float16',
-                'idl': None,
-                'mathematica': None},
-    'float32': {'descr': '32-bit IEEE single precision float (sign bit, '
-                         '8 bits exponent, 23 bits mantissa)',
-                'numpy': 'f4',
-                'matlab': 'float32',
-                'R': {'what': 'numeric()', 'size': 4, 'signed': 'TRUE'},
-                'julia': 'Float32',
-                'idl': 4,
-                'mathematica': "Real32"},
-    'float64': {'descr': '64-bit IEEE double precision float (sign bit, '
-                         '11 bits exponent, 52 bits mantissa)',
-                'numpy': 'f8',
-                'matlab': 'float64',
-                'R': {'what': 'numeric()', 'size': 8, 'signed': 'TRUE'},
-                'julia': 'Float64',
-                'idl': 5,
-                'mathematica': "Real64"},
-    'complex64': {'descr': '64-bit IEEE single‐precision complex number, '
-                           'represented by two 32 - bit floats (real and '
-                           'imaginary components)',
-                  'numpy': 'c8',
-                  'matlab': None,
-                  'R': None,
-                  'julia': 'Complex{Float32}',
-                  'idl': 6,
-                  'mathematica': "Complex64"},
-    'complex128': {'descr': '128-bit IEEE double‐precision complex number, '
-                            'represented by two 64 - bit floats (real and '
-                            'imaginary components)',
-                   'numpy': 'c16',
-                   'matlab': None,
-                   'R': {'what': 'complex()', 'size': 16, 'signed': 'TRUE'},
-                   'julia': 'Complex{Float64}',
-                   'idl': 9,
-                   'mathematica': "Complex128"}
-}
-
-endiannesstypes = {
-    'big':    {'descr': 'most-significant byte first',
-               'matlab': 'ieee-be',
-               'R': 'big',
-               'julia': 'ntoh',
-               'idl': 'big',
-               'mathematica': '+1',
-               'numpy': 'big',
-               'numpymemmap': 'big'},
-    'little': {'descr': 'least-significant byte first',
-               'matlab': 'ieee-le',
-               'R': 'little',
-               'julia': 'ltoh',
-               'idl': 'little',
-               'mathematica': '-1',
-               'numpy': 'little',
-               'numpymemmap': 'little'}
-}
 
 class AppendDataError(Exception):
     pass
@@ -433,7 +316,7 @@ class Array(BaseDataDir):
         self._datapath = self._path.joinpath(self._datafilename)
         self._accessmode = check_accessmode(accessmode)
         self._arraydescrpath = self._path.joinpath(self._arraydescrfilename)
-        self._arraydescr = self._read_arraydescr()
+        self._arrayinfo = self._read_arraydescr() # dictionary with type and layout info
         self._memmap = None
         self._valuesfd = None
         with self._open_array() as (ar, fd):
@@ -556,17 +439,17 @@ class Array(BaseDataDir):
                 # windows will fail
                 with open(file=self._datapath, mode=filemode) as fd:
                     self._valuesfd = fd
-                    ad = self._arraydescr
-                    dtypedescr = arraydescrtodtype(ad)
-                    if np.product(ad['shape']) == 0: # empty file/array
-                        self._memmap = np.zeros(ad['shape'], dtype=dtypedescr,
-                                                order=ad['arrayorder'])
+                    d = self._arrayinfo
+                    dtypedescr = arrayinfotodtype(d)
+                    if np.product(d['shape']) == 0: # empty file/array
+                        self._memmap = np.zeros(d['shape'], dtype=dtypedescr,
+                                                order=d['arrayorder'])
                     else:
                         self._memmap = np.memmap(filename=fd,
                                                  mode=memmapmode,
-                                                 shape=ad['shape'],
+                                                 shape=d['shape'],
                                                  dtype=dtypedescr,
-                                                 order=ad['arrayorder'])
+                                                 order=d['arrayorder'])
                     yield self._memmap, self._valuesfd
             except Exception:
                 raise
@@ -616,6 +499,20 @@ class Array(BaseDataDir):
             yield memmap
 
     def _read_arraydescr(self):
+        """
+        Private method to read everything we need to know about the numeric
+        data type and layout from the json file that holds this info
+
+        There are 4 essential parameters in this file:
+
+        numtype: the numeric types that Darr supports; these are listed in
+                 the 'numtypes' dict in the numtype module, like 'int8' etc.
+        shape: a list with dimension lengths
+        arrayorder: 'C' or 'F'
+        darrversion: a string in loose version format
+
+
+        """
         requiredkeys = {'numtype', 'shape', 'arrayorder', 'darrversion'}
         try:
             d = self._read_jsondict(filename=self._arraydescrfilename,
@@ -634,14 +531,14 @@ class Array(BaseDataDir):
             d['shape'] = tuple(d['shape'])  # json does not have tuples
         except TypeError:
             ValueError(f"'{d['shape']}' is not a valid array shape")
-        d['dtypedescr'] = arraydescrtodtype(d)
+        d['dtypedescr'] = arrayinfotodtype(d)
         if d['arrayorder'] not in {'C', 'F'}:
             raise ValueError(
                 f"'{d['arrayorder']}' is not a valid numpy arrayorder")
         return d
 
     def _check_consistency(self):
-        if not (self._read_arraydescr() == self._arraydescr):
+        if not (self._read_arraydescr() == self._arrayinfo):
             raise ValueError("in-memory and on-disk array descriptions not "
                              "the same")
         filesize = self._datapath.stat().st_size
@@ -666,13 +563,13 @@ class Array(BaseDataDir):
         self._shape = tuple(newshape)
         self._size = np.product(self._shape)
         self._mb = self._size * self._dtype.itemsize / 1e6
-        self._arraydescr.update(shape=self._shape)
+        self._arrayinfo.update(shape=self._shape)
         self._write_jsondict(filename=self._arraydescrfilename,
-                             d=self._arraydescr, overwrite=True)
+                             d=self._arrayinfo, overwrite=True)
         self._update_readmetxt()
 
     def _update_readmetxt(self):
-        txt = arrayreadmetxt(self)
+        txt = readcodetxt(self)
         self._write_txt(self._readmefilename, txt)
 
     def append(self, array):
@@ -1159,7 +1056,7 @@ def asarray(path, array, dtype=None, accessmode='r',
             arraylen += chunk.shape[0]
     shape = list(firstchunk.shape)
     shape[0] = arraylen
-    datainfo = get_arraymetadata(firstchunk)
+    datainfo = arraynumtypeinfo(firstchunk)
     if datainfo['arrayorder'] == 'F':
         # numpy's tofile always writes C order, hence we too
         warnings.warn("Warning: array is F_CONTIGUOUS, but data in file will "
@@ -1424,195 +1321,6 @@ def fit_chunks(totallen, chunklen, steplen=None):
     remainder = totallen - newsize
     return nchunks, newsize, remainder
 
-
-def arraydescrtodtype(arraydescr):
-    numtype = numtypes.get(arraydescr['numtype'], None)
-    if numtype is None:
-        raise ValueError(
-            f"'{arraydescr['numtype']}' is not a valid numeric type")
-    numpytype = numtype['numpy']
-    if arraydescr['byteorder'] == 'little':
-        dtypedescr = f'<{numpytype}'
-    elif arraydescr['byteorder'] == 'big':
-        dtypedescr = f'>{numpytype}'
-    else:
-        raise ValueError(f"'{arraydescr['byteorder']}' is not a valid order")
-    return dtypedescr
-
-
-def get_arraymetadata(ndarray):
-    sys_is_le = (sys.byteorder == 'little')
-    bo = ndarray.dtype.byteorder
-    if (bo == '<') or (sys_is_le and (bo in ('|', '='))):
-        bostr = 'little'
-    else:
-        bostr = 'big'
-    return {  # 'dtypedescr': str(ndarray.dtype.descr[0][1]),
-        'numtype': ndarray.dtype.name,
-        'arrayorder': 'C' if ndarray.flags['C_CONTIGUOUS'] else 'F',
-        'shape': ndarray.shape,
-        'byteorder': bostr}
-
-
-def get_arrayorderdescr(arrayorder):
-    if arrayorder == 'C':
-        return 'Row-major; last dimension varies most rapidly with ' \
-               'memory address'
-    elif arrayorder == 'F':
-        return 'Column-major; first dimension varies most rapidly with ' \
-               'memory address'
-    else:
-        raise ValueError(f'arrayorder type "{arrayorder}" unknown')
-
-
-def formatdescriptiontxt(da):
-    md = da._arraydescr
-    numdescr = numtypes[md['numtype']]['descr']
-    arrayorderdescr = get_arrayorderdescr(md['arrayorder'])
-    endianness = md['byteorder']
-    d = f"Description of data format\n" \
-        f"==========================\n\n" \
-        f"The file 'arrayvalues.bin' contains a numeric array in the " \
-        f"following format:\n\n" \
-        f"Numeric type: {numdescr}\n" \
-        f"Byte order: {endianness} ({endiannesstypes[endianness]['descr']})\n"
-    if da.ndim == 1:
-        d += f"Array length:  {md['shape'][0]}\n"
-    else:
-        d += f"Array dimensions:  {md['shape']}\n"
-    d += f"Array order layout:  {md['arrayorder']} ({arrayorderdescr})\n\n" \
-         f"The file only contains the raw binary values, without header " \
-         f"information.\n\n" \
-         f"Format details are also stored in json format in the separate " \
-         f"UTF-8 text file, 'arraydescription.json'.\n\n" \
-         f"If present, the file 'metadata.json' contains metadata in json " \
-         f"UTF-8 text format.\n\n"
-    return d
-
-
-def readcodenumpy(typedescr, shape, arrayorder, **kwargs):
-    ct = f"import numpy as np\n" \
-         f"a = np.fromfile('arrayvalues.bin', dtype='{typedescr}')\n"
-    if len(shape) > 1:  # multidimensional, we need reshape
-        ct += f"a = a.reshape({shape}, order='{arrayorder}')\n"
-    return ct
-
-
-def readcodenumpymemmap(typedescr, shape, arrayorder, **kwargs):
-    ct = "import numpy as np\n"
-    ct += f"a = np.memmap('arrayvalues.bin', dtype='{typedescr}', " \
-          f"shape={shape}, order='{arrayorder}')\n"
-    return ct
-
-
-def readcodematlab(typedescr, shape, endianness, **kwargs):
-    shape = list(shape)[::-1]  # darr is always C order, Matlab is F order
-    size = np.product(shape)
-    ndim = len(shape)
-    ct = "fileid = fopen('arrayvalues.bin');\n"
-    if ndim == 1:
-        ct += f"a = fread(fileid, {size}, '*{typedescr}', '{endianness}');\n"
-    elif ndim == 2:
-        ct += f"a = fread(fileid, {shape}, '*{typedescr}', " \
-              f"'{endianness}');\n"
-    else:  # ndim > 2, we need reshape to get multidimensional array
-        ct += f"a = reshape(fread(fileid, {size}, '*{typedescr}', " \
-              f"'{endianness}'), {shape});\n"
-    return ct + "fclose(fileid);\n"
-
-
-def readcoder(typedescr, shape, endianness, **kwargs):
-    # typedecr is a dict, with 'what', 'size' and 'n' keys
-    shape = shape[::-1]  # darr is always C order, R is F order
-    n = np.product(shape)
-    ct = 'fileid = file("arrayvalues.bin", "rb")\n' \
-         'a = readBin(con=fileid, what={what}, n={n}, size={size}, ' \
-         'endian="{endianness}")\n'.format(endianness=endianness, n=n,
-                                           **typedescr)
-    if len(shape) > 1:
-        ct += f'a = array(data=a, dim=c{shape}, dimnames=NULL)\n'
-    return ct + 'close(fileid)\n'
-
-
-def readcodejulia(typedescr, shape, endianness, **kwargs):
-    # this does not work if numtype is complex and byteorder is different on
-    # reading machine, will generate an error, so we accept this.
-    shape = shape[::-1]  # darr is always C order, Julia is F order
-    return f'fileid = open("arrayvalues.bin","r");\n' \
-           f'a = map({endianness}, read(fileid, {typedescr}, {shape}));\n' \
-           f'close(fileid);\n'
-
-
-def readcodeidl(typedescr, shape, endianness, **kwargs):
-    shape = list(shape[::-1])
-    return f'a = read_binary("arrayvalues.bin", data_type={typedescr}, ' \
-           f'data_dims={shape}, endian="{endianness}")\n'
-
-
-def readcodemathematica(typedescr, shape, endianness, **kwargs):
-    dimstr = str(shape)[1:-1]
-    if dimstr.endswith(','):
-        dimstr = dimstr[:-1]
-    dimstr = '{' + dimstr + '}'
-    return f'a = BinaryReadList["arrayvalues.bin", "{typedescr}", ' \
-           f'ByteOrdering -> {endianness}];\n' \
-           f'a = ArrayReshape[a, {dimstr}];\n'
-
-
-readcodefunc = {
-        'idl': readcodeidl,
-        'julia': readcodejulia,
-        'mathematica': readcodemathematica,
-        'matlab': readcodematlab,
-        'numpy': readcodenumpy,
-        'numpymemmap': readcodenumpymemmap,
-        'R': readcoder,
-}
-
-
-def readcode(da, language):
-    arraydescription = da._arraydescr
-    if language not in readcodefunc:
-        raise ValueError(f"'{language}' not supported ({readcodefunc.keys()})")
-    kwargs = {}
-    if 'numpy' in language:
-        kwargs['typedescr'] = arraydescription['dtypedescr']
-    else:
-        kwargs['typedescr'] = numtypes[arraydescription['numtype']][language]
-    kwargs['shape'] = arraydescription['shape']
-    byteorder = arraydescription['byteorder']
-    kwargs['endianness'] = endiannesstypes[byteorder][language]
-    kwargs['arrayorder'] = arraydescription['arrayorder']
-    if kwargs['typedescr'] is None:
-        return None
-    else:
-        return readcodefunc[language](**kwargs)
-
-
-def promptify_codetxt(codetxt, prompt=">>> "):
-    return "\n".join([f"{prompt}{l}" for l in codetxt.splitlines()]) + '\n'
-
-
-def arrayreadmetxt(da):
-    s = formatdescriptiontxt(da)
-    s += "Example code for reading the data\n" \
-         "=================================\n\n"
-    languages = (
-        ("Python with Numpy:", "numpy"),
-        ("Python with Numpy (memmap):", "numpymemmap"),
-        ("R:", "R"),
-        ("Matlab/Octave:", "matlab"),
-        ("Julia:", "julia"),
-        ("IDL/GDL:", "idl"),
-        ("Mathematica:", "mathematica")
-    )
-    for heading, language in languages:
-        codetext = readcode(da, language)
-        if codetext is not None:
-            s += f"{heading}\n{'-'*len(heading)}\n{codetext}\n"
-    return s
-
-
 def write_jsonfile(path, data, sort_keys=True, indent=4, ensure_ascii=True,
                    overwrite=False):
     path = Path(path)
@@ -1631,3 +1339,76 @@ def write_jsonfile(path, data, sort_keys=True, indent=4, ensure_ascii=True,
         # utf-8 is ascii compatible
         with open(path, 'w', encoding='utf-8') as fp:
             fp.write(json_string)
+
+
+def readcodetxt(da):
+    """Returns text on how to read a Darr array numeric binary data in various
+    programming languages.
+
+    Parameters
+    ----------
+    da: Darr array
+
+    """
+
+    s = numtypedescriptiontxt(da)
+    s += "Example code for reading the data\n" \
+         "=================================\n\n"
+    languages = (
+        ("Python with Numpy:", "numpy"),
+        ("Python with Numpy (memmap):", "numpymemmap"),
+        ("R:", "R"),
+        ("Matlab/Octave:", "matlab"),
+        ("Julia:", "julia"),
+        ("IDL/GDL:", "idl"),
+        ("Mathematica:", "mathematica")
+    )
+    for heading, language in languages:
+        codetext = readcode(da, language)
+        if codetext is not None:
+            s += f"{heading}\n{'-'*len(heading)}\n{codetext}\n"
+    return s
+
+
+def numtypedescriptiontxt(da):
+    """Returns a paragraph of text that describes Darr array type and layout
+    information, as well as some additional info on how metadata is stored etc.
+
+    Parameters
+    ----------
+    da: Darr array
+
+    """
+    d = da._arrayinfo
+    shape = d['shape']
+    typedescr = numtypes[d['numtype']]['descr']
+    arrayorder = d['arrayorder']
+    endianness = d['byteorder']
+    endiannessdescr = endiannesstypes[endianness]['descr']
+    if arrayorder == 'C':
+        arrayorderdescr = 'Row-major; last dimension varies most rapidly ' \
+                          'with memory address'
+    elif arrayorder == 'F':
+        arrayorderdescr = 'Column-major; first dimension varies most rapidly ' \
+                          'with memory address'
+    else:
+        raise ValueError(f'arrayorder type "{arrayorder}" unknown')
+    s = f"Description of data format\n" \
+        f"==========================\n\n" \
+        f"The file 'arrayvalues.bin' contains a numeric array in the " \
+        f"following format:\n\n" \
+        f"Numeric type: {typedescr}\n" \
+        f"Byte order: {endianness} ({endiannessdescr})\n"
+    if da.ndim == 1:
+        s += f"Array length:  {shape[0]}\n"
+    else:
+        s += f"Array dimensions:  {shape}\n"
+    s += f"Array order layout:  {arrayorder} ({arrayorderdescr})\n\n" \
+         f"The file only contains the raw binary values, without header " \
+         f"information.\n\n" \
+         f"Format details are also stored in json format in the separate " \
+         f"UTF-8 text file, 'arraydescription.json' to facilitate automatic " \
+         f"reading by a grogram.\n\n" \
+         f"If present, the file 'metadata.json' contains metadata in json " \
+         f"UTF-8 text format.\n\n"
+    return s
