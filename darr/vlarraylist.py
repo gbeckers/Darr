@@ -36,13 +36,22 @@ class VLArrayList(BaseDataDir):
 
     @property
     def accessmode(self):
-        """File access mode of the disk array data. `r` means read-only, `r+`
-        means read-write. `w` does not exist. To create new diskarrays,
-        potentially overwriting an other one, use the `asdiskarray` or
-        `create_diskarray` functions.
+        """
+        Set data access mode of metadata.
 
-       """
+        Parameters
+        ----------
+        accessmode: {'r', 'r+'}, default 'r'
+            File access mode of the data. `r` means read-only, `r+`
+            means read-write.
+
+        """
         return self._accessmode
+
+    @accessmode.setter
+    def accessmode(self, value):
+        self._accessmode = check_accessmode(value)
+        self._metadata.accessmode = value
 
     @property
     def dtype(self):
