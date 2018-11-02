@@ -21,7 +21,7 @@ To avoid dependency on specific tools, Darr is based on a combination of
 flat binary and human-readable text files. It automatically saves a clear
 text description of how the data is stored, together with code for reading
 the specific data in a variety of current scientific data tools such as
-Python, R, Julia, Matlab and Mathematica (see `example array
+Python, R, Julia, IDL, Matlab, Maple and Mathematica (see `example array
 <https://github.com/gbeckers/Darr/tree/master/examplearray.da>`__).
 
 Darr is open source and freely available under the `New BSD
@@ -45,7 +45,7 @@ Pro's:
    saved in a README text file.
 -  README also contains **examples of how to read the array** in popular
    analysis environments such as Python (without Darr), R, Julia,
-   Octave/Matlab, GDL/IDL, and Mathematica.
+   Octave/Matlab, GDL/IDL, Maple and Mathematica.
 -  **Many numeric types** are supported: (u)int8-(u)int64,
    float16-float64, complex64, complex128.
 -  Easy use of **metadata**, stored in a separate

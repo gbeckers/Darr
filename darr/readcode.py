@@ -74,12 +74,22 @@ def readcodemathematica(typedescr, shape, endianness, **kwargs):
            f'ByteOrdering -> {endianness}];\n' \
            f'a = ArrayReshape[a, {dimstr}];\n'
 
+def readcodemaple(typedescr, shape, endianness, **kwargs):
+    ct = f'a := FileTools[Binary][Read]("arrayvalues.bin", {typedescr}, ' \
+         f'byteorder={endianness}, output=Array);\n'
+    ndim = len(shape)
+    if ndim > 1:
+        shape = list(shape[::-1])
+        ct += f'a := ArrayTools[Reshape](a, {shape});\n'
+    return ct
+
 
 readcodefunc = {
         'idl': readcodeidl,
         'julia': readcodejulia,
         'mathematica': readcodemathematica,
         'matlab': readcodematlab,
+        'maple': readcodemaple,
         'numpy': readcodenumpy,
         'numpymemmap': readcodenumpymemmap,
         'R': readcoder,

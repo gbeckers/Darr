@@ -1361,7 +1361,8 @@ def readcodetxt(da):
         ("Matlab/Octave:", "matlab"),
         ("Julia:", "julia"),
         ("IDL/GDL:", "idl"),
-        ("Mathematica:", "mathematica")
+        ("Mathematica:", "mathematica"),
+        ("Maple:", "maple")
     )
     for heading, language in languages:
         codetext = readcode(da, language)
