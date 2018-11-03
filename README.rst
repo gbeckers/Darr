@@ -20,8 +20,9 @@ the specific data in a variety of current scientific data tools such as
 Python, R, Julia, IDL, Matlab, Maple, and Mathematica (see `example array
 <https://github.com/gbeckers/Darr/tree/master/examplearray.darr>`__).
 
-Darr is open source and freely available under the `New BSD
-License <https://opensource.org/licenses/BSD-3-Clause>`__ terms.
+Darr is currently pre-1.0, still undergoing significant development. It is
+open source and freely available under the `New BSD License
+<https://opensource.org/licenses/BSD-3-Clause>`__ terms.
 
 Features
 --------

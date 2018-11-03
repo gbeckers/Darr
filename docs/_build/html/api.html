@@ -243,10 +243,16 @@ functions.</li>
 <dl class="attribute">
 <dt id="darr.Array.accessmode">
 <code class="descname">accessmode</code><a class="headerlink" href="#darr.Array.accessmode" title="Permalink to this definition">¶</a></dt>
-<dd><p>File access mode of the disk array data. <cite>r</cite> means read-only, <cite>r+</cite>
-means read-write. <cite>w</cite> does not exist. To create new darr arrays,
-potentially overwriting an other one, use the <cite>asarray</cite> or
-<cite>create_array</cite> functions.</p>
+<dd><p>Set data access mode of metadata.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>accessmode</strong> (<em>{'r'</em><em>, </em><em>'r+'}</em><em>, </em><em>default 'r'</em>) – File access mode of the data. <cite>r</cite> means read-only, <cite>r+</cite>
+means read-write.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -331,6 +337,12 @@ raised. Default is <cite>False</cite>.</li>
 <dt id="darr.Array.dtype">
 <code class="descname">dtype</code><a class="headerlink" href="#darr.Array.dtype" title="Permalink to this definition">¶</a></dt>
 <dd><p>Numpy data type of the array values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="darr.Array.itemsize">
+<code class="descname">itemsize</code><a class="headerlink" href="#darr.Array.itemsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size in bytes of each item in the array.</p>
 </dd></dl>
 
 <dl class="method">
@@ -424,34 +436,25 @@ means read-write.</li>
 <dl class="attribute">
 <dt id="darr.Array.mb">
 <code class="descname">mb</code><a class="headerlink" href="#darr.Array.mb" title="Permalink to this definition">¶</a></dt>
-<dd><p>Size in megabytes of the data array.</p>
+<dd><p>Array size in megabytes, excluding metadata.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="darr.Array.metadata">
 <code class="descname">metadata</code><a class="headerlink" href="#darr.Array.metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dictionary of meta data.</p>
+<dd><p>Dictionary-like interface to metadata.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="darr.Array.nbytes">
+<code class="descname">nbytes</code><a class="headerlink" href="#darr.Array.nbytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array size in bytes, excluding metadata.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="darr.Array.ndim">
 <code class="descname">ndim</code><a class="headerlink" href="#darr.Array.ndim" title="Permalink to this definition">¶</a></dt>
-<dd><p>Number of dimensions.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="darr.Array.set_accessmode">
-<code class="descname">set_accessmode</code><span class="sig-paren">(</span><em>accessmode</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.set_accessmode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set data access mode of data.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>accessmode</strong> (<em>{'r'</em><em>, </em><em>'r+'}</em><em>, </em><em>default 'r'</em>) – File access mode of the data. <cite>r</cite> means read-only, <cite>r+</cite>
-means read-write.</td>
-</tr>
-</tbody>
-</table>
+<dd><p>Number of dimensions</p>
 </dd></dl>
 
 <dl class="attribute">

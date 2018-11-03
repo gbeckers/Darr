@@ -24,6 +24,7 @@ the specific data in a variety of current scientific data tools such as
 Python, R, Julia, Matlab and Mathematica (see 
 [example array](https://github.com/gbeckers/Darr/tree/master/examplearray.da)).
 
+Darr is currently pre-1.0, still undergoing significant development.
 
 Features
 --------
