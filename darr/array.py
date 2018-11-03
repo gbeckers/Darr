@@ -268,14 +268,7 @@ class MetaData:
 
 
 class Array(BaseDataDir):
-    """Read and write numeric data from and to a memory-mapped, disk-based
-    array using numpy indexing. Memory-mapped arrays are used for accessing
-    segments of (very) large files on disk, without reading the entire file
-    into memory.
-
-    Darr data is stored in a simple format that maximizes long-term
-    readability by other software and programming languages, and has been
-    designed with scientific use cases in mind.
+    """Instantiate a Darr array from disk.
 
     A darr array corresponds to a directory containing 1) a binary file with
     the raw numeric array values, 2) a text file (json format) describing the

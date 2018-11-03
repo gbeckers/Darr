@@ -10,8 +10,8 @@ Creating arrays
 .. autofunction:: darr.asarray
 .. autofunction:: darr.create_array
 
-Accessing existing arrays
--------------------------
+Accessing arrays
+----------------
 .. autoclass:: darr.Array
    :members:
 
