@@ -322,16 +322,7 @@ class Array(BaseDataDir):
 
     @property
     def accessmode(self):
-        """
-        Set data access mode of metadata.
-
-        Parameters
-        ----------
-        accessmode: {'r', 'r+'}, default 'r'
-            File access mode of the data. `r` means read-only, `r+`
-            means read-write.
-
-        """
+        """Data access mode of metadata, {'r', 'r+'}."""
         return self._accessmode
 
     @accessmode.setter
