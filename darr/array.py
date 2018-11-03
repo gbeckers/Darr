@@ -316,7 +316,6 @@ class Array(BaseDataDir):
             self._dtype = ar.dtype
             self._shape = ar.shape
             self._size = ar.size
-            self._mb = ar.size * ar.dtype.itemsize / 1e6
         self._check_consistency()
         self._metadata = MetaData(self._path.joinpath(self._metadatafilename),
                                   accessmode=accessmode)
@@ -343,59 +342,52 @@ class Array(BaseDataDir):
 
     @property
     def dtype(self):
-        """Numpy data type of the array values.
-
-        """
+        """Numpy data type of the array values."""
         return self._dtype
 
     @property
     def metadata(self):
-        """
-        Dictionary of meta data.
-
-        """
+        """Dictionary-like interface to metadata."""
         return self._metadata
 
     @property
-    def mb(self):
-        """Size in megabytes of the data array.
+    def itemsize(self):
+        """The size in bytes of each item in the array."""
+        return self._dtype.itemsize
 
-        """
-        return self._mb
+    @property
+    def nbytes(self):
+        """Array size in bytes, excluding metadata."""
+        return self._size * self._dtype.itemsize
+
+    @property
+    def mb(self):
+        """Array size in megabytes, excluding metadata."""
+        return self.nbytes / 1e6
 
     @property
     def ndim(self):
-        """Number of dimensions.
-
-        """
+        """Number of dimensions """
         return len(self._shape)
 
     @property
     def shape(self):
-        """Tuple with sizes of each axis of the data array.
-
-        """
+        """Tuple with sizes of each axis of the data array."""
         return self._shape
 
     @property
     def size(self):
-        """Total number of values in the data array.
-
-        """
+        """Total number of values in the data array."""
         return self._size
 
     @property
     def currentchecksums(self):
-        """Current md5 checksums of data and datadescription files.
-
-        """
+        """Current md5 checksums of data and datadescription files."""
         return self._currentchecksums()
 
     @property
     def storedmd5checksums(self):
-        """Previously stored md5 checksums of data and datadescription files.
-
-        """
+        """Previously stored md5 checksums of data and datadescription files."""
         return self._storedmd5checksums()
 
     def __getitem__(self, index):
@@ -564,7 +556,6 @@ class Array(BaseDataDir):
         newshape[0] += lenincrease
         self._shape = tuple(newshape)
         self._size = np.product(self._shape)
-        self._mb = self._size * self._dtype.itemsize / 1e6
         self._arrayinfo.update(shape=self._shape)
         self._write_jsondict(filename=self._arraydescrfilename,
                              d=self._arrayinfo, overwrite=True)
