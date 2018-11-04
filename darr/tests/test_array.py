@@ -380,6 +380,21 @@ class MetaData(unittest.TestCase):
                                dtype='int64', metadata=md, overwrite=True)
             assert_equal(dict(dar.metadata), md)
 
+    def test_getmetadata(self):
+        with tempdir() as dirname:
+            md = {'fs': 20000, 'x': 33.3}
+            dar = create_array(path=dirname, shape=(0, 2),
+                               dtype='int64', metadata=md, overwrite=True)
+            self.assertEqual(dar.metadata.get('fs'), 20000)
+
+    def test_metadatavalues(self):
+        with tempdir() as dirname:
+            md = {'fs': 20000, 'x': 33.3}
+            dar = create_array(path=dirname, shape=(0, 2),
+                               dtype='int64', metadata=md, overwrite=True)
+            self.assertEqual(set(dar.metadata.values()), {20000,33.3})
+
+
     def test_changemetadata(self):
         with tempdir() as dirname:
             md = {'fs': 20000, 'x': 33.3}
@@ -504,9 +519,11 @@ class TestMd5Checksums(unittest.TestCase):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2, 2), dtype='int64',
                                overwrite=True)
-            scs = dar.store_md5checksums()
+            cs = dar.store_md5checksums()
+            scs = dar.storedmd5checksums
+            self.assertEqual(scs, cs)
             ccs = dar.currentchecksums
-            self.assertEqual(scs, ccs)
+            self.assertEqual(scs, cs)
 
     def test_assertmd5checksumsvalues(self):
         with tempdir() as dirname:
