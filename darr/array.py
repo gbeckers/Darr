@@ -788,7 +788,7 @@ class Array(BaseDataDir):
         Returns
         -------
         Array
-           copy of the darr
+           copy of the darr array
 
         """
         metadata = dict(self.metadata)
