@@ -158,7 +158,7 @@ class CreateDiskArray(unittest.TestCase):
                                       chunklen=1)
 
 
-class dArray(unittest.TestCase):
+class TestArray(unittest.TestCase):
 
     def test_instantiatefromexistingpath(self):
         with tempdir() as dirname:
@@ -210,6 +210,45 @@ class dArray(unittest.TestCase):
             # linux and windows have different numpy memmap reprs...
             assert_equal(repr(dar)[:18], 'darr array ([0, 0]')
 
+    def test_setaccessmode(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True, accessmode='r')
+            self.assertEqual(dar.accessmode, 'r')
+            dar.accessmode = 'r+'
+            self.assertEqual(dar.accessmode, 'r+')
+            self.assertRaises(ValueError, setattr, dar, 'accessmode', 'w')
+            self.assertRaises(ValueError, setattr, dar, 'accessmode', 'a')
+
+    def test_itemsize(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            assert_equal(dar.itemsize, 8)
+
+    def test_nbytes(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            assert_equal(dar.nbytes, 2*8)
+
+    def test_mb(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            assert_equal(dar.mb, 2*8/1e6)
+
+    def test_mb(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            assert_equal(dar.mb, 2*8/1e6)
+
+    def test_size(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,2), fill=0,
+                               dtype='int64', overwrite=True)
+            assert_equal(dar.size, 4)
 
 
 class IterView(unittest.TestCase):
@@ -389,6 +428,20 @@ class MetaData(unittest.TestCase):
                                accessmode='r')
             self.assertEqual(dar.metadata.accessmode, 'r')
             self.assertRaises(OSError, dar.metadata.popitem)
+            self.assertRaises(OSError, dar.metadata.pop)
+            self.assertRaises(OSError, dar.metadata.update, {'a': 3})
+
+    def test_setaccessmode(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True, accessmode='r')
+            self.assertEqual(dar.metadata.accessmode, 'r')
+            dar.metadata.accessmode = 'r+'
+            self.assertEqual(dar.metadata.accessmode, 'r+')
+            self.assertRaises(ValueError, setattr, dar.metadata, 'accessmode',
+                              'w')
+            self.assertRaises(ValueError, setattr, dar.metadata, 'accessmode',
+                              'a')
 
     def test_delitem(self):
         with tempdir() as dirname:

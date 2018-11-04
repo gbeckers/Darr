@@ -320,7 +320,8 @@ class Array(BaseDataDir):
 
     @accessmode.setter
     def accessmode(self, value):
-        self._accessmode = check_accessmode(value)
+        self._accessmode = check_accessmode(value, validmodes=('r', 'r+'),
+                                            makebinary=False)
         self._metadata.accessmode = value
 
 
