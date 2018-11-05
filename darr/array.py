@@ -864,7 +864,7 @@ class Array(BaseDataDir):
         >>> import darr as da
         >>> d = da.create_array('recording.darr', shape=(12,))
         >>> with d.open_file('notes.txt', 'a') as f:
-        ...     n = f.write('excellent recording\n')
+        ...     n = f.write('excellent recording\\n')
 
         """
         filepath = self.path / Path(filename)
