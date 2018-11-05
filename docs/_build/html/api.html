@@ -208,18 +208,12 @@ Default is <cite>False</cite>.</li>
 </dd></dl>
 
 </div>
-<div class="section" id="accessing-existing-arrays">
-<h2>Accessing existing arrays<a class="headerlink" href="#accessing-existing-arrays" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="accessing-arrays">
+<h2>Accessing arrays<a class="headerlink" href="#accessing-arrays" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="darr.Array">
 <em class="property">class </em><code class="descclassname">darr.</code><code class="descname">Array</code><span class="sig-paren">(</span><em>path</em>, <em>accessmode='r'</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read and write numeric data from and to a memory-mapped, disk-based
-array using numpy indexing. Memory-mapped arrays are used for accessing
-segments of (very) large files on disk, without reading the entire file
-into memory.</p>
-<p>Darr data is stored in a simple format that maximizes long-term
-readability by other software and programming languages, and has been
-designed with scientific use cases in mind.</p>
+<dd><p>Instantiate a Darr array from disk.</p>
 <p>A darr array corresponds to a directory containing 1) a binary file with
 the raw numeric array values, 2) a text file (json format) describing the
 numeric type, array shape, and other format information, 3) a README text
@@ -243,16 +237,7 @@ functions.</li>
 <dl class="attribute">
 <dt id="darr.Array.accessmode">
 <code class="descname">accessmode</code><a class="headerlink" href="#darr.Array.accessmode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set data access mode of metadata.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>accessmode</strong> (<em>{'r'</em><em>, </em><em>'r+'}</em><em>, </em><em>default 'r'</em>) – File access mode of the data. <cite>r</cite> means read-only, <cite>r+</cite>
-means read-write.</td>
-</tr>
-</tbody>
-</table>
+<dd><p>Data access mode of metadata, {‘r’, ‘r+’}.</p>
 </dd></dl>
 
 <dl class="method">
@@ -317,7 +302,7 @@ raised. Default is <cite>False</cite>.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">copy of the darr</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">copy of the darr array</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#darr.Array" title="darr.Array">Array</a></p>

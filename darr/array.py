@@ -859,6 +859,13 @@ class Array(BaseDataDir):
         This method is a thin wrapper of the that of the Python 'open'
         function. The parameters are therefore the same.
 
+        Examples
+        --------
+        >>> import darr as da
+        >>> d = da.create_array('recording.darr', shape=(12,))
+        >>> with d.open_file('notes.txt', 'a') as f:
+        ...     n = f.write('excellent recording\n')
+
         """
         filepath = self.path / Path(filename)
         if filepath.name in self._filenames:
