@@ -9,13 +9,13 @@ Darr
 |Travis Status| |Appveyor Status| |PyPy version| |Coverage Status| |Docs Status|
 
 
-Darr is a Python science library for storing numeric data arrays in a way
-that is open, simple, and self-explanatory. It enables fast memory-mapped
-read/write access to such disk-based data, the ability to append data, and
-the flexible use of metadata. It is primarily designed for scientific use
-cases. Save and use your numeric arrays and metadata with one line of code
-while long-term and tool-independent accessibility and easy shareability
-is ensured.
+Darr is a Python science library for storing and sharing numeric data arrays
+in a way that is open, simple, and self-explanatory. It enables fast
+memory-mapped read/write access to such disk-based data, the ability to append
+data, and the flexible use of metadata. It is primarily designed for
+scientific use cases. Save and use your numeric arrays and metadata with one
+line of code while long-term and tool-independent accessibility and easy
+shareability is ensured.
 
 To avoid dependency on specific tools, Darr is based on a combination of
 flat binary and human-readable text files. It automatically saves a clear
