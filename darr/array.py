@@ -538,7 +538,7 @@ class Array(BaseDataDir):
 
     def _check_consistency(self):
         if not (self._read_arraydescr() == self._arrayinfo):
-            raise ValueError("in-memory and on-disk array descriptions not "
+            raise ValueError("in-memory and on-disk array info not "
                              "the same")
         self._check_arrayinfoconsistency()
 
