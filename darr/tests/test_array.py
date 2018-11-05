@@ -290,6 +290,38 @@ class TestReadArrayDescr(unittest.TestCase):
                                 overwrite=True)
             self.assertRaises(Exception, Array, dar.path)
 
+class TestConsistency(unittest.TestCase):
+
+    def test_consistencyself(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            arrayinfo = dar._arrayinfo.copy()
+            arrayinfo['shape'] = (3,)
+            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+                                overwrite=True)
+            self.assertRaises(ValueError, dar._check_consistency)
+
+    def test_consistencywrongshape(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            arrayinfo = dar._arrayinfo.copy()
+            arrayinfo['shape'] = (3,)
+            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+                                overwrite=True)
+            self.assertRaises(ValueError, Array, dar.path)
+
+    def test_consistencywrongitemsize(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            arrayinfo = dar._arrayinfo.copy()
+            arrayinfo['numtype'] = 'int32'
+            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+                                overwrite=True)
+            self.assertRaises(ValueError, Array, dar.path)
+
 
 class IterView(unittest.TestCase):
 

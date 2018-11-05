@@ -512,6 +512,7 @@ class Array(BaseDataDir):
                           f"guaranteed to work", UserWarning)
         try:
             d['shape'] = tuple(d['shape'])  # json does not have tuples
+            all(isinstance(d, int) for d in d['shape']) # all ints?
         except TypeError:
             print(f"'{d['shape']}' is not a valid array shape")
             raise
