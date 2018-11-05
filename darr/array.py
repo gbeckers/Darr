@@ -851,6 +851,15 @@ class Array(BaseDataDir):
     @contextmanager
     def open_file(self, filename, mode='r', buffering=-1, encoding=None,
                   errors=None, newline=None, closefd=True, opener=None):
+        """
+        Open a file in the darr array directory and yield a file object.
+        Protected files, i.e. those that are part of the darr array may not be
+        opened.
+
+        This method is a thin wrapper of the that of the Python 'open'
+        function. The parameters are therefore the same.
+
+        """
         filepath = self.path / Path(filename)
         if filepath.name in self._filenames:
             raise OSError(f'Cannot open protected darr file "{filename}"')
