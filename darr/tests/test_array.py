@@ -1,6 +1,7 @@
 import os
 import unittest
 from pathlib import Path
+import warnings
 
 import numpy as np
 from numpy.testing import assert_equal, assert_array_equal
@@ -249,6 +250,45 @@ class TestArray(unittest.TestCase):
             dar = create_array(path=dirname, shape=(2,2), fill=0,
                                dtype='int64', overwrite=True)
             assert_equal(dar.size, 4)
+
+
+class TestReadArrayDescr(unittest.TestCase):
+
+    def test_arrayinfonewerversionfile(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            arrayinfo = dar._arrayinfo.copy()
+            vs  = arrayinfo['darrversion'].split('.')
+            vs = '.'.join([str(int(vs[0]) + 1)] + vs[1:])
+            arrayinfo['darrversion'] = vs
+            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+                                overwrite=True)
+            self.assertWarns(UserWarning, Array, dar.path)
+
+    def test_arrayinfowrongshapetype(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            arrayinfo = dar._arrayinfo.copy()
+            arrayinfo['shape'] = ['a', 3]
+            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+                                overwrite=True)
+            self.assertRaises(TypeError, Array, dar.path)
+
+    def test_arrayinfowrongorder(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            arrayinfo = dar._arrayinfo.copy()
+            arrayinfo['arrayorder'] = 'D'
+            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+                                overwrite=True)
+            self.assertRaises(ValueError, Array, dar.path)
+            arrayinfo['arrayorder'] = '[D]'
+            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+                                overwrite=True)
+            self.assertRaises(Exception, Array, dar.path)
 
 
 class IterView(unittest.TestCase):

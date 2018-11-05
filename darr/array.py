@@ -498,23 +498,30 @@ class Array(BaseDataDir):
             d = self._read_jsondict(filename=self._arraydescrfilename,
                                     requiredkeys=requiredkeys)
         except Exception:
-            raise OSError(f"Could not read array description from "
-                          f"'{self._arraydescrfilename}'")
+            print(f"Could not read array description from "
+                  f"'{self._arraydescrpath}'")
+            raise
         vfile = distutils.version.LooseVersion(d['darrversion'])
         vlib = distutils.version.LooseVersion(self._formatversion)
+        # for now, in alpha stage, we do not recommend the use of newer files
+        # with older libraries
         if not vlib >= vfile:
-            raise ValueError(f"Format version of file ({d['darrversion']}) "
-                             f"is too new. The installed Darr "
-                             f"library only handles up to version "
-                             f"{self._formatversion}; please update")
+            warnings.warn(f"Format version of file ({d['darrversion']}) "
+                          f"is newer than your version of Darr "
+                          f"{self._formatversion}. At this stage this is not"
+                          f"guaranteed to work", UserWarning)
         try:
             d['shape'] = tuple(d['shape'])  # json does not have tuples
         except TypeError:
-            ValueError(f"'{d['shape']}' is not a valid array shape")
+            print(f"'{d['shape']}' is not a valid array shape")
+            raise
         d['dtypedescr'] = arrayinfotodtype(d)
-        if d['arrayorder'] not in {'C', 'F'}:
-            raise ValueError(
-                f"'{d['arrayorder']}' is not a valid numpy arrayorder")
+        try:
+            if d['arrayorder'] not in {'C', 'F'}:
+                raise ValueError(
+                    f"'{d['arrayorder']}' is not a valid numpy arrayorder")
+        except Exception:
+            raise
         return d
 
     def _check_consistency(self):
