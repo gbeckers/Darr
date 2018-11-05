@@ -577,6 +577,28 @@ class MetaData(unittest.TestCase):
             self.assertEqual(repr(dar.metadata), "{'a': 1}")
 
 
+class TestOpenFile(unittest.TestCase):
+
+    def test_openfile(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(0, 2), dtype='int64',
+                               overwrite=True, accessmode='r+')
+            with dar.open_file('notes.txt', 'a') as f:
+                f.write('test\n')
+            path = dar.path / 'notes.txt'
+            self.assertEqual(path.exists(), True)
+
+    def test_openfileprotectedfiles(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(0, 2), dtype='int64',
+                               overwrite=True, accessmode='r+')
+            for fn in dar._filenames:
+                with self.assertRaises(OSError):
+                    with dar.open_file(fn, 'a') as f:
+                        f.write('test\n')
+
+
+
 class TruncateData(unittest.TestCase):
 
     def test_truncate1d(self):

@@ -848,6 +848,20 @@ class Array(BaseDataDir):
                                  f"previously: {lastchecksums[fname]}\n"
                                  f"now: {md5}\n")
 
+    @contextmanager
+    def open_file(self, filename, mode='r', buffering=-1, encoding=None,
+                  errors=None, newline=None, closefd=True, opener=None):
+        filepath = self.path / Path(filename)
+        if filepath.name in self._filenames:
+            raise OSError(f'Cannot open protected darr file "{filename}"')
+
+        with open(file=filepath, mode=mode, buffering=buffering,
+                  encoding=encoding, errors=errors, newline=newline,
+                  closefd=closefd, opener=opener) as f:
+            yield f
+
+
+
 
 
 def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
