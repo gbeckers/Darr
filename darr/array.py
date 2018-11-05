@@ -13,7 +13,7 @@ array from disk, use **delete_array**.
 import distutils.version
 import hashlib
 import json
-import os
+import os, sys
 
 import warnings
 from contextlib import contextmanager
@@ -497,10 +497,10 @@ class Array(BaseDataDir):
         try:
             d = self._read_jsondict(filename=self._arraydescrfilename,
                                     requiredkeys=requiredkeys)
-        except Exception:
-            print(f"Could not read array description from "
-                  f"'{self._arraydescrpath}'")
-            raise
+        except Exception as e:
+            m = f". Could not read array description from "\
+                f"'{self._arraydescrpath}. '"
+            raise type(e)(str(e) + m).with_traceback(sys.exc_info()[2])
         vfile = distutils.version.LooseVersion(d['darrversion'])
         vlib = distutils.version.LooseVersion(self._formatversion)
         # for now, in alpha stage, we do not recommend the use of newer files
@@ -685,6 +685,7 @@ class Array(BaseDataDir):
                     f"succeed. Shape of array was {oldshape} and is now " \
                     f"{self._shape} after an increase in length " \
                     f"(along first dimension) of {lenincrease}."
+                raise AppendDataError(s)
                 raise AppendDataError(s)
         self._update_len(lenincrease=lenincrease)
 

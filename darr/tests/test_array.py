@@ -254,6 +254,13 @@ class TestArray(unittest.TestCase):
 
 class TestReadArrayDescr(unittest.TestCase):
 
+    def test_arrayinfomissingfile(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            dar._arraydescrpath.unlink()
+            self.assertRaises(FileNotFoundError, Array, dar.path)
+
     def test_arrayinfonewerversionfile(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
@@ -289,6 +296,7 @@ class TestReadArrayDescr(unittest.TestCase):
             dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
                                 overwrite=True)
             self.assertRaises(Exception, Array, dar.path)
+
 
 class TestConsistency(unittest.TestCase):
 
@@ -441,6 +449,27 @@ class AppendData(unittest.TestCase):
                                dtype='int64', overwrite=True)
             self.assertRaises(AppendDataError, dar.iterappend, g)
             assert_equal(dar[:], [0,0,1,2,3,4,5,6])
+
+    def test_appendwrongshape(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,3),
+                               dtype='int64', overwrite=True)
+            ar = [[3,4]]
+            self.assertRaises(AppendDataError, dar.append, ar)
+
+    def test_appendreadonlyarray(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,),
+                               dtype='int64', overwrite=True, accessmode='r')
+            ar = [3, 4]
+            self.assertRaises(OSError, dar.append, ar)
+
+    def test_iterappendnoniterable(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,),
+                               dtype='int64', overwrite=True)
+            ar = 3
+            self.assertRaises(TypeError, dar.iterappend, ar)
 
 
 class MetaData(unittest.TestCase):
