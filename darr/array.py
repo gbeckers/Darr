@@ -305,11 +305,11 @@ class Array(BaseDataDir):
         self._arrayinfo = self._read_arraydescr() # dictionary with type and layout info
         self._memmap = None
         self._valuesfd = None
+        self._check_arrayinfoconsistency()
         with self._open_array() as (ar, fd):
             self._dtype = ar.dtype
             self._shape = ar.shape
             self._size = ar.size
-        self._check_consistency()
         self._metadata = MetaData(self._path.joinpath(self._metadatafilename),
                                   accessmode=accessmode)
 
@@ -525,18 +525,22 @@ class Array(BaseDataDir):
             raise
         return d
 
+    def _check_arrayinfoconsistency(self):
+        ai = self._arrayinfo
+        dtype = np.dtype(arrayinfotodtype(ai))
+        expectedfilesize = np.product(ai['shape']) * dtype.itemsize
+        actualfilesize = self._datapath.stat().st_size
+        if actualfilesize != expectedfilesize:
+            raise ValueError(
+                f"binary file size ({actualfilesize}) is different from file "
+                f"size as expected from array info file ({expectedfilesize})")
+
+
     def _check_consistency(self):
         if not (self._read_arraydescr() == self._arrayinfo):
             raise ValueError("in-memory and on-disk array descriptions not "
                              "the same")
-        filesize = self._datapath.stat().st_size
-        expectedfilesize = (self._size * self._dtype.itemsize)
-        if filesize != expectedfilesize:
-            raise ValueError(
-                f"file size ({filesize}) is different from expected file "
-                f"size ({expectedfilesize})")
-        if self._size != np.product(self._shape):
-            raise ValueError('array size and shape not congruent')
+        self._check_arrayinfoconsistency()
 
     def check_arraywriteable(self):
         with self._open_array() as (ar, fd):
