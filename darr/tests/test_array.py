@@ -376,6 +376,13 @@ class IterView(unittest.TestCase):
 
 class AppendData(unittest.TestCase):
 
+    def test_appendnumber(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,),
+                               dtype='int64', overwrite=True)
+            dar.append(1)
+            assert_array_equal(np.array([0, 0, 1], dtype='int64'), dar[:])
+
     def test_appendlist1d(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,),
@@ -469,6 +476,24 @@ class AppendData(unittest.TestCase):
                                dtype='int64', overwrite=True)
             ar = 3
             self.assertRaises(TypeError, dar.iterappend, ar)
+
+class TestIterView(unittest.TestCase):
+
+    def test_iterviewstartindextoohigh(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(10,),
+                               dtype='int64', overwrite=True)
+            with self.assertRaises(ValueError):
+                chunks = [f for f in dar.iterview(chunklen=2, startindex=5, \
+                                                  endindex=2)]
+
+    def test_iterviewendindextoohigh(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(5,),
+                               dtype='int64', overwrite=True)
+            with self.assertRaises(ValueError):
+                chunks = [f for f in dar.iterview(chunklen=2, startindex=1, \
+                                                  endindex=8)]
 
 
 class MetaData(unittest.TestCase):

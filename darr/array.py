@@ -719,7 +719,6 @@ class Array(BaseDataDir):
                     f"{self._shape} after an increase in length " \
                     f"(along first dimension) of {lenincrease}."
                 raise AppendDataError(s)
-                raise AppendDataError(s)
         self._update_len(lenincrease=lenincrease)
 
     def iterview(self, chunklen, stepsize=None, startindex=None,
@@ -780,8 +779,6 @@ class Array(BaseDataDir):
         if endindex is None:
             endindex = self.shape[0]
 
-        if startindex > endindex:
-            raise ValueError("startindex too high")
         if endindex > self.shape[0]:
             raise ValueError("endindex is too high")
         if startindex >= endindex:
