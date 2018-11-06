@@ -266,8 +266,7 @@ class TestReadArrayDescr(unittest.TestCase):
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             arrayinfo = dar._arrayinfo.copy()
-            vs  = arrayinfo['darrversion'].split('.')
-            vs = '.'.join([str(int(vs[0]) + 1)] + vs[1:])
+            vs = f"1{arrayinfo['darrversion']}"
             arrayinfo['darrversion'] = vs
             dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
                                 overwrite=True)
