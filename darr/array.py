@@ -851,8 +851,7 @@ class Array(BaseDataDir):
     @contextmanager
     def open_file(self, filename, mode='r', buffering=-1, encoding=None,
                   errors=None, newline=None, closefd=True, opener=None):
-        """
-        Open a file in the darr array directory and yield a file object.
+        """Open a file in the darr array directory and yield a file object.
         Protected files, i.e. those that are part of the darr array may not be
         opened.
 
@@ -1122,7 +1121,7 @@ def create_basedir(path, overwrite=False):
 def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
                  accessmode='r+', chunklen=None, metadata=None,
                  overwrite=False):
-    """Create a new `darr` of given shape and type, filled with
+    """Create a new `darr array` of given shape and type, filled with
     predetermined values.
 
     Parameters
@@ -1165,7 +1164,7 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
 
     See Also
     --------
-    asarray : create a darr from existing array-like object or
+    asarray : create a darr array from existing array-like object or
         generator.
 
     Examples
