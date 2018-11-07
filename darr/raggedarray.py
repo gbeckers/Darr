@@ -240,10 +240,13 @@ def delete_raggedarray(rar):
     """
     try:
         if not isinstance(rar, RaggedArray):
-            dal = RaggedArray(rar)
+            rar = RaggedArray(rar)
     except:
         raise TypeError(f"'{dal}' not recognized as a Darr array list")
 
+    if not rar.accessmode == 'r+':
+        raise OSError('Darr ragged arrays is read-only; set accessmode to '
+                      '"r+" to change')
     for fn in rar._filenames:
         path = rar.path.joinpath(fn)
         if path.exists() and not path.is_dir():
