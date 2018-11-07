@@ -4,16 +4,18 @@
 from pathlib import Path
 
 import numpy as np
+from ._version import get_versions
 
 from .array import BaseDataDir, Array, MetaData, asarray, \
-    create_basedir, check_accessmode, delete_array
+    create_basedir, check_accessmode, delete_array, create_array
 
-__all__ = ['VLArrayList', 'asvlarraylist', 'create_vlarraylist',
-           'delete_vlarraylist']
+__all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
+           'delete_ragged']
 
-class VLArrayList(BaseDataDir):
+class RaggedArray(BaseDataDir):
     """
-    Disk-based list of variable-length arrays.
+    Disk-based sequence of arrays that may have a variable length in maximally
+    one dimension.
 
     """
     _valuesdirname = 'values'
@@ -23,7 +25,7 @@ class VLArrayList(BaseDataDir):
     _readmefilename = 'README.txt'
     _filenames = {_valuesdirname, _indicesdirname,
                   _readmefilename, _metadatafilename} | BaseDataDir._filenames
-    _formatversion = "0.1.0"
+    _formatversion = get_versions()['version']
     def __init__(self, path, accessmode='r'):
         BaseDataDir.__init__(self, path=path)
         self._accessmode = check_accessmode(accessmode)
@@ -116,13 +118,13 @@ class VLArrayList(BaseDataDir):
     def copy(self, path, accessmode='r', overwrite=False):
         arrayiterable = (self[i] for i in range(len(self)))
         metadata = dict(self.metadata)
-        return asvlarraylist(path=path, arrayiterable=arrayiterable,
+        return asraggedarray(path=path, arrayiterable=arrayiterable,
                              dtype=self.dtype, metadata=metadata,
                              accessmode=accessmode, overwrite=overwrite)
 
 
 # FIXME empty arrayiterable
-def asvlarraylist(path, arrayiterable, dtype=None, metadata=None,
+def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
                   accessmode='r+', overwrite=False):
     path = Path(path)
     if not hasattr(arrayiterable, 'next'):
@@ -130,8 +132,8 @@ def asvlarraylist(path, arrayiterable, dtype=None, metadata=None,
     bd = create_basedir(path=path, overwrite=overwrite)
     firstarray = np.asarray(next(arrayiterable), dtype=dtype)
     dtype = firstarray.dtype
-    valuespath = bd.path.joinpath(VLArrayList._valuesdirname)
-    indicespath = bd.path.joinpath(VLArrayList._indicesdirname)
+    valuespath = bd.path.joinpath(RaggedArray._valuesdirname)
+    indicespath = bd.path.joinpath(RaggedArray._indicesdirname)
     valuesda = asarray(path=valuespath, array=firstarray, dtype=dtype,
                        accessmode='r+', overwrite=overwrite)
     firstindices = [[0, len(firstarray)]]
@@ -159,11 +161,11 @@ def asvlarraylist(path, arrayiterable, dtype=None, metadata=None,
                            d=metadata, overwrite=overwrite)
     elif metadatapath.exists():  # no metadata but file exists, remove it
         metadatapath.unlink()
-    bd._write_txt(VLArrayList._readmefilename, readmetxt)
-    return VLArrayList(path=path, accessmode=accessmode)
+    bd._write_txt(RaggedArray._readmefilename, readmetxt)
+    return RaggedArray(path=path, accessmode=accessmode)
 
 
-def create_vlarraylist(path, atom=(), dtype='float64', metadata=None,
+def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
                        accessmode='r+', overwrite=False):
     if not hasattr(atom, '__len__'):
         raise TypeError(f'shape "{atom}" is not a sequence of dimensions.\n'
@@ -171,26 +173,29 @@ def create_vlarraylist(path, atom=(), dtype='float64', metadata=None,
                         f'use "()"')
     shape = [0] + list(atom)
     ar = np.zeros(shape, dtype=dtype)
-    dal = asvlarraylist(path=path, arrayiterable=[ar], metadata=metadata,
+    dal = asraggedarray(path=path, arrayiterable=[ar], metadata=metadata,
                         accessmode=accessmode, overwrite=overwrite)
-    # the current diskarraylist has one element, which is an empty array
-    # but we want an empty diskarraylist => we should get rid of the indices
-    indices = asarray(path=dal._indicespath, array=np.zeros((0, 2)),
-                      dtype=np.int64, accessmode='r+', overwrite=True)
-    return VLArrayList(dal.path, accessmode=accessmode)
+    # the current ragged array has one element, which is an empty array
+    # but we want an empty ragged array => we should get rid of the indices
+    create_array(path=dal._indicespath, shape=(0,2), dtype=np.int64,
+                 overwrite=True)
+    return RaggedArray(dal.path, accessmode=accessmode)
 
 
 
 
 
 
-# FIXME this should be a lot clearer
-readmetxt = """Disk-based storage of variable-length arrays
-               ============================================
 
-This directory is a data store for a list of variable length arrays. There 
-are two subdirectories, each containing an array stored in a simple format 
-that should be easy to read. To do so, see the READMEs in these directories.
+readmetxt = """Disk-based storage of ragged arrays
+               ===================================
+
+This directory is a data store for numeric ragged arrays. This is a sequence
+of arrays that may have variable lengths in maximally one of their dimensions.
+
+There are two subdirectories, each containing an array stored in a simple 
+format that should be easy to read. To do so, see the README's in these 
+directories.
 
 The subdirectory 'values' holds the actual numerical data, where arrays are 
 simply appended along their variable length dimension (first axis).
@@ -207,9 +212,9 @@ array data from the values array (array = values[starti:endi]).
 """
 
 
-def delete_vlarraylist(dal):
+def delete_ragged(dal):
     """
-    Delete Darr array list data from disk.
+    Delete Darr ragged array data from disk.
 
     Parameters
     ----------
@@ -217,8 +222,8 @@ def delete_vlarraylist(dal):
 
     """
     try:
-        if not isinstance(dal, VLArrayList):
-            dal = VLArrayList(dal)
+        if not isinstance(dal, RaggedArray):
+            dal = RaggedArray(dal)
     except:
         raise TypeError(f"'{dal}' not recognized as a Darr array list")
 

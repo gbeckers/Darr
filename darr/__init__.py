@@ -1,5 +1,5 @@
 from .array import *
-from .vlarraylist import *
+from .raggedarray import *
 
 from .tests import test
 
