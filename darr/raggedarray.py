@@ -2,6 +2,7 @@
 # change
 
 from pathlib import Path
+from contextlib import contextmanager
 
 import numpy as np
 from ._version import get_versions
@@ -10,7 +11,7 @@ from .array import BaseDataDir, Array, MetaData, asarray, \
     create_basedir, check_accessmode, delete_array, create_array
 
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
-           'delete_ragged']
+           'delete_raggedarray']
 
 class RaggedArray(BaseDataDir):
     """
@@ -122,6 +123,22 @@ class RaggedArray(BaseDataDir):
                              dtype=self.dtype, metadata=metadata,
                              accessmode=accessmode, overwrite=overwrite)
 
+    @contextmanager
+    def _view(self, accessmode=None):
+        with self._indices.view(accessmode=accessmode) as iv,\
+             self._values.view(accessmode=accessmode) as vv:
+            yield iv, vv
+
+    @contextmanager
+    def iterview(self, startindex=0, endindex=None, stepsize=1,
+                 accessmode=None):
+        if endindex is None:
+            endindex = self.narrays
+        with self._view(accessmode=accessmode):
+            for i in range(startindex, endindex, stepsize):
+                return self[i]
+
+
 
 # FIXME empty arrayiterable
 def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
@@ -212,7 +229,7 @@ array data from the values array (array = values[starti:endi]).
 """
 
 
-def delete_ragged(dal):
+def delete_raggedarray(rar):
     """
     Delete Darr ragged array data from disk.
 
@@ -222,22 +239,22 @@ def delete_ragged(dal):
 
     """
     try:
-        if not isinstance(dal, RaggedArray):
-            dal = RaggedArray(dal)
+        if not isinstance(rar, RaggedArray):
+            dal = RaggedArray(rar)
     except:
         raise TypeError(f"'{dal}' not recognized as a Darr array list")
 
-    for fn in dal._filenames:
-        path = dal.path.joinpath(fn)
+    for fn in rar._filenames:
+        path = rar.path.joinpath(fn)
         if path.exists() and not path.is_dir():
             path.unlink()
-    delete_array(dal._values)
-    delete_array(dal._indices)
+    delete_array(rar._values)
+    delete_array(rar._indices)
     try:
-        dal._path.rmdir()
+        rar._path.rmdir()
     except OSError as error:
         message = f"Error: could not fully delete Darr array list directory " \
-                  f"'{da.path}'. It may contain additional files that are " \
+                  f"'{rar.path}'. It may contain additional files that are " \
                   f"not part of the darr. If so, these should be removed " \
                   f"manually."
         raise OSError(message) from error
