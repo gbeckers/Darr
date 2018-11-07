@@ -39,22 +39,15 @@ class RaggedArray(BaseDataDir):
 
     @property
     def accessmode(self):
-        """
-        Set data access mode of metadata.
-
-        Parameters
-        ----------
-        accessmode: {'r', 'r+'}, default 'r'
-            File access mode of the data. `r` means read-only, `r+`
-            means read-write.
-
-        """
+        """Data access mode of metadata, {'r', 'r+'}."""
         return self._accessmode
 
     @accessmode.setter
     def accessmode(self, value):
         self._accessmode = check_accessmode(value)
         self._metadata.accessmode = value
+        self._values.accessmode = value
+        self._indices.accessmode = value
 
     @property
     def dtype(self):
@@ -129,14 +122,13 @@ class RaggedArray(BaseDataDir):
              self._values.view(accessmode=accessmode) as vv:
             yield iv, vv
 
-    @contextmanager
-    def iterview(self, startindex=0, endindex=None, stepsize=1,
+    def iter_arrays(self, startindex=0, endindex=None, stepsize=1,
                  accessmode=None):
         if endindex is None:
             endindex = self.narrays
         with self._view(accessmode=accessmode):
             for i in range(startindex, endindex, stepsize):
-                return self[i]
+                yield self[i]
 
 
 
