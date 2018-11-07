@@ -69,7 +69,7 @@ class DeleteRaggedArray(unittest.TestCase):
         with tempdir() as dirname:
             dalpath = Path(dirname).joinpath('temp.dal')
             dal = create_raggedarray(dalpath, atom=(2,), overwrite=True)
-            delete_ragged(dal)
+            delete_raggedarray(dal)
             assert_equal(len(os.listdir(dirname)), 0)
 
 
