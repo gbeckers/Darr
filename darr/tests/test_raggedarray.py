@@ -5,7 +5,7 @@ from numpy.testing import assert_equal, assert_array_equal
 
 from pathlib import Path
 from darr.raggedarray import create_raggedarray, asraggedarray, \
-    delete_ragged
+    delete_raggedarray
 from .utils import tempdir
 
 
