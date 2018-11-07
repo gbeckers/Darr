@@ -197,7 +197,7 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
 
 
 readmetxt = """Disk-based storage of ragged arrays
-               ===================================
+===================================
 
 This directory is a data store for numeric ragged arrays. This is a sequence
 of arrays that may have variable lengths in maximally one of their dimensions.
