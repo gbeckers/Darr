@@ -36,6 +36,16 @@ def check_arrayequaltocreatearray(ndarray, shape, dtype=None, chunklen=None):
 
 class AsArray(unittest.TestCase):
 
+    def test_numberint(self):
+        with tempdir() as dirname:
+            dar = asarray(path=dirname, array=1, overwrite=True)
+            self.assertEqual(dar[0], 1)
+
+    def test_numberfloat(self):
+        with tempdir() as dirname:
+            dar = asarray(path=dirname, array=1.0, overwrite=True)
+            self.assertEqual(dar[0], 1.0)
+
     def test_onedimensional(self):
         ndarray = np.arange(24)
         check_arrayequaltoasarray(ndarray)
