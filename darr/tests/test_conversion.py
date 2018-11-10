@@ -1,9 +1,7 @@
-import os
 import unittest
-from pathlib import Path
 
 import numpy as np
-from numpy.testing import assert_equal, assert_array_equal
+from numpy.testing import assert_array_equal
 
 from darr.array import asarray, create_array
 from darr.conversion import aszarrarray

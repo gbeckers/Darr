@@ -3,8 +3,9 @@ from unittest import TestLoader, TextTestRunner, TestSuite
 from . import test_array
 from . import test_raggedarray
 from . import test_conversion
+from . import test_basedatadir
 
-modules = [test_array, test_raggedarray, test_conversion]
+modules = [test_array, test_raggedarray, test_conversion, test_basedatadir]
 
 def test(verbosity=1):
     suite =TestSuite()

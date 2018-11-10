@@ -14,6 +14,7 @@ import distutils.version
 import hashlib
 import json
 import os, sys
+import tarfile
 
 import warnings
 from contextlib import contextmanager
@@ -150,6 +151,40 @@ class BaseDataDir(object):
                   closefd=closefd, opener=opener) as f:
             yield f
 
+    def archive(self,  filepath=None, compressiontype='xz', overwrite=False):
+        """Archive disk-based data into a single compressed file.
+
+        Parameters
+        ----------
+        filepath: str
+            Name of the archive. In None, it will be derived from the data's
+            path name.
+        compressiontype: str
+            One of 'xz', 'gz', or 'bz2', corresponding to the gzip, bz2 and
+            lzma compression algorithms supported by the Python standard
+            library.
+        overwrite: {False | True}
+
+        Returns
+        -------
+        The path of the created archive
+        
+
+        """
+        if filepath is None:
+            filepath = f'{self.path}.tar.{compressiontype}'
+        if overwrite:
+            filemode = 'w'
+        else:
+            filemode = 'x'
+        supported_compressiontypes = ('xz', 'gz', 'bz2')
+        if not compressiontype in supported_compressiontypes:
+            raise ValueError(f'"{compressiontype}" is not a valid '
+                             f'compressiontype, use one of '
+                             f'{supported_compressiontypes}.')
+        with tarfile.open(filepath, f"{filemode}:{compressiontype}") as tf:
+            tf.add(self.path)
+        return Path(filepath)
 
 
 

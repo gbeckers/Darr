@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Version 0.1.9
+-------------
+- archive and compress darr objects
+
 Version 0.1.8
 -------------
 - create and open arbitrary (non-protected) files in darr array directory

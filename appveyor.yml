@@ -31,6 +31,7 @@ test_script:
   - "%PYTHON%\\python.exe -m pip install -rrequirements_dev.txt"
   - "%PYTHON%\\python.exe -m darr.tests.test_array"
   - "%PYTHON%\\python.exe -m darr.tests.test_raggedarray"
+  - "%PYTHON%\\python.exe -m darr.tests.test_basedatadir"
 
 after_test:
   # This step builds your wheels.
