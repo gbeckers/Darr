@@ -53,14 +53,10 @@ Pro's:
 
 Con's:
 
--  **No compression**, although it is of course possible to simply
-   compress the darr files with a compression tool for archiving
-   purposes.
--  **Multiple files**. The data, the data description, and the metadata
-   are stored in separate files, though all within a single directory.
+-  **No direct access to compressed data**, although it is of course possible
+   to simply compress darr files for archiving purposes.
 -  **Inefficient (storage-wise) for very small arrays**. If you have a
-   zillion small arrays, and storage space in a concern, use other
-   approaches.
+   zillion small arrays, and storage space in a concern, use other approaches.
 
 
 Installation

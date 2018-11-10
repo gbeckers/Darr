@@ -52,25 +52,16 @@ with such data.
 
 There are of course also disadvantages to Darr's approach.
 
--  Although the data is widely readable by many scientific analysis
-   tools and programming languages, it lacks the ease of 'double-click
-   access' that specific data file formats may have. For example, if
-   your data is a sound recording, saving it in a '.wav' file enables
-   you to directly open it in any audio program.
--  To keep things as simple as possible, Darr does not use
-   compression. If you are archiving your data and want to minimize disk
-   space usage you can compress the data files with a general compression
-   tool.
+-  To keep things as simple as possible, Darr does not provide direct access
+   to compressed data. However, it does provide an `archive` method that
+   compresses data into one file, for archiving.
 -  Your data is not stored in one file, but in a directory that contains
    3-4 files (depending if you save metadata), at least 2 of which are
-   small text files (~150 b - 1.7 kb). This has two disadvantages:
-
-   -  It is less ideal when transferring data, for example by email. You
-      may want to archive them into a single file first (zip, tar).
-   -  In many file systems, files take up a minimum amount of disk space
-      (normally 512 b - 4 kb) even if the data they contain is not that
-      large. Darr's way of storing data is thus space-inefficient if
-      you have zillions of very small data arrays stored separately.
+   small text files (~150 b - 1.7 kb). In many file systems, files take up a
+   minimum amount of disk space (normally 512 b - 4 kb) even if the data
+   they contain is not that large. Darr's way of storing data is thus
+   space-inefficient if you have zillions of very small data arrays stored
+   separately.
 
 **Other interesting projects**
 
