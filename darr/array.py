@@ -308,7 +308,7 @@ class MetaData:
 
         Returns
         -------
-        None
+            None
 
         Examples
         --------
@@ -643,7 +643,7 @@ class Array(BaseDataDir):
 
         Returns
         -------
-        None
+            None
 
         Examples
         --------
@@ -703,7 +703,7 @@ class Array(BaseDataDir):
 
         Returns
         -------
-        None
+            None
 
         Examples
         --------
@@ -886,7 +886,8 @@ class Array(BaseDataDir):
 
         Returns
         -------
-        A dictionary with the checksums
+        dict
+            A dictionary with the checksums
         """
         checksums = self._currentchecksums()
         self._write_jsondict(self._checksumsfilename, checksums,
@@ -943,7 +944,8 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
 
     Returns
     -------
-    A generator yield numpy arrays
+    generator
+        A generator that yields numpy arrays
 
     """
     if not hasattr(shape, '__len__'):  # probably integer
@@ -1044,7 +1046,8 @@ def asarray(path, array, dtype=None, accessmode='r',
 
     Returns
     -------
-    A Darr `array` instance.
+    Array
+        A Darr `array` instance.
 
     See Also
     --------
@@ -1139,7 +1142,7 @@ def create_basedir(path, overwrite=False):
 
     Returns
     -------
-    BaseDataDir instance
+    BaseDataDir
     
     """
     path = Path(path)
@@ -1196,7 +1199,8 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
 
     Returns
     -------
-    A Darr `array` instance.
+    Array
+        A Darr `array` instance.
 
     See Also
     --------
