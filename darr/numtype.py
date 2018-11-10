@@ -1,5 +1,13 @@
 import sys
 
+# mathematica: https://reference.wolfram.com/language/ref/BinaryRead.html
+# Octave: https://octave.org/doc/v4.2.0/Binary-I_002fO.html
+# Matlab: https://mathworks.com/help/matlab/ref/fread.html
+# R: https://www.rdocumentation.org/packages/base/versions/3.4.3/topics/readBin
+# Julia: https://docs.julialang.org/en/release-0.4/manual/integers-and- floating-point-numbers/
+# Maple: https://www.maplesoft.com/support/help/maple/view.aspx?path=FileTools%2FBinary%2FRead
+
+
 numtypes = {
     'int8': {'descr': '8-bit signed integer (-128 to 127)',
              'numpy': 'i1',

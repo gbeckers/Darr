@@ -36,13 +36,6 @@ from ._version import get_versions
 __all__ = ['Array', 'asarray', 'create_array', 'delete_array',
            'truncate_array']
 
-# mathematica: https://reference.wolfram.com/language/ref/BinaryRead.html
-# Octave: https://octave.org/doc/v4.2.0/Binary-I_002fO.html
-# Matlab: https://mathworks.com/help/matlab/ref/fread.html
-# R: https://www.rdocumentation.org/packages/base/versions/3.4.3/topics/readBin
-# Julia: https://docs.julialang.org/en/release-0.4/manual/integers-and-
-#        floating-point-numbers/
-
 class AppendDataError(Exception):
     pass
 
@@ -177,7 +170,7 @@ class BaseDataDir(object):
         
         .. _tarfile library:
            https://docs.python.org/3/library/tarfile.html
-           
+
         """
         if filepath is None:
             filepath = f'{self.path}.tar.{compressiontype}'
