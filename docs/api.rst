@@ -14,6 +14,8 @@ Accessing arrays
 ----------------
 .. autoclass:: darr.Array
    :members:
+   :inherited-members:
+
 
 Deleting arrays
 ---------------

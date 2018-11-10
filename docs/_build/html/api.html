@@ -102,7 +102,7 @@ these will not be removed and an OSError is raised. Default is <cite>False</cite
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-func docutils literal"><span class="pre">create_array()</span></code></dt>
+<dt><a class="reference internal" href="#darr.create_array" title="darr.create_array"><code class="xref py py-func docutils literal"><span class="pre">create_array()</span></code></a></dt>
 <dd>create an array from scratch.</dd>
 </dl>
 </div>
@@ -169,7 +169,7 @@ Default is <cite>False</cite>.</li>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
-<dt><code class="xref py py-func docutils literal"><span class="pre">asarray()</span></code></dt>
+<dt><a class="reference internal" href="#darr.asarray" title="darr.asarray"><code class="xref py py-func docutils literal"><span class="pre">asarray()</span></code></a></dt>
 <dd>create a darr array from existing array-like object or generator.</dd>
 </dl>
 </div>
@@ -274,6 +274,34 @@ numpy array.</td>
 <span class="go"> [ 5.  6.]]</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="darr.Array.archive">
+<code class="descname">archive</code><span class="sig-paren">(</span><em>filepath=None</em>, <em>compressiontype='xz'</em>, <em>overwrite=False</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Archive disk-based data into a single compressed file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filepath</strong> (<em>str</em>) – Name of the archive. In None, it will be derived from the data’s
+path name.</li>
+<li><strong>compressiontype</strong> (<em>str</em>) – One of ‘xz’, ‘gz’, or ‘bz2’, corresponding to the gzip, bz2 and
+lzma compression algorithms supported by the Python standard
+library.</li>
+<li><strong>overwrite</strong> (<em>{False | True}</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">The path of the created archive</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -440,6 +468,23 @@ means read-write.</li>
 <dt id="darr.Array.ndim">
 <code class="descname">ndim</code><a class="headerlink" href="#darr.Array.ndim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="darr.Array.open_file">
+<code class="descname">open_file</code><span class="sig-paren">(</span><em>filename</em>, <em>mode='r'</em>, <em>buffering=-1</em>, <em>encoding=None</em>, <em>errors=None</em>, <em>newline=None</em>, <em>closefd=True</em>, <em>opener=None</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.open_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a file in the darr array directory and yield a file object.
+Protected files, i.e. those that are part of the darr array may not be
+opened.</p>
+<p>This method is a thin wrapper of the that of the Python ‘open’
+function. The parameters are therefore the same.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darr</span> <span class="k">as</span> <span class="nn">da</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;recording.darr&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">d</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="s1">&#39;notes.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">n</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;excellent recording</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -682,7 +727,7 @@ Zarr</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Gabriel Beckers.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>
 </html>

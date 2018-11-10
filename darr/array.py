@@ -163,7 +163,8 @@ class BaseDataDir(object):
             One of 'xz', 'gz', or 'bz2', corresponding to the gzip, bz2 and
             lzma compression algorithms supported by the Python standard
             library.
-        overwrite: {False | True}
+        overwrite: (True, False), optional
+            Overwrites existing archive if it exists. Default is False.
 
         Returns
         -------

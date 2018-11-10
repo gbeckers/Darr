@@ -94,11 +94,8 @@ float16-float64, complex64, complex128.</li>
 </ul>
 <p>Con’s:</p>
 <ul class="simple">
-<li><strong>No compression</strong>, although it is of course possible to simply
-compress the darr files with a compression tool for archiving
-purposes.</li>
-<li><strong>Multiple files</strong>. The data, the data description, and the metadata
-are stored in separate files, though all within a single directory.</li>
+<li><strong>No direct access to compressed data</strong>, although it is of course possible
+to simply compress darr files for archiving purposes.</li>
 <li><strong>Inefficient (storage-wise) for very small arrays</strong>. If you have a
 zillion small arrays, and storage space in a concern, use other
 approaches.</li>
@@ -138,6 +135,7 @@ naming of some functions/methods may still change.</p>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Darr</a></li>
 <li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-9">Version 0.1.9</a></li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-8">Version 0.1.8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-7">Version 0.1.7</a></li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-6">Version 0.1.6</a></li>
@@ -208,7 +206,7 @@ Beckers</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Gabriel Beckers.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
     </div>
   </body>
 </html>
