@@ -168,9 +168,15 @@ class BaseDataDir(object):
 
         Returns
         -------
-        The path of the created archive
-        
+        pathlib.Path
+            The path of the created archive
 
+        Notes
+        -----
+        See the `tarfile library`_ for more info on archiving formats
+        
+        .. _tarfile library:
+           https://docs.python.org/3/library/tarfile.html
         """
         if filepath is None:
             filepath = f'{self.path}.tar.{compressiontype}'
