@@ -177,6 +177,7 @@ class BaseDataDir(object):
         
         .. _tarfile library:
            https://docs.python.org/3/library/tarfile.html
+           
         """
         if filepath is None:
             filepath = f'{self.path}.tar.{compressiontype}'
