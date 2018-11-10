@@ -56,7 +56,7 @@ Con's:
 -  **No direct access to compressed data**, although it is of course possible
    to simply compress darr files for archiving purposes.
 -  **Inefficient (storage-wise) for very small arrays**. If you have a
-   zillion small arrays, and storage space in a concern, use other approaches.
+   zillion small arrays, and storage space is a concern, use other approaches.
 
 
 Installation
