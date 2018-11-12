@@ -577,9 +577,9 @@ class Array(BaseDataDir):
                           f"guaranteed to work", UserWarning)
         try:
             d['shape'] = tuple(d['shape'])  # json does not have tuples
-            all(isinstance(d, int) for d in d['shape']) # all ints?
+            if not all(isinstance(d, int) for d in d['shape']): # all ints?
+                raise TypeError(f"'{d['shape']}' is not a valid array shape")
         except TypeError:
-            print(f"'{d['shape']}' is not a valid array shape")
             raise
         d['dtypedescr'] = arrayinfotodtype(d)
         try:
