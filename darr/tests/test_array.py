@@ -112,6 +112,13 @@ class AsArray(unittest.TestCase):
             dar = asarray(path=dirname, array=a, chunklen=4096, overwrite=True)
             assert_equal(a, dar[:])
 
+    def test_asarrayarray(self):
+        with tempdir() as dirname1, tempdir() as dirname2:
+            a = np.arange(1024, dtype='int64').reshape(2, -1)
+            dar1 = asarray(path=dirname1, array=a, overwrite=True)
+            dar2 = asarray(path=dirname1, array=a, chunklen=5, overwrite=True)
+            assert_array_equal(dar1[:], dar2[:])
+
 
 class CreateDiskArray(unittest.TestCase):
 
@@ -260,6 +267,18 @@ class TestArray(unittest.TestCase):
             dar = create_array(path=dirname, shape=(2,2), fill=0,
                                dtype='int64', overwrite=True)
             assert_equal(dar.size, 4)
+
+    def test_copy(self):
+        with tempdir() as dirname1, tempdir() as dirname2:
+            ndarray = np.arange(13, dtype='float64')
+            md = {'a': 1}
+            dar1 = asarray(path=dirname1, array=ndarray,
+                           metadata=md, overwrite=True)
+            dar2 = dar1.copy(path=dirname2, overwrite=True)
+            assert_array_equal(dar1[:], dar2[:])
+            self.assertEqual(dict(dar1.metadata), dict(dar2.metadata))
+
+
 
 
 class TestReadArrayDescr(unittest.TestCase):
