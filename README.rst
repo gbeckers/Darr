@@ -31,16 +31,16 @@ Pro's:
 
 -  **Transparent data format** based on **flat binary** and **text**
    files.
+-  **Human-readable explanation of how the binary data is stored** is
+   saved in a README text file.
+-  Includes **examples of how to read the array** in popular
+   analysis environments such as Python (without Darr), R, Julia,
+   Octave/Matlab, GDL/IDL, and Mathematica.
 -  Supports **very large data arrays** through **memory-mapped** file
    access.
 -  Data read/write access through **NumPy indexing** (see
    `here <https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html>`__).
 -  Data is easily **appendable**.
--  **Human-readable explanation of how the binary data is stored** is
-   saved in a README text file.
--  README also contains **examples of how to read the array** in popular
-   analysis environments such as Python (without Darr), R, Julia,
-   Octave/Matlab, GDL/IDL, and Mathematica.
 -  **Many numeric types** are supported: (u)int8-(u)int64,
    float16-float64, complex64, complex128.
 -  Easy use of **metadata**, stored in a separate
