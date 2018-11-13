@@ -93,7 +93,7 @@ Beckers
    :target: https://travis-ci.org/gbeckers/Darr?branch=master
 .. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
    :target: https://ci.appveyor.com/project/gbeckers/darr
-.. |PyPy version| image:: https://img.shields.io/badge/pypi-v0.1.8-orange.svg
+.. |PyPy version| image:: https://img.shields.io/badge/pypi-0.1.9-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
    :target: https://coveralls.io/github/gbeckers/Darr?branch=master
