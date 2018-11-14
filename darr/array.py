@@ -1076,7 +1076,7 @@ def asarray(path, array, dtype=None, accessmode='r',
             metadata = dict(array.attrs)
             json.dumps(metadata, ensure_ascii=True)
         except:
-            warnings.warn("Found metadata but could not read it as a "
+            warnings.warn("Found metadata but could not read it as a " 
                           "dictionary. Not saving it as part of darr array")
     if isinstance(array, Array) and (path == array.path):
         raise ValueError(f"'{path}' is the same as the path of the "

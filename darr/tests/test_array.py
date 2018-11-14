@@ -119,6 +119,27 @@ class AsArray(unittest.TestCase):
             dar2 = asarray(path=dirname1, array=a, chunklen=5, overwrite=True)
             assert_array_equal(dar1[:], dar2[:])
 
+    def test_asarraywronginput(self):
+        with tempdir() as dirname:
+            a = 'text'
+            self.assertRaises(TypeError, asarray, path=dirname, array=a,
+                              chunklen=32, overwrite=True)
+    def test_asarraykeepattrs(self):
+        class AttrList(list):
+            attrs = {'a': 1, 'b': 2}
+        with tempdir() as dirname:
+            a = AttrList([0, 0, 0, 0])
+            dar = asarray(path=dirname, array=a, overwrite=True)
+            self.assertEqual(dict(dar.metadata), AttrList.attrs)
+
+    def test_asarraywarnsnondictattrs(self):
+        class AttrList(list):
+            attrs = [0]
+        with tempdir() as dirname:
+            a = AttrList([0, 0, 0, 0])
+            self.assertWarns(UserWarning, asarray, path=dirname, array=a,
+                             overwrite=True)
+
 
 class CreateDiskArray(unittest.TestCase):
 
