@@ -1,12 +1,8 @@
 Darr
 ====
 
-.. image:: https://api.codacy.com/project/badge/Grade/c0157592ce7a4ecca5f7d8527874ce54
-   :alt: Codacy Badge
-   :target: https://app.codacy.com/app/gbeckers/Darr?utm_source=github.com&utm_medium=referral&utm_content=gbeckers/Darr&utm_campaign=Badge_Grade_Dashboard
-
 |Travis Status| |Appveyor Status| |PyPy version| |Coverage Status| |Docs Status|
-|Repo Status|
+|Repo Status| |Codacy Badge|
 
 
 Darr is a Python science library for storing and sharing numeric data arrays
@@ -106,3 +102,7 @@ Beckers
 .. |Repo Status| image:: https://www.repostatus.org/badges/latest/active.svg
    :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
    :target: https://www.repostatus.org/#active
+.. |Codacy Badge| image:: https://api.codacy.com/project/badge/Grade/c0157592ce7a4ecca5f7d8527874ce54
+   :alt: Codacy Badge
+   :target: https://app.codacy.com/app/gbeckers/Darr?utm_source=github.com&utm_medium=referral&utm_content=gbeckers/Darr&utm_campaign=Badge_Grade_Dashboard
+
