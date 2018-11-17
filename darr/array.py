@@ -13,7 +13,8 @@ array from disk, use **delete_array**.
 import distutils.version
 import hashlib
 import json
-import os, sys
+import os
+import sys
 import tarfile
 
 import warnings
@@ -37,8 +38,10 @@ from ._version import get_versions
 __all__ = ['Array', 'asarray', 'create_array', 'delete_array',
            'truncate_array']
 
+
 class AppendDataError(Exception):
     pass
+
 
 class BaseDataDir(object):
     """Use a directory for managing data of a subclass. Has methods for reading
@@ -125,19 +128,14 @@ class BaseDataDir(object):
 
     def _sha256checksums(self):
         filenames = self._filenames
-        if len(self.metadata) == 0:
-            filenames = filenames ^ {self._metadatafilename}
         checksums = {}
         for filename in filenames:
             checksums[filename] = self._sha256(filename)
         return checksums
 
-
-
-
     @contextmanager
     def open_file(self, filename, mode='r', buffering=-1, encoding=None,
-                  errors=None, newline=None, closefd=True, opener=None):
+                  errors=None, newline=None, closefd=True):
         """Open a file in the darr array directory and yield a file object.
         Protected files, i.e. those that are part of the darr array may not be
         opened.
@@ -159,7 +157,7 @@ class BaseDataDir(object):
 
         with open(file=filepath, mode=mode, buffering=buffering,
                   encoding=encoding, errors=errors, newline=newline,
-                  closefd=closefd, opener=opener) as f:
+                  closefd=closefd) as f:
             yield f
 
     def archive(self,  filepath=None, compressiontype='xz', overwrite=False):
@@ -197,14 +195,13 @@ class BaseDataDir(object):
         else:
             filemode = 'x'
         supported_compressiontypes = ('xz', 'gz', 'bz2')
-        if not compressiontype in supported_compressiontypes:
+        if compressiontype not in supported_compressiontypes:
             raise ValueError(f'"{compressiontype}" is not a valid '
                              f'compressiontype, use one of '
                              f'{supported_compressiontypes}.')
         with tarfile.open(filepath, f"{filemode}:{compressiontype}") as tf:
             tf.add(self.path)
         return Path(filepath)
-
 
 
 class MetaData:
@@ -286,7 +283,8 @@ class MetaData:
         is raised
         """
         if self._accessmode == 'r':
-            raise OSError("metadata not writeable; change 'accessmode' to 'r+'")
+            raise OSError("metadata not writeable; change 'accessmode' to "
+                          "'r+'")
         metadata = self._read()
         val = metadata.pop(*args)
         if metadata:
@@ -301,7 +299,8 @@ class MetaData:
         value) pair from the dictionary.
         """
         if self._accessmode == 'r':
-            raise OSError("metadata not writeable; change 'accessmode' to 'r+'")
+            raise OSError("metadata not writeable; change 'accessmode' to "
+                          "'r+'")
         metadata = self._read()
         key, val = metadata.popitem()
         if metadata:
@@ -341,13 +340,13 @@ class MetaData:
 
         """
         if self._accessmode == 'r':
-            raise OSError("metadata not writeable; change 'accessmode' to 'r+'")
+            raise OSError("metadata not writeable; change 'accessmode' to "
+                          "'r+'")
         metadata = self._read()
         metadata.update(*arg, **kwargs)
 
         write_jsonfile(self.path, data=metadata, sort_keys=True,
                        ensure_ascii=True, overwrite=True)
-
 
 
 class Array(BaseDataDir):
@@ -384,7 +383,7 @@ class Array(BaseDataDir):
         self._datapath = self._path.joinpath(self._datafilename)
         self._accessmode = check_accessmode(accessmode)
         self._arraydescrpath = self._path.joinpath(self._arraydescrfilename)
-        self._arrayinfo = self._read_arraydescr() # dictionary with type and layout info
+        self._arrayinfo = self._read_arraydescr()
         self._memmap = None
         self._valuesfd = None
         self._check_arrayinfoconsistency()
@@ -405,7 +404,6 @@ class Array(BaseDataDir):
         self._accessmode = check_accessmode(value, validmodes=('r', 'r+'),
                                             makebinary=False)
         self._metadata.accessmode = value
-
 
     @property
     def dtype(self):
@@ -493,7 +491,7 @@ class Array(BaseDataDir):
                     self._valuesfd = fd
                     d = self._arrayinfo
                     dtypedescr = arrayinfotodtype(d)
-                    if np.product(d['shape']) == 0: # empty file/array
+                    if np.product(d['shape']) == 0:  # empty file/array
                         self._memmap = np.zeros(d['shape'], dtype=dtypedescr,
                                                 order=d['arrayorder'])
                     else:
@@ -506,11 +504,9 @@ class Array(BaseDataDir):
             except Exception:
                 raise
             finally:
-                #self._memmap._mmap.close() # may need this for Windows
+                # self._memmap._mmap.close() # may need this for Windows
                 self._memmap = None
                 self._valuesfd = None
-
-
 
     @contextmanager
     def view(self, accessmode=None):
@@ -584,7 +580,7 @@ class Array(BaseDataDir):
                           f"guaranteed to work", UserWarning)
         try:
             d['shape'] = tuple(d['shape'])  # json does not have tuples
-            if not all(isinstance(d, int) for d in d['shape']): # all ints?
+            if not all(isinstance(d, int) for d in d['shape']):  # all ints?
                 raise TypeError(f"'{d['shape']}' is not a valid array shape")
         except TypeError:
             raise
@@ -606,7 +602,6 @@ class Array(BaseDataDir):
             raise ValueError(
                 f"binary file size ({actualfilesize}) is different from file "
                 f"size as expected from array info file ({expectedfilesize})")
-
 
     def _check_consistency(self):
         if not (self._read_arraydescr() == self._arrayinfo):
@@ -694,9 +689,6 @@ class Array(BaseDataDir):
         array.tofile(fd)
         fd.flush()
         return array.shape[0]
-
-
-
 
     def iterappend(self, arrayiterable):
         """Iteratively append data from a data iterable.
@@ -913,7 +905,7 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
     """
     if not hasattr(shape, '__len__'):  # probably integer
         shape = (shape,)
-    if shape[0] == 0: # empty array, we yield immediately
+    if shape[0] == 0:  # empty array, we yield immediately
         yield np.empty(shape, dtype=dtype)
     dtype = np.dtype(dtype)
     if fill is None and fillfunc is None:
@@ -940,14 +932,14 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
 
 
 def _archunkgenerator(array, dtype=None, chunklen=None):
-    if chunklen is None: # we try to make a reasonable guess
+    if chunklen is None:  # we try to make a reasonable guess
         if hasattr(array, 'shape') and hasattr(array, 'dtype'):
             chunklen = int((80 * 1024 ** 2) // (np.product(array.shape[1:]) *
                                                 array.dtype.itemsize))
         else:
             chunklen = (1024 ** 2)
     chunklen = max(chunklen, 1)
-    if hasattr(array, '__next__'):  # is already an iterator, we ignore chunklen
+    if hasattr(array, '__next__'):  # is already an iterator, ignore chunklen
         for chunk in array:
             yield np.asarray(chunk, dtype=dtype)
     elif isinstance(array, Array):
@@ -1034,8 +1026,8 @@ def asarray(path, array, dtype=None, accessmode='r',
 
     """
     path = Path(path)
-    if metadata is None and hasattr(array, 'attrs'): # e.g. zarr array
-        try: # see if we can use it as json dict
+    if metadata is None and hasattr(array, 'attrs'):  # e.g. zarr array
+        try:  # see if we can use it as json dict
             metadata = dict(array.attrs)
             json.dumps(metadata, ensure_ascii=True)
         except Exception:
@@ -1119,7 +1111,7 @@ def create_basedir(path, overwrite=False):
     return BaseDataDir(path)
 
 
-#FIXME non-first axis len 0
+# FIXME non-first axis len 0
 def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
                  accessmode='r+', chunklen=None, metadata=None,
                  overwrite=False):
