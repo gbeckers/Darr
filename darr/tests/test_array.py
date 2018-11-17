@@ -277,12 +277,6 @@ class TestArray(unittest.TestCase):
                                dtype='int64', overwrite=True)
             assert_equal(dar.mb, 2*8/1e6)
 
-    def test_mb(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
-                               dtype='int64', overwrite=True)
-            assert_equal(dar.mb, 2*8/1e6)
-
     def test_size(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,2), fill=0,
