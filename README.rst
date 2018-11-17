@@ -1,6 +1,10 @@
 Darr
 ====
 
+.. image:: https://api.codacy.com/project/badge/Grade/c0157592ce7a4ecca5f7d8527874ce54
+   :alt: Codacy Badge
+   :target: https://app.codacy.com/app/gbeckers/Darr?utm_source=github.com&utm_medium=referral&utm_content=gbeckers/Darr&utm_campaign=Badge_Grade_Dashboard
+
 |Travis Status| |Appveyor Status| |PyPy version| |Coverage Status| |Docs Status|
 |Repo Status|
 
