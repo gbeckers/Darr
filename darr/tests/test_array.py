@@ -575,9 +575,9 @@ class MetaData(unittest.TestCase):
                                dtype='int64', metadata=md, overwrite=True)
             k, v = dar.metadata.popitem()
             keys = dar.metadata.keys()
-            assert k not in keys
+            self.assertNotIn(k, keys)
             k, v = dar.metadata.popitem()
-            assert not dar._metadata.path.exists()
+            self.assertEqual(dar._metadata.path.exists(), False)
 
     def test_metadataaccessmodereadwrite(self):
         with tempdir() as dirname:

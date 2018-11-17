@@ -16,12 +16,12 @@ class RaggedArray(unittest.TestCase):
             dal = create_raggedarray(dirname, atom=(), dtype='float64',
                                      metadata=None, accessmode='r+',
                                      overwrite=True)
-            assert len(dal) == 0
-            assert dal.atom == ()
-            assert dal.dtype == np.float64
+            self.assertEqual(len(dal), 0)
+            self.assertEqual(dal.atom, ())
+            self.assertEqual(dal.dtype, np.float64)
             a = np.array([0,1,2,3], dtype='float64')
             dal.append(a)
-            assert len(dal) == 1
+            self.assertEqual(len(dal) ,1)
             assert_equal(dal[0], a)
 
     def test_2darray(self):
@@ -29,12 +29,12 @@ class RaggedArray(unittest.TestCase):
             dal = create_raggedarray(dirname, atom=(2,), dtype='float64',
                                      metadata=None, accessmode='r+',
                                      overwrite=True)
-            assert len(dal) == 0
-            assert dal.atom == (2,)
-            assert dal.dtype == np.float64
+            self.assertEqual(len(dal), 0)
+            self.assertEqual(dal.atom, (2,))
+            self.assertEqual(dal.dtype, np.float64)
             a = np.array([[0,1],[2,3],[4,5]], dtype='float64')
             dal.append(a)
-            assert len(dal) == 1
+            self.assertEqual(len(dal), 1)
             assert_equal(dal[0], a)
 
 
