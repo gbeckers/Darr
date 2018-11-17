@@ -60,7 +60,7 @@ class ClassCopyRaggedArray(unittest.TestCase):
             with tempdir() as dirname2:
                 dal2 = dal1.copy(path=dirname2, overwrite=True)
                 assert_array_equal(dal1[0], dal2[0])
-                assert dal1.dtype == dal2.dtype
+                self.assertEqual(dal1.dtype, dal2.dtype)
 
 
 class DeleteRaggedArray(unittest.TestCase):
