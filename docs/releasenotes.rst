@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Version 0.1.10
+--------------
+- cleaned up checksum handling
+
 Version 0.1.9
 -------------
 - archive and compress darr objects
