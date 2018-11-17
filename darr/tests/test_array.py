@@ -220,22 +220,6 @@ class TestArray(unittest.TestCase):
             dar[2:4] = 1
             assert_equal(dar[2:4], [1,1])
 
-    def test_currentchecksumsnometadata(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(12,), fill=0,
-                               dtype='int64', overwrite=True)
-            s = set(dar.currentchecksums)
-            assert_equal({'README.txt', 'arraydescription.json',
-                    'arrayvalues.bin'}, s)
-
-    def test_currentchecksumsmetadata(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(12,), fill=0,
-                               dtype='int64', metadata={'a':1}, overwrite=True)
-            s = set(dar.currentchecksums)
-            assert_equal({'README.txt', 'arraydescription.json',
-                          'arrayvalues.bin', 'metadata.json'}, s)
-
     def test_str(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
