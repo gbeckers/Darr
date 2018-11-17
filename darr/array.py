@@ -66,6 +66,11 @@ class BaseDataDir(object):
     def path(self):
         return self._path
 
+    @property
+    def sha256(self):
+        """Checksums (sha256) of files."""
+        return self._sha256checksums()
+
     def _read_jsonfile(self, filename):
         path = self._path.joinpath(filename)
         with open(path, 'r') as fp:
@@ -107,9 +112,9 @@ class BaseDataDir(object):
             f.write(text)
             f.flush()
 
-    def _md5(self, filename, blocksize=2 ** 20):
+    def _sha256(self, filename, blocksize=2 ** 20):
         """Compute the checksum of a file."""
-        m = hashlib.md5()
+        m = hashlib.sha256()
         with open(self._path.joinpath(filename), 'rb') as f:
             while True:
                 buf = f.read(blocksize)
@@ -117,6 +122,18 @@ class BaseDataDir(object):
                     break
                 m.update(buf)
         return m.hexdigest()
+
+    def _sha256checksums(self):
+        filenames = self._filenames
+        if len(self.metadata) == 0:
+            filenames = filenames ^ {self._metadatafilename}
+        checksums = {}
+        for filename in filenames:
+            checksums[filename] = self._sha256(filename)
+        return checksums
+
+
+
 
     @contextmanager
     def open_file(self, filename, mode='r', buffering=-1, encoding=None,
@@ -355,11 +372,10 @@ class Array(BaseDataDir):
     """
     _datafilename = 'arrayvalues.bin'
     _arraydescrfilename = 'arraydescription.json'
-    _checksumsfilename = 'md5checksums.json'
     _metadatafilename = 'metadata.json'
     _readmefilename = 'README.txt'
     _filenames = {_arraydescrfilename, _datafilename,
-                  _readmefilename, _checksumsfilename,
+                  _readmefilename,
                   _metadatafilename} | BaseDataDir._filenames
     _formatversion = get_versions()['version']
 
@@ -430,16 +446,6 @@ class Array(BaseDataDir):
     def size(self):
         """Total number of values in the data array."""
         return self._size
-
-    @property
-    def currentchecksums(self):
-        """Current md5 checksums of data and datadescription files."""
-        return self._currentchecksums()
-
-    @property
-    def storedmd5checksums(self):
-        """Previously stored md5 checksums of data and datadescription files."""
-        return self._storedmd5checksums()
 
     def __getitem__(self, index):
         with self._open_array() as (ar, fd):
@@ -871,50 +877,6 @@ class Array(BaseDataDir):
         return asarray(path=path, array=self, dtype=dtype,
                        accessmode=accessmode, metadata=metadata,
                        chunklen=chunklen, overwrite=overwrite)
-
-    def _currentchecksums(self):
-        filenames = self._filenames ^ {self._checksumsfilename}
-        if len(self.metadata) == 0:
-            filenames = filenames ^ {self._metadatafilename}
-        checksums = {}
-        for filename in filenames:
-            checksums[filename] = self._md5(filename)
-        return checksums
-
-    def store_md5checksums(self):
-        """Calculates md5 checksums of current data and stores them in a file
-        'md5checksums.json'.
-
-        Returns
-        -------
-        dict
-            A dictionary with the checksums
-        """
-        checksums = self._currentchecksums()
-        self._write_jsondict(self._checksumsfilename, checksums,
-                             overwrite=True)
-        return checksums
-
-    def _storedmd5checksums(self):
-        if not self._path.joinpath(self._checksumsfilename).exists():
-            raise FileNotFoundError('No checksums have been computed before. '
-                                    'Use `store_md5checksums` method if you '
-                                    'want to save the current ones.')
-        return self._read_jsondict(self._checksumsfilename)
-
-    def assert_md5checksums(self):
-        lastchecksums = self._storedmd5checksums()
-        for fname, md5 in self._currentchecksums().items():
-            if fname not in lastchecksums:
-                raise ValueError(f"no checksum was stored for '{fname}'")
-            elif not md5 == lastchecksums[fname]:
-                raise ValueError(f"md5 checksums do not match for '{fname}'\n"
-                                 f"previously: {lastchecksums[fname]}\n"
-                                 f"now: {md5}\n")
-
-
-
-
 
 
 def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,

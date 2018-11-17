@@ -704,32 +704,6 @@ class DeleteArray(unittest.TestCase):
             self.assertRaises(OSError, delete_array, dar)
             self.assertEqual(testpath.exists(), True)
 
-class TestMd5Checksums(unittest.TestCase):
-
-    def test_storemd5checksums(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2, 2), dtype='int64',
-                               overwrite=True)
-            cs = dar.store_md5checksums()
-            scs = dar.storedmd5checksums
-            self.assertEqual(scs, cs)
-            ccs = dar.currentchecksums
-            self.assertEqual(scs, cs)
-
-    def test_assertmd5checksumsvalues(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2, 2), dtype='int64',
-                               overwrite=True)
-            self.assertRaises(FileNotFoundError, dar.assert_md5checksums)
-            scs = dar.store_md5checksums()
-            ccs = dar.currentchecksums
-            self.assertEqual(scs, ccs)
-            dar[0] = 1
-            self.assertRaises(ValueError, dar.assert_md5checksums)
-            scs = dar.store_md5checksums()
-            ccs = dar.currentchecksums
-            self.assertEqual(scs, ccs)
-
 
 class TestBaseDataDir(unittest.TestCase):
 
