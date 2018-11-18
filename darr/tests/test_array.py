@@ -403,73 +403,70 @@ class IterView(unittest.TestCase):
 
 class AppendData(unittest.TestCase):
 
+    def setUp(self):
+        self.temparpath = tempfile.mkdtemp() # even array
+
+    def tearDown(self):
+        shutil.rmtree(str(self.temparpath))
+
     def test_appendnumber(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,),
-                               dtype='int64', overwrite=True)
-            dar.append(1)
-            assert_array_equal(np.array([0, 0, 1], dtype='int64'), dar[:])
+        dar = create_array(path=self.temparpath, shape=(2,),
+                           dtype='int64', overwrite=True)
+        dar.append(1)
+        assert_array_equal(np.array([0, 0, 1], dtype='int64'), dar[:])
 
     def test_appendlist1d(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,),
-                               dtype='int64', overwrite=True)
-            dar.append([1,2])
-            dar.append([3])
-            assert_array_equal(np.array([0,0,1,2,3], dtype='int64'), dar[:])
+        dar = create_array(path=self.temparpath, shape=(2,),
+                           dtype='int64', overwrite=True)
+        dar.append([1,2])
+        dar.append([3])
+        assert_array_equal(np.array([0,0,1,2,3], dtype='int64'), dar[:])
 
     def test_appendlist2d(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2, 3),
-                               dtype='int64', overwrite=True)
-            dar.append([[1,2,3]])
-            dar.append([[1,2,3],[4,5,6]])
-            assert_array_equal(np.array([[0,0,0],[0,0,0],[1,2,3],[1,2,3],
-                                         [4, 5, 6]], dtype='int64'), dar[:])
+        dar = create_array(path=self.temparpath, shape=(2, 3),
+                           dtype='int64', overwrite=True)
+        dar.append([[1,2,3]])
+        dar.append([[1,2,3],[4,5,6]])
+        assert_array_equal(np.array([[0,0,0],[0,0,0],[1,2,3],[1,2,3],
+                                     [4, 5, 6]], dtype='int64'), dar[:])
 
     def test_appendtoempty1d(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(0,),
-                               dtype='int64', overwrite=True)
-            dar.append([1, 2, 3])
-            assert_array_equal(np.array([1, 2, 3], dtype='int64'), dar[:])
+        dar = create_array(path=self.temparpath, shape=(0,),
+                           dtype='int64', overwrite=True)
+        dar.append([1, 2, 3])
+        assert_array_equal(np.array([1, 2, 3], dtype='int64'), dar[:])
 
     def test_appendtoempty2d(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', overwrite=True)
-            dar.append([[1,2]])
-            dar.append([[1,2],[3,4]])
-            assert_array_equal(np.array([[1,2],[1,2],[3,4]], dtype='int64'),
-            dar[:])
+        dar = create_array(path=self.temparpath, shape=(0, 2),
+                           dtype='int64', overwrite=True)
+        dar.append([[1,2]])
+        dar.append([[1,2],[3,4]])
+        assert_array_equal(np.array([[1,2],[1,2],[3,4]], dtype='int64'),
+        dar[:])
 
     def test_appendempty1d(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(1,),
-                               dtype='int64', overwrite=True)
-            dar.append([])
-            assert_array_equal(np.array([0], dtype='int64'), dar[:])
+        dar = create_array(path=self.temparpath, shape=(1,),
+                           dtype='int64', overwrite=True)
+        dar.append([])
+        assert_array_equal(np.array([0], dtype='int64'), dar[:])
 
     def test_appendempty2d(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(1, 2),
-                               dtype='int64', overwrite=True)
-            dar.append(np.zeros((0,2), dtype='int64'))
-            assert_array_equal(np.array([[0,0]], dtype='int64'), dar[:])
+        dar = create_array(path=self.temparpath, shape=(1, 2),
+                           dtype='int64', overwrite=True)
+        dar.append(np.zeros((0,2), dtype='int64'))
+        assert_array_equal(np.array([[0,0]], dtype='int64'), dar[:])
 
     def test_appendemptytoempty1d(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(0,),
-                               dtype='int64', overwrite=True)
-            dar.append([])
-            assert_array_equal(np.array([], dtype='int64'), dar[:])
+        dar = create_array(path=self.temparpath, shape=(0,),
+                           dtype='int64', overwrite=True)
+        dar.append([])
+        assert_array_equal(np.array([], dtype='int64'), dar[:])
 
     def test_appendemptytoempty2d(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', overwrite=True)
-            dar.append(np.zeros((0, 2), dtype='int64'))
-            assert_array_equal(np.zeros((0,2), dtype='int64'), dar[:])
+        dar = create_array(path=self.temparpath, shape=(0, 2),
+                           dtype='int64', overwrite=True)
+        dar.append(np.zeros((0, 2), dtype='int64'))
+        assert_array_equal(np.zeros((0,2), dtype='int64'), dar[:])
 
     def test_appenddataerror(self):
         def testiter():
@@ -477,155 +474,118 @@ class AppendData(unittest.TestCase):
             yield [4, 5, 6]
             raise ValueError
         g = (f for f in testiter())
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,),
-                               dtype='int64', overwrite=True)
-            self.assertRaises(AppendDataError, dar.iterappend, g)
-            assert_equal(dar[:], [0,0,1,2,3,4,5,6])
+        dar = create_array(path=self.temparpath, shape=(2,),
+                           dtype='int64', overwrite=True)
+        self.assertRaises(AppendDataError, dar.iterappend, g)
+        assert_equal(dar[:], [0,0,1,2,3,4,5,6])
 
     def test_appendwrongshape(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,3),
-                               dtype='int64', overwrite=True)
-            ar = [[3,4]]
-            self.assertRaises(AppendDataError, dar.append, ar)
+        dar = create_array(path=self.temparpath, shape=(2,3),
+                           dtype='int64', overwrite=True)
+        ar = [[3,4]]
+        self.assertRaises(AppendDataError, dar.append, ar)
 
     def test_appendreadonlyarray(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,),
-                               dtype='int64', overwrite=True, accessmode='r')
-            ar = [3, 4]
-            self.assertRaises(OSError, dar.append, ar)
+        dar = create_array(path=self.temparpath, shape=(2,),
+                           dtype='int64', overwrite=True, accessmode='r')
+        ar = [3, 4]
+        self.assertRaises(OSError, dar.append, ar)
 
     def test_iterappendnoniterable(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,),
-                               dtype='int64', overwrite=True)
-            ar = 3
-            self.assertRaises(TypeError, dar.iterappend, ar)
+        dar = create_array(path=self.temparpath, shape=(2,),
+                           dtype='int64', overwrite=True)
+        ar = 3
+        self.assertRaises(TypeError, dar.iterappend, ar)
 
 class TestIterView(unittest.TestCase):
 
+    def setUp(self):
+        self.temparpath = tempfile.mkdtemp()
+        self.tempar = create_array(path=self.temparpath, shape=(10,),
+                                   dtype='int64', overwrite=True)
+
+    def tearDown(self):
+        shutil.rmtree(str(self.temparpath))
+
     def test_iterviewstartindextoohigh(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(10,),
-                               dtype='int64', overwrite=True)
-            with self.assertRaises(ValueError):
-               _ = [f for f in dar.iterview(chunklen=2, startindex=5,
-                                          endindex=2)]
+        with self.assertRaises(ValueError):
+           _ = [f for f in self.tempar.iterview(chunklen=2, startindex=12,
+                                                endindex=2)]
 
     def test_iterviewendindextoohigh(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(5,),
-                               dtype='int64', overwrite=True)
-            with self.assertRaises(ValueError):
-                _ = [f for f in dar.iterview(chunklen=2, startindex=1,
-                                          endindex=8)]
+        with self.assertRaises(ValueError):
+            _ = [f for f in self.tempar.iterview(chunklen=2, startindex=1,
+                                                 endindex=12)]
 
 
 class MetaData(unittest.TestCase):
+    def setUp(self):
+        self.temparpath = tempfile.mkdtemp() # even array
+        self.metadata = md = {'fs':20000, 'x': 33.3}
+        self.tempar = create_array(path=self.temparpath, shape=(12,),
+                                    dtype='int64', metadata=md,
+                                   accessmode='r+', overwrite=True)
+
+    def tearDown(self):
+        shutil.rmtree(str(self.temparpath))
+
 
     def test_createwithmetadata(self):
-        with tempdir() as dirname:
-            md = {'fs':20000, 'x': 33.3}
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', metadata=md, overwrite=True)
-            assert_equal(dict(dar.metadata), md)
+        assert_equal(dict(self.tempar.metadata), self.metadata)
 
     def test_getmetadata(self):
-        with tempdir() as dirname:
-            md = {'fs': 20000, 'x': 33.3}
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', metadata=md, overwrite=True)
-            self.assertEqual(dar.metadata.get('fs'), 20000)
+        self.assertEqual(self.tempar.metadata.get('fs'), 20000)
 
     def test_metadatavalues(self):
-        with tempdir() as dirname:
-            md = {'fs': 20000, 'x': 33.3}
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', metadata=md, overwrite=True)
-            self.assertEqual(set(dar.metadata.values()), {20000,33.3})
+        self.assertEqual(set(self.tempar.metadata.values()), {20000,33.3})
 
 
     def test_changemetadata(self):
-        with tempdir() as dirname:
-            md = {'fs': 20000, 'x': 33.3}
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', metadata=md, overwrite=True)
-            dar.metadata['fs'] = 40000
-            assert_equal(dict(dar.metadata), {'fs': 40000, 'x': 33.3})
-            dar.metadata.update({'x': 34.4})
-            assert_equal(dict(dar.metadata), {'fs': 40000, 'x': 34.4})
+        self.tempar.metadata['fs'] = 40000
+        assert_equal(dict(self.tempar.metadata), {'fs': 40000, 'x': 33.3})
+        self.tempar.metadata.update({'x': 34.4})
+        assert_equal(dict(self.tempar.metadata), {'fs': 40000, 'x': 34.4})
 
     def test_popmetadata(self):
-        with tempdir() as dirname:
-            md = {'fs': 20000, 'x': 33.3}
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', metadata=md, overwrite=True)
-            dar.metadata.pop('x')
-            assert_equal(dict(dar.metadata), {'fs': 20000})
-            dar.metadata.pop('fs')
-            assert_equal(dict(dar.metadata), {})
+        self.tempar.metadata.pop('x')
+        assert_equal(dict(self.tempar.metadata), {'fs': 20000})
+        self.tempar.metadata.pop('fs')
+        assert_equal(dict(self.tempar.metadata), {})
 
     def test_popitmemetadata(self):
-        with tempdir() as dirname:
-            md = {'fs': 20000, 'x': 33.3}
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', metadata=md, overwrite=True)
-            k, _ = dar.metadata.popitem()
-            keys = dar.metadata.keys()
-            self.assertNotIn(k, keys)
-            dar.metadata.popitem()
-            self.assertEqual(dar._metadata.path.exists(), False)
+        k, _ = self.tempar.metadata.popitem()
+        keys = self.tempar.metadata.keys()
+        self.assertNotIn(k, keys)
+        self.tempar.metadata.popitem()
+        self.assertEqual(self.tempar._metadata.path.exists(), False)
 
     def test_metadataaccessmodereadwrite(self):
-        with tempdir() as dirname:
-            md = {'fs': 20000, 'x': 33.3}
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', metadata=md, overwrite=True,
-                               accessmode='r+')
-            self.assertEqual(dar.metadata.accessmode, 'r+')
-            dar.metadata['x'] = 22.2
+        self.assertEqual(self.tempar.metadata.accessmode, 'r+')
+        self.tempar.metadata['x'] = 22.2
 
     def test_metadataaccessmodereadonly(self):
-        with tempdir() as dirname:
-            md = {'fs': 20000, 'x': 33.3}
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', metadata=md, overwrite=True,
-                               accessmode='r')
-            self.assertEqual(dar.metadata.accessmode, 'r')
-            self.assertRaises(OSError, dar.metadata.popitem)
-            self.assertRaises(OSError, dar.metadata.pop)
-            self.assertRaises(OSError, dar.metadata.update, {'a': 3})
+        self.tempar.accessmode = 'r'
+        self.assertEqual(self.tempar.metadata.accessmode, 'r')
+        self.assertRaises(OSError, self.tempar.metadata.popitem)
+        self.assertRaises(OSError, self.tempar.metadata.pop)
+        self.assertRaises(OSError, self.tempar.metadata.update, {'a': 3})
 
     def test_setaccessmode(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
-                               dtype='int64', overwrite=True, accessmode='r')
-            self.assertEqual(dar.metadata.accessmode, 'r')
-            dar.metadata.accessmode = 'r+'
-            self.assertEqual(dar.metadata.accessmode, 'r+')
-            self.assertRaises(ValueError, setattr, dar.metadata, 'accessmode',
-                              'w')
-            self.assertRaises(ValueError, setattr, dar.metadata, 'accessmode',
-                              'a')
+        self.assertEqual(self.tempar.metadata.accessmode, 'r+')
+        self.tempar.metadata.accessmode = 'r'
+        self.assertEqual(self.tempar.metadata.accessmode, 'r')
+        self.assertRaises(ValueError, setattr, self.tempar.metadata,
+                          'accessmode', 'w')
+        self.assertRaises(ValueError, setattr, self.tempar.metadata,
+                          'accessmode', 'a')
 
     def test_delitem(self):
-        with tempdir() as dirname:
-            md = {'fs': 20000, 'x': 33.3}
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', metadata=md, overwrite=True,
-                               accessmode='r+')
-            del dar.metadata['x']
-            self.assertEqual(dict(dar.metadata), {'fs': 20000})
+        del self.tempar.metadata['x']
+        self.assertDictEqual(dict(self.tempar.metadata), {'fs': 20000})
 
     def test_metadatarepr(self):
-        with tempdir() as dirname:
-            md = {'a': 1}
-            dar = create_array(path=dirname, shape=(0, 2),
-                               dtype='int64', metadata=md, overwrite=True,
-                               accessmode='r+')
-            self.assertEqual(repr(dar.metadata), "{'a': 1}")
+        self.assertEqual(repr(self.tempar.metadata),
+                         "{'fs': 20000, 'x': 33.3}")
 
 
 class TestOpenFile(unittest.TestCase):
@@ -651,15 +611,19 @@ class TestOpenFile(unittest.TestCase):
 
 
 class TruncateData(unittest.TestCase):
+    def setUp(self):
+        self.temparpath = tempfile.mkdtemp()
+        a = np.array([0, 1, 2, 3, 4], dtype='int64')
+        self.tempar = asarray(path=self.temparpath, array=a, overwrite=True,
+                              accessmode='r+')
+
+    def tearDown(self):
+        shutil.rmtree(str(self.temparpath))
+
 
     def test_truncate1d(self):
-        with tempdir() as dirname:
-            a = np.array([0,1,2,3,4], dtype='int64')
-            dar = asarray(path=dirname, array=a, overwrite=True,
-                          accessmode='r+')
-            assert_equal(a, dar[:])
-            truncate_array(dar, 2)
-            assert_equal(a[:2], dar[:])
+        truncate_array(self.tempar, 2)
+        assert_array_equal(self.tempar[:], [0,1])
 
 
 class DeleteArray(unittest.TestCase):
