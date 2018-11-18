@@ -225,14 +225,14 @@ class TestArray(unittest.TestCase):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
-            assert_equal(str(dar),'[0 0]')
+            self.assertEqual(str(dar),'[0 0]')
 
     def test_repr(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             # linux and windows have different numpy memmap reprs...
-            assert_equal(repr(dar)[:18], 'darr array ([0, 0]')
+            self.assertEqual(repr(dar)[:18], 'darr array ([0, 0]')
 
     def test_setaccessmode(self):
         with tempdir() as dirname:
@@ -248,25 +248,25 @@ class TestArray(unittest.TestCase):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
-            assert_equal(dar.itemsize, 8)
+            self.assertEqual(dar.itemsize, 8)
 
     def test_nbytes(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
-            assert_equal(dar.nbytes, 2*8)
+            self.assertEqual(dar.nbytes, 2*8)
 
     def test_mb(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
-            assert_equal(dar.mb, 2*8/1e6)
+            self.assertEqual(dar.mb, 2*8/1e6)
 
     def test_size(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,2), fill=0,
                                dtype='int64', overwrite=True)
-            assert_equal(dar.size, 4)
+            self.assertEqual(dar.size, 4)
 
     def test_copy(self):
         with tempdir() as dirname1, tempdir() as dirname2:
@@ -277,8 +277,6 @@ class TestArray(unittest.TestCase):
             dar2 = dar1.copy(path=dirname2, overwrite=True)
             assert_array_equal(dar1[:], dar2[:])
             self.assertEqual(dict(dar1.metadata), dict(dar2.metadata))
-
-
 
 
 class TestReadArrayDescr(unittest.TestCase):
@@ -738,7 +736,6 @@ class TestBaseDataDir(unittest.TestCase):
     def test_readjsondictnotdict(self):
         with tempdir() as dirname:
             bd = BaseDataDir(dirname)
-            wd = {'a': 1, 'b': [1, 2, 3], 'c': 'k'}
             bd._write_jsonfile('test1.json', [1,2,3])
             self.assertRaises(TypeError, bd._read_jsondict, 'test1.json')
 
