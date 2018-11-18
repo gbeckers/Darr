@@ -2,7 +2,6 @@
 ---
 exclude_paths:
   - 'docs/**'
-  - 'tests/**'
   - 'setup.py'
   - 'versioneer.py'
   - 'darr/_version.py'
