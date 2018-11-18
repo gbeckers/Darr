@@ -163,6 +163,11 @@ class CreateDiskArray(unittest.TestCase):
         self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(0,),
                                            dtype='float64')
 
+    def test_emptyarraymd(self):
+        ndarray = np.zeros((0,3,7), dtype='float64')
+        self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(0, 3, 7),
+                                           chunklen=1)
+
     def test_emptyarraydifferentdtype(self):
         ndarray = np.zeros(0, dtype='float64')
         self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(0,),
@@ -191,11 +196,6 @@ class CreateDiskArray(unittest.TestCase):
     def test_toosmallchunklen(self):
         ndarray = np.zeros((12, 3, 7), dtype='float64')
         self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(12, 3, 7),
-                                           chunklen=1)
-
-    def test_emptyarray(self):
-        ndarray = np.zeros((0,3,7), dtype='float64')
-        self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(0, 3, 7),
                                            chunklen=1)
 
 
