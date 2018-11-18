@@ -49,7 +49,7 @@
             
   <div class="section" id="darr">
 <h1>Darr<a class="headerlink" href="#darr" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://travis-ci.org/gbeckers/Darr?branch=master"><img alt="Travis Status" src="https://travis-ci.org/gbeckers/Darr.svg?branch=master" /></a> <a class="reference external" href="https://ci.appveyor.com/project/gbeckers/darr"><img alt="Appveyor Status" src="https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true" /></a> <a class="reference external" href="https://pypi.org/project/darr/"><img alt="PyPy version" src="https://img.shields.io/badge/pypi-v0.1.7-orange.svg" /></a> <a class="reference external" href="https://coveralls.io/github/gbeckers/Darr?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master" /></a> <a class="reference external" href="https://darr.readthedocs.io/en/latest/"><img alt="Docs Status" src="https://readthedocs.org/projects/darr/badge/?version=latest" /></a></p>
+<p><a class="reference external" href="https://travis-ci.org/gbeckers/Darr?branch=master"><img alt="Travis Status" src="https://travis-ci.org/gbeckers/Darr.svg?branch=master" /></a> <a class="reference external" href="https://ci.appveyor.com/project/gbeckers/darr"><img alt="Appveyor Status" src="https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true" /></a> <a class="reference external" href="https://pypi.org/project/darr/"><img alt="PyPy version" src="https://img.shields.io/badge/pypi-v0.1.9-orange.svg" /></a> <a class="reference external" href="https://coveralls.io/github/gbeckers/Darr?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master" /></a> <a class="reference external" href="https://darr.readthedocs.io/en/latest/"><img alt="Docs Status" src="https://readthedocs.org/projects/darr/badge/?version=latest" /></a></p>
 <p>Darr is a Python science library for storing and sharing numeric data arrays
 in a way that is open, simple, and self-explanatory. It also enables fast
 memory-mapped read/write access to such disk-based data, the ability to append
@@ -72,16 +72,16 @@ License</a> terms.</p>
 <ul class="simple">
 <li><strong>Transparent data format</strong> based on <strong>flat binary</strong> and <strong>text</strong>
 files.</li>
+<li><strong>Human-readable explanation of how the binary data is stored</strong> is
+saved in a README text file.</li>
+<li>Includes <strong>examples of how to read the array</strong> in popular
+analysis environments such as Python (without Darr), R, Julia,
+Octave/Matlab, GDL/IDL, and Mathematica.</li>
 <li>Supports <strong>very large data arrays</strong> through <strong>memory-mapped</strong> file
 access.</li>
 <li>Data read/write access through <strong>NumPy indexing</strong> (see
 <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html">here</a>).</li>
 <li>Data is easily <strong>appendable</strong>.</li>
-<li><strong>Human-readable explanation of how the binary data is stored</strong> is
-saved in a README text file.</li>
-<li>README also contains <strong>examples of how to read the array</strong> in popular
-analysis environments such as Python (without Darr), R, Julia,
-Octave/Matlab, GDL/IDL, Maple and Mathematica.</li>
 <li><strong>Many numeric types</strong> are supported: (u)int8-(u)int64,
 float16-float64, complex64, complex128.</li>
 <li>Easy use of <strong>metadata</strong>, stored in a separate
@@ -97,7 +97,7 @@ float16-float64, complex64, complex128.</li>
 <li><strong>No direct access to compressed data</strong>, although it is of course possible
 to simply compress darr files for archiving purposes.</li>
 <li><strong>Inefficient (storage-wise) for very small arrays</strong>. If you have a
-zillion small arrays, and storage space in a concern, use other
+zillion small arrays, and storage space is a concern, use other
 approaches.</li>
 </ul>
 </div>
@@ -135,6 +135,7 @@ naming of some functions/methods may still change.</p>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Darr</a></li>
 <li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-10">Version 0.1.10</a></li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-9">Version 0.1.9</a></li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-8">Version 0.1.8</a></li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-7">Version 0.1.7</a></li>

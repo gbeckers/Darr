@@ -91,10 +91,10 @@ these will not be removed and an OSError is raised. Default is <cite>False</cite
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Darr <cite>array</cite> instance.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">A Darr <cite>array</cite> instance.</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#darr.Array" title="darr.Array">Array</a></p>
 </td>
 </tr>
 </tbody>
@@ -158,10 +158,10 @@ Default is <cite>False</cite>.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Darr <cite>array</cite> instance.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">A Darr <cite>array</cite> instance.</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#darr.Array" title="darr.Array">Array</a></p>
 </td>
 </tr>
 </tbody>
@@ -290,18 +290,20 @@ path name.</li>
 <li><strong>compressiontype</strong> (<em>str</em>) – One of ‘xz’, ‘gz’, or ‘bz2’, corresponding to the gzip, bz2 and
 lzma compression algorithms supported by the Python standard
 library.</li>
-<li><strong>overwrite</strong> (<em>{False | True}</em>) – </li>
+<li><strong>overwrite</strong> (<em>(</em><em>True</em><em>, </em><em>False</em><em>)</em><em>, </em><em>optional</em>) – Overwrites existing archive if it exists. Default is False.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The path of the created archive</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">The path of the created archive</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pathlib.Path</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Notes</p>
+<p>See the <a class="reference external" href="https://docs.python.org/3/library/tarfile.html">tarfile library</a> for more info on archiving formats</p>
 </dd></dl>
 
 <dl class="method">
@@ -338,12 +340,6 @@ raised. Default is <cite>False</cite>.</li>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="darr.Array.currentchecksums">
-<code class="descname">currentchecksums</code><a class="headerlink" href="#darr.Array.currentchecksums" title="Permalink to this definition">¶</a></dt>
-<dd><p>Current md5 checksums of data and datadescription files.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -472,7 +468,7 @@ means read-write.</li>
 
 <dl class="method">
 <dt id="darr.Array.open_file">
-<code class="descname">open_file</code><span class="sig-paren">(</span><em>filename</em>, <em>mode='r'</em>, <em>buffering=-1</em>, <em>encoding=None</em>, <em>errors=None</em>, <em>newline=None</em>, <em>closefd=True</em>, <em>opener=None</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.open_file" title="Permalink to this definition">¶</a></dt>
+<code class="descname">open_file</code><span class="sig-paren">(</span><em>filename</em>, <em>mode='r'</em>, <em>buffering=-1</em>, <em>encoding=None</em>, <em>errors=None</em>, <em>newline=None</em>, <em>closefd=True</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.open_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open a file in the darr array directory and yield a file object.
 Protected files, i.e. those that are part of the darr array may not be
 opened.</p>
@@ -488,6 +484,12 @@ function. The parameters are therefore the same.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="darr.Array.sha256">
+<code class="descname">sha256</code><a class="headerlink" href="#darr.Array.sha256" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checksums (sha256) of files.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="darr.Array.shape">
 <code class="descname">shape</code><a class="headerlink" href="#darr.Array.shape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tuple with sizes of each axis of the data array.</p>
@@ -497,29 +499,6 @@ function. The parameters are therefore the same.</p>
 <dt id="darr.Array.size">
 <code class="descname">size</code><a class="headerlink" href="#darr.Array.size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Total number of values in the data array.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="darr.Array.store_md5checksums">
-<code class="descname">store_md5checksums</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.store_md5checksums" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates md5 checksums of current data and stores them in a file
-‘md5checksums.json’.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">A dictionary with the checksums</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="darr.Array.storedmd5checksums">
-<code class="descname">storedmd5checksums</code><a class="headerlink" href="#darr.Array.storedmd5checksums" title="Permalink to this definition">¶</a></dt>
-<dd><p>Previously stored md5 checksums of data and datadescription files.</p>
 </dd></dl>
 
 <dl class="method">
@@ -623,67 +602,6 @@ current length.</li>
 </div>
 <div class="section" id="exporting-to-other-formats">
 <h2>Exporting to other formats<a class="headerlink" href="#exporting-to-other-formats" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="darr.conversion.aszarrarray">
-<code class="descclassname">darr.conversion.</code><code class="descname">aszarrarray</code><span class="sig-paren">(</span><em>da</em>, <em>chunks=True</em>, <em>dtype=None</em>, <em>compressor='default'</em>, <em>order='C'</em>, <em>store=None</em>, <em>synchronizer=None</em>, <em>overwrite=False</em>, <em>path=None</em>, <em>chunk_store=None</em>, <em>filters=None</em>, <em>cache_metadata=True</em>, <em>cache_attrs=True</em>, <em>read_only=False</em>, <em>object_codec=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#darr.conversion.aszarrarray" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a Darr array to a Zarr array.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>da</strong> (<em>Darr Array</em><em> or </em><em>Path to it</em>) – </li>
-<li><strong>chunks</strong> (<em>int</em><em> or </em><em>tuple of ints</em><em>, </em><em>optional</em>) – Chunk shape. If True, will be guessed from <cite>shape</cite> and <cite>dtype</cite>. If
-False, will be set to <cite>shape</cite>, i.e., single chunk for the whole array.</li>
-<li><strong>dtype</strong> (<em>string</em><em> or </em><a class="reference internal" href="#darr.Array.dtype" title="darr.Array.dtype"><em>dtype</em></a><em>, </em><em>optional</em>) – NumPy dtype.</li>
-<li><strong>compressor</strong> (<em>Codec</em><em>, </em><em>optional</em>) – Primary compressor.</li>
-<li><strong>fill_value</strong> (<em>object</em>) – Default value to use for uninitialized portions of the array.</li>
-<li><strong>order</strong> (<em>{'C'</em><em>, </em><em>'F'}</em><em>, </em><em>optional</em>) – Memory layout to be used within each chunk.</li>
-<li><strong>store</strong> (<em>MutableMapping</em><em> or </em><em>string</em>) – Store or path to directory in file system or name of zip file.</li>
-<li><strong>synchronizer</strong> (<em>object</em><em>, </em><em>optional</em>) – Array synchronizer.</li>
-<li><strong>overwrite</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, delete all pre-existing data in <cite>store</cite> at <cite>path</cite> before
-creating the array.</li>
-<li><strong>path</strong> (<em>string</em><em>, </em><em>optional</em>) – Path under which array is stored.</li>
-<li><strong>chunk_store</strong> (<em>MutableMapping</em><em>, </em><em>optional</em>) – Separate storage for chunks. If not provided, <cite>store</cite> will be used
-for storage of both chunks and metadata.</li>
-<li><strong>filters</strong> (<em>sequence of Codecs</em><em>, </em><em>optional</em>) – Sequence of filters to use to encode chunk data prior to compression.</li>
-<li><strong>cache_metadata</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, array configuration metadata will be cached for the
-lifetime of the object. If False, array metadata will be reloaded
-prior to all data access and modification operations (may incur
-overhead depending on storage and data access pattern).</li>
-<li><strong>cache_attrs</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True (default), user attributes will be cached for attribute read
-operations. If False, user attributes are reloaded from the store prior
-to all attribute read operations.</li>
-<li><strong>read_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – True if array should be protected against modification.</li>
-<li><strong>object_codec</strong> (<em>Codec</em><em>, </em><em>optional</em>) – A codec to encode object arrays, only needed if dtype=object.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">zarr.core.Array</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">darr</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">da</span> <span class="o">=</span> <span class="n">darr</span><span class="o">.</span><span class="n">create_array</span><span class="p">(</span><span class="s1">&#39;test.darr&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1024</span><span class="p">),</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">darr.conversion</span> <span class="k">import</span> <span class="n">aszarrarray</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">za</span> <span class="o">=</span> <span class="n">aszarrarray</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="s1">&#39;test.zarr&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">za</span>
-<span class="go">&lt;zarr.core.Array (2, 1024) float64&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">(</span><span class="n">za</span><span class="o">.</span><span class="n">attrs</span><span class="p">)</span> <span class="c1"># metadata is preserved as attrs</span>
-<span class="go">{&#39;a&#39;: 1}</span>
-</pre></div>
-</div>
-<p class="rubric">Notes</p>
-<p>See <a class="reference external" href="https://zarr.readthedocs.io/en/stable/tutorial.html">https://zarr.readthedocs.io/en/stable/tutorial.html</a> for more info on
-Zarr</p>
-<p>The doc string here is largely copied from that of zarr.core.Array</p>
-</dd></dl>
-
 </div>
 </div>
 

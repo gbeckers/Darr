@@ -37,16 +37,16 @@ Pro's:
 
 -  **Transparent data format** based on **flat binary** and **text**
    files.
+-  **Human-readable explanation of how the binary data is stored** is
+   saved in a README text file.
+-  Includes **examples of how to read the array** in popular
+   analysis environments such as Python (without Darr), R, Julia,
+   Octave/Matlab, GDL/IDL, and Mathematica.
 -  Supports **very large data arrays** through **memory-mapped** file
    access.
 -  Data read/write access through **NumPy indexing** (see
    `here <https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html>`__).
 -  Data is easily **appendable**.
--  **Human-readable explanation of how the binary data is stored** is
-   saved in a README text file.
--  README also contains **examples of how to read the array** in popular
-   analysis environments such as Python (without Darr), R, Julia,
-   Octave/Matlab, GDL/IDL, Maple and Mathematica.
 -  **Many numeric types** are supported: (u)int8-(u)int64,
    float16-float64, complex64, complex128.
 -  Easy use of **metadata**, stored in a separate
@@ -62,7 +62,7 @@ Con's:
 -  **No direct access to compressed data**, although it is of course possible
    to simply compress darr files for archiving purposes.
 -  **Inefficient (storage-wise) for very small arrays**. If you have a
-   zillion small arrays, and storage space in a concern, use other
+   zillion small arrays, and storage space is a concern, use other
    approaches.
 
 
@@ -108,7 +108,7 @@ Indices and tables
    :target: https://travis-ci.org/gbeckers/Darr?branch=master
 .. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
    :target: https://ci.appveyor.com/project/gbeckers/darr
-.. |PyPy version| image:: https://img.shields.io/badge/pypi-v0.1.7-orange.svg
+.. |PyPy version| image:: https://img.shields.io/badge/pypi-v0.1.9-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
    :target: https://coveralls.io/github/gbeckers/Darr?branch=master
