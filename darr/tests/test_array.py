@@ -674,7 +674,7 @@ class DeleteArray(unittest.TestCase):
     def test_simpledeletearraypath(self):
         with tempdir() as dirname:
             dalpath = Path(dirname).joinpath('temp.dal')
-            dar = create_array(path=dalpath, shape=(0, 2), dtype='int64')
+            _ = create_array(path=dalpath, shape=(0, 2), dtype='int64')
             delete_array(dalpath)
             assert_equal(len(os.listdir(dirname)), 0)
 

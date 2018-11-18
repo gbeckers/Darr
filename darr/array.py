@@ -445,7 +445,7 @@ class Array(BaseDataDir):
         return self._size
 
     def __getitem__(self, index):
-        with self._open_array() as (ar, fd):
+        with self._open_array() as (ar, _):
             values = np.array(ar[index], copy=True)
         return values
 
