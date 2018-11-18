@@ -543,7 +543,7 @@ class Array(BaseDataDir):
 
         """
 
-        with self._open_array(accessmode=accessmode) as (memmap, fp):
+        with self._open_array(accessmode=accessmode) as (memmap, _):
             yield memmap
 
     def _read_arraydescr(self):
@@ -740,7 +740,7 @@ class Array(BaseDataDir):
             oldshape = v.shape
             lenincrease = 0
             try:
-                for i, array in enumerate(arrayiterable):
+                for array in arrayiterable:
                     lenincrease += self._append(array=array, fd=fd)
             except Exception as exception:
                 if fd.closed:
@@ -818,14 +818,14 @@ class Array(BaseDataDir):
             raise ValueError("endindex is too high")
         if startindex >= endindex:
             raise ValueError("startindex should be lower than endindex")
-        nframes, newsize, remainder = fit_chunks(
+        nframes, _, remainder = fit_chunks(
             totallen=(endindex - startindex),
             chunklen=chunklen,
             steplen=stepsize)
         framestart = startindex
         frameend = framestart + chunklen
-        with self._open_array(accessmode=accessmode) as (ar, fd):
-            for i in range(nframes):
+        with self._open_array(accessmode=accessmode) as (ar, _):
+            for _ in range(nframes):
                 yield ar[framestart:frameend]
                 framestart += stepsize
                 frameend = framestart + chunklen
@@ -922,7 +922,7 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
     i = np.empty(chunkshape, dtype='int64')
     i.T[:] = np.arange(chunklen, dtype='int64')
     if nchunks > 0:
-        for n in range(nchunks):
+        for _ in range(nchunks):
             chunk[:] = fillfunc(i) if fill is None else fill
             yield chunk
             i += chunklen
@@ -950,7 +950,7 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
         if totallen == 0:
             yield array.astype(dtype)
         else:
-            nchunks, newsize, remainder = fit_chunks(totallen=totallen,
+            nchunks, _, remainder = fit_chunks(totallen=totallen,
                                                      chunklen=chunklen)
             for i in range(nchunks):
                 yield np.asarray(array[i * chunklen:(i + 1) * chunklen],
@@ -996,7 +996,7 @@ def asarray(path, array, dtype=None, accessmode='r',
         None and `array` is a generator or sequence, chunklen will be 1.
     overwrite: (True, False), optional
         Overwrites existing darr data if it exists. Note that a darr
-        path is a directory. If that directory contains additional files, 
+        path is a directory. If that directory contains additional files,
         these will not be removed and an OSError is raised. Default is `False`.
 
     Returns

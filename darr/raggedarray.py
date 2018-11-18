@@ -151,8 +151,8 @@ def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
                         overwrite=overwrite)
     valueslen = firstindices[0][1]
     indiceslen = 1
-    with valuesda._open_array(accessmode='r+') as (vv, vfd), \
-         indicesda._open_array(accessmode='r+') as (iv, ifd):
+    with valuesda._open_array(accessmode='r+') as (_, vfd), \
+         indicesda._open_array(accessmode='r+') as (_, ifd):
         for array in arrayiterable:
             lenincreasevalues = valuesda._append(array, fd=vfd)
             starti, endi = valueslen, valueslen + lenincreasevalues
