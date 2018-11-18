@@ -43,9 +43,11 @@ class ClassAsRaggedArray(unittest.TestCase):
     def test_1darray(self):
         with tempdir() as dirname:
             na = [[1,2,3],[4,5,6]]
-            dal = asraggedarray(dirname, na, overwrite=True)
+            md = {'fs': 20000, 'x': 33.3}
+            dal = asraggedarray(dirname, na, metadata=md, overwrite=True)
             assert_array_equal(dal[0], na[0])
             assert_array_equal(dal[1], na[1])
+            self.assertDictEqual(dict(dal.metadata), md)
 
 
 class ClassCopyRaggedArray(unittest.TestCase):
@@ -70,7 +72,7 @@ class DeleteRaggedArray(unittest.TestCase):
             dalpath = Path(dirname).joinpath('temp.dal')
             dal = create_raggedarray(dalpath, atom=(2,), overwrite=True)
             delete_raggedarray(dal)
-            assert_equal(len(os.listdir(dirname)), 0)
+            self.assertEqual(len(os.listdir(dirname)), 0)
 
 
 # this is already tested with simple Arrays, so a brief check will suffice
@@ -83,4 +85,4 @@ class MetaData(unittest.TestCase):
                                      metadata=md, accessmode='r+',
                                      overwrite=True)
 
-            assert_equal(dict(dal.metadata), md)
+            self.assertDictEqual(dict(dal.metadata), md)
