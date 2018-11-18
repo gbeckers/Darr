@@ -1,7 +1,6 @@
 import os
 import unittest
 from pathlib import Path
-import warnings
 
 import numpy as np
 from numpy.testing import assert_equal, assert_array_equal
@@ -116,7 +115,7 @@ class AsArray(unittest.TestCase):
         with tempdir() as dirname1, tempdir() as dirname2:
             a = np.arange(1024, dtype='int64').reshape(2, -1)
             dar1 = asarray(path=dirname1, array=a, overwrite=True)
-            dar2 = asarray(path=dirname1, array=a, chunklen=5, overwrite=True)
+            dar2 = asarray(path=dirname2, array=a, chunklen=5, overwrite=True)
             assert_array_equal(dar1[:], dar2[:])
 
     def test_asarraywronginput(self):
@@ -201,14 +200,14 @@ class TestArray(unittest.TestCase):
 
     def test_instantiatefromexistingpath(self):
         with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(12,),
-                               dtype='int64', overwrite=True)
-            dar = Array(path=dirname)
+            create_array(path=dirname, shape=(12,),
+                         dtype='int64', overwrite=True)
+            Array(path=dirname)
 
     def test_instantiatefromnonexistingpath(self):
         with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(12,),
-                               dtype='int64', overwrite=True)
+            create_array(path=dirname, shape=(12,),
+                         dtype='int64', overwrite=True)
         with self.assertRaises(OSError):
             Array(path=dirname)
 
@@ -512,16 +511,14 @@ class TestIterView(unittest.TestCase):
             dar = create_array(path=dirname, shape=(10,),
                                dtype='int64', overwrite=True)
             with self.assertRaises(ValueError):
-                chunks = [f for f in dar.iterview(chunklen=2, startindex=5, \
-                                                  endindex=2)]
+                [f for f in dar.iterview(chunklen=2, startindex=5, endindex=2)]
 
     def test_iterviewendindextoohigh(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(5,),
                                dtype='int64', overwrite=True)
             with self.assertRaises(ValueError):
-                chunks = [f for f in dar.iterview(chunklen=2, startindex=1, \
-                                                  endindex=8)]
+                [f for f in dar.iterview(chunklen=2, startindex=1, endindex=8)]
 
 
 class MetaData(unittest.TestCase):
@@ -573,10 +570,10 @@ class MetaData(unittest.TestCase):
             md = {'fs': 20000, 'x': 33.3}
             dar = create_array(path=dirname, shape=(0, 2),
                                dtype='int64', metadata=md, overwrite=True)
-            k, v = dar.metadata.popitem()
+            k, _ = dar.metadata.popitem()
             keys = dar.metadata.keys()
             self.assertNotIn(k, keys)
-            k, v = dar.metadata.popitem()
+            dar.metadata.popitem()
             self.assertEqual(dar._metadata.path.exists(), False)
 
     def test_metadataaccessmodereadwrite(self):

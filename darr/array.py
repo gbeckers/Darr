@@ -387,7 +387,7 @@ class Array(BaseDataDir):
         self._memmap = None
         self._valuesfd = None
         self._check_arrayinfoconsistency()
-        with self._open_array() as (ar, fd):
+        with self._open_array() as (ar, _):
             self._dtype = ar.dtype
             self._shape = ar.shape
             self._size = ar.size
