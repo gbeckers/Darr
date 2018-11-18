@@ -115,10 +115,10 @@ class BaseDataDir(object):
             f.write(text)
             f.flush()
 
-    def _sha256(self, filename, blocksize=2 ** 20):
+    def _sha256(self, filepath, blocksize=2 ** 20):
         """Compute the checksum of a file."""
         m = hashlib.sha256()
-        with open(self._path.joinpath(filename), 'rb') as f:
+        with open(filepath, 'rb') as f:
             while True:
                 buf = f.read(blocksize)
                 if not buf:
@@ -130,7 +130,9 @@ class BaseDataDir(object):
         filenames = self._filenames
         checksums = {}
         for filename in filenames:
-            checksums[filename] = self._sha256(filename)
+            filepath = self._path.joinpath(filename)
+            if filepath.exists():
+                checksums[filename] = self._sha256(filename)
         return checksums
 
     @contextmanager
