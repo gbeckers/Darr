@@ -25,7 +25,7 @@ import numpy as np
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypes, \
     endiannesstypes
 from .readcode import readcode
-from .utils import fit_chunks, sha256
+from .utils import fit_chunks, filesha256
 from ._version import get_versions
 
 
@@ -117,7 +117,7 @@ class BaseDataDir(object):
     def _sha256checksums(self):
         checksums = {}
         for filepath in self.path.iterdir():
-            checksums[str(filepath)] = sha256(filepath)
+            checksums[str(filepath)] = filesha256(filepath)
         return checksums
 
     @contextmanager
