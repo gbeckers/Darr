@@ -4,25 +4,27 @@ from pathlib import Path
 from darr.array import BaseDataDir
 from .utils import tempdir
 
+@contextmanager
+def create_testbasedatadir(filename='test.json', datadict=None):
+    if datadict is None:
+        datadict = {'a': 1}
+    with tempdir() as dirname:
+        bdddirname = Path(dirname) / 'data.bd'
+        bdddirname.mkdir()
+        bdd = BaseDataDir(bdddirname)
+        bdd._write_jsondict(filename, datadict)
+        yield bdd
+
 class TestArchiving(unittest.TestCase):
 
-    @contextmanager
-    def create_basedatadir(self):
-        with tempdir() as dirname:
-            bdddirname = Path(dirname) / 'data.bd'
-            bdddirname.mkdir()
-            bdd = BaseDataDir(bdddirname)
-            bdd._write_jsondict('test.json', {'a': 1})
-            yield bdd
-
     def test_archive(self):
-        with self.create_basedatadir() as bdd:
+        with create_testbasedatadir() as bdd:
             archivepath = bdd.archive()
             self.assertEqual(archivepath , Path(str(bdd.path) + '.tar.xz'))
             self.assertEqual(archivepath.exists(), True)
 
     def test_archiveoverwrite(self):
-        with self.create_basedatadir() as bdd:
+        with create_testbasedatadir() as bdd:
             archivepath = bdd.archive()
             self.assertEqual(archivepath.exists(), True)
             bdd.archive(overwrite=True)
@@ -30,5 +32,13 @@ class TestArchiving(unittest.TestCase):
             self.assertRaises(OSError, bdd.archive, overwrite=False)
 
     def test_archivewrongcompressiontype(self):
-        with self.create_basedatadir() as bdd:
+        with create_testbasedatadir() as bdd:
             self.assertRaises(ValueError, bdd.archive, compressiontype='z7')
+
+    def test_sha256checksums(self):
+        datadict = {'a': 1, 'b': "abcd"}
+        with create_testbasedatadir(datadict=datadict) as bdd:
+            checksums = bdd.sha256
+
+
+
