@@ -1,3 +1,4 @@
+import hashlib
 
 def fit_chunks(totallen, chunklen, steplen=None):
     """
@@ -33,3 +34,14 @@ def fit_chunks(totallen, chunklen, steplen=None):
     newsize = nchunks * steplen + (chunklen - steplen)
     remainder = totallen - newsize
     return nchunks, newsize, remainder
+
+def sha256(self, filepath, blocksize=2 ** 20):
+    """Compute the checksum of a file."""
+    m = hashlib.sha256()
+    with open(filepath, 'rb') as f:
+        while True:
+            buf = f.read(blocksize)
+            if not buf:
+                break
+            m.update(buf)
+    return m.hexdigest()

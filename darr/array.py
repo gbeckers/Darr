@@ -11,7 +11,6 @@ array from disk, use **delete_array**.
 """
 
 import distutils.version
-import hashlib
 import json
 import os
 import sys
@@ -26,7 +25,7 @@ import numpy as np
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypes, \
     endiannesstypes
 from .readcode import readcode
-from .utils import fit_chunks
+from .utils import fit_chunks, sha256
 from ._version import get_versions
 
 
@@ -115,21 +114,10 @@ class BaseDataDir(object):
             f.write(text)
             f.flush()
 
-    def _sha256(self, filepath, blocksize=2 ** 20):
-        """Compute the checksum of a file."""
-        m = hashlib.sha256()
-        with open(filepath, 'rb') as f:
-            while True:
-                buf = f.read(blocksize)
-                if not buf:
-                    break
-                m.update(buf)
-        return m.hexdigest()
-
     def _sha256checksums(self):
         checksums = {}
         for filepath in self.path.iterdir():
-            checksums[str(filepath)] = self._sha256(filepath)
+            checksums[str(filepath)] = sha256(filepath)
         return checksums
 
     @contextmanager
