@@ -15,25 +15,17 @@ def assert_array_identical(x, y):
     assert_equal(x.dtype, y.dtype)
     assert_equal(x.shape, y.shape)
 
-def check_arrayequaltoasarray(ndarray):
-    """Tests if asarray creates an array of same shape and dtype and same
-    contents as input."""
-    with tempdir() as dirname:
-        dar = asarray(path=dirname, array=ndarray, overwrite=True)
-        assert_array_equal(dar[:], ndarray)
-        assert_equal(dar.dtype, ndarray.dtype)
-        assert_equal(dar.shape, ndarray.shape)
-
-def check_arrayequaltocreatearray(ndarray, shape, dtype=None, chunklen=None):
-    with tempdir() as dirname:
-        dar = create_array(path=dirname, shape=shape,
-                           dtype=dtype, chunklen=chunklen,
-                           overwrite=True)
-        if dtype is not None:
-            ndarray = ndarray.astype(dtype)
-        assert_array_identical(ndarray, dar[:])
 
 class AsArray(unittest.TestCase):
+
+    def check_arrayequaltoasarray(self, ndarray):
+        """Tests if asarray creates an array of same shape and dtype and same
+        contents as input."""
+        with tempdir() as dirname:
+            dar = asarray(path=dirname, array=ndarray, overwrite=True)
+            assert_array_equal(dar[:], ndarray)
+            assert_equal(dar.dtype, ndarray.dtype)
+            assert_equal(dar.shape, ndarray.shape)
 
     def test_numberint(self):
         with tempdir() as dirname:
@@ -47,47 +39,37 @@ class AsArray(unittest.TestCase):
 
     def test_onedimensional(self):
         ndarray = np.arange(24)
-        check_arrayequaltoasarray(ndarray)
+        self.check_arrayequaltoasarray(ndarray)
 
     def test_twodimensional(self):
         ndarray = np.arange(24).reshape(12, 2)
-        check_arrayequaltoasarray(ndarray)
+        self.check_arrayequaltoasarray(ndarray)
 
     def test_threedimensional(self):
         ndarray = np.arange(24).reshape(4, 2, 3)
-        check_arrayequaltoasarray(ndarray)
+        self.check_arrayequaltoasarray(ndarray)
 
     def test_numericdtypes(self):
         dtypes = numtypes.keys()
         for dtype in dtypes:
             ndarray = np.arange(24, dtype=dtype)
-            check_arrayequaltoasarray(ndarray)
+            self.check_arrayequaltoasarray(ndarray)
 
     def test_fortranorder(self):
         ndarray = np.asarray(np.arange(24, dtype='float64'), order='F')
-        check_arrayequaltoasarray(ndarray)
+        self.check_arrayequaltoasarray(ndarray)
 
     def test_corder(self):
         ndarray = np.asarray(np.arange(24, dtype='float64'), order='C')
-        check_arrayequaltoasarray(ndarray)
+        self.check_arrayequaltoasarray(ndarray)
 
     def test_littleendian(self):
         ndarray = np.arange(24, dtype='<f4')
-        check_arrayequaltoasarray(ndarray)
+        self.check_arrayequaltoasarray(ndarray)
 
     def test_bigendian(self):
         ndarray = np.arange(24, dtype='>f4')
-        check_arrayequaltoasarray(ndarray)
-
-    def test_emptyarray(self):
-        ndarray = np.zeros(0, dtype='float64')
-        check_arrayequaltocreatearray(ndarray=ndarray, shape=(0,),
-                                      dtype='float64')
-
-    def test_emptyarraydifferentdtype(self):
-        ndarray = np.zeros(0, dtype='float64')
-        check_arrayequaltocreatearray(ndarray=ndarray, shape=(0,),
-                                      dtype='int64')
+        self.check_arrayequaltoasarray(ndarray)
 
     def test_overwritearray(self):
         with tempdir() as dirname:
@@ -142,58 +124,78 @@ class AsArray(unittest.TestCase):
 
 class CreateDiskArray(unittest.TestCase):
 
+    def check_arrayequaltocreatearray(self, ndarray, shape, dtype=None,
+                                      chunklen=None):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=shape,
+                               dtype=dtype, chunklen=chunklen,
+                               overwrite=True)
+            if dtype is not None:
+                ndarray = ndarray.astype(dtype)
+            assert_array_identical(ndarray, dar[:])
+
     def test_zerosfloat64default(self):
         shape = (12,)
         ndarray = np.zeros(shape, dtype='float64')
-        check_arrayequaltocreatearray(ndarray=ndarray, shape=shape)
+        self.check_arrayequaltocreatearray(ndarray=ndarray, shape=shape)
 
     def test_twodimensional(self):
         shape = (12, 2)
         ndarray = np.zeros(shape, dtype='float64')
-        check_arrayequaltocreatearray(ndarray=ndarray, shape=shape)
+        self.check_arrayequaltocreatearray(ndarray=ndarray, shape=shape)
 
     def test_threedimensional(self):
         shape = (4, 2, 3)
         ndarray = np.zeros(shape, dtype='float64')
-        check_arrayequaltocreatearray(ndarray=ndarray, shape=shape)
+        self.check_arrayequaltocreatearray(ndarray=ndarray, shape=shape)
 
     # split out manually?
     def test_numericdtypes(self):
         dtypes = numtypes.keys()
         for dtype in dtypes:
             ndarray = np.zeros(24, dtype=dtype)
-            check_arrayequaltocreatearray(ndarray=ndarray, shape=(24,),
-                                          dtype=dtype)
+            self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(24,),
+                                               dtype=dtype)
+
+    def test_emptyarray(self):
+        ndarray = np.zeros(0, dtype='float64')
+        self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(0,),
+                                           dtype='float64')
+
+    def test_emptyarraydifferentdtype(self):
+        ndarray = np.zeros(0, dtype='float64')
+        self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(0,),
+                                           dtype='int64')
 
     def test_chunked(self):
         ndarray = np.zeros(12, dtype='float64')
         for chunklen in (1, 5, 6, 11, 12, 13):
-            check_arrayequaltocreatearray(ndarray=ndarray, shape=(12,),
-                                          chunklen=chunklen)
+            self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(12,),
+                                               chunklen=chunklen)
         ndarray = np.zeros(13, dtype='float64')
         for chunklen in (1, 6, 7, 12, 13, 14):
-            check_arrayequaltocreatearray(ndarray=ndarray, shape=(13,),
-                                          chunklen=chunklen)
+            self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(13,),
+                                               chunklen=chunklen)
 
     def test_chunkedthreedimensional(self):
         ndarray = np.zeros((12,3,7), dtype='float64')
         for chunklen in (1, 5, 6, 11, 12, 13):
-            check_arrayequaltocreatearray(ndarray=ndarray, shape=(12, 3, 7),
-                                          chunklen=chunklen*21)
+            self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(12, 3, 7),
+                                               chunklen=chunklen*21)
         ndarray = np.zeros((13,3,7), dtype='float64')
         for chunklen in (1, 6, 7, 12, 13, 14):
-            check_arrayequaltocreatearray(ndarray=ndarray, shape=(13, 3, 7),
-                                          chunklen=chunklen*21)
+            self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(13, 3, 7),
+                                               chunklen=chunklen*21)
 
     def test_toosmallchunklen(self):
         ndarray = np.zeros((12, 3, 7), dtype='float64')
-        check_arrayequaltocreatearray(ndarray=ndarray, shape=(12, 3, 7),
-                                      chunklen=1)
+        self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(12, 3, 7),
+                                           chunklen=1)
 
     def test_emptyarray(self):
         ndarray = np.zeros((0,3,7), dtype='float64')
-        check_arrayequaltocreatearray(ndarray=ndarray, shape=(0, 3, 7),
-                                      chunklen=1)
+        self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(0, 3, 7),
+                                           chunklen=1)
 
 
 class TestArray(unittest.TestCase):
