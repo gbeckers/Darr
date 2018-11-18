@@ -1,6 +1,8 @@
 import os
 import unittest
 from pathlib import Path
+import tempfile
+import shutil
 
 import numpy as np
 from numpy.testing import assert_equal, assert_array_equal
@@ -18,108 +20,125 @@ def assert_array_identical(x, y):
 
 class AsArray(unittest.TestCase):
 
+    def setUp(self):
+        self.tempdirname1 = tempfile.mkdtemp()
+        self.tempdirname2 = tempfile.mkdtemp()
+
+    def tearDown(self):
+        shutil.rmtree(self.tempdirname1)
+        shutil.rmtree(self.tempdirname2)
+
     def check_arrayequaltoasarray(self, ndarray):
         """Tests if asarray creates an array of same shape and dtype and same
         contents as input."""
-        with tempdir() as dirname:
-            dar = asarray(path=dirname, array=ndarray, overwrite=True)
-            assert_array_equal(dar[:], ndarray)
-            self.assertEqual(dar.dtype, ndarray.dtype)
-            self.assertEqual(dar.shape, ndarray.shape)
+        dar = asarray(path=self.tempdirname1, array=ndarray, overwrite=True)
+        ndarray = np.asarray(ndarray) # could be list or tuple
+        assert_array_equal(dar[:], ndarray)
+        self.assertEqual(dar.dtype, ndarray.dtype)
+        self.assertEqual(dar.shape, ndarray.shape)
 
-    def test_numberint(self):
-        with tempdir() as dirname:
-            dar = asarray(path=dirname, array=1, overwrite=True)
-            self.assertEqual(dar[0], 1)
+    def test_asarraynumberint(self):
+        dar = asarray(path=self.tempdirname1, array=1, overwrite=True)
+        self.assertEqual(dar[0], 1)
 
-    def test_numberfloat(self):
-        with tempdir() as dirname:
-            dar = asarray(path=dirname, array=1.0, overwrite=True)
-            self.assertEqual(dar[0], 1.0)
+    def test_asarraynumberfloat(self):
+        dar = asarray(path=self.tempdirname1, array=1.0, overwrite=True)
+        self.assertEqual(dar[0], 1.0)
 
-    def test_onedimensional(self):
+    def test_asarrayonedimensionalndarray(self):
         ndarray = np.arange(24)
         self.check_arrayequaltoasarray(ndarray)
 
-    def test_twodimensional(self):
+    def test_asarraytwodimensionalndarray(self):
         ndarray = np.arange(24).reshape(12, 2)
         self.check_arrayequaltoasarray(ndarray)
 
-    def test_threedimensional(self):
+    def test_asarraythreedimensionalndarray(self):
         ndarray = np.arange(24).reshape(4, 2, 3)
         self.check_arrayequaltoasarray(ndarray)
 
-    def test_numericdtypes(self):
+    def test_asarrayonedimensionallist(self):
+        ndarray = [1, 2, 3, 4]
+        self.check_arrayequaltoasarray(ndarray)
+
+    def test_asarraytwodimensionallist(self):
+        ndarray = [[1, 2, 3, 4],
+                   [1, 2, 3, 4]]
+        self.check_arrayequaltoasarray(ndarray)
+
+    def test_asarraythreedimensionallist(self):
+        ndarray = [[[1, 2, 3, 4],
+                    [1, 2, 3, 4]],
+                   [[1, 2, 3, 4],
+                    [1, 2, 3, 4]]]
+        self.check_arrayequaltoasarray(ndarray)
+
+    def test_asarraynumericdtypes(self):
         dtypes = numtypes.keys()
         for dtype in dtypes:
-            ndarray = np.arange(24, dtype=dtype)
-            self.check_arrayequaltoasarray(ndarray)
+            with self.subTest(dtype=dtype):
+                ndarray = np.arange(24, dtype=dtype)
+                self.check_arrayequaltoasarray(ndarray)
 
-    def test_fortranorder(self):
+    def test_asarrayfortranorder(self):
         ndarray = np.asarray(np.arange(24, dtype='float64'), order='F')
         self.check_arrayequaltoasarray(ndarray)
 
-    def test_corder(self):
+    def test_asarraycorder(self):
         ndarray = np.asarray(np.arange(24, dtype='float64'), order='C')
         self.check_arrayequaltoasarray(ndarray)
 
-    def test_littleendian(self):
+    def test_asarraylittleendian(self):
         ndarray = np.arange(24, dtype='<f4')
         self.check_arrayequaltoasarray(ndarray)
 
-    def test_bigendian(self):
+    def test_asarraybigendian(self):
         ndarray = np.arange(24, dtype='>f4')
         self.check_arrayequaltoasarray(ndarray)
 
-    def test_overwritearray(self):
-        with tempdir() as dirname:
-            a = np.zeros((5,), dtype='float64')
-            dar = asarray(path=dirname, array=a, overwrite=True)
-            b = np.ones((4,2), dtype='uint8')
-            dar = asarray(path=dirname, array=b, overwrite=True)
-            assert_array_identical(dar[:], b)
+    def test_asarrayoverwrite(self):
+        a = np.zeros((5,), dtype='float64')
+        _ = asarray(path=self.tempdirname1, array=a, overwrite=True)
+        b = np.ones((4,2), dtype='uint8')
+        dar = asarray(path=self.tempdirname1, array=b, overwrite=True)
+        assert_array_identical(dar[:], b)
 
-    def test_writingsmallerchunks(self):
-        with tempdir() as dirname:
-            a = np.arange(1024, dtype='int64').reshape(2,-1)
-            dar = asarray(path=dirname, array=a, chunklen=4, overwrite=True)
-            assert_equal(a, dar[:])
-            dar = asarray(path=dirname, array=a, chunklen=5, overwrite=True)
-            assert_equal(a, dar[:])
+    def test_asarraywritingsmallerchunks(self):
+        a = np.arange(1024, dtype='int64').reshape(2,-1)
+        dar = asarray(path=self.tempdirname1, array=a, chunklen=4, overwrite=True)
+        assert_equal(a, dar[:])
+        dar = asarray(path=self.tempdirname1, array=a, chunklen=5, overwrite=True)
+        assert_equal(a, dar[:])
 
-    def test_writinglargerthanlenchunks(self):
-        with tempdir() as dirname:
-            a = np.arange(1024, dtype='int64').reshape(2, -1)
-            dar = asarray(path=dirname, array=a, chunklen=4096, overwrite=True)
-            assert_equal(a, dar[:])
+    def test_asarraywritinglargerthanlenchunks(self):
+        a = np.arange(1024, dtype='int64').reshape(2, -1)
+        dar = asarray(path=self.tempdirname1, array=a, chunklen=4096, overwrite=True)
+        assert_equal(a, dar[:])
 
     def test_asarrayarray(self):
-        with tempdir() as dirname1, tempdir() as dirname2:
-            a = np.arange(1024, dtype='int64').reshape(2, -1)
-            dar1 = asarray(path=dirname1, array=a, overwrite=True)
-            dar2 = asarray(path=dirname2, array=a, chunklen=5, overwrite=True)
-            assert_array_equal(dar1[:], dar2[:])
+        a = np.arange(1024, dtype='int64').reshape(2, -1)
+        dar1 = asarray(path=self.tempdirname1, array=a, overwrite=True)
+        dar2 = asarray(path=self.tempdirname2, array=a, chunklen=5, overwrite=True)
+        assert_array_equal(dar1[:], dar2[:])
 
     def test_asarraywronginput(self):
-        with tempdir() as dirname:
-            a = 'text'
-            self.assertRaises(TypeError, asarray, path=dirname, array=a,
-                              chunklen=32, overwrite=True)
+        a = 'text'
+        self.assertRaises(TypeError, asarray, path=self.tempdirname1, array=a,
+                          chunklen=32, overwrite=True)
+
     def test_asarraykeepattrs(self):
         class AttrList(list):
             attrs = {'a': 1, 'b': 2}
-        with tempdir() as dirname:
-            a = AttrList([0, 0, 0, 0])
-            dar = asarray(path=dirname, array=a, overwrite=True)
-            self.assertEqual(dict(dar.metadata), AttrList.attrs)
+        a = AttrList([0, 0, 0, 0])
+        dar = asarray(path=self.tempdirname1, array=a, overwrite=True)
+        self.assertEqual(dict(dar.metadata), AttrList.attrs)
 
     def test_asarraywarnsnondictattrs(self):
         class AttrList(list):
             attrs = [0]
-        with tempdir() as dirname:
-            a = AttrList([0, 0, 0, 0])
-            self.assertWarns(UserWarning, asarray, path=dirname, array=a,
-                             overwrite=True)
+        a = AttrList([0, 0, 0, 0])
+        self.assertWarns(UserWarning, asarray, path=self.tempdirname1, array=a,
+                         overwrite=True)
 
 
 class CreateDiskArray(unittest.TestCase):
@@ -201,26 +220,28 @@ class CreateDiskArray(unittest.TestCase):
 
 class TestArray(unittest.TestCase):
 
+    def setUp(self):
+        self.temparpath = tempfile.mkdtemp()
+        self.tempnonarpath = tempfile.mkdtemp()
+        self.tempar = create_array(path=self.temparpath, shape=(12,),
+                                   dtype='int64', metadata={'a': 1},
+                                   overwrite=True)
+
+    def tearDown(self):
+        shutil.rmtree(str(self.temparpath))
+        shutil.rmtree(str(self.tempnonarpath))
+
     def test_instantiatefromexistingpath(self):
-        with tempdir() as dirname:
-            create_array(path=dirname, shape=(12,),
-                         dtype='int64', overwrite=True)
-            Array(path=dirname)
+        Array(path=self.temparpath)
 
     def test_instantiatefromnonexistingpath(self):
-        with tempdir() as dirname:
-            create_array(path=dirname, shape=(12,),
-                         dtype='int64', overwrite=True)
-        with self.assertRaises(OSError):
-            Array(path=dirname)
+       with self.assertRaises(OSError):
+            Array(path=self.tempnonarpath)
 
     def test_setvalues(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(12,), fill=0,
-                               dtype='int64', overwrite=True)
-            assert_equal(dar[2:4],[0,0])
-            dar[2:4] = 1
-            assert_equal(dar[2:4], [1,1])
+        assert_equal(self.tempar[2:4],[0,0])
+        self.tempar[2:4] = 1
+        assert_equal(self.tempar[2:4], [1,1])
 
     def test_str(self):
         with tempdir() as dirname:
@@ -236,48 +257,28 @@ class TestArray(unittest.TestCase):
             self.assertEqual(repr(dar)[:18], 'darr array ([0, 0]')
 
     def test_setaccessmode(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
-                               dtype='int64', overwrite=True, accessmode='r')
-            self.assertEqual(dar.accessmode, 'r')
-            dar.accessmode = 'r+'
-            self.assertEqual(dar.accessmode, 'r+')
-            self.assertRaises(ValueError, setattr, dar, 'accessmode', 'w')
-            self.assertRaises(ValueError, setattr, dar, 'accessmode', 'a')
+        self.assertEqual(self.tempar.accessmode, 'r+')
+        self.tempar.accessmode = 'r'
+        self.assertEqual(self.tempar.accessmode, 'r')
+        self.assertRaises(ValueError, setattr, self.tempar, 'accessmode', 'w')
+        self.assertRaises(ValueError, setattr, self.tempar, 'accessmode', 'a')
 
     def test_itemsize(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
-                               dtype='int64', overwrite=True)
-            self.assertEqual(dar.itemsize, 8)
+        self.assertEqual(self.tempar.itemsize, 8)
 
     def test_nbytes(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
-                               dtype='int64', overwrite=True)
-            self.assertEqual(dar.nbytes, 2*8)
+        self.assertEqual(self.tempar.nbytes, 12*8)
 
     def test_mb(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
-                               dtype='int64', overwrite=True)
-            self.assertEqual(dar.mb, 2*8/1e6)
+        self.assertEqual(self.tempar.mb, 12*8/1e6)
 
     def test_size(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,2), fill=0,
-                               dtype='int64', overwrite=True)
-            self.assertEqual(dar.size, 4)
+        self.assertEqual(self.tempar.size, 12)
 
     def test_copy(self):
-        with tempdir() as dirname1, tempdir() as dirname2:
-            ndarray = np.arange(13, dtype='float64')
-            md = {'a': 1}
-            dar1 = asarray(path=dirname1, array=ndarray,
-                           metadata=md, overwrite=True)
-            dar2 = dar1.copy(path=dirname2, overwrite=True)
-            assert_array_equal(dar1[:], dar2[:])
-            self.assertEqual(dict(dar1.metadata), dict(dar2.metadata))
+        dar2 = self.tempar.copy(path=self.tempnonarpath, overwrite=True)
+        assert_array_equal(self.tempar[:], dar2[:])
+        self.assertEqual(dict(self.tempar.metadata), dict(dar2.metadata))
 
 
 class TestReadArrayDescr(unittest.TestCase):
@@ -360,46 +361,44 @@ class TestConsistency(unittest.TestCase):
 
 class IterView(unittest.TestCase):
 
+    def setUp(self):
+        self.tempearpath = tempfile.mkdtemp() # even array
+        self.tempoarpath = tempfile.mkdtemp()  # odd array
+        self.tempnonarpath = tempfile.mkdtemp()
+        self.tempear = create_array(path=self.tempearpath, shape=(12,),
+                                    dtype='int64', metadata={'a': 1},
+                                    overwrite=True)
+        self.tempoar = create_array(path=self.tempearpath, shape=(13,),
+                                    dtype='int64', metadata={'a': 1},
+                                    overwrite=True)
+
+    def tearDown(self):
+        shutil.rmtree(str(self.tempearpath))
+        shutil.rmtree(str(self.tempoarpath))
+        shutil.rmtree(str(self.tempnonarpath))
+
     def test_defaultparams_fit(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(12,),
-                               dtype='int64', overwrite=True)
-            l = [c for c in dar.iterview(chunklen=2)]
-            assert_equal(len(l), 6)
-            assert_array_equal(np.concatenate(l), dar[:])
-            del l # otherwise file is still in use and may not be removed
-            del dar
+        l = [c for c in self.tempear.iterview(chunklen=2)]
+        assert_equal(len(l), 6)
+        assert_array_equal(np.concatenate(l), self.tempear[:])
+
 
     def test_remainderfalse_fit(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(12,),
-                               dtype='int64', overwrite=True)
-            l = [c for c in dar.iterview(chunklen=2, include_remainder=False)]
+            l = [c for c in self.tempear.iterview(chunklen=2,
+                                                  include_remainder=False)]
             assert_equal(len(l), 6)
-            assert_array_equal(np.concatenate(l), dar[:])
-            del l # otherwise file is still in use and may not be removed
-            del dar
+            assert_array_equal(np.concatenate(l), self.tempear[:])
 
     def test_defaultparams_nofit(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(13,),
-                               dtype='int64', overwrite=True)
-            l = [c for c in dar.iterview(chunklen=2)]
+            l = [c for c in self.tempoar.iterview(chunklen=2)]
             assert_equal(len(l), 7)
-            assert_array_equal(np.concatenate(l), dar[:])
-            del l # otherwise file is still in use and may not be removed
-            del dar
+            assert_array_equal(np.concatenate(l), self.tempoar[:])
 
     def test_remainderfalse_nofit(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(13,),
-                               dtype='int64', overwrite=True)
             l = [c for c in
-                 dar.iterview(chunklen=2, include_remainder=False)]
+                 self.tempoar.iterview(chunklen=2, include_remainder=False)]
             assert_equal(len(l), 6)
-            assert_array_equal(np.concatenate(l), dar[:12])
-            del l # otherwise file is still in use and may not be removed
-            del dar
+            assert_array_equal(np.concatenate(l), self.tempoar[:12])
 
 
 class AppendData(unittest.TestCase):

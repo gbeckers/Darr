@@ -438,7 +438,7 @@ class Array(BaseDataDir):
         return values
 
     def __setitem__(self, index, value):
-        with self._open_array() as (ar, fd):
+        with self._open_array() as (ar, _):
             self.check_arraywriteable()
             ar[index] = value
 
