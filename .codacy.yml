@@ -1,0 +1,7 @@
+# Config file for automatic testing at codacy.com
+---
+exclude_paths:
+  - 'darr/_version.py'
+  - 'tests/*'
+  - 'setup.py'
+  - 'versioneer.py'
