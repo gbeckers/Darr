@@ -24,8 +24,8 @@ class AsArray(unittest.TestCase):
         with tempdir() as dirname:
             dar = asarray(path=dirname, array=ndarray, overwrite=True)
             assert_array_equal(dar[:], ndarray)
-            assert_equal(dar.dtype, ndarray.dtype)
-            assert_equal(dar.shape, ndarray.shape)
+            self.assertEqual(dar.dtype, ndarray.dtype)
+            self.assertEqual(dar.shape, ndarray.shape)
 
     def test_numberint(self):
         with tempdir() as dirname:
@@ -133,6 +133,7 @@ class CreateDiskArray(unittest.TestCase):
             if dtype is not None:
                 ndarray = ndarray.astype(dtype)
             assert_array_identical(ndarray, dar[:])
+            self.assertEqual(shape, dar.shape)
 
     def test_zerosfloat64default(self):
         shape = (12,)
