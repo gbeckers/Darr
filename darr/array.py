@@ -127,12 +127,9 @@ class BaseDataDir(object):
         return m.hexdigest()
 
     def _sha256checksums(self):
-        filenames = self._filenames
         checksums = {}
-        for filename in filenames:
-            filepath = self._path.joinpath(filename)
-            if filepath.exists():
-                checksums[filename] = self._sha256(filename)
+        for filepath in self.path.iterdir():
+            checksums[str(filepath)] = self._sha256(filepath)
         return checksums
 
     @contextmanager
