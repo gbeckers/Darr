@@ -6,17 +6,16 @@ Darr
 
 
 Darr is a Python science library for storing and sharing numeric data arrays
-in a way that is open, simple, and self-explanatory. It also enables fast
-memory-mapped read/write access to such disk-based data, the ability to append
-data, and the flexible use of metadata. It is primarily designed for
-scientific use cases. Save and use your numeric arrays and metadata with one
-line of code while long-term and tool-independent accessibility and easy
-shareability is ensured.
+in a way that is open, simple, and self-explanatory. Save and use your numeric
+arrays and metadata with one line of code while long-term and tool-independent
+accessibility and easy shareability is ensured. In addition, Darr provides
+fast memory-mapped read/write access to such disk-based data, the ability to
+append data, and the flexible use of metadata.
 
-To avoid dependency on specific tools, Darr is based on a combination of
-flat binary and human-readable text files. It automatically saves a clear
-text description of how the data is stored, together with code for reading
-the specific data in a variety of current scientific data tools such as
+To maximize wide readability of your data, Darr is based on a combination of
+flat binary and human-readable text files. It automatically saves a
+description of how the data is stored, together with code for reading the
+specific data in a variety of current scientific data tools such as
 Python, R, Julia, IDL, Matlab, Maple, and Mathematica (see `example array
 <https://github.com/gbeckers/Darr/tree/master/examplearray.darr>`__).
 
@@ -38,7 +37,7 @@ Pro's:
    Octave/Matlab, GDL/IDL, and Mathematica.
 -  Supports **very large data arrays** through **memory-mapped** file
    access.
--  Data read/write access through **NumPy indexing** (see
+-  Data read/write access is simple through **NumPy indexing** (see
    `here <https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html>`__).
 -  Data is easily **appendable**.
 -  **Many numeric types** are supported: (u)int8-(u)int64,
