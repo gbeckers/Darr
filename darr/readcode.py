@@ -50,7 +50,7 @@ def readcoder(typedescr, shape, endianness, **kwargs):
     return ct + 'close(fileid)\n'
 
 
-def readcodejulia(typedescr, shape, endianness, **kwargs):
+def readcodejulia0(typedescr, shape, endianness, **kwargs):
     # this does not work if numtype is complex and byteorder is different on
     # reading machine, will generate an error, so we accept this.
     shape = shape[::-1]  # darr is always C order, Julia is F order
@@ -58,6 +58,16 @@ def readcodejulia(typedescr, shape, endianness, **kwargs):
            f'a = map({endianness}, read(fileid, {typedescr}, {shape}));\n' \
            f'close(fileid);\n'
 
+def readcodejulia1(typedescr, shape, endianness, **kwargs):
+    # this does not work if numtype is complex and byteorder is different on
+    # reading machine, will generate an error, so we accept this.
+    shape = shape[::-1]  # darr is always C order, Julia is F order
+    dimstr = str(shape)[1:-1]
+    if dimstr.endswith(','):
+        dimstr = dimstr[:-1]
+    return f'fileid = open("arrayvalues.bin","r");\n' \
+           f'a = map({endianness}, read!(fileid, Array{{{typedescr}}}(undef, {dimstr})));\n' \
+           f'close(fileid);\n'
 
 def readcodeidl(typedescr, shape, endianness, **kwargs):
     shape = list(shape[::-1])
@@ -86,7 +96,7 @@ def readcodemaple(typedescr, shape, endianness, **kwargs):
 
 readcodefunc = {
         'idl': readcodeidl,
-        'julia': readcodejulia,
+        'julia': readcodejulia1,
         'mathematica': readcodemathematica,
         'matlab': readcodematlab,
         'maple': readcodemaple,

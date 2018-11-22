@@ -46,10 +46,10 @@ fileid = fopen('arrayvalues.bin');
 a = fread(fileid, [2, 1024], '*float64', 'ieee-le');
 fclose(fileid);
 
-Julia:
-------
+Julia (version >= 1.0):
+-----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read(fileid, Float64, (2, 1024)));
+a = map(ltoh, read!(fileid, Array{Float64}(undef, 2, 1024)));
 close(fileid);
 
 IDL/GDL:
