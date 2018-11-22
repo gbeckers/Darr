@@ -22,7 +22,8 @@ flat binary and human-readable text files. It automatically saves a
 description of how the data is stored, together with code for reading the
 specific data in a variety of current scientific data tools such as
 Python, R, Julia, IDL, Matlab, Maple, and Mathematica  (see 
-[example array](https://github.com/gbeckers/Darr/tree/master/examplearray.da)).
+[example array](https://github.com/gbeckers/Darr/tree/master/examplearray
+.darr)).
 
 Darr is currently pre-1.0, still undergoing significant development.
 

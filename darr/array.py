@@ -1328,15 +1328,14 @@ def readcodetxt(da):
 def wrap(s):
     return textwrap.fill(s, width=98, replace_whitespace=False)
 
-def numtypedescriptiontxt(da, width=98):
+def numtypedescriptiontxt(da):
     """Returns a paragraph of text that describes Darr array type and layout
     information, as well as some additional info on how metadata is stored etc.
 
     Parameters
     ----------
     da: Darr array
-    width: int
-        Maximum width text lines. Default is 98.
+
 
     """
     d = da._arrayinfo
