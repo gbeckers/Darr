@@ -16,8 +16,8 @@ in a way that is open, simple, and self-explanatory. Save and use
 your numeric arrays and metadata with one line of code while long-term and
 tool-independent accessibility and easy shareability is ensured. In
 addition, Darr provides fast memory-mapped read/write access to such
-disk-based data and the ability to append data, enabling arrays that are
-larger than available RAM.
+disk-based data and the ability to append data, , so that arrays may be
+larger than available RAM..
 
 To maximize wide readability of your data, Darr is based on a combination of
 flat binary and human-readable text files. It automatically saves a
