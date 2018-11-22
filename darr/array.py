@@ -1355,7 +1355,7 @@ def numtypedescriptiontxt(da):
     s = wrap("This directory contains a numeric array. The array can be "
              "read in Python using the Darr library "
              "(https://pypi.org/project/darr/), but if that is not available "
-             "it should be straighforward to read the data in other "
+             "it should be straightforward to read the data in other "
              "environments using the information below.") + "\n\n"
     s+= f"Description of data format\n==========================\n\n"
     s += wrap("The file 'arrayvalues.bin' contains a numeric array in the "
