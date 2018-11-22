@@ -28,8 +28,7 @@ Features
 
 Pro's:
 
--  **Transparent data format** based on **flat binary** and **text**
-   files.
+-  Purely based on **flat binary** and **text** files, tool independence.
 -  **Human-readable explanation of how the binary data is stored** is
    saved in a README text file.
 -  Includes **examples of how to read the array** in popular
@@ -40,8 +39,8 @@ Pro's:
 -  Data read/write access is simple through **NumPy indexing** (see
    `here <https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html>`__).
 -  Data is easily **appendable**.
--  **Many numeric types** are supported: (u)int8-(u)int64,
-   float16-float64, complex64, complex128.
+-  **Many numeric types** are supported: (u)int8-(u)int64, float16-float64,
+   complex64, complex128.
 -  Easy use of **metadata**, stored in a separate
    `JSON <https://en.wikipedia.org/wiki/JSON>`__ text file.
 -  **Minimal dependencies**, only `NumPy <http://www.numpy.org/>`__.
@@ -52,8 +51,8 @@ Pro's:
 
 Con's:
 
--  **No direct access to compressed data**, although it is of course possible
-   to simply compress darr files for archiving purposes.
+-  **No compression**, although it is of course possible to compress darr files
+   for archiving purposes.
 -  **Inefficient (storage-wise) for very small arrays**. If you have a
    zillion small arrays, and storage space is a concern, use other approaches.
 
