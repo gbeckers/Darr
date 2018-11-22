@@ -15,6 +15,7 @@ import json
 import os
 import sys
 import tarfile
+import textwrap
 
 import warnings
 from contextlib import contextmanager
@@ -1324,14 +1325,18 @@ def readcodetxt(da):
             s += f"{heading}\n{'-'*len(heading)}\n{codetext}\n"
     return s
 
+def wrap(s):
+    return textwrap.fill(s, width=98, replace_whitespace=False)
 
-def numtypedescriptiontxt(da):
+def numtypedescriptiontxt(da, width=98):
     """Returns a paragraph of text that describes Darr array type and layout
     information, as well as some additional info on how metadata is stored etc.
 
     Parameters
     ----------
     da: Darr array
+    width: int
+        Maximum width text lines. Default is 98.
 
     """
     d = da._arrayinfo
@@ -1348,22 +1353,26 @@ def numtypedescriptiontxt(da):
                           'with memory address'
     else:
         raise ValueError(f'arrayorder type "{arrayorder}" unknown')
-    s = f"Description of data format\n" \
-        f"==========================\n\n" \
-        f"The file 'arrayvalues.bin' contains a numeric array in the " \
-        f"following format:\n\n" \
-        f"Numeric type: {typedescr}\n" \
-        f"Byte order: {endianness} ({endiannessdescr})\n"
+    s = wrap("This directory contains a numeric array. The array can be "
+             "read in Python using the Darr library "
+             "(https://pypi.org/project/darr/), but if that is not available "
+             "it should be straighforward to read the data in other "
+             "environments using the information below.") + "\n\n"
+    s+= f"Description of data format\n==========================\n\n"
+    s += wrap("The file 'arrayvalues.bin' contains a numeric array in the "
+              "following format:") + "\n\n"
+    s +=f"  Numeric type: {typedescr}\n" \
+        f"  Byte order: {endianness} ({endiannessdescr})\n"
     if da.ndim == 1:
-        s += f"Array length:  {shape[0]}\n"
+        s += f"  Array length: {shape[0]}\n"
     else:
-        s += f"Array dimensions:  {shape}\n"
-    s += f"Array order layout:  {arrayorder} ({arrayorderdescr})\n\n" \
-         f"The file only contains the raw binary values, without header " \
-         f"information.\n\n" \
-         f"Format details are also stored in json format in the separate " \
-         f"UTF-8 text file, 'arraydescription.json' to facilitate automatic " \
-         f"reading by a grogram.\n\n" \
-         f"If present, the file 'metadata.json' contains metadata in json " \
-         f"UTF-8 text format.\n\n"
+        s += f"  Array dimensions: {shape}\n"
+    s += f"  Array order layout:  {arrayorder} ({arrayorderdescr})\n\n"
+    s += wrap("The file only contains the raw binary values, without header "
+              "information.") + "\n\n"
+    s += wrap("Format details are also stored in json format in the separate "
+              "UTF-8 text file, 'arraydescription.json' to facilitate "
+              "automatic reading by a program.") + "\n\n"
+    s += wrap("If present, the file 'metadata.json' contains metadata in json "
+              "UTF-8 text format.") + "\n\n"
     return s
