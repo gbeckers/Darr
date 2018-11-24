@@ -1,6 +1,6 @@
 - conda
 - split classes in array over different modules
 - add axis labels?
-- support zarr implicitly (i.e. without depending on the package)
+
 
 
