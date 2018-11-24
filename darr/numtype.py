@@ -43,7 +43,8 @@ def arrayinfotodtype(arrayinfo):
 
     Returns
     -------
-    dtype description string that can be used to instantiate numpy arrays
+    str
+        dtype description string that can be used to instantiate numpy arrays
 
     """
 
@@ -55,8 +56,7 @@ def arrayinfotodtype(arrayinfo):
     if byteorder not in ('little', 'big'):
         raise ValueError(f"'{byteorder}' is not a valid order")
     endianness = {'big': '>', 'little': '<'}[byteorder]
-    strcode = np.dtype(numtype).str
-    return np.dtype(f'{endianness}{strcode[1:]}').str
+    return np.dtype(numtype).newbyteorder(endianness).str
 
 
 def arraynumtypeinfo(ndarray):
