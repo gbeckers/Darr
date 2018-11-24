@@ -23,8 +23,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypes, \
-    endiannesstypes
+from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcode import readcode
 from .utils import fit_chunks, filesha256
 from ._version import get_versions
@@ -1028,7 +1027,7 @@ def asarray(path, array, dtype=None, accessmode='r',
     firstchunk = next(chunkiter)
     if firstchunk.ndim == 0:  # we received a number instead of an array
         firstchunk = np.array(firstchunk, ndmin=1, dtype=dtype)
-    if firstchunk.dtype.name not in numtypes:
+    if firstchunk.dtype.name not in numtypesdescr.keys():
         raise TypeError(f"darr cannot have type "
                         f"'{firstchunk.dtype.name}'")
     dtype = firstchunk.dtype
@@ -1314,7 +1313,8 @@ def readcodetxt(da):
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),
         ("Matlab/Octave:", "matlab"),
-        ("Julia (version >= 1.0):", "julia"),
+        ("Julia (version < 1.0):", "julia0"),
+        ("Julia (version >= 1.0):", "julia1"),
         ("IDL/GDL:", "idl"),
         ("Mathematica:", "mathematica"),
         ("Maple:", "maple")
@@ -1340,10 +1340,13 @@ def numtypedescriptiontxt(da):
     """
     d = da._arrayinfo
     shape = d['shape']
-    typedescr = numtypes[d['numtype']]['descr']
+    typedescr = numtypesdescr[d['numtype']]
     arrayorder = d['arrayorder']
     endianness = d['byteorder']
-    endiannessdescr = endiannesstypes[endianness]['descr']
+    if endianness == 'little':
+        endiannessdescr = 'most-significant byte last'
+    elif endianness == 'big':
+        endiannessdescr = 'most-significant byte first'
     if arrayorder == 'C':
         arrayorderdescr = 'Row-major; last dimension varies most rapidly ' \
                           'with memory address'

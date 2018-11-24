@@ -7,7 +7,7 @@ import shutil
 import numpy as np
 from numpy.testing import assert_equal, assert_array_equal
 
-from darr.array import asarray, create_array, numtypes, Array, \
+from darr.array import asarray, create_array, numtypesdescr, Array, \
     truncate_array, BaseDataDir, delete_array, AppendDataError
 from .utils import tempdir
 
@@ -74,7 +74,7 @@ class AsArray(unittest.TestCase):
         self.check_arrayequaltoasarray(ndarray)
 
     def test_asarraynumericdtypes(self):
-        dtypes = numtypes.keys()
+        dtypes = numtypesdescr.keys()
         for dtype in dtypes:
             with self.subTest(dtype=dtype):
                 ndarray = np.arange(24, dtype=dtype)
@@ -171,7 +171,7 @@ class CreateDiskArray(unittest.TestCase):
 
     # split out manually?
     def test_numericdtypes(self):
-        dtypes = numtypes.keys()
+        dtypes = numtypesdescr.keys()
         for dtype in dtypes:
             ndarray = np.zeros(24, dtype=dtype)
             self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(24,),
