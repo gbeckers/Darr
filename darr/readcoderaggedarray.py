@@ -9,15 +9,18 @@ def readcodenumpymemmap(dra, varname='a'):
                                  filepath='values/arrayvalues.bin',
                                  varname='v')
     rcv = ''.join(rcv.splitlines(keepends=True)[1:]) # get rid of import
+    rff = 'def get_subarray(seqno):\n' \
+          '    starti, endi = i[seqno]\n' \
+          '    return v[starti:endi]\n'
     if len(dra) > 2:
        j, position = 2, 'third'
     elif len(dra) == 2:
         j, position = 1, 'second'
     else:
         j, position = 0, 'first'
-    rca = f'{varname} = v[i[{j},0]:i[{j},1]] # example to read {position} ' \
-        f'subarray\n'
-    return f'{rci}{rcv}{rca}'
+    rca = f'{varname} = get_subarray({j})  # example to read {position} ' \
+          f'subarray\n'
+    return f'{rci}{rcv}{rff}{rca}'
 
 
 def readcoder(dra, varname='a'):
@@ -27,7 +30,7 @@ def readcoder(dra, varname='a'):
     rcv = readcodearray.readcode(dra._values, 'R',
                                  filepath='values/arrayvalues.bin',
                                  varname='v')
-    corindex = "i[1,] = i[1,] + 1 # adjust index, R starts counting at 1\n"
+    corindex = "i[1,] = i[1,] + 1  # adjust index, R starts counting at 1\n"
 
     if len(dra) > 2:
        j, position = 3, 'third'
@@ -35,7 +38,7 @@ def readcoder(dra, varname='a'):
         j, position = 2, 'second'
     else:
         j, position = 1, 'first'
-    rca = f'{varname} = v[i[1,{j}]:i[2,{j}]] # example to read {position} ' \
+    rca = f'{varname} = v[i[1,{j}]:i[2,{j}]]  # example to read {position} ' \
         f'subarray\n'
     return f'{rci}{rcv}{corindex}{rca}'
 

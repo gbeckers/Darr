@@ -227,11 +227,11 @@ be retrieved if one knows its start and end index along the first axis of
 the values array. These indices (counting from 0) are stored in a different 
 2-dimensional array in the subdirectory 'indices'. The first axis of the 
 index array represents the sequence number of the subarray and the second 
-axis (length 2) represents start and end indices to be used on the values 
-array. 
+axis (length 2) represents start and ( non-inclusive) end indices to be used 
+on the values array. 
 
-So to read the n-th subarray, read the nt-h start and end indices 
-from the indices array ('starti, endi = indices[n]') and use these to read the 
+So to read the n-th subarray, read the nt-h start and end indices from the 
+indices array ('starti, endi = indices[n]') and use these to read the 
 array data from the values array ('array = values[starti:endi]').
 
 
