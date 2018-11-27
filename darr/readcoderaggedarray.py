@@ -30,17 +30,20 @@ def readcoder(dra, varname='a'):
     rcv = readcodearray.readcode(dra._values, 'R',
                                  filepath='values/arrayvalues.bin',
                                  varname='v')
-    corindex = "i[1,] = i[1,] + 1  # adjust index, R starts counting at 1\n"
-
+    rff = 'get_subarray <- function(seqno){\n' \
+          '    starti = i[seqno,1] + 1  # R starts counting from 1\n' \
+          '    endi = i[seqno,2]  # R has inclusive end index\n' \
+          '    return (v[starti:endi])\n' \
+          '}\n'
     if len(dra) > 2:
        j, position = 3, 'third'
     elif len(dra) == 2:
         j, position = 2, 'second'
     else:
         j, position = 1, 'first'
-    rca = f'{varname} = v[i[1,{j}]:i[2,{j}]]  # example to read {position} ' \
+    rca = f'{varname} = get_subarray({j})  # example to read {position} ' \
         f'subarray\n'
-    return f'{rci}{rcv}{corindex}{rca}'
+    return f'{rci}{rcv}{rff}{rca}'
 
 
 
