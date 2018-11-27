@@ -15,7 +15,7 @@ import json
 import os
 import sys
 import tarfile
-import textwrap
+
 
 import warnings
 from contextlib import contextmanager
@@ -25,7 +25,7 @@ import numpy as np
 
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode
-from .utils import fit_chunks, filesha256
+from .utils import fit_chunks, filesha256, wrap
 from ._version import get_versions
 
 
@@ -1325,8 +1325,6 @@ def readcodetxt(da):
             s += f"{heading}\n{'-'*len(heading)}\n{codetext}\n"
     return s
 
-def wrap(s):
-    return textwrap.fill(s, width=98, replace_whitespace=False)
 
 def numtypedescriptiontxt(da):
     """Returns a paragraph of text that describes Darr array type and layout

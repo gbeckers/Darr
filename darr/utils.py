@@ -1,4 +1,5 @@
 import hashlib
+import textwrap
 
 def fit_chunks(totallen, chunklen, steplen=None):
     """
@@ -45,3 +46,6 @@ def filesha256(filepath, blocksize=2 ** 20):
                 break
             m.update(buf)
     return m.hexdigest()
+
+def wrap(s):
+    return textwrap.fill(s, width=98, replace_whitespace=False)

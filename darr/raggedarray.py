@@ -10,6 +10,7 @@ from ._version import get_versions
 from .array import BaseDataDir, Array, MetaData, asarray, \
     create_basedir, check_accessmode, delete_array, create_array
 from .readcoderaggedarray import readcode
+from .utils import wrap
 
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
            'delete_raggedarray']
@@ -202,40 +203,37 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
 
 
 
-# FIXME include examples
-readmetxt = """Disk-based storage of a ragged array
-====================================
+readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
+            wrap('====================================') + '\n\n' + \
+            wrap('This directory is a data store for a numeric ragged array. '
+                 'This is a sequence of subarrays that all have the same '
+                 'shape except for one dimension. On disk, these subarrays '
+                 'are concatenated along their variable dimension. The data '
+                 'can be read in Python using the Darr library, but if that '
+                 'is not available, they can also be read in other '
+                 'environments with a little more effort.') + '\n\n' + \
+            wrap('There are two subdirectories, each containing an array '
+                 'stored in a self-explanatory format. See the READMEs in '
+                 'the corresponding directories to find out in detail out '
+                 'how. However, example code is provided below for a number '
+                 'of analysis environments, which in many cases is '
+                 'suffcient.') + '\n\n' + \
+            wrap('The subdirectory "values" holds the numerical data itself, '
+                 'where subarrays are simply appended along their variable '
+                 'length dimension (first axis). So the number of dimensions '
+                 'of the values array is one less than that of the ragged '
+                 'array. A particular subarray can be be retrieved using the '
+                 'appropriate start and end index along the first axis of the '
+                 'values array. These indices (counting from 0) are stored in '
+                 'a different 2-dimensional array in the subdirectory '
+                 '"indices". The first axis of the index array represents the '
+                 'sequence number of the subarray and the second axis '
+                 '(length 2) represents start and (non-inclusive) end '
+                 'indices to be used on the values array. To read the n-th '
+                 'subarray, read the nt-h start and end indices from the '
+                 'indices array and use these to read the array data from '
+                 'the values array.') + '\n\n'
 
-This directory is a data store for a numeric ragged array. This can be seen 
-as a sequence of subarrays that have the same shape except for one 
-dimension. On disk, these subarrays are concatenated along their variable 
-dimension. The data can easily be read using the Darr library in Python, 
-but if that is not available, they can also be read in other environments. 
-To do so, read below.
-
-There are two subdirectories, each containing an array stored in a simple 
-format that is easy to read. See the README's in the corresponding 
-directories to find out in detail out how. However, below example code is 
-provided for a number of analysis environment, which in many cases is 
-suffcient.
-
-The subdirectory 'values' holds the numerical data itself, where subarrays 
-are simply appended along their variable length dimension (first axis). So 
-the number of dimensions of the values array is one less than that of the 
-ragged array. Read the values array first. A particular subarray can be then 
-be retrieved if one knows its start and end index along the first axis of 
-the values array. These indices (counting from 0) are stored in a different 
-2-dimensional array in the subdirectory 'indices'. The first axis of the 
-index array represents the sequence number of the subarray and the second 
-axis (length 2) represents start and ( non-inclusive) end indices to be used 
-on the values array. 
-
-So to read the n-th subarray, read the nt-h start and end indices from the 
-indices array ('starti, endi = indices[n]') and use these to read the 
-array data from the values array ('array = values[starti:endi]').
-
-
-"""
 
 def readcodetxt(dra):
     """Returns text on how to read a Darr ragged array numeric binary data in
@@ -248,8 +246,9 @@ def readcodetxt(dra):
     """
 
     s = readmetxt
-    s += "Example code for reading the data\n" \
-         "=================================\n\n"
+    s += wrap(f'This ragged array has {len(dra)} subarrays. ') + '\n\n' + \
+         wrap(f'Example code for reading the data') + '\n' + \
+         wrap(f'=================================') + '\n\n'
     languages = (
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),

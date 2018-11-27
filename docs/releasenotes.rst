@@ -5,6 +5,7 @@ Version 0.1.10
 --------------
 - cleaned up checksum handling
 - refactored handling read code for other languages
+- read code for ragged arrays (experimental)
 
 Version 0.1.9
 -------------
