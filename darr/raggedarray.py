@@ -9,6 +9,7 @@ from ._version import get_versions
 
 from .array import BaseDataDir, Array, MetaData, asarray, \
     create_basedir, check_accessmode, delete_array, create_array
+from .readcoderaggedarray import readcode
 
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
            'delete_raggedarray']
@@ -103,11 +104,16 @@ class RaggedArray(BaseDataDir):
     def __len__(self):
         return self._indices.shape[0]
 
+    def _update_readmetxt(self):
+        txt = readcodetxt(self)
+        self._write_txt(self._readmefilename, txt)
+
     def append(self, array):
         size = len(array)
         endindex = self._values.shape[0]
         self._values.append(np.asarray(array, dtype=self.dtype))
         self._indices.append([[endindex, endindex + size]])
+        self._update_readmetxt()
 
     def copy(self, path, accessmode='r', overwrite=False):
         arrayiterable = (self[i] for i in range(len(self)))
@@ -170,7 +176,8 @@ def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
                            d=metadata, overwrite=overwrite)
     elif metadatapath.exists():  # no metadata but file exists, remove it
         metadatapath.unlink()
-    bd._write_txt(RaggedArray._readmefilename, readmetxt)
+    ra = RaggedArray(path=path, accessmode=accessmode)
+    ra._update_readmetxt()
     return RaggedArray(path=path, accessmode=accessmode)
 
 
@@ -207,17 +214,21 @@ but if that is not available, they can also be read in other environments.
 To do so, read below.
 
 There are two subdirectories, each containing an array stored in a simple 
-format that are easy to read. See the README's in the corresponding 
-directories to find out how. The subdirectory 'values' holds the numerical 
-data itself, where subarrays are simply appended along their variable length 
-dimension (first axis). So the number of dimensions of the values array is 
-one less than that of the ragged array. Read the values array first. A 
-particular subarray can be then be retrieved if one knows its start and end 
-index along the first axis of the values array. These indices (counting from 
-0) are stored in a different 2-dimensional array in the subdirectory 
-'indices'. The first axis of the index array represents the sequence number 
-of the subarray and the second axis (length 2) represents start and end 
-indices to be used on the values array.
+format that is easy to read. See the README's in the corresponding 
+directories to find out in detail out how. However, below example code is 
+provided for a number of analysis environment, which in many cases is 
+suffcient.
+
+The subdirectory 'values' holds the numerical data itself, where subarrays 
+are simply appended along their variable length dimension (first axis). So 
+the number of dimensions of the values array is one less than that of the 
+ragged array. Read the values array first. A particular subarray can be then 
+be retrieved if one knows its start and end index along the first axis of 
+the values array. These indices (counting from 0) are stored in a different 
+2-dimensional array in the subdirectory 'indices'. The first axis of the 
+index array represents the sequence number of the subarray and the second 
+axis (length 2) represents start and end indices to be used on the values 
+array. 
 
 So to read the n-th subarray, read the nt-h start and end indices 
 from the indices array ('starti, endi = indices[n]') and use these to read the 
@@ -226,6 +237,28 @@ array data from the values array ('array = values[starti:endi]').
 
 """
 
+def readcodetxt(dra):
+    """Returns text on how to read a Darr ragged array numeric binary data in
+    various programming languages.
+
+    Parameters
+    ----------
+    dra: Darr raggedarray
+
+    """
+
+    s = readmetxt
+    s += "Example code for reading the data\n" \
+         "=================================\n\n"
+    languages = (
+        ("Python with Numpy (memmap):", "numpymemmap"),
+        ("R:", "R"),
+    )
+    for heading, language in languages:
+        codetext = readcode(dra, language)
+        if codetext is not None:
+            s += f"{heading}\n{'-' * len(heading)}\n{codetext}\n"
+    return s
 
 def delete_raggedarray(rar):
     """

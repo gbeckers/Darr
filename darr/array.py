@@ -24,7 +24,7 @@ from pathlib import Path
 import numpy as np
 
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
-from .readcode import readcode
+from .readcodearray import readcode
 from .utils import fit_chunks, filesha256
 from ._version import get_versions
 

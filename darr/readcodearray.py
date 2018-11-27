@@ -23,18 +23,20 @@ typedescr_numpy = {'int8': 'i1',
 endianness_numpy = {'little': '<',
                     'big': '>'}
 
-def readcodenumpy(numtype, shape, endianness):
+def readcodenumpy(numtype, shape, endianness, filepath='arrayvalues.bin',
+                  varname='a'):
     typedescr = f"{endianness_numpy[endianness]}{typedescr_numpy[numtype]}"
     ct = f"import numpy as np\n" \
-         f"a = np.fromfile('arrayvalues.bin', dtype='{typedescr}')\n"
+         f"{varname} = np.fromfile('{filepath}', dtype='{typedescr}')\n"
     if len(shape) > 1:  # multidimensional, we need reshape
-        ct += f"a = a.reshape({shape}, order='C')\n"
+        ct += f"{varname} = {varname}.reshape({shape}, order='C')\n"
     return ct
 
-def readcodenumpymemmap(numtype, shape, endianness):
+def readcodenumpymemmap(numtype, shape, endianness, filepath='arrayvalues.bin',
+                        varname='a'):
     typedescr = f"{endianness_numpy[endianness]}{typedescr_numpy[numtype]}"
     ct = "import numpy as np\n"
-    ct += f"a = np.memmap('arrayvalues.bin', dtype='{typedescr}', " \
+    ct += f"{varname} = np.memmap('{filepath}', dtype='{typedescr}', " \
           f"shape={shape}, order='C')\n"
     return ct
 
@@ -56,7 +58,8 @@ typedescr_matlab = {'int8': 'int8',
 endianness_matlab = {'little': 'ieee-le',
                      'big': 'ieee-be'}
 
-def readcodematlab(numtype, shape, endianness):
+def readcodematlab(numtype, shape, endianness,filepath='arrayvalues.bin',
+                   varname='a'):
     typedescr = typedescr_matlab[numtype]
     if typedescr is None:
         return None
@@ -64,14 +67,14 @@ def readcodematlab(numtype, shape, endianness):
     shape = list(shape)[::-1]  # darr is always C order, Matlab is F order
     size = np.product(shape)
     ndim = len(shape)
-    ct = "fileid = fopen('arrayvalues.bin');\n"
+    ct = f"fileid = fopen('{filepath}');\n"
     if ndim == 1:
-        ct += f"a = fread(fileid, {size}, '*{typedescr}', '{endianness}');\n"
+        ct += f"{varname} = fread(fileid, {size}, '*{typedescr}', '{endianness}');\n"
     elif ndim == 2:
-        ct += f"a = fread(fileid, {shape}, '*{typedescr}', " \
+        ct += f"{varname} = fread(fileid, {shape}, '*{typedescr}', " \
               f"'{endianness}');\n"
     else:  # ndim > 2, we need reshape to get multidimensional array
-        ct += f"a = reshape(fread(fileid, {size}, '*{typedescr}', " \
+        ct += f"{varname} = reshape(fread(fileid, {size}, '*{typedescr}', " \
               f"'{endianness}'), {shape});\n"
     return ct + "fclose(fileid);\n"
 
@@ -94,7 +97,8 @@ typedescr_r = {'int8': ('integer()', 1, 'TRUE'),
 endianness_r = {'little': 'little',
                 'big': 'big'}
 
-def readcoder(numtype, shape, endianness):
+def readcoder(numtype, shape, endianness, filepath='arrayvalues.bin',
+              varname='a'):
     typedescr = typedescr_r[numtype]
     if typedescr is None:
         return None
@@ -102,11 +106,12 @@ def readcoder(numtype, shape, endianness):
     what, size, signed = typedescr
     shape = shape[::-1]  # darr is always C order, R is F order
     n = np.product(shape)
-    ct = f'fileid = file("arrayvalues.bin", "rb")\n' \
-         f'a = readBin(con=fileid, what={what}, n={n}, size={size}, ' \
+    ct = f'fileid = file("{filepath}", "rb")\n' \
+         f'{varname} = readBin(con=fileid, what={what}, n={n}, size={size}, ' \
          f'signed={signed}, endian="{endianness}")\n'
     if len(shape) > 1:
-        ct += f'a = array(data=a, dim=c{shape}, dimnames=NULL)\n'
+        ct += f'{varname} = array(data={varname}, dim=c{shape}, ' \
+            f'dimnames=NULL)\n'
     return ct + 'close(fileid)\n'
 
 
@@ -128,17 +133,19 @@ typedescr_julia = {'int8': 'Int8',
 endianness_julia = {'little': 'ltoh',
                     'big': 'ntoh'}
 
-def readcodejulia0(numtype, shape, endianness):
+def readcodejulia0(numtype, shape, endianness, filepath='arrayvalues.bin',
+                   varname='a'):
     # this does not work if numtype is complex and byteorder is different on
     # reading machine, will generate an error, so we accept this.
     typedescr = typedescr_julia[numtype]
     endianness = endianness_julia[endianness]
     shape = shape[::-1]  # darr is always C order, Julia is F order
-    return f'fileid = open("arrayvalues.bin","r");\n' \
-           f'a = map({endianness}, read(fileid, {typedescr}, {shape}));\n' \
+    return f'fileid = open("{filepath}","r");\n' \
+           f'{varname} = map({endianness}, read(fileid, {typedescr}, {shape}));\n' \
            f'close(fileid);\n'
 
-def readcodejulia1(numtype, shape, endianness):
+def readcodejulia1(numtype, shape, endianness, filepath='arrayvalues.bin',
+                   varname='a'):
     # this does not work if numtype is complex and byteorder is different on
     # reading machine, will generate an error, so we accept this.
     typedescr = typedescr_julia[numtype]
@@ -147,8 +154,8 @@ def readcodejulia1(numtype, shape, endianness):
     dimstr = str(shape)[1:-1]
     if dimstr.endswith(','):
         dimstr = dimstr[:-1]
-    return f'fileid = open("arrayvalues.bin","r");\n' \
-           f'a = map({endianness}, read!(fileid, Array{{{typedescr}}}(undef, {dimstr})));\n' \
+    return f'fileid = open("{filepath}","r");\n' \
+           f'{varname} = map({endianness}, read!(fileid, Array{{{typedescr}}}(undef, {dimstr})));\n' \
            f'close(fileid);\n'
 
 typedescr_idl = {'int8': None,
@@ -169,13 +176,14 @@ typedescr_idl = {'int8': None,
 endianness_idl = {'little': 'little',
                   'big': 'big'}
 
-def readcodeidl(numtype, shape, endianness):
+def readcodeidl(numtype, shape, endianness, filepath='arrayvalues.bin',
+                varname='a'):
     typedescr = typedescr_idl[numtype]
     endianness = endianness_idl[endianness]
     if typedescr is None:
         return None
     shape = list(shape[::-1])
-    return f'a = read_binary("arrayvalues.bin", data_type={typedescr}, ' \
+    return f'{varname} = read_binary("{filepath}", data_type={typedescr}, ' \
            f'data_dims={shape}, endian="{endianness}")\n'
 
 typedescr_mathematica = {'int8': 'Integer8',
@@ -196,7 +204,8 @@ typedescr_mathematica = {'int8': 'Integer8',
 endianness_mathematica = {'little': '-1',
                           'big': '+1'}
 
-def readcodemathematica(numtype, shape, endianness):
+def readcodemathematica(numtype, shape, endianness,
+                        filepath='arrayvalues.bin', varname='a'):
     typedescr = typedescr_mathematica[numtype]
     endianness = endianness_mathematica[endianness]
     if typedescr is None:
@@ -205,9 +214,9 @@ def readcodemathematica(numtype, shape, endianness):
     if dimstr.endswith(','):
         dimstr = dimstr[:-1]
     dimstr = '{' + dimstr + '}'
-    return f'a = BinaryReadList["arrayvalues.bin", "{typedescr}", ' \
+    return f'{varname} = BinaryReadList["{filepath}", "{typedescr}", ' \
            f'ByteOrdering -> {endianness}];\n' \
-           f'a = ArrayReshape[a, {dimstr}];\n'
+           f'{varname} = ArrayReshape[{varname}, {dimstr}];\n'
 
 typedescr_maple = {'int8': 'integer[1]',
                    'int16': 'integer[2]',
@@ -227,17 +236,18 @@ typedescr_maple = {'int8': 'integer[1]',
 endianness_maple = {'little': 'little',
                     'big': 'big'}
 
-def readcodemaple(numtype, shape, endianness):
+def readcodemaple(numtype, shape, endianness, filepath='arrayvalues.bin',
+                  varname='a'):
     typedescr = typedescr_maple[numtype]
     endianness = endianness_maple[endianness]
     if typedescr is None:
         return None
-    ct = f'a := FileTools[Binary][Read]("arrayvalues.bin", {typedescr}, ' \
+    ct = f'{varname} := FileTools[Binary][Read]("{filepath}", {typedescr}, ' \
          f'byteorder={endianness}, output=Array);\n'
     ndim = len(shape)
     if ndim > 1:
         shape = list(shape[::-1])
-        ct += f'a := ArrayTools[Reshape](a, {shape});\n'
+        ct += f'{varname} := ArrayTools[Reshape]({varname}, {shape});\n'
     return ct
 
 
@@ -254,7 +264,7 @@ readcodefunc = {
 }
 
 
-def readcode(da, language):
+def readcode(da, language, filepath='arrayvalues.bin', varname='a'):
     """Produces the code to read the Darr array `da` in a given programming
     language.
 
@@ -276,7 +286,8 @@ def readcode(da, language):
     shape = d['shape']
     endianness = d['byteorder']
     return readcodefunc[language](numtype=numtype, shape=shape,
-                                  endianness=endianness)
+                                  endianness=endianness, filepath=filepath,
+                                  varname=varname)
 
 
 def promptify_codetxt(codetxt, prompt=">>> "):
