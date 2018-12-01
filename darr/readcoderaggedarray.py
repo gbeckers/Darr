@@ -20,7 +20,10 @@ def readcodenumpymemmap(dra, varname='a'):
         j, position = 0, 'first'
     rca = f'{varname} = get_subarray({j})  # example to read {position} ' \
           f'subarray\n'
-    return f'{rci}{rcv}{rff}{rca}'
+    if (rci is None) or (rcv is None):
+        return None
+    else:
+        return f'{rci}{rcv}{rff}{rca}'
 
 
 def readcoder(dra, varname='a'):
@@ -43,7 +46,10 @@ def readcoder(dra, varname='a'):
         j, position = 1, 'first'
     rca = f'{varname} = get_subarray({j})  # example to read {position} ' \
         f'subarray\n'
-    return f'{rci}{rcv}{rff}{rca}'
+    if (rci is None) or (rcv is None):
+        return None
+    else:
+        return f'{rci}{rcv}{rff}{rca}'
 
 
 

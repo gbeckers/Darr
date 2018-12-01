@@ -35,16 +35,3 @@ def get_subarray(seqno):
     return v[starti:endi]
 a = get_subarray(2)  # example to read third subarray
 
-R:
---
-fileid = file("indices/arrayvalues.bin", "rb")
-i = readBin(con=fileid, what=integer(), n=6, size=8, signed=TRUE, endian="little")
-i = array(data=i, dim=c(2, 3), dimnames=NULL)
-close(fileid)
-Noneget_subarray <- function(seqno){
-    starti = i[seqno,1] + 1  # R starts counting from 1
-    endi = i[seqno,2]  # R has inclusive end index
-    return (v[starti:endi])
-}
-a = get_subarray(3)  # example to read third subarray
-
