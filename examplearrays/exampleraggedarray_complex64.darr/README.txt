@@ -20,7 +20,7 @@ first axis of the index array represents the sequence number of the subarray and
 read the n-th subarray, read the nt-h start and end indices from the indices array and use these
 to read the array data from the values array.
 
-This ragged array has 1 subarrays.
+This ragged array has 3 subarrays.
 
 Example code for reading the data
 =================================
@@ -28,23 +28,23 @@ Example code for reading the data
 Python with Numpy (memmap):
 ---------------------------
 import numpy as np
-i = np.memmap('indices/arrayvalues.bin', dtype='<i8', shape=(1, 2), order='C')
-v = np.memmap('values/arrayvalues.bin', dtype='<c8', shape=(8, 2), order='C')
+i = np.memmap('indices/arrayvalues.bin', dtype='<i8', shape=(3, 2), order='C')
+v = np.memmap('values/arrayvalues.bin', dtype='<c8', shape=(24, 2), order='C')
 def get_subarray(seqno):
     starti, endi = i[seqno]
     return v[starti:endi]
-a = get_subarray(0)  # example to read first subarray
+a = get_subarray(2)  # example to read third subarray
 
 R:
 --
 fileid = file("indices/arrayvalues.bin", "rb")
-i = readBin(con=fileid, what=integer(), n=2, size=8, signed=TRUE, endian="little")
-i = array(data=i, dim=c(2, 1), dimnames=NULL)
+i = readBin(con=fileid, what=integer(), n=6, size=8, signed=TRUE, endian="little")
+i = array(data=i, dim=c(2, 3), dimnames=NULL)
 close(fileid)
 Noneget_subarray <- function(seqno){
     starti = i[seqno,1] + 1  # R starts counting from 1
     endi = i[seqno,2]  # R has inclusive end index
     return (v[starti:endi])
 }
-a = get_subarray(1)  # example to read first subarray
+a = get_subarray(3)  # example to read third subarray
 

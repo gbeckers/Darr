@@ -6,7 +6,7 @@
     "dtypedescr": "|u1",
     "numtype": "uint8",
     "shape": [
-        8,
+        24,
         2
     ]
 }
