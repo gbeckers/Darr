@@ -367,9 +367,9 @@ class Array(BaseDataDir):
 
     def __init__(self, path, accessmode='r'):
         BaseDataDir.__init__(self, path=path)
-        self._datapath = self._path.joinpath(self._datafilename)
+        self._datapath = self._path / self._datafilename
         self._accessmode = check_accessmode(accessmode)
-        self._arraydescrpath = self._path.joinpath(self._arraydescrfilename)
+        self._arraydescrpath = self._path / self._arraydescrfilename
         self._arrayinfo = self._read_arraydescr()
         self._memmap = None
         self._valuesfd = None
@@ -378,7 +378,7 @@ class Array(BaseDataDir):
             self._dtype = ar.dtype
             self._shape = ar.shape
             self._size = ar.size
-        self._metadata = MetaData(self._path.joinpath(self._metadatafilename),
+        self._metadata = MetaData(self._path / self._metadatafilename,
                                   accessmode=accessmode)
 
     @property
@@ -430,7 +430,7 @@ class Array(BaseDataDir):
     @property
     def size(self):
         """Total number of values in the data array."""
-        return self._size
+        return int(self._size)
 
     def __getitem__(self, index):
         with self._open_array() as (ar, _):

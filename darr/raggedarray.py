@@ -1,5 +1,8 @@
 # EXPERIMENTAL! This code is still experimental, and is probably going to
 # change
+import distutils.version
+import sys
+import warnings
 
 from pathlib import Path
 from contextlib import contextmanager
@@ -23,21 +26,32 @@ class RaggedArray(BaseDataDir):
     """
     _valuesdirname = 'values'
     _indicesdirname = 'indices'
-    _version = '0.1.0'
+    _arraydescrfilename = 'arraydescription.json'
     _metadatafilename = 'metadata.json'
     _readmefilename = 'README.txt'
     _filenames = {_valuesdirname, _indicesdirname,
-                  _readmefilename, _metadatafilename} | BaseDataDir._filenames
+                  _readmefilename, _metadatafilename,
+                  _arraydescrfilename} | BaseDataDir._filenames
     _formatversion = get_versions()['version']
+
     def __init__(self, path, accessmode='r'):
         BaseDataDir.__init__(self, path=path)
         self._accessmode = check_accessmode(accessmode)
-        self._valuespath = self.path.joinpath(self._valuesdirname)
-        self._indicespath = self.path.joinpath(self._indicesdirname)
+        self._valuespath = self.path / self._valuesdirname
+        self._indicespath = self.path / self._indicesdirname
+        self._arraydescrpath = self._path / self._arraydescrfilename
         self._values = Array(self._valuespath, accessmode=self._accessmode)
         self._indices = Array(self._indicespath, accessmode=self._accessmode)
-        self._metadata = MetaData(self._path.joinpath(self._metadatafilename),
+        self._metadata = MetaData(self._path / self._metadatafilename,
                                   accessmode=accessmode)
+        arrayinfo = {}
+        arrayinfo['len'] = len(self._indices)
+        arrayinfo['size'] = self._values.size
+        arrayinfo['atom'] = self._values.shape[1:]
+        arrayinfo['numtype'] = self._values._arrayinfo['numtype']
+        arrayinfo['darrversion'] = RaggedArray._formatversion
+        arrayinfo['darrobject'] = 'RaggedArray'
+        self._arrayinfo = arrayinfo
 
     @property
     def accessmode(self):
@@ -82,18 +96,17 @@ class RaggedArray(BaseDataDir):
 
     @property
     def mb(self):
-        """Size in megabytes of the data array.
+        """Storage size in megabytes of the ragged array.
 
         """
-        return self._values._mb #+ self._indices._mb
+        return self._values._mb + self._indices._mb
 
     @property
     def size(self):
         """Total number of values in the data array.
 
         """
-        return self._values._size
-
+        return int(self._values._size)
 
     def __getitem__(self, item):
         if not np.issubdtype(type(item), np.integer):
@@ -109,12 +122,19 @@ class RaggedArray(BaseDataDir):
         txt = readcodetxt(self)
         self._write_txt(self._readmefilename, txt)
 
+    def _update_arraydescr(self, **kwargs):
+        self._arrayinfo.update(kwargs)
+        self._write_jsondict(filename=self._arraydescrfilename,
+                           d=self._arrayinfo, overwrite=True)
+
     def append(self, array):
         size = len(array)
         endindex = self._values.shape[0]
         self._values.append(np.asarray(array, dtype=self.dtype))
         self._indices.append([[endindex, endindex + size]])
         self._update_readmetxt()
+        self._update_arraydescr(len=len(self._indices),
+                                size=self._values.size)
 
     def copy(self, path, accessmode='r', overwrite=False):
         arrayiterable = (self[i] for i in range(len(self)))
@@ -170,7 +190,15 @@ def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
     valuesda._update_readmetxt()
     indicesda._update_len(lenincrease=indiceslen-1)
     indicesda._update_readmetxt()
-
+    datainfo = {}
+    datainfo['len'] = len(indicesda)
+    datainfo['size'] = valuesda.size
+    datainfo['atom'] = valuesda.shape[1:]
+    datainfo['numtype'] = valuesda._arrayinfo['numtype']
+    datainfo['darrversion'] = Array._formatversion
+    datainfo['darrobject'] = 'RaggedArray'
+    bd._write_jsondict(filename=RaggedArray._arraydescrfilename,
+                       d=datainfo, overwrite=overwrite)
     metadatapath = path.joinpath(Array._metadatafilename)
     if metadata is not None:
         bd._write_jsondict(filename=Array._metadatafilename,
@@ -190,13 +218,14 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
                         f'use "()"')
     shape = [0] + list(atom)
     ar = np.zeros(shape, dtype=dtype)
-    dal = asraggedarray(path=path, arrayiterable=[ar], metadata=metadata,
+    ra = asraggedarray(path=path, arrayiterable=[ar], metadata=metadata,
                         accessmode=accessmode, overwrite=overwrite)
     # the current ragged array has one element, which is an empty array
     # but we want an empty ragged array => we should get rid of the indices
-    create_array(path=dal._indicespath, shape=(0,2), dtype=np.int64,
+    create_array(path=ra._indicespath, shape=(0,2), dtype=np.int64,
                  overwrite=True)
-    return RaggedArray(dal.path, accessmode=accessmode)
+    ra._update_arraydescr(len=0, size=0)
+    return RaggedArray(ra.path, accessmode=accessmode)
 
 
 readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
