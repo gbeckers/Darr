@@ -1052,6 +1052,7 @@ def asarray(path, array, dtype=None, accessmode='r',
         datainfo['arrayorder'] = 'C'
     datainfo['shape'] = shape
     datainfo['darrversion'] = Array._formatversion
+    datainfo['darrobject'] = 'Array'
     bd._write_jsondict(filename=Array._arraydescrfilename,
                        d=datainfo, overwrite=overwrite)
     metadatapath = path.joinpath(Array._metadatafilename)
