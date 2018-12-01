@@ -1,8 +1,5 @@
 # EXPERIMENTAL! This code is still experimental, and is probably going to
 # change
-import distutils.version
-import sys
-import warnings
 
 from pathlib import Path
 from contextlib import contextmanager
