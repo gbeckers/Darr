@@ -1,0 +1,10 @@
+{
+    "atom": [
+        2
+    ],
+    "darrobject": "RaggedArray",
+    "darrversion": "0.1.9+59.g6c47e6b.dirty",
+    "len": 1,
+    "numtype": "float16",
+    "size": 16
+}
