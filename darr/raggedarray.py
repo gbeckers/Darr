@@ -199,10 +199,6 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
     return RaggedArray(dal.path, accessmode=accessmode)
 
 
-
-
-
-
 readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
             wrap('====================================') + '\n\n' + \
             wrap('This directory is a data store for a numeric ragged array. '
@@ -258,6 +254,7 @@ def readcodetxt(dra):
         if codetext is not None:
             s += f"{heading}\n{'-' * len(heading)}\n{codetext}\n"
     return s
+
 
 def delete_raggedarray(rar):
     """
