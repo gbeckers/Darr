@@ -563,7 +563,7 @@ class Array(BaseDataDir):
         if not vlib >= vfile:
             warnings.warn(f"Format version of file ({d['darrversion']}) "
                           f"is newer than your version of Darr "
-                          f"{self._formatversion}. At this stage this is not"
+                          f"{self._formatversion}. At this stage this is not "
                           f"guaranteed to work", UserWarning)
         try:
             d['shape'] = tuple(d['shape'])  # json does not have tuples
