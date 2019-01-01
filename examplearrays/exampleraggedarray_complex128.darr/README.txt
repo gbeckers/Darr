@@ -48,7 +48,7 @@ close(fileid)
 get_subarray <- function(seqno){
     starti = i[seqno,1] + 1  # R starts counting from 1
     endi = i[seqno,2]  # R has inclusive end index
-    return (v[starti:endi])
+    return (v[,starti:endi])
 }
 a = get_subarray(3)  # example to read third subarray
 

@@ -48,7 +48,19 @@ close(fileid)
 get_subarray <- function(seqno){
     starti = i[seqno,1] + 1  # R starts counting from 1
     endi = i[seqno,2]  # R has inclusive end index
-    return (v[starti:endi])
+    return (v[,starti:endi])
 }
 a = get_subarray(3)  # example to read third subarray
 
+Matlab:
+-------
+fileid = fopen('indices/arrayvalues.bin');
+i = fread(fileid, [2, 3], '*int64', 'ieee-le');
+fclose(fileid);
+fileid = fopen('values/arrayvalues.bin');
+v = fread(fileid, [2, 24], '*uint8', 'ieee-le');
+fclose(fileid);
+# example to read third subarray
+startindex = i(1,3) + 1;  # matlab starts counting from 1
+endindex = i(2,3);  # matlab has inclusive end index
+a = v(:,startindex:endindex));
