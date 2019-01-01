@@ -36,7 +36,7 @@ def readcoder(dra, varname='a'):
     rff = 'get_subarray <- function(seqno){\n' \
           '    starti = i[seqno,1] + 1  # R starts counting from 1\n' \
           '    endi = i[seqno,2]  # R has inclusive end index\n' \
-          '    return (v[starti:endi])\n' \
+          '    return (v[,starti:endi])\n' \
           '}\n'
     if len(dra) > 2:
        j, position = 3, 'third'
