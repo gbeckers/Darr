@@ -45,16 +45,39 @@ def readcoder(dra, varname='a'):
     else:
         j, position = 1, 'first'
     rca = f'{varname} = get_subarray({j})  # example to read {position} ' \
-        f'subarray\n'
+          f'subarray\n'
     if (rci is None) or (rcv is None):
         return None
     else:
         return f'{rci}{rcv}{rff}{rca}'
 
+def readcodematlab(dra, varname='a'):
+    rci = readcodearray.readcode(dra._indices, 'matlab',
+                                 filepath='indices/arrayvalues.bin',
+                                 varname='i')
+    rcv = readcodearray.readcode(dra._values, 'matlab',
+                                 filepath='values/arrayvalues.bin',
+                                 varname='v')
+    if len(dra) > 2:
+       j, position = 3, 'third'
+    elif len(dra) == 2:
+        j, position = 2, 'second'
+    else:
+        j, position = 1, 'first'
+    rca = f'{varname} = v(:,i(:,{j}));  # example to read {position} ' \
+          f'subarray\n'
+    if (rci is None) or (rcv is None):
+        return None
+    else:
+        return f'{rci}{rcv}{rca}'
+
+
+
 
 
 readcodefunc = {
         'numpymemmap': readcodenumpymemmap,
+        'matlab': readcodematlab,
         'R': readcoder
 }
 

@@ -274,6 +274,7 @@ def readcodetxt(dra):
     languages = (
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),
+        ("Matlab:", "matlab")
     )
     for heading, language in languages:
         codetext = readcode(dra, language)
