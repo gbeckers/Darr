@@ -480,7 +480,8 @@ class AppendData(DarrTestCase):
         dar = create_array(path=self.temparpath, shape=(2,),
                            dtype='int64', overwrite=True)
         self.assertRaises(AppendDataError, dar.iterappend, g)
-        self.assertArrayIdentical(dar[:], np.array([0, 0, 1, 2, 3, 4, 5, 6]))
+        self.assertArrayIdentical(dar[:], np.array([0, 0, 1, 2, 3, 4, 5, 6],
+                                                   dtype='int64'))
 
     def test_appendwrongshape(self):
         dar = create_array(path=self.temparpath, shape=(2,3),
