@@ -5,7 +5,6 @@ import tempfile
 import shutil
 
 import numpy as np
-# from numpy.testing import assert_equal, assert_array_equal
 
 from darr.array import asarray, create_array, numtypesdescr, Array, \
     truncate_array, BaseDataDir, delete_array, AppendDataError
@@ -18,12 +17,6 @@ class DarrTestCase(unittest.TestCase):
         self.assertEqual(x.dtype, y.dtype)
         self.assertEqual(x.shape, y.shape)
         self.assertEqual(np.sum(x-y), 0)
-
-# def assert_array_identical(x, y):
-#     assert_array_equal(x, y)
-#     assert_equal(x.dtype, y.dtype)
-#     assert_equal(x.shape, y.shape)
-
 
 class AsArray(DarrTestCase):
 
