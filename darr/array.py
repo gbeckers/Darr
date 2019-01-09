@@ -931,7 +931,7 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
             yield np.asarray(chunk, dtype=dtype)
     elif isinstance(array, Array):
         for chunk in array.iterview(chunklen=chunklen):
-            yield chunk.astype(dtype)
+            yield chunk
     elif hasattr(array, '__len__'):  # is numpy array or sequence
         totallen = len(array)
         if totallen == 0:
