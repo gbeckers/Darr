@@ -38,6 +38,17 @@ class RaggedArray(unittest.TestCase):
             assert_equal(dal[0], a)
 
 
+class IterAppendRaggedArray(unittest.TestCase):
+
+    def test_1darray(self):
+        with tempdir() as dirname:
+            dal = create_raggedarray(dirname, atom=(), dtype='float64',
+                                     metadata=None, accessmode='r+',
+                                     overwrite=True)
+            dal.iterappend([[0., 1., 2.], [3., 4.], [5.]])
+            self.assertEqual(len(dal), 3)
+
+
 class ClassAsRaggedArray(unittest.TestCase):
 
     def test_1darray(self):
