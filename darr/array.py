@@ -681,7 +681,7 @@ class Array(BaseDataDir):
         """Iteratively append data from a data iterable.
 
         The iterable has to yield chunks of data that are array-like objects
-        compliant with the darr.
+        compliant with Darr arrays.
 
         Parameters
         ----------
