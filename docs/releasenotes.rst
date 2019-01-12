@@ -1,6 +1,13 @@
 Release notes
 =============
 
+Version 0.1.11
+--------------
+- fixed bugs in read code generation Matlab
+- removed dependency on numpy.testing (was giving problems with pytest and
+  numpy 1.15)
+- iterappend for ragged arrays (not optimally efficient yet)
+
 Version 0.1.10
 --------------
 - cleaned up checksum handling
