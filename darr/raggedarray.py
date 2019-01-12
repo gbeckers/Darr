@@ -124,11 +124,15 @@ class RaggedArray(BaseDataDir):
         self._write_jsondict(filename=self._arraydescrfilename,
                            d=self._arrayinfo, overwrite=True)
 
-    def append(self, array):
+    def _append(self, array):
         size = len(array)
         endindex = self._values.shape[0]
         self._values.append(np.asarray(array, dtype=self.dtype))
         self._indices.append([[endindex, endindex + size]])
+
+
+    def append(self, array):
+        self._append(array)
         self._update_readmetxt()
         self._update_arraydescr(len=len(self._indices),
                                 size=self._values.size)
@@ -154,6 +158,29 @@ class RaggedArray(BaseDataDir):
             for i in range(startindex, endindex, stepsize):
                 yield self[i]
 
+    def iterappend(self, arrayiterable):
+        """Iteratively append data from a data iterable.
+
+        The iterable has to yield array-like objects compliant with darr.
+        The length of first dimension of these objects may be different,
+        but the length of other dimensions, if any, has to be the same.
+
+        Parameters
+        ----------
+        arrayiterable: an iterable that yield array-like objects
+
+        Returns
+        -------
+            None
+
+        """
+        # TODO refactor such that info files are not updated at each append?
+        with self._view():
+            for a in arrayiterable:
+                self._append(a)
+        self._update_readmetxt()
+        self._update_arraydescr(len=len(self._indices),
+                                size=self._values.size)
 
 
 # FIXME empty arrayiterable
