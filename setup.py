@@ -15,7 +15,7 @@ but Darr also ensures tool-independent and long-term accessibility of your
 data. It saves and automatically updates a human-readable explanation of how
 your binary data is stored, together with code for reading the specific data
 in a variety of current scientific data tools such as Python, R, Julia, IDL,
-Matlab, Maple, and Mathematica (see [example array]
+Matlab, Maple, and Mathematica (see [example arrays]
 (https://github.com/gbeckers/Darr/tree/master/examplearrays/)).
 
 In essence, Darr enables you to efficiently work with potentially very large
