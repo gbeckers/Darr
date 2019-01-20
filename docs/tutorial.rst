@@ -49,7 +49,7 @@ Or in `Julia <https://julialang.org/>`__:
 
 To see the files that correspond to a Darr array, see
 'examplearray.da' in the source
-`repo <https://github.com/gjlbeckers-uu/Darr>`__.
+`repo <https://github.com/gbeckers/Darr>`__.
 
 Different numeric type
 ----------------------
