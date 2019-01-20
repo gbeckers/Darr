@@ -255,18 +255,18 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
 readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
             wrap('====================================') + '\n\n' + \
             wrap('This directory is a data store for a numeric ragged array. '
-                 'This is a sequence of subarrays that all have the same '
-                 'shape except for one dimension. On disk, these subarrays '
-                 'are concatenated along their variable dimension. The data '
-                 'can be read in Python using the Darr library, but if that '
-                 'is not available, they can also be read in other '
-                 'environments with a little more effort.') + '\n\n' + \
+                 'This is a sequence of arrays in which one dimension varies '
+                 'in length. On disk, these arrays are concatenated along '\
+                 'their variable dimension. The data can be read in Python '\
+                 'using the Darr library, but if that is not available, '\
+                 'they can also be read in other environments with a little '\
+                 'more effort.') + '\n\n' + \
             wrap('There are two subdirectories, each containing an array '
                  'stored in a self-explanatory format. See the READMEs in '
                  'the corresponding directories to find out in detail out '
                  'how. However, example code is provided below for a number '
                  'of analysis environments, which in many cases is '
-                 'suffcient.') + '\n\n' + \
+                 'sufficient.') + '\n\n' + \
             wrap('The subdirectory "values" holds the numerical data itself, '
                  'where subarrays are simply appended along their variable '
                  'length dimension (first axis). So the number of dimensions '
