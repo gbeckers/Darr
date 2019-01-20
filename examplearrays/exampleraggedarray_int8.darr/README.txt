@@ -63,4 +63,4 @@ fclose(fileid);
 # example to read third subarray
 startindex = i(1,3) + 1;  # matlab starts counting from 1
 endindex = i(2,3);  # matlab has inclusive end index
-a = v(:,startindex:endindex));
+a = v(:,startindex:endindex);
