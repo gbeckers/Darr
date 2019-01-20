@@ -4,21 +4,24 @@ Darr
 |Travis Status| |Appveyor Status| |PyPi version| |Coverage Status|
 |Docs Status| |Repo Status| |Codacy Badge| |PyUp Badge|
 
+Darr is a Python science library for efficient read/write/append access to
+disk-persistent numeric data arrays. There are other Python libraries for this,
+but Darr also ensures tool-independent and long-term accessibility of your
+data. It saves and automatically updates a human-readable explanation of how
+your binary data is stored, together with code for reading the specific data
+in a variety of current scientific data tools such as Python, R, Julia, IDL,
+Matlab, Maple, and Mathematica (see `example array <https://github.com/
+gbeckers/Darr/tree/master/examplearrays /examplearray_float64.darr>`__).
 
-Darr is a Python science library for storing and sharing numeric data arrays
-in a way that is open, simple, and self-explanatory. Save and use
-your numeric arrays and metadata with one line of code while long-term and
-tool-independent accessibility and easy shareability is ensured. In
-addition, Darr provides fast memory-mapped read/write access to such
-disk-based data and the ability to append data, so that arrays may be
-larger than available RAM.
+In essence, Darr enables you to work with potentially very large data arrays
+in a Python/NumPy environment, and share this data as is with others who do
+not use Darr, or even Python, without exporting anything. It is also an easy
+way to make sure you can read your own data in the future when you may use
+different tools.
 
-To maximize wide readability of your data, Darr is based on a combination of
-flat binary and human-readable text files. It automatically saves a
-description of how the data is stored, together with code for reading the
-specific data in a variety of current scientific data tools such as
-Python, R, Julia, IDL, Matlab, Maple, and Mathematica (see `example array
-<https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_float64.darr>`__).
+Darr currently supports numerical N-dimensional arrays, and experimentally
+supports numerical ragged arrays, i.e. a series of arrays in which one
+dimension varies in length.
 
 Darr is currently pre-1.0, still undergoing significant development. It is
 open source and freely available under the `New BSD License
