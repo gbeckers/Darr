@@ -11,7 +11,7 @@ data. It saves and automatically updates a human-readable explanation of how
 your binary data is stored, together with code for reading the specific data
 in a variety of current scientific data tools such as Python, R, Julia, IDL,
 Matlab, Maple, and Mathematica (see `example array <https://github.com/
-gbeckers/Darr/tree/master/examplearrays /examplearray_float64.darr>`__).
+gbeckers/Darr/tree/master/examplearrays/>`__).
 
 In essence, Darr enables you to work with potentially very large data arrays
 in a Python/NumPy environment, and share this data as is with others who do
@@ -22,6 +22,10 @@ different tools.
 Darr currently supports numerical N-dimensional arrays, and experimentally
 supports numerical ragged arrays, i.e. a series of arrays in which one
 dimension varies in length.
+
+See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
+for a brief introduction, or the
+`documentation <http://darr.readthedocs.io/>`__ for more info.
 
 Darr is currently pre-1.0, still undergoing significant development. It is
 open source and freely available under the `New BSD License
