@@ -19,7 +19,8 @@ In essence, Darr enables you to work with potentially very large data arrays
 in a Python/NumPy environment, and share this data as is with others who do
 not use Darr, or even Python, without exporting anything or requiring much
 explanation. It is also an easy way to make sure you can read your own data in
-the future when you may use different tools.
+the future when you may use different tools. More rationale for this
+approach is provided `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
 Darr currently supports numerical N-dimensional arrays, and experimentally
 supports numerical ragged arrays, i.e. a series of arrays in which one
