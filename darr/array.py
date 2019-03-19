@@ -1307,8 +1307,8 @@ def readcodetxt(da):
     """
 
     s = numtypedescriptiontxt(da)
-    s += "Example code for reading the data\n" \
-         "=================================\n\n"
+    s += "Example code for reading the numeric data\n" \
+         "=========================================\n\n"
     languages = (
         ("Python with Numpy:", "numpy"),
         ("Python with Numpy (memmap):", "numpymemmap"),
