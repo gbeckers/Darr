@@ -1314,8 +1314,8 @@ def readcodetxt(da):
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),
         ("Matlab/Octave:", "matlab"),
-        ("Julia (version < 1.0):", "julia0"),
-        ("Julia (version >= 1.0):", "julia1"),
+        ("Julia (version < 1.0):", "julia_ver0"),
+        ("Julia (version >= 1.0):", "julia_ver1"),
         ("IDL/GDL:", "idl"),
         ("Mathematica:", "mathematica"),
         ("Maple:", "maple")

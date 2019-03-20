@@ -260,8 +260,8 @@ def readcodemaple(numtype, shape, endianness, filepath='arrayvalues.bin',
 
 readcodefunc = {
         'idl': readcodeidl,
-        'julia0': readcodejulia0,
-        'julia1': readcodejulia1,
+        'julia_ver0': readcodejulia0,
+        'julia_ver1': readcodejulia1,
         'mathematica': readcodemathematica,
         'matlab': readcodematlab,
         'maple': readcodemaple,
