@@ -12,13 +12,14 @@ Darr
 
 
 Darr is a Python science library for efficient read/write/append access to
-disk-persistent numeric data arrays. There are other Python libraries for this,
-but Darr also ensures tool-independent and long-term accessibility of your
-data. It saves and automatically updates a human-readable explanation of how
-your binary data is stored, together with code for reading the specific data
-in a variety of current scientific data tools such as Python, R, Julia, IDL,
-Matlab, Maple, and Mathematica (see `example arrays <https://github.com/
-gbeckers/Darr/tree/master/examplearrays/>`__).
+disk-persistent numeric data arrays. There are other Python libraries for
+this, but Darr is specifically designed to maintain tool-independent and
+long-term accessibility of your data, which is in line with good scientific
+practice. It saves and automatically updates a human-readable explanation of
+how your binary data is stored, together with code for reading the specific
+data in a variety of current scientific data tools such as Python, R,
+Julia, IDL, Matlab, Maple, and Mathematica (see `example arrays
+<https://github.com/gbeckers/Darr/tree/master/examplearrays/>`__).
 
 In essence, Darr enables you to work with potentially very large data arrays
 in a Python/NumPy environment, and share this data as is with others who do

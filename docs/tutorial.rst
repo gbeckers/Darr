@@ -119,8 +119,8 @@ be writable first:
 Efficient I/O
 -------------
 
-To get maximum speed when doing multiple operations open a direct view
-on the disk-based array so as to opens the underlying files only once:
+To get maximum speed when doing multiple operations, open a direct view
+on the disk-based array so as to open and close the underlying files only once:
 
 .. code:: python
 
