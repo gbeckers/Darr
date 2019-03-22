@@ -72,8 +72,8 @@ setup(
     license='BSD-3',
     author='Gabriel J.L. Beckers',
     author_email='gabriel@gbeckers.nl',
-    description='Darr is a Python science library for storing numeric data '
-                'arrays in a format that is open, simple, and self-explanatory',
+    description='A science library for storing numeric data arrays in a ' \
+                'format that is open, simple, and self-explanatory',
     long_description=long_description,
     long_description_content_type="text/x-rst",
     requires=['numpy'],
