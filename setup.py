@@ -72,8 +72,8 @@ setup(
     license='BSD-3',
     author='Gabriel J.L. Beckers',
     author_email='gabriel@gbeckers.nl',
-    description='A science library for storing numeric data arrays in a ' \
-                'format that is open, simple, and self-explanatory',
+    description='Memory-mapped numeric arrays, based on a '\
+                'format that is self-explanatory and tool-independent',
     long_description=long_description,
     long_description_content_type="text/x-rst",
     requires=['numpy'],
