@@ -1,5 +1,4 @@
 import sys
-from distutils.core import setup
 import versioneer
 import setuptools
 
@@ -63,7 +62,7 @@ See the [documentation](http://darr.readthedocs.io/) for more information.
 
 """
 
-setup(
+setuptools.setup(
     name='darr',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
@@ -76,11 +75,13 @@ setup(
                 'format that is self-explanatory and tool-independent',
     long_description=long_description,
     long_description_content_type="text/x-rst",
-    requires=['numpy'],
+    python_requires='>=3.6',
     install_requires=['numpy'],
     data_files = [("", ["LICENSE"])],
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         'Development Status :: 3 - Alpha',
@@ -89,4 +90,7 @@ setup(
         'Intended Audience :: Information Technology',
         'Intended Audience :: Science/Research',
     ],
+    project_urls={  # Optional
+        'Source': 'https://github.com/gbeckers/darr',
+    },
 )
