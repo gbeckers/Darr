@@ -17,12 +17,12 @@ This makes it easy to share your data with those who do not use Darr or even
 Python. No exporting required and, as the data is saved in a self-explanatory
 way, not much explanation required either. Tool-independent and easy access
 to data is in line with good scientific practice as it promotes wide and
-long-term availability, to others but also yourself. More rationale for this
+long-term availability, to others but also to yourself. More rationale for this
 approach is provided
 `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
 Darr supports efficient read/write/append access and is based on universally
-readable flat binary files and automatically generated text files with
+readable flat binary files and automatically generated text files, containing
 human-readable explanation of precisely how your binary data is stored. It
 also provides specific code that reads the data in a variety of current
 scientific data tools such as Python, R, Julia, IDL, Matlab, Maple, and
