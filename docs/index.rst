@@ -12,10 +12,10 @@ Darr
 
 
 Darr is a Python science library that enables you to work with potentially
-very large disk-based numeric arrays, and share this data with others who do
-not use Darr, or even Python, without exporting anything or requiring much
-explanation. It is also an easy way of make sure you can read your own data
-when using different tools, perhaps in the future. Tool-independance of data
+very large numeric arrays, and share this data with others who do not use
+Darr, or even Python, without exporting anything or requiring much
+explanation. It is also an easy way of making sure you can read your own data
+when using different tools, now or in the future. Tool-independence of data
 is in line with good scientific practice as it promotes wide and long-term
 accessibility. More rationale for this approach is provided
 `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
