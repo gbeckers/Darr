@@ -4,22 +4,23 @@ Darr
 |Travis Status| |Appveyor Status| |PyPi version| |Coverage Status|
 |Docs Status| |Repo Status| |Codacy Badge| |PyUp Badge|
 
-Darr is a Python science library for efficient read/write/append access to
-disk-persistent numeric data arrays, while ensuring tool-independent, wide
-and long-term accessibility of the data. It is based on universally readable
-flat binary files and automatically generated text files with human-readable
-explanation of precisely how your binary data is stored, as well as examples
-code for reading the specific data in a variety of current scientific data
-tools such as Python, R, Julia, IDL, Matlab, Maple, and Mathematica (see
-`example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
 
-In essence, Darr enables you to work with potentially very large disk-based
-arrays in a Python/NumPy environment, and share this data as is with others
-who do not use Darr, or even Python, without exporting anything or requiring
-much explanation. It is also an easy way to make sure you can read your own
-data in the future when you may use different tools. This is in line with good
-scientific practice. More rationale for this approach is provided
+Darr is a Python science library that enables you to work with potentially
+very large disk-based numeric arrays, and share this data with others who do
+not use Darr, or even Python, without exporting anything or requiring much
+explanation. It is also an easy way of make sure you can read your own data
+when using different tools, perhaps in the future. Tool-independance of data
+is in line with good scientific practice as it promotes wide and long-term
+accessibility. More rationale for this approach is provided
 `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
+
+Darr supports efficient read/write/append access. Data is disk-persistent
+and memory mapped. It is based on universally readable flat binary
+files and automatically generated text files with human-readable explanation
+of precisely how your binary data is stored, as well as examples code for
+reading the specific data in a variety of current scientific data tools
+such as Python, R, Julia, IDL, Matlab, Maple, and Mathematica (see
+`example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
 
 Darr currently supports numerical N-dimensional arrays, and experimentally
 supports numerical ragged arrays, i.e. a series of arrays in which one
