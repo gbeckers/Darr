@@ -1,6 +1,33 @@
 Tutorial
 ========
 
+Accessing an existing array
+---------------------------
+
+Darr arrays are intended to be widely readable without Darr or Python, but the
+easiest is simply to use Darr if that is available. On-disk data is
+memory-mapped (i.e. not loaded in RAM), default is to access arrays in
+read-only mode.
+
+.. code:: python
+
+    >>> import darr as da
+    >>> a = da.Array('data.da')
+    >>> a
+    >>> array([[1., 2., 3., ..., 97., 98., 99.],
+               [0., 0., 0., ..., 0., 0., 0.]]) (r)
+
+If you intend to overwrite (part of) the data or append data (see below how)
+you need to specify that and set 'accesmode' to 'r+'.
+
+.. code:: python
+
+    >>> import darr as da
+    >>> a = da.Array('data.da', accessmode='r+')
+    >>> a
+    >>> array([[1., 2., 3., ..., 97., 98., 99.],
+               [0., 0., 0., ..., 0., 0., 0.]]) (r+)
+
 Creating an array
 -----------------
 
