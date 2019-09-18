@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Version 0.1.12
+--------------
+- improved explanation in array README
+
 Version 0.1.11
 --------------
 - fixed bugs in read code generation Matlab
