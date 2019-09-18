@@ -260,9 +260,10 @@ readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
                  'their variable dimension. The data can easiest be read '
                  'in Python using the Darr library '
                  '(https://pypi.org/project/darr/), as follows:') + '\n\n' \
-            + 'import darr as da\n' \
-            + 'a = da.RaggedArray(path_to_array_dir)\n\n' \
-            + \
+            + '>>> import darr as da\n' \
+            + ">>> a = da.RaggedArray('path_to_array_dir')\n\n" + \
+            wrap("where 'path_to_array_dir' is the name of the array "
+              "directory.") + "\n\n" + \
             wrap('If Darr is not available, '
                  'the data can also be read in other environments, with '
                  'more effort, using the description '
