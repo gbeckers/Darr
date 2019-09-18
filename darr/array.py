@@ -1307,8 +1307,8 @@ def readcodetxt(da):
     """
 
     s = numtypedescriptiontxt(da)
-    s += "Example code for reading the numeric data\n" \
-         "=========================================\n\n"
+    s += "Example code for reading the numeric data without Darr\n" \
+         "=======================================================\n\n"
     languages = (
         ("Python with Numpy:", "numpy"),
         ("Python with Numpy (memmap):", "numpymemmap"),
@@ -1356,7 +1356,12 @@ def numtypedescriptiontxt(da):
         raise ValueError(f'arrayorder type "{arrayorder}" unknown')
     s = wrap("This directory contains a numeric array. The array can be "
              "read in Python using the Darr library "
-             "(https://pypi.org/project/darr/), but if that is not available "
+             "(https://pypi.org/project/darr/):") + "\n\n"
+    s +=     "import darr as da\n" \
+             "a = da.Array(path_to_array_dir)\n\n"
+    s += wrap("where path_to_array_dir is the name of the array "
+             "directory. "
+             "If the Darr library is not available "
              "it should be straightforward to read the data in other "
              "environments using the information below.") + "\n\n"
     s+= f"Description of data format\n==========================\n\n"
