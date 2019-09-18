@@ -1354,15 +1354,14 @@ def numtypedescriptiontxt(da):
                           'with memory address'
     else:
         raise ValueError(f'arrayorder type "{arrayorder}" unknown')
-    s = wrap("This directory contains a numeric array. The array can be "
-             "read in Python using the Darr library "
-             "(https://pypi.org/project/darr/):") + "\n\n"
+    s = wrap("This directory contains a numeric array that can most easily "
+             "be read in Python, using the Darr library "
+             "(https://pypi.org/project/darr/), as follows:") + "\n\n"
     s +=     "import darr as da\n" \
-             "a = da.Array(path_to_array_dir)\n\n"
-    s += wrap("where path_to_array_dir is the name of the array "
-             "directory. "
-             "If the Darr library is not available "
-             "it should be straightforward to read the data in other "
+             "a = da.Array('path_to_array_dir')\n\n"
+    s += wrap("where 'path_to_array_dir' is the name of the array "
+             "directory.\n\nIf the Darr library is not available "
+             "it is straightforward to read the data in other "
              "environments using the information below.") + "\n\n"
     s+= f"Description of data format\n==========================\n\n"
     s += wrap("The file 'arrayvalues.bin' contains a numeric array in the "

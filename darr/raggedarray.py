@@ -254,19 +254,21 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
 
 readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
             wrap('====================================') + '\n\n' + \
-            wrap('This directory is a data store for a numeric ragged array. '
-                 'This is a sequence of arrays in which one dimension varies '
-                 'in length. On disk, these arrays are concatenated along '\
-                 'their variable dimension. The data can easiest be read in '
-                 'using the Python Darr library '
+            wrap('This directory is a data store for a numeric ragged array, '
+                 'which is a sequence of arrays in which one dimension varies '
+                 'in length. On disk, these arrays are concatenated along '
+                 'their variable dimension. The data can easiest be read '
+                 'in Python using the Darr library '
                  '(https://pypi.org/project/darr/):') + '\n\n' \
             + 'import darr as da\n' \
-            +  'a = da.RaggedArray(path_to_array_dir)\n\n' \
+            + 'a = da.RaggedArray(path_to_array_dir)\n\n' \
             + \
-            wrap('If Darr is not available, '\
-                 'the data can also be read in other environments with '
-                 'more effort using the descriptions '
-                 'below.') + '\n\n' + \
+            wrap('If Darr is not available, '
+                 'the data can also be read in other environments, with '
+                 'more effort, using the descriptions '
+                 'below.') + '\n\n' \
+            + 'Description of data storage\n' \
+            + '---------------------------\n' + \
             wrap('There are two subdirectories, each containing an array '
                  'stored in a self-explanatory format. See the READMEs in '
                  'the corresponding directories to find out in detail out '
