@@ -1,14 +1,13 @@
-This directory contains a numeric array that can most easily be read in Python, using the Darr
+This directory contains a numeric array that can most easily be read in Python using the Darr
 library (https://pypi.org/project/darr/), as follows:
 
-import darr as da
-a = da.Array('path_to_array_dir')
+>>> import darr as da
+>>> a = da.Array('path_to_array_dir')
 
 where 'path_to_array_dir' is the name of the array directory.
 
-If the Darr library is not
-available it is straightforward to read the data in other environments using the information
-below.
+If the Darr library is not available, it is straightforward to read the data in other environments
+based on the information below.
 
 Description of data format
 ==========================
