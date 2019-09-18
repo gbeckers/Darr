@@ -1,6 +1,11 @@
 This directory contains a numeric array. The array can be read in Python using the Darr library
-(https://pypi.org/project/darr/), but if that is not available it should be straightforward to
-read the data in other environments using the information below.
+(https://pypi.org/project/darr/):
+
+import darr as da
+a = da.Array(path_to_array_dir)
+
+where path_to_array_dir is the name of the array directory. If the Darr library is not available
+it should be straightforward to read the data in other environments using the information below.
 
 Description of data format
 ==========================
@@ -19,8 +24,8 @@ Format details are also stored in json format in the separate UTF-8 text file,
 
 If present, the file 'metadata.json' contains metadata in json UTF-8 text format.
 
-Example code for reading the data
-=================================
+Example code for reading the numeric data without Darr
+=======================================================
 
 Python with Numpy:
 ------------------
