@@ -4,11 +4,6 @@ Tutorial
 Accessing an existing array
 ---------------------------
 
-Darr arrays are intended to be widely readable without Darr or Python, but the
-easiest is simply to use Darr if that is available. On-disk data is
-memory-mapped (i.e. not loaded in RAM), default is to access arrays in
-read-only mode.
-
 .. code:: python
 
     >>> import darr as da
@@ -74,9 +69,12 @@ Or in `Julia <https://julialang.org/>`__:
     x = map(ltoh, read(fid, Float64, (1024, 2)));
     close(fid);
 
-To see the files that correspond to a Darr array, see
-'examplearray.da' in the source
-`repo <https://github.com/gbeckers/Darr>`__.
+To see the files that correspond to a Darr array, see 'examplearray.da' in
+the source `repo <https://github.com/gbeckers/Darr>`__.
+
+Note that this way Darr arrays are intended to be widely and easily readable
+without Darr or Python, but the easiest of course is still to use Darr if that
+is available.
 
 Different numeric type
 ----------------------
