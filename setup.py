@@ -21,11 +21,10 @@ approach is provided
 Darr supports efficient read/write/append access and is based on universally
 readable flat binary files and automatically generated text files, containing
 human-readable explanation of precisely how your binary data is stored. It
-also provides specific code that reads the data in a variety of current 
-scientific data tools such as Python, R, Julia, IDL, Matlab, Maple, and 
+also provides specific code that reads the data in a variety of current
+scientific data tools such as Python, R, Julia, IDL, Matlab, Maple, and
 Mathematica (see
 `example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
-
 
 Darr currently supports numerical N-dimensional arrays, and experimentally
 supports numerical ragged arrays, i.e. a series of arrays in which one
@@ -39,25 +38,32 @@ Darr is currently pre-1.0, still undergoing significant development. It is
 open source and freely available under the `New BSD License
 <https://opensource.org/licenses/BSD-3-Clause>`__ terms.
 
-
 Features
 --------
 
--   Purely based on **flat binary** and **text** files, tool independence.
--   Supports **very large data arrays** through **memory-mapped** file access.
--   Data read/write access through **NumPy indexing**
--   Data is easily **appendable**.
--   **Human-readable explanation of how the binary data is stored** is saved 
-    in a README text file.
--   README also contains **examples of how to read the array** in popular 
-    analysis environments such as Python (without Darr), R, Julia, 
-    Octave/Matlab, GDL/IDL, Maple, and Mathematica.
--   **Many numeric types** are supported: (u)int8-(u)int64, float16-float64, 
-    complex64, complex128.
--   Easy use of **metadata**, stored in a separate JSON text file.
--   **Minimal dependencies**, only NumPy.
--   **Integrates easily** with the Dask or NumExpr libraries for 
-    **numeric computation on very large Darr arrays**.
+Pro's:
+
+-  Purely based on **flat binary** and **text** files, tool independence.
+-  **Human-readable explanation of how the binary data is stored** is
+   saved in a README text file.
+-  Includes **examples of how to read the array** in popular
+   analysis environments such as Python (without Darr), R, Julia,
+   Octave/Matlab, GDL/IDL, and Mathematica.
+-  Supports **very large data arrays** through **memory-mapped** file
+   access.
+-  Data read/write access is simple through **NumPy indexing** (see
+   `here <https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html>`__).
+-  Data is easily **appendable**.
+-  **Many numeric types** are supported: (u)int8-(u)int64, float16-float64,
+   complex64, complex128.
+-  Easy use of **metadata**, stored in a separate
+   `JSON <https://en.wikipedia.org/wiki/JSON>`__ text file.
+-  **Minimal dependencies**, only `NumPy <http://www.numpy.org/>`__.
+-  **Integrates easily** with the
+   `Dask <https://dask.pydata.org/en/latest/>`__ or
+   `NumExpr <https://numexpr.readthedocs.io/en/latest/>`__ libraries for
+   **numeric computation on very large Darr arrays**.
+-  Supports **ragged arrays** (still experimental).
 
 See the [documentation](http://darr.readthedocs.io/) for more information.
 
