@@ -97,7 +97,7 @@ If Darr is not exactly what you are looking for, have a look at these projects:
 
 
 
-Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
+Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2019, Gabriël
 Beckers
 
 .. |Travis Status| image:: https://travis-ci.org/gbeckers/Darr.svg?branch=master
