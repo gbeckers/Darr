@@ -9,6 +9,7 @@ sudo: true
 matrix:
   include:
     - python: 3.6
+    - python: 3.7
 
 install:
   - pip install -U pip setuptools wheel tox-travis coveralls
