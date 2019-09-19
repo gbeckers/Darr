@@ -1,4 +1,4 @@
-This directory contains a numeric array that can most easily be read in Python using the Darr
+This directory contains a numeric array that can be accessed most easily in Python using the Darr
 library (https://pypi.org/project/darr/), as follows:
 
 >>> import darr as da

@@ -3,11 +3,13 @@ Disk-based storage of a ragged array
 
 This directory is a data store for a numeric ragged array, which is a sequence of arrays in which
 one dimension varies in length. On disk, these arrays are concatenated along their variable
-dimension. The data can easiest be read in Python using the Darr library
-(https://pypi.org/project/darr/), as follows:
+dimension. The easiest way to access the data is to use the Darr library
+(https://pypi.org/project/darr/) in Python , as follows:
 
-import darr as da
-a = da.RaggedArray(path_to_array_dir)
+>>> import darr as da
+>>> a = da.RaggedArray('path_to_array_dir')
+
+where 'path_to_array_dir' is the name of the array directory.
 
 If Darr is not available, the data can also be read in other environments, with more effort, using
 the description below.
@@ -15,8 +17,8 @@ the description below.
 Description of data storage
 ---------------------------
 There are two subdirectories, each containing an array stored in a self-explanatory format. See
-the READMEs in the corresponding directories to find out in detail out how. However, example code
-is provided below for a number of analysis environments, which in many cases is sufficient.
+the READMEs in the corresponding directories to find out in detail out how to read them. Example
+code is provided below for a number of analysis environments, which in many cases is sufficient.
 
 The subdirectory "values" holds the numerical data itself, where subarrays are simply appended
 along their variable length dimension (first axis). So the number of dimensions of the values

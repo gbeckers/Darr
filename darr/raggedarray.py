@@ -257,25 +257,25 @@ readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
             wrap('This directory is a data store for a numeric ragged array, '
                  'which is a sequence of arrays in which one dimension varies '
                  'in length. On disk, these arrays are concatenated along '
-                 'their variable dimension. The data can easiest be read '
-                 'in Python using the Darr library '
-                 '(https://pypi.org/project/darr/), as follows:') + '\n\n' \
+                 'their variable dimension. The easiest way to access the '
+                 'data is to use the Darr library '
+                 '(https://pypi.org/project/darr/) in Python , as follows:') \
+            + '\n\n' \
             + '>>> import darr as da\n' \
             + ">>> a = da.RaggedArray('path_to_array_dir')\n\n" + \
             wrap("where 'path_to_array_dir' is the name of the array "
               "directory.") + "\n\n" + \
-            wrap('If Darr is not available, '
-                 'the data can also be read in other environments, with '
-                 'more effort, using the description '
-                 'below.') + '\n\n' \
+            wrap('If Darr is not available, the data can also be read in '\
+                 'other environments, with more effort, using the '\
+                 'description below.') + '\n\n' \
             + 'Description of data storage\n' \
             + '---------------------------\n' + \
             wrap('There are two subdirectories, each containing an array '
                  'stored in a self-explanatory format. See the READMEs in '
                  'the corresponding directories to find out in detail out '
-                 'how. However, example code is provided below for a number '
-                 'of analysis environments, which in many cases is '
-                 'sufficient.') + '\n\n' + \
+                 'how to read them. Example code is provided below '
+                 'for a number of analysis environments, which in many cases '
+                 'is sufficient.') + '\n\n' + \
             wrap('The subdirectory "values" holds the numerical data itself, '
                  'where subarrays are simply appended along their variable '
                  'length dimension (first axis). So the number of dimensions '

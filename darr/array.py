@@ -1354,8 +1354,8 @@ def numtypedescriptiontxt(da):
                           'with memory address'
     else:
         raise ValueError(f'arrayorder type "{arrayorder}" unknown')
-    s = wrap("This directory contains a numeric array that can most easily "
-             "be read in Python using the Darr library "
+    s = wrap("This directory contains a numeric array that can "
+             "be accessed most easily in Python using the Darr library "
              "(https://pypi.org/project/darr/), as follows:") + "\n\n"
     s +=     ">>> import darr as da\n" \
              ">>> a = da.Array('path_to_array_dir')\n\n"
