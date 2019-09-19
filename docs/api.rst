@@ -1,14 +1,18 @@
+======================
 Darr API Documentation
 ======================
 
+Two types of numeric data structures are supported:
+
+* arrays_
+* raggedarrays_
 
 .. automodule:: darr.array
 
-Creating arrays
----------------
+.. _arrays:
 
-.. autofunction:: darr.asarray
-.. autofunction:: darr.create_array
+Arrays
+======
 
 Accessing arrays
 ----------------
@@ -16,6 +20,11 @@ Accessing arrays
    :members:
    :inherited-members:
 
+Creating arrays
+---------------
+
+.. autofunction:: darr.asarray
+.. autofunction:: darr.create_array
 
 Deleting arrays
 ---------------
@@ -26,3 +35,26 @@ Truncating arrays
 -----------------
 
 .. autofunction:: darr.truncate_array
+
+.. _raggedarrays:
+
+Ragged Arrays
+=============
+
+
+Accessing arrays
+----------------
+.. autoclass:: darr.RaggedArray
+   :members:
+   :inherited-members:
+
+Creating arrays
+---------------
+
+.. autofunction:: darr.asraggedarray
+.. autofunction:: darr.create_raggedarray
+
+Deleting arrays
+---------------
+
+.. autofunction:: darr.delete_raggedarray

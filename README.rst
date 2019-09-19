@@ -60,6 +60,7 @@ Pro's:
    `Dask <https://dask.pydata.org/en/latest/>`__ or
    `NumExpr <https://numexpr.readthedocs.io/en/latest/>`__ libraries for
    **numeric computation on very large Darr arrays**.
+-  Supports **ragged arrays** (still experimental).
 
 Con's:
 
