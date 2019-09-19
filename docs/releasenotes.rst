@@ -4,6 +4,7 @@ Release notes
 Version 0.1.12
 --------------
 - improved explanation in array README
+- better documentation of ragged arrays
 
 Version 0.1.11
 --------------
