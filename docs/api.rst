@@ -42,19 +42,19 @@ Ragged Arrays
 =============
 
 
-Accessing arrays
-----------------
+Accessing ragged arrays
+-----------------------
 .. autoclass:: darr.RaggedArray
    :members:
    :inherited-members:
 
-Creating arrays
----------------
+Creating ragged arrays
+----------------------
 
 .. autofunction:: darr.asraggedarray
 .. autofunction:: darr.create_raggedarray
 
-Deleting arrays
----------------
+Deleting ragged arrays
+----------------------
 
 .. autofunction:: darr.delete_raggedarray
