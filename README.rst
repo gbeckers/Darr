@@ -107,7 +107,7 @@ Beckers
 .. |PyPi version| image:: https://img.shields.io/badge/pypi-0.1.11-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
-   :target: https://coveralls.io/github/gbeckers/Darr?branch=master
+   :target: https://coveralls.io/github/gbeckers/Darr?branch=master&kill_cache=1
 .. |Docs Status| image:: https://readthedocs.org/projects/darr/badge/?version=latest
    :target: https://darr.readthedocs.io/en/latest/
 .. |Repo Status| image:: https://www.repostatus.org/badges/latest/active.svg
