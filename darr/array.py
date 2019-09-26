@@ -25,7 +25,7 @@ import numpy as np
 
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode
-from .utils import fit_chunks, filesha256, wrap
+from .utils import fit_frames, filesha256, wrap
 from ._version import get_versions
 
 
@@ -805,7 +805,7 @@ class Array(BaseDataDir):
             raise ValueError("endindex is too high")
         if startindex >= endindex:
             raise ValueError("startindex should be lower than endindex")
-        nframes, _, remainder = fit_chunks(
+        nframes, _, remainder = fit_frames(
             totallen=(endindex - startindex),
             chunklen=chunklen,
             steplen=stepsize)
@@ -937,8 +937,8 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
         if totallen == 0:
             yield array.astype(dtype)
         else:
-            nchunks, _, remainder = fit_chunks(totallen=totallen,
-                                                     chunklen=chunklen)
+            nchunks, _, remainder = fit_frames(totallen=totallen,
+                                               chunklen=chunklen)
             for i in range(nchunks):
                 yield np.asarray(array[i * chunklen:(i + 1) * chunklen],
                                  dtype=dtype)
