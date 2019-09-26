@@ -37,6 +37,23 @@ class RaggedArray(unittest.TestCase):
             self.assertEqual(len(dal), 1)
             assert_equal(dal[0], a)
 
+    def test_setaccessmode(self):
+        with tempdir() as dirname:
+            dal = create_raggedarray(dirname, atom=(), dtype='float64',
+                                     metadata=None, accessmode='r+',
+                                     overwrite=True)
+            self.assertEqual(dal.accessmode, 'r+')
+            self.assertEqual(dal._metadata.accessmode, 'r+')
+            self.assertEqual(dal._values.accessmode, 'r+')
+            self.assertEqual(dal._indices.accessmode, 'r+')
+            dal.accessmode = 'r'
+            self.assertEqual(dal.accessmode, 'r')
+            self.assertEqual(dal._metadata.accessmode, 'r')
+            self.assertEqual(dal._values.accessmode, 'r')
+            self.assertEqual(dal._indices.accessmode, 'r')
+            self.assertRaises(ValueError, setattr, dal, 'accessmode', 'w')
+            self.assertRaises(ValueError, setattr, dal, 'accessmode', 'a')
+
 
 class IterAppendRaggedArray(unittest.TestCase):
 
