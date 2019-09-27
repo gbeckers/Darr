@@ -595,6 +595,10 @@ class MetaData(DarrTestCase):
         l = len(self.tempar.metadata)
         self.assertEqual(l, 2)
 
+    def test_metadataitems(self):
+        self.assertTupleEqual((('fs', 20000), ('x', 33.3)),
+                              tuple(self.tempar.metadata.items()))
+
 
 class TestOpenFile(DarrTestCase):
 
