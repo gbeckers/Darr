@@ -14,19 +14,21 @@ numtypesdescr = {
     'uint64': '64‐bit unsigned integer (0 to 18446744073709551615)',
     'float16': '16-bit half precision float (sign bit, 5 bits exponent, 10 '
                'bits mantissa)',
-    'float32': '32-bit IEEE single precision float (sign bit, 8 bits exponent, '
+    'float32': '32-bit IEEE single precision float (sign bit, 8 bits exponent, 
                '23 bits mantissa)',
     'float64': '64-bit IEEE double precision float (sign bit, 11 bits '
                'exponent, 52 bits mantissa)',
-    'complex64':'64-bit IEEE single‐precision complex number, represented by '
-                'two 32 - bit floats (real and imaginary components)',
+    'complex64': '64-bit IEEE single‐precision complex number, represented by '
+                 'two 32 - bit floats (real and imaginary components)',
     'complex128': '128-bit IEEE double‐precision complex number, represented '
                   'by two 64 - bit floats (real and imaginary components)',
 }
 
+
 def arrayinfotodtype(arrayinfo):
-    """Produces a numpy dtype description string like '<f8' based on a dictionary
-    with type description details (as present in json array description file).
+    """Produces a numpy dtype description string like '<f8' based on a
+    dictionary with type description details (as present in json array
+    description file).
 
     Parameters
     ----------
@@ -47,7 +49,7 @@ def arrayinfotodtype(arrayinfo):
         raise ValueError(
             f"'{numtype}' is not a valid numeric type")
     if byteorder not in ('little', 'big'):
-        raise ValueError(f"'{byteorder}' is not a valid order")
+        raise ValueError(f"'{byteorder}' is not a valid byte order")
     endianness = {'big': '>', 'little': '<'}[byteorder]
     return np.dtype(numtype).newbyteorder(endianness).str
 
@@ -68,4 +70,3 @@ def arraynumtypeinfo(ndarray):
         'arrayorder': 'C' if ndarray.flags['C_CONTIGUOUS'] else 'F',
         'shape': ndarray.shape,
         'byteorder': bostr}
-
