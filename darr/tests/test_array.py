@@ -523,13 +523,13 @@ class TestIterView(DarrTestCase):
 
 
 class MetaData(DarrTestCase):
+
     def setUp(self):
         self.temparpath = tempfile.mkdtemp() # even array
         self.metadata = md = {'fs':20000, 'x': 33.3}
         self.tempar = create_array(path=self.temparpath, shape=(12,),
                                     dtype='int64', metadata=md,
                                    accessmode='r+', overwrite=True)
-
     def tearDown(self):
         shutil.rmtree(str(self.temparpath))
 
@@ -590,6 +590,10 @@ class MetaData(DarrTestCase):
     def test_metadatarepr(self):
         self.assertEqual(repr(self.tempar.metadata),
                          "{'fs': 20000, 'x': 33.3}")
+
+    def test_metadatalen(self):
+        l = len(self.tempar.metadata)
+        self.assertEqual(l, 2)
 
 
 class TestOpenFile(DarrTestCase):
