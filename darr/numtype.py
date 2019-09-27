@@ -14,7 +14,7 @@ numtypesdescr = {
     'uint64': '64‐bit unsigned integer (0 to 18446744073709551615)',
     'float16': '16-bit half precision float (sign bit, 5 bits exponent, 10 '
                'bits mantissa)',
-    'float32': '32-bit IEEE single precision float (sign bit, 8 bits exponent, 
+    'float32': '32-bit IEEE single precision float (sign bit, 8 bits exponent, '
                '23 bits mantissa)',
     'float64': '64-bit IEEE double precision float (sign bit, 11 bits '
                'exponent, 52 bits mantissa)',
