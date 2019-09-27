@@ -4,3 +4,4 @@ source = darr
 [report]
 omit =
     */_version.py
+    */tests/*
