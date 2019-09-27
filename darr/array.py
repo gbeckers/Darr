@@ -956,6 +956,9 @@ def asarray(path, array, dtype=None, accessmode='r',
             metadata=None, chunklen=None, overwrite=False):
     """Save an array or array generator as a Darr array to file system path.
 
+    Data is always written in ‘C’ order to disk, independent of the order of
+    `array`.
+
     Parameters
     ----------
     path : str or pathlib.Path
@@ -1104,7 +1107,7 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
                  accessmode='r+', chunklen=None, metadata=None,
                  overwrite=False):
     """Create a new `darr array` of given shape and type, filled with
-    predetermined values.
+    predetermined values. Data is always written in ‘C’ order to disk.
 
     Parameters
     ----------
