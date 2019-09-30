@@ -225,6 +225,13 @@ class CreateDiskArray(DarrTestCase):
                                dtype='int32', overwrite=True)
             self.assertTupleEqual((1,), dar.shape)
 
+    def test_fillandfillfuncisnotnone(self):
+        fillfunc= lambda i: i * 2
+        with tempdir() as dirname:
+            self.assertRaises(ValueError, create_array, path=dirname,
+                              shape=(1,), fill=1, fillfunc=fillfunc,
+                              dtype='int32', overwrite=True)
+
 
 class TestArray(DarrTestCase):
 

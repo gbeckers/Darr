@@ -1175,7 +1175,7 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
        [ 23.4,  23.4],
        [ 23.4,  23.4],
        [ 23.4,  23.4]]) (r+)
-    >>> fillfunc = lambda i: i * 2 darr
+    >>> fillfunc = lambda i: i * 2
     >>> da.create_array('testarray4', shape=(5,), fillfunc=fillfunc)
     darr([ 0.,  2.,  4.,  6.,  8.]) (r+)
     >>> fillfunc = lambda i: i * [1, 2]
