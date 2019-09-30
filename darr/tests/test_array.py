@@ -328,6 +328,13 @@ class TestReadArrayDescr(DarrTestCase):
                                 overwrite=True)
             self.assertRaises(Exception, Array, dar.path)
 
+    def test_allowfortranorder(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,4), fill=0,
+                               dtype='int64', overwrite=True)
+            dar._update_jsondict(dar._arraydescrpath.absolute(),
+                                 {'arrayorder': 'F'})
+
 
 class TestConsistency(DarrTestCase):
 
@@ -335,11 +342,9 @@ class TestConsistency(DarrTestCase):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
-            arrayinfo = dar._arrayinfo.copy()
-            arrayinfo['shape'] = (3,)
-            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
-                                overwrite=True)
-            self.assertRaises(ValueError, dar._check_consistency)
+            self.assertIsNone(dar._check_consistency())
+            dar.append([0,0])
+            self.assertIsNone(dar._check_consistency())
 
     def test_consistencywrongshape(self):
         with tempdir() as dirname:
