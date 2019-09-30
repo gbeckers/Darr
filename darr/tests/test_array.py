@@ -366,6 +366,20 @@ class TestConsistency(DarrTestCase):
                                 overwrite=True)
             self.assertRaises(ValueError, Array, dar.path)
 
+class TestCheckArraywriteable(DarrTestCase):
+
+    def test_check_arraywriteable(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', accessmode='r+', overwrite=True)
+            self.assertIsNone(dar.check_arraywriteable())
+
+    def test_check_arraynotwriteable(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', accessmode='r', overwrite=True)
+            self.assertRaises(OSError, dar.check_arraywriteable)
+
 
 class IterView(DarrTestCase):
 
