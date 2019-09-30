@@ -218,6 +218,13 @@ class CreateDiskArray(DarrTestCase):
         self.check_arrayequaltocreatearray(ndarray=ndarray, shape=(12, 3, 7),
                                            chunklen=1)
 
+    def test_shapeisint(self):
+        # we allow shapes to be integers
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=1,
+                               dtype='int32', overwrite=True)
+            self.assertTupleEqual((1,), dar.shape)
+
 
 class TestArray(DarrTestCase):
 
