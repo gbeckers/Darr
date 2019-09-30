@@ -259,7 +259,7 @@ readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
                  'in length. On disk, these arrays are concatenated along '
                  'their variable dimension. The easiest way to access the '
                  'data is to use the Darr library '
-                 '(https://pypi.org/project/darr/) in Python , as follows:') \
+                 '(https://pypi.org/project/darr/) in Python, as follows:') \
             + '\n\n' \
             + '>>> import darr as da\n' \
             + ">>> a = da.RaggedArray('path_to_array_dir')\n\n" + \
