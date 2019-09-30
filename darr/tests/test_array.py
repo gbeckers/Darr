@@ -338,7 +338,7 @@ class TestReadArrayDescr(DarrTestCase):
 
 class TestConsistency(DarrTestCase):
 
-    def test_consistencyself(self):
+    def test_consistencycorrect(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
@@ -346,7 +346,21 @@ class TestConsistency(DarrTestCase):
             dar.append([0,0])
             self.assertIsNone(dar._check_consistency())
 
-    def test_consistencywrongshape(self):
+    def test_consistencyincorrectinfoshape(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            dar._arrayinfo['shape'] = (3,)
+            self.assertRaises(ValueError, dar._check_consistency)
+
+    def test_consistencywronginfoitemsize(self):
+        with tempdir() as dirname:
+            dar = create_array(path=dirname, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            dar._arrayinfo['numtype'] = 'int32'
+            self.assertRaises(ValueError, dar._check_consistency)
+
+    def test_consistencyincorrectinfofileshape(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
@@ -354,9 +368,10 @@ class TestConsistency(DarrTestCase):
             arrayinfo['shape'] = (3,)
             dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
                                 overwrite=True)
+            self.assertRaises(ValueError, dar._check_consistency)
             self.assertRaises(ValueError, Array, dar.path)
 
-    def test_consistencywrongitemsize(self):
+    def test_consistencywronginfofileitemsize(self):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
@@ -364,6 +379,7 @@ class TestConsistency(DarrTestCase):
             arrayinfo['numtype'] = 'int32'
             dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
                                 overwrite=True)
+            self.assertRaises(ValueError, dar._check_consistency)
             self.assertRaises(ValueError, Array, dar.path)
 
 class TestCheckArraywriteable(DarrTestCase):
