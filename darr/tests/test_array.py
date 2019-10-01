@@ -596,18 +596,18 @@ class AppendData(DarrTestCase):
         ar = 3
         self.assertRaises(TypeError, dar.iterappend, ar)
 
-    def test_fdclosedduringiterappend(self):
-
-        def seq(dar):
-            yield [0]
-            dar._valuesfd.close()
-            yield [0]
-
-        dar = create_array(path=self.temparpath, shape=(2,),
-                           dtype='int64', overwrite=True)
-        self.assertRaises(AppendDataError, dar.iterappend, seq(dar))
-        self.assertArrayIdentical(dar, np.array([0, 0, 0], dtype='int64'))
-        dar._check_consistency()
+    # def test_fdclosedduringiterappend(self):
+    #
+    #     def seq(dar):
+    #         yield [0]
+    #         dar._valuesfd.close()
+    #         yield [0]
+    #
+    #     dar = create_array(path=self.temparpath, shape=(2,),
+    #                        dtype='int64', overwrite=True)
+    #     self.assertRaises(AppendDataError, dar.iterappend, seq(dar))
+    #     self.assertArrayIdentical(dar, np.array([0, 0, 0], dtype='int64'))
+    #     dar._check_consistency()
 
 
 class TestIterView(DarrTestCase):
@@ -732,26 +732,25 @@ class TestOpenFile(DarrTestCase):
 
 
 class TruncateData(DarrTestCase):
-    def setUp(self):
-        self.temparpath = tempfile.mkdtemp()
-        a = np.array([0, 1, 2, 3, 4], dtype='int64')
-        self.tempar = asarray(path=self.temparpath, array=a, overwrite=True,
-                              accessmode='r+')
-
-    def tearDown(self):
-        shutil.rmtree(str(self.temparpath))
-
 
     def test_truncate1d(self):
-        truncate_array(self.tempar, 2)
-        self.assertArrayIdentical(self.tempar[:],
-                                  np.array([0,1], dtype=self.tempar.dtype))
+        with tempdir() as dirname:
+            a = np.array([0, 1, 2, 3, 4], dtype='int64')
+            dar = asarray(path=dirname, array=a, overwrite=True,
+                          accessmode='r+')
+            truncate_array(dar, 2)
+            self.assertArrayIdentical(dar[:],
+                                      np.array([0,1], dtype=dar.dtype))
 
     def test_truncatebydirname(self):
-        truncate_array(self.temparpath, 2)
-        a = Array(self.temparpath)
-        self.assertArrayIdentical(a[:], np.array([0, 1],
-                                                 dtype=self.tempar.dtype))
+        with tempdir() as dirname:
+            a = np.array([0, 1, 2, 3, 4], dtype='int64')
+            dar = asarray(path=dirname, array=a, overwrite=True,
+                          accessmode='r+')
+            truncate_array(dirname, 2)
+            a = Array(dirname)
+            self.assertArrayIdentical(a[:], np.array([0, 1],
+                                                     dtype=a.dtype))
 
     def test_donottruncatenondarrdir(self):
         with tempdir() as dirname:
@@ -760,10 +759,18 @@ class TruncateData(DarrTestCase):
             self.assertRaises(TypeError, truncate_array, dirname, 3)
 
     def test_truncateinvalidindextype(self):
-        self.assertRaises(TypeError, truncate_array, self.tempar, 'a')
+        with tempdir() as dirname:
+            a = np.array([0, 1, 2, 3, 4], dtype='int64')
+            dar = asarray(path=dirname, array=a, overwrite=True,
+                          accessmode='r+')
+            self.assertRaises(TypeError, truncate_array, dar, 'a')
 
     def test_truncateindextoohigh(self):
-        self.assertRaises(IndexError, truncate_array, self.tempar, 10)
+        with tempdir() as dirname:
+            a = np.array([0, 1, 2, 3, 4], dtype='int64')
+            dar = asarray(path=dirname, array=a, overwrite=True,
+                          accessmode='r+')
+            self.assertRaises(IndexError, truncate_array, dar, 10)
 
 
 
