@@ -10,7 +10,7 @@ def tempdir(dirname='.', keep=False, report=False):
         tempdirname = tf.mkdtemp(dir=dirname)
         if report:
             print('created tempdir {}'.format(tempdirname))
-        yield tempdirname
+        yield Path(tempdirname)
     except:
         raise
     finally:
@@ -26,7 +26,7 @@ def tempfile(dirname='.', keep=False, report=False):
         _, tempfilename = tf.mkstemp(dir=dirname)
         if report:
             print('created tempfile {}'.format(tempfilename))
-        yield tempfilename
+        yield Path(tempfilename)
     except:
         raise
     finally:

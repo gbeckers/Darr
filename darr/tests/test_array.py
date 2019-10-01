@@ -736,22 +736,20 @@ class TruncateData(DarrTestCase):
     def test_truncate1d(self):
         with tempdir() as dirname:
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
-            dar = asarray(path=dirname, array=a, overwrite=True,
-                          accessmode='r+')
+            dar = asarray(path=dirname / 'test', array=a, accessmode='r+')
             truncate_array(dar, 2)
             self.assertArrayIdentical(dar[:],
                                       np.array([0,1], dtype=dar.dtype))
-            a = Array(dirname)
+            a = Array(dirname/ 'test')
             self.assertArrayIdentical(a[:],
                               np.array([0, 1], dtype=a.dtype))
 
     def test_truncatebydirname(self):
         with tempdir() as dirname:
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
-            dar = asarray(path=dirname, array=a, overwrite=True,
-                          accessmode='r+')
-            truncate_array(dirname, 2)
-            a = Array(dirname)
+            dar = asarray(path=dirname/ 'test', array=a, accessmode='r+')
+            truncate_array(dirname / 'test', 2)
+            a = Array(dirname / 'test')
             self.assertArrayIdentical(a[:], np.array([0, 1],
                                                      dtype=a.dtype))
 
