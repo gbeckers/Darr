@@ -1205,7 +1205,7 @@ def delete_array(da):
     """
     try:
         if not isinstance(da, Array):
-            da = Array(da)
+            da = Array(da, accessmode='r+')
     except Exception:
         raise TypeError(f"'{da}' not recognized as a Darr array")
     da.check_arraywriteable()
@@ -1261,7 +1261,7 @@ def truncate_array(a, index):
 
     try:
         if not isinstance(a, Array):
-            a = Array(a)
+            a = Array(a, accessmode='r+')
     except Exception:
         raise TypeError(f"'{a}' not recognized as a darr")
     a.check_arraywriteable()

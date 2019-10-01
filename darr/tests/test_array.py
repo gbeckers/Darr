@@ -6,8 +6,8 @@ import shutil
 
 import numpy as np
 
-from darr.array import asarray, create_array, numtypesdescr, Array, \
-    truncate_array, delete_array, AppendDataError
+from darr.array import asarray, create_array, create_basedir, Array, \
+    numtypesdescr, truncate_array, delete_array, AppendDataError
 from .utils import tempdir
 
 
@@ -745,6 +745,18 @@ class TruncateData(DarrTestCase):
         self.assertArrayIdentical(self.tempar[:],
                                   np.array([0,1], dtype=self.tempar.dtype))
 
+    def test_truncatebydirname(self):
+        truncate_array(self.temparpath, 2)
+        a = Array(self.temparpath)
+        self.assertArrayIdentical(a[:], np.array([0, 1],
+                                                 dtype=self.tempar.dtype))
+
+    def test_donottruncatenondarrdir(self):
+        with tempdir() as dirname:
+            bd = create_basedir(dirname, overwrite=True)
+            bd._write_jsondict('test.json', {'a': 1})
+            self.assertRaises(TypeError, truncate_array, dirname, 3)
+
 
 class DeleteArray(DarrTestCase):
 
@@ -771,6 +783,12 @@ class DeleteArray(DarrTestCase):
             self.assertRaises(OSError, delete_array, dar)
             self.assertEqual(testpath.exists(), True)
 
+    def test_donotdeletenondarrdir(self):
+        with tempdir() as dirname:
+            bd = create_basedir(dirname, overwrite=True)
+            self.assertRaises(TypeError, delete_array, dirname)
+            bd._write_jsondict('test.json', {'a': 1})
+            self.assertRaises(TypeError, delete_array, dirname)
 
 if __name__ == '__main__':
     unittest.main()
