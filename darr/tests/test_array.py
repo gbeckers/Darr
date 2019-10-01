@@ -158,8 +158,13 @@ class AsArray(DarrTestCase):
                           array=dar, overwrite=True)
 
     def test_asarraysequenceofzerodimnumpyscalars(self):
-        a = [np.float32(0), np.float32(1), np.float32(2)]
-        dar = asarray(path=self.tempdirname1, array=a, overwrite=True)
+
+        def a():
+            yield np.float32(0)
+            yield np.float32(1)
+            yield np.float32(2)
+
+        dar = asarray(path=self.tempdirname1, array=a(), overwrite=True)
         self.assertArrayIdentical(dar[:], np.array([0,1,2], dtype=np.float32))
 
 
