@@ -7,7 +7,8 @@ import shutil
 import numpy as np
 
 from darr.array import asarray, create_array, create_basedir, Array, \
-    numtypesdescr, truncate_array, delete_array, AppendDataError
+    numtypesdescr, truncate_array, delete_array, AppendDataError, \
+    numtypedescriptiontxt
 from .utils import tempdir
 
 
@@ -382,6 +383,8 @@ class TestReadArrayDescr(DarrTestCase):
                                dtype='int64', overwrite=True)
             dar._update_jsondict(dar._arraydescrpath.absolute(),
                                  {'arrayorder': 'F'})
+            dar = Array(dirname)
+            self.assertIn("Column-major", numtypedescriptiontxt(dar))
 
     def test_warnwritefortranarray(self):
         with tempdir() as dirname1, tempdir() as dirname2:
@@ -392,7 +395,6 @@ class TestReadArrayDescr(DarrTestCase):
             dar = Array(dirname1)
             self.assertWarns(UserWarning, asarray, path=dirname2, array=dar,
                              overwrite=True)
-
 
 class TestConsistency(DarrTestCase):
 
