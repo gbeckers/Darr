@@ -365,6 +365,16 @@ class TestReadArrayDescr(DarrTestCase):
             dar._update_jsondict(dar._arraydescrpath.absolute(),
                                  {'arrayorder': 'F'})
 
+    def test_warnwritefortranarray(self):
+        with tempdir() as dirname1, tempdir() as dirname2:
+            dar = create_array(path=dirname1, shape=(2, 4), fill=0,
+                               dtype='int64', overwrite=True)
+            dar._update_jsondict(dar._arraydescrpath.absolute(),
+                                 {'arrayorder': 'F'})
+            dar = Array(dirname1)
+            self.assertWarns(UserWarning, asarray, path=dirname2, array=dar,
+                             overwrite=True)
+
 
 class TestConsistency(DarrTestCase):
 
