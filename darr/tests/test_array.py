@@ -104,6 +104,12 @@ class AsArray(DarrTestCase):
         dar = asarray(path=self.tempdirname1, array=b, overwrite=True)
         self.assertArrayIdentical(dar[:], b)
 
+    def test_asarraysequencesmallchunklen(self):
+        a = [1, 2, 3, 4, 5]
+        dar = asarray(path=self.tempdirname1, array=a, chunklen=3,
+                      overwrite=True)
+        self.assertArrayIdentical(np.array(a), dar[:])
+
     def test_asarraywritingsmallerchunks(self):
         a = np.arange(1024, dtype='int64').reshape(2,-1)
         dar = asarray(path=self.tempdirname1, array=a, chunklen=4, overwrite=True)
