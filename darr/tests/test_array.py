@@ -735,39 +735,43 @@ class TruncateData(DarrTestCase):
 
     def test_truncate1d(self):
         with tempdir() as dirname:
+            dirname = dirname / 'test'
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
-            dar = asarray(path=dirname / 'test', array=a, accessmode='r+')
+            dar = asarray(path=dirname, array=a, accessmode='r+')
             truncate_array(dar, 2)
             self.assertArrayIdentical(dar[:],
                                       np.array([0,1], dtype=dar.dtype))
-            a = Array(dirname/ 'test')
+            a = Array(dirname)
             self.assertArrayIdentical(a[:],
                               np.array([0, 1], dtype=a.dtype))
 
     def test_truncatebydirname(self):
         with tempdir() as dirname:
+            dirname = dirname / 'test'
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
-            dar = asarray(path=dirname/ 'test', array=a, accessmode='r+')
-            truncate_array(dirname / 'test', 2)
-            a = Array(dirname / 'test')
+            dar = asarray(path=dirname, array=a, accessmode='r+')
+            truncate_array(dirname, 2)
+            a = Array(dirname)
             self.assertArrayIdentical(a[:], np.array([0, 1],
                                                      dtype=a.dtype))
 
     def test_donottruncatenondarrdir(self):
         with tempdir() as dirname:
-            bd = create_basedir(dirname, overwrite=True)
+            dirname = dirname / 'test'
+            bd = create_basedir(dirname)
             bd._write_jsondict('test.json', {'a': 1})
             self.assertRaises(TypeError, truncate_array, dirname, 3)
 
     def test_truncateinvalidindextype(self):
         with tempdir() as dirname:
+            dirname = dirname / 'test'
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
-            dar = asarray(path=dirname, array=a, overwrite=True,
-                          accessmode='r+')
+            dar = asarray(path=dirname, array=a, accessmode='r+')
             self.assertRaises(TypeError, truncate_array, dar, 'a')
 
     def test_truncateindextoohigh(self):
         with tempdir() as dirname:
+            dirname = dirname / 'test'
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
             dar = asarray(path=dirname, array=a, overwrite=True,
                           accessmode='r+')
