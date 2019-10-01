@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 import tempfile
 import shutil
+import time
 
 import numpy as np
 
@@ -741,7 +742,8 @@ class TruncateData(DarrTestCase):
             truncate_array(dar, 2)
             self.assertArrayIdentical(dar[:],
                                       np.array([0,1], dtype=dar.dtype))
-            # a = Array(dirname)
+            time.sleep(1.)
+            a = Array(dirname)
             # self.assertArrayIdentical(a[:],
             #                   np.array([0, 1], dtype=a.dtype))
 
