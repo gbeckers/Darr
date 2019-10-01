@@ -3,7 +3,7 @@ import tempfile
 import shutil
 from contextlib import contextmanager
 from pathlib import Path
-from darr.array import BaseDataDir
+from darr.array import BaseDataDir, create_basedir
 from .utils import tempdir
 
 @contextmanager
@@ -16,6 +16,17 @@ def create_testbasedatadir(filename='test.json', datadict=None):
         bdd = BaseDataDir(bdddirname)
         bdd._write_jsondict(filename, datadict)
         yield bdd
+
+
+class TestCreateBaseDir(unittest.TestCase):
+
+    def test_pathexistsnotoverwrite(self):
+        with tempdir() as dirname:
+            self.assertRaises(OSError, create_basedir, dirname)
+
+    def test_pathexistsoverwrite(self):
+        with tempdir() as dirname:
+            create_basedir(dirname, overwrite=True)
 
 
 class TestBaseDataDir(unittest.TestCase):
