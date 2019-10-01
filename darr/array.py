@@ -933,7 +933,8 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
     elif isinstance(array, Array):
         for chunk in array.iterview(chunklen=chunklen):
             yield chunk
-    elif hasattr(array, '__len__'):  # is numpy array or sequence
+    elif hasattr(array, '__len__') and not hasattr(array, 'keys'):
+        # may be numpy array or sequence
         totallen = len(array)
         if totallen == 0:
             yield array.astype(dtype)
@@ -945,12 +946,11 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
                                  dtype=dtype)
             if remainder:
                 yield np.asarray(array[-remainder:], dtype=dtype)
+    elif np.isscalar(array): # a number
+        yield np.array(array, dtype=dtype, ndmin=1)
     else:
-        try:  # could be a number
-            yield np.array(array, dtype=dtype, ndmin=1)
-        except Exception:
-            raise TypeError(
-                f"cannot convert object of type '{type(array)}' to an array")
+        raise TypeError(
+            f"cannot convert object of type '{type(array)}' to an array")
 
 
 def asarray(path, array, dtype=None, accessmode='r',
