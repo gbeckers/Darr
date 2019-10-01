@@ -152,6 +152,11 @@ class AsArray(DarrTestCase):
         self.assertRaises(TypeError, asarray,path=self.tempdirname1, array=a,
                          overwrite=True)
 
+    def test_asarrayarratosamepath(self):
+        dar = asarray(path=self.tempdirname1, array=[0,1], overwrite=True)
+        self.assertRaises(ValueError, asarray, path=self.tempdirname1,
+                          array=dar, overwrite=True)
+
 
 class CreateDiskArray(DarrTestCase):
 
