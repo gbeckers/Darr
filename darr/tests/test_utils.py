@@ -1,5 +1,18 @@
 import unittest
-from darr.utils import fit_frames
+from darr.utils import fit_frames, write_jsonfile
+from .utils import tempdir, tempfile
+
+class WriteJsonFile(unittest.TestCase):
+
+    def test_pathexistsdonotoverwrite(self):
+        with tempfile() as filename:
+            self.assertRaises(OSError, write_jsonfile, path=filename,
+                              data={'a': 1})
+
+    def test_wrongtype(self):
+        with tempfile() as filename:
+            self.assertRaises(TypeError, write_jsonfile, path=filename,
+                              data=unittest, overwrite=True)
 
 class FitChunks(unittest.TestCase):
 

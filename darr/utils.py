@@ -1,5 +1,28 @@
 import hashlib
 import textwrap
+import json
+from pathlib import Path
+
+
+def write_jsonfile(path, data, sort_keys=True, indent=4, ensure_ascii=True,
+                   overwrite=False):
+    path = Path(path)
+    if path.exists() and not overwrite:
+        raise OSError(f"'{path}' exists, use 'overwrite' argument")
+    try:
+        json_string = json.dumps(data, sort_keys=sort_keys,
+                                 ensure_ascii=ensure_ascii, indent=indent)
+    except Exception:
+        s = f"Unable to serialize the metadata to JSON: {data}.\n" \
+            f"Use character strings as dictionary keys, and only " \
+            f"character strings, numbers, booleans, None, lists, " \
+            f"and dictionaries as objects."
+        raise TypeError(s)
+    else:
+        # utf-8 is ascii compatible
+        with open(path, 'w', encoding='utf-8') as fp:
+            fp.write(json_string)
+
 
 def fit_frames(totallen, chunklen, steplen=None):
     """

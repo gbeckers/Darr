@@ -25,7 +25,7 @@ import numpy as np
 
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode
-from .utils import fit_frames, filesha256, wrap
+from .utils import fit_frames, filesha256, wrap, write_jsonfile
 from ._version import get_versions
 
 
@@ -1278,26 +1278,6 @@ def truncate_array(a, index):
         raise IndexError(f"'index' {index} would yield an array of length "
                          f"{newlen}, which is invalid (current length is "
                          f"{len(a)})")
-
-
-def write_jsonfile(path, data, sort_keys=True, indent=4, ensure_ascii=True,
-                   overwrite=False):
-    path = Path(path)
-    if path.exists() and not overwrite:
-        raise OSError(f"'{path}' exists, use 'overwrite' argument")
-    try:
-        json_string = json.dumps(data, sort_keys=sort_keys,
-                                 ensure_ascii=ensure_ascii, indent=indent)
-    except TypeError:
-        print(f"Unable to serialize the metadata to JSON: {data}.\n"
-              f"Use character strings as dictionary keys, and only "
-              f"character strings, numbers, booleans, None, lists, "
-              f"and dictionaries as objects.")
-        raise
-    else:
-        # utf-8 is ascii compatible
-        with open(path, 'w', encoding='utf-8') as fp:
-            fp.write(json_string)
 
 
 def readcodetxt(da):

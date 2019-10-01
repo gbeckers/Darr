@@ -763,7 +763,7 @@ class TruncateData(DarrTestCase):
     def test_truncateindextoohigh(self):
         self.assertRaises(IndexError, truncate_array, self.tempar, 10)
 
-    
+
 
 class DeleteArray(DarrTestCase):
 

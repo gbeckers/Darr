@@ -1,12 +1,13 @@
 import shutil
-import tempfile
+import tempfile as tf
 from contextlib import contextmanager
+from pathlib import Path
 
 @contextmanager
 def tempdir(dirname='.', keep=False, report=False):
     """Yields a temporary directory which is removed when context is closed."""
     try:
-        tempdirname = tempfile.mkdtemp(dir=dirname)
+        tempdirname = tf.mkdtemp(dir=dirname)
         if report:
             print('created tempdir {}'.format(tempdirname))
         yield tempdirname
@@ -17,3 +18,19 @@ def tempdir(dirname='.', keep=False, report=False):
             shutil.rmtree(tempdirname)
             if report:
                 print('removed temp dir {}'.format(tempdirname))
+
+@contextmanager
+def tempfile(dirname='.', keep=False, report=False):
+    """Yields a temporary file which is removed when context is closed."""
+    try:
+        _, tempfilename = tf.mkstemp(dir=dirname)
+        if report:
+            print('created tempfile {}'.format(tempfilename))
+        yield tempfilename
+    except:
+        raise
+    finally:
+        if not keep:
+            Path(tempfilename).unlink()
+            if report:
+                print('removed temp file {}'.format(tempfilename))
