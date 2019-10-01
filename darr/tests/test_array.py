@@ -167,6 +167,13 @@ class AsArray(DarrTestCase):
         dar = asarray(path=self.tempdirname1, array=a(), overwrite=True)
         self.assertArrayIdentical(dar[:], np.array([0,1,2], dtype=np.float32))
 
+    def test_asarrayremoveoldmetadata(self):
+
+        dar = asarray(path=self.tempdirname1, array=[1,2],
+                      metadata={'a':1}, overwrite=True)
+        dar = asarray(path=self.tempdirname1, array=[1, 2],
+                      overwrite=True)
+        self.assertDictEqual(dict(dar.metadata), {})
 
 
 class CreateDiskArray(DarrTestCase):
