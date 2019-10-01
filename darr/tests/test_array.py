@@ -157,6 +157,12 @@ class AsArray(DarrTestCase):
         self.assertRaises(ValueError, asarray, path=self.tempdirname1,
                           array=dar, overwrite=True)
 
+    def test_asarraysequenceofzerodimnumpyscalars(self):
+        a = [np.float32(0), np.float32(1), np.float32(2)]
+        dar = asarray(path=self.tempdirname1, array=a, overwrite=True)
+        self.assertArrayIdentical(dar[:], np.array([0,1,2], dtype=np.float32))
+
+
 
 class CreateDiskArray(DarrTestCase):
 
