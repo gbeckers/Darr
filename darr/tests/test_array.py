@@ -741,6 +741,9 @@ class TruncateData(DarrTestCase):
             truncate_array(dar, 2)
             self.assertArrayIdentical(dar[:],
                                       np.array([0,1], dtype=dar.dtype))
+            a = Array(dirname)
+            self.assertArrayIdentical(a[:],
+                              np.array([0, 1], dtype=a.dtype))
 
     def test_truncatebydirname(self):
         with tempdir() as dirname:
