@@ -1272,8 +1272,8 @@ def truncate_array(a, index):
     lenincrease = newlen - len(a)
     if 0 < newlen < len(a):
         i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize
-        with a._open_array() as (v, fd):
-            fd.seek(0)
+        with a._open_array(accessmode='r+') as (v, fd):
+            fd.seek(0) # necessary for windows?
             fd.truncate(i)
             fd.flush()
         a._update_len(lenincrease)
