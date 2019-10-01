@@ -550,6 +550,20 @@ class AppendData(DarrTestCase):
         ar = 3
         self.assertRaises(TypeError, dar.iterappend, ar)
 
+    def test_fdclosedduringiterappend(self):
+
+        def seq(dar):
+            yield [0]
+            dar._valuesfd.close()
+            yield [0]
+
+        dar = create_array(path=self.temparpath, shape=(2,),
+                           dtype='int64', overwrite=True)
+        self.assertRaises(AppendDataError, dar.iterappend, seq(dar))
+        self.assertArrayIdentical(dar, np.array([0, 0, 0], dtype='int64'))
+        dar._check_consistency()
+
+
 class TestIterView(DarrTestCase):
 
     def setUp(self):
