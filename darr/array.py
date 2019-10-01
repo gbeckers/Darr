@@ -1275,7 +1275,7 @@ def truncate_array(a, index):
         os.truncate(a._datapath, i)
         a._update_len(lenincrease)
     else:
-        raise ValueError(f"'index' {index} would yield an array of length "
+        raise IndexError(f"'index' {index} would yield an array of length "
                          f"{newlen}, which is invalid (current length is "
                          f"{len(a)})")
 

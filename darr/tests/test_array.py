@@ -757,6 +757,13 @@ class TruncateData(DarrTestCase):
             bd._write_jsondict('test.json', {'a': 1})
             self.assertRaises(TypeError, truncate_array, dirname, 3)
 
+    def test_truncateinvalidindextype(self):
+        self.assertRaises(TypeError, truncate_array, self.tempar, 'a')
+
+    def test_truncateindextoohigh(self):
+        self.assertRaises(IndexError, truncate_array, self.tempar, 10)
+
+    
 
 class DeleteArray(DarrTestCase):
 
