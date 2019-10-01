@@ -147,6 +147,11 @@ class AsArray(DarrTestCase):
         self.assertWarns(UserWarning, asarray, path=self.tempdirname1, array=a,
                          overwrite=True)
 
+    def test_asarrayfromincompatipletype(self):
+        a = {'a': 1}
+        self.assertRaises(TypeError, asarray,path=self.tempdirname1, array=a,
+                         overwrite=True)
+
 
 class CreateDiskArray(DarrTestCase):
 

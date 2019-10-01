@@ -950,7 +950,7 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
             yield np.array(array, dtype=dtype, ndmin=1)
         except Exception:
             raise TypeError(
-                f"cannot object of type '{type(array)}' to an array")
+                f"cannot convert object of type '{type(array)}' to an array")
 
 
 def asarray(path, array, dtype=None, accessmode='r',
