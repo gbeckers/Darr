@@ -1272,7 +1272,7 @@ def truncate_array(a, index):
     lenincrease = newlen - len(a)
     if 0 < newlen < len(a):
         i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize
-        os.truncate(a._datapath, i)
+        os.truncate(str(a._datapath), i) # str for windows..
         a._update_len(lenincrease)
     else:
         raise IndexError(f"'index' {index} would yield an array of length "
