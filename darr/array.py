@@ -1223,6 +1223,7 @@ def delete_array(da):
         raise OSError(message) from error
 
 
+# FIXME does not always work on windows
 def truncate_array(a, index):
     """Truncate darr data.
 
