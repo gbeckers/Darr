@@ -401,6 +401,8 @@ class TestReadArrayDescr(DarrTestCase):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(2,4), fill=0,
                                dtype='int64', overwrite=True)
+            dar._arrayinfo['arrayorder'] = 'X'
+            self.assertRaises(ValueError, numtypedescriptiontxt, dar)
             dar._update_jsondict(dar._arraydescrpath.absolute(),
                                  {'arrayorder': 'X'})
             self.assertRaises(ValueError, Array, dirname)
