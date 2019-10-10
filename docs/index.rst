@@ -86,6 +86,10 @@ Install Darr from PyPI::
     $ pip install darr
 
 
+If you insist on the latest master version from github::
+
+    $ pip install git+https://github.com/gbeckers/darr@master
+
 
 Status
 ------
