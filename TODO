@@ -1,3 +1,4 @@
+- improve tests so that tempfiles work on windows
 - conda
 - split classes in array over different modules
 - add axis labels?
