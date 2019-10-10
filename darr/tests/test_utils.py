@@ -5,8 +5,10 @@ from .utils import tempdir, tempfile
 class WriteJsonFile(unittest.TestCase):
 
     def test_pathexistsdonotoverwrite(self):
-        with tempfile() as filename:
-            self.assertRaises(OSError, write_jsonfile, path=filename,
+        with tempdir() as dirname:
+            filepath = dirname / "test"
+            open(filepath, 'w').close()
+            self.assertRaises(OSError, write_jsonfile, path=filepath,
                               data={'a': 1})
 
     def test_wrongtype(self):
