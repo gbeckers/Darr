@@ -1,9 +1,8 @@
 import unittest
-import tempfile
-import shutil
 from contextlib import contextmanager
 from pathlib import Path
 from darr.array import BaseDataDir, create_basedir
+from darr.utils import filesha256
 from .utils import tempdir
 
 @contextmanager
@@ -108,10 +107,10 @@ class TestArchiving(unittest.TestCase):
     def test_sha256checksums(self):
         datadict = {'a': 1, 'b': "abcd"}
         filename = 'test.json'
-        with create_testbasedatadir(datadict=datadict) as bdd:
-            checksums = bdd.sha256
-            self.assertEqual(checksums[str(bdd.path.joinpath(filename))],
-                             '0f955a82d1055c6c71a21bd1953a0323aa5ce0b57067bae01c93a773fe913369')
+        with create_testbasedatadir(filename='test.json', datadict=datadict) \
+                as bdd:
+            checksums = bdd.sha256[str(bdd.path / filename)]
+            self.assertEqual(checksums, filesha256(bdd.path / filename))
 
 
 
