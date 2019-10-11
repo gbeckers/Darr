@@ -10,7 +10,7 @@ import numpy as np
 from darr.array import asarray, create_array, create_basedir, Array, \
     numtypesdescr, truncate_array, delete_array, AppendDataError, \
     numtypedescriptiontxt
-from .utils import tempdir
+from .utils import tempdir, tempdirfile
 
 
 class DarrTestCase(unittest.TestCase):
@@ -182,8 +182,8 @@ class CreateDiskArray(DarrTestCase):
 
     def check_arrayequaltocreatearray(self, ndarray, shape, dtype=None,
                                       chunklen=None):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=shape,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=shape,
                                dtype=dtype, chunklen=chunklen,
                                overwrite=True)
             if dtype is not None:
@@ -256,15 +256,15 @@ class CreateDiskArray(DarrTestCase):
 
     def test_shapeisint(self):
         # we allow shapes to be integers
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=1,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=1,
                                dtype='int32', overwrite=True)
             self.assertTupleEqual((1,), dar.shape)
 
     def test_fillandfillfuncisnotnone(self):
         fillfunc= lambda i: i * 2
-        with tempdir() as dirname:
-            self.assertRaises(ValueError, create_array, path=dirname,
+        with tempdirfile() as filename:
+            self.assertRaises(ValueError, create_array, path=filename,
                               shape=(1,), fill=1, fillfunc=fillfunc,
                               dtype='int32', overwrite=True)
 
@@ -297,14 +297,14 @@ class TestArray(DarrTestCase):
                                   np.array([1, 1], dtype=self.tempar.dtype))
 
     def test_str(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             self.assertEqual(str(dar),'[0 0]')
 
     def test_repr(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             # linux and windows have different numpy memmap reprs...
             self.assertEqual(repr(dar)[:18], 'darr array ([0, 0]')
@@ -337,15 +337,15 @@ class TestArray(DarrTestCase):
 class TestReadArrayDescr(DarrTestCase):
 
     def test_arrayinfomissingfile(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             dar._arraydescrpath.unlink()
             self.assertRaises(FileNotFoundError, Array, dar.path)
 
     def test_arrayinfonewerversionfile(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             arrayinfo = dar._arrayinfo.copy()
             vs = f"1{arrayinfo['darrversion']}"
@@ -355,8 +355,8 @@ class TestReadArrayDescr(DarrTestCase):
             self.assertWarns(UserWarning, Array, dar.path)
 
     def test_arrayinfowrongshapetype(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             arrayinfo = dar._arrayinfo.copy()
             arrayinfo['shape'] = ['a', 3]
@@ -365,8 +365,8 @@ class TestReadArrayDescr(DarrTestCase):
             self.assertRaises(TypeError, Array, dar.path)
 
     def test_arrayinfowrongorder(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             arrayinfo = dar._arrayinfo.copy()
             arrayinfo['arrayorder'] = 'D'
@@ -379,22 +379,22 @@ class TestReadArrayDescr(DarrTestCase):
             self.assertRaises(Exception, Array, dar.path)
 
     def test_allowfortranorder(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,4), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,4), fill=0,
                                dtype='int64', overwrite=True)
             dar._update_jsondict(dar._arraydescrpath.absolute(),
                                  {'arrayorder': 'F'})
-            dar = Array(dirname)
+            dar = Array(filename)
             self.assertIn("Column-major", numtypedescriptiontxt(dar))
 
     def test_warnwritefortranarray(self):
-        with tempdir() as dirname1, tempdir() as dirname2:
-            dar = create_array(path=dirname1, shape=(2, 4), fill=0,
+        with tempdirfile() as filename1, tempdirfile() as filename2:
+            dar = create_array(path=filename1, shape=(2, 4), fill=0,
                                dtype='int64', overwrite=True)
             dar._update_jsondict(dar._arraydescrpath.absolute(),
                                  {'arrayorder': 'F'})
-            dar = Array(dirname1)
-            self.assertWarns(UserWarning, asarray, path=dirname2, array=dar,
+            dar = Array(filename1)
+            self.assertWarns(UserWarning, asarray, path=filename2, array=dar,
                              overwrite=True)
 
     def test_unknownarrayordertype(self):
@@ -411,30 +411,30 @@ class TestReadArrayDescr(DarrTestCase):
 class TestConsistency(DarrTestCase):
 
     def test_consistencycorrect(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             self.assertIsNone(dar._check_consistency())
             dar.append([0,0])
             self.assertIsNone(dar._check_consistency())
 
     def test_consistencyincorrectinfoshape(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             dar._arrayinfo['shape'] = (3,)
             self.assertRaises(ValueError, dar._check_consistency)
 
     def test_consistencywronginfoitemsize(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             dar._arrayinfo['numtype'] = 'int32'
             self.assertRaises(ValueError, dar._check_consistency)
 
     def test_consistencyincorrectinfofileshape(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             arrayinfo = dar._arrayinfo.copy()
             arrayinfo['shape'] = (3,)
@@ -444,8 +444,8 @@ class TestConsistency(DarrTestCase):
             self.assertRaises(ValueError, Array, dar.path)
 
     def test_consistencywronginfofileitemsize(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             arrayinfo = dar._arrayinfo.copy()
             arrayinfo['numtype'] = 'int32'
@@ -457,14 +457,14 @@ class TestConsistency(DarrTestCase):
 class TestCheckArraywriteable(DarrTestCase):
 
     def test_check_arraywriteable(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', accessmode='r+', overwrite=True)
             self.assertIsNone(dar.check_arraywriteable())
 
     def test_check_arraynotwriteable(self):
-        with tempdir() as dirname:
-            dar = create_array(path=dirname, shape=(2,), fill=0,
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', accessmode='r', overwrite=True)
             self.assertRaises(OSError, dar.check_arraywriteable)
 
@@ -746,10 +746,9 @@ class TestOpenFile(DarrTestCase):
 class TruncateData(DarrTestCase):
 
     def test_truncate1d(self):
-        with tempdir() as dirname:
-            dirname = dirname / 'test'
+        with tempdirfile() as filename:
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
-            dar = asarray(path=dirname, array=a, accessmode='r+')
+            dar = asarray(path=filename, array=a, accessmode='r+')
             truncate_array(dar, 2)
             self.assertArrayIdentical(dar[:],
                                       np.array([0,1], dtype=dar.dtype))
@@ -758,34 +757,30 @@ class TruncateData(DarrTestCase):
             #                   np.array([0, 1], dtype=a.dtype))
 
     def test_truncatebydirname(self):
-        with tempdir() as dirname:
-            dirname = dirname / 'test'
+        with tempdirfile() as filename:
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
-            dar = asarray(path=dirname, array=a, accessmode='r+')
-            truncate_array(dirname, 2)
+            dar = asarray(path=filename, array=a, accessmode='r+')
+            truncate_array(filename, 2)
             # a = Array(dirname)
             # self.assertArrayIdentical(a[:], np.array([0, 1],
             #                                          dtype=a.dtype))
 
     def test_donottruncatenondarrdir(self):
-        with tempdir() as dirname:
-            dirname = dirname / 'test'
-            bd = create_basedir(dirname)
+        with tempdirfile() as filename:
+            bd = create_basedir(filename)
             bd._write_jsondict('test.json', {'a': 1})
-            self.assertRaises(TypeError, truncate_array, dirname, 3)
+            self.assertRaises(TypeError, truncate_array, filename, 3)
 
     def test_truncateinvalidindextype(self):
-        with tempdir() as dirname:
-            dirname = dirname / 'test'
+        with tempdirfile() as filename:
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
-            dar = asarray(path=dirname, array=a, accessmode='r+')
+            dar = asarray(path=filename, array=a, accessmode='r+')
             self.assertRaises(TypeError, truncate_array, dar, 'a')
 
     def test_truncateindextoohigh(self):
-        with tempdir() as dirname:
-            dirname = dirname / 'test'
+        with tempdirfile() as filename:
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
-            dar = asarray(path=dirname, array=a, overwrite=True,
+            dar = asarray(path=filename, array=a, overwrite=True,
                           accessmode='r+')
             self.assertRaises(IndexError, truncate_array, dar, 10)
 
@@ -794,34 +789,31 @@ class TruncateData(DarrTestCase):
 class DeleteArray(DarrTestCase):
 
     def test_simpledeletearray(self):
-        with tempdir() as dirname:
-            dalpath = Path(dirname).joinpath('temp.dal')
-            dar = create_array(path=dalpath, shape=(0, 2), dtype='int64')
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(0, 2), dtype='int64')
             delete_array(dar)
-            self.assertEqual(len(os.listdir(dirname)), 0)
+            self.assertEqual(len(os.listdir(filename.parent)), 0)
 
     def test_simpledeletearraypath(self):
-        with tempdir() as dirname:
-            dalpath = Path(dirname).joinpath('temp.dal')
-            _ = create_array(path=dalpath, shape=(0, 2), dtype='int64')
-            delete_array(dalpath)
-            self.assertEqual(len(os.listdir(dirname)), 0)
+        with tempdirfile() as filename:
+            _ = create_array(path=filename, shape=(0, 2), dtype='int64')
+            delete_array(filename)
+            self.assertEqual(len(os.listdir(filename.parent)), 0)
 
     def test_donotdeletenondarrfile(self):
-        with tempdir() as dirname:
-            dalpath = Path(dirname).joinpath('temp.dal')
-            dar = create_array(path=dalpath, shape=(0, 2), dtype='int64')
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(0, 2), dtype='int64')
             dar._write_jsondict('test.json', {'a': 1})
             testpath = dar._path.joinpath('test.json')
             self.assertRaises(OSError, delete_array, dar)
             self.assertEqual(testpath.exists(), True)
 
     def test_donotdeletenondarrdir(self):
-        with tempdir() as dirname:
-            bd = create_basedir(dirname, overwrite=True)
-            self.assertRaises(TypeError, delete_array, dirname)
+        with tempdirfile() as filename:
+            bd = create_basedir(filename, overwrite=True)
+            self.assertRaises(TypeError, delete_array, filename)
             bd._write_jsondict('test.json', {'a': 1})
-            self.assertRaises(TypeError, delete_array, dirname)
+            self.assertRaises(TypeError, delete_array, filename)
 
 if __name__ == '__main__':
     unittest.main()

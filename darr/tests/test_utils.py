@@ -1,6 +1,6 @@
 import unittest
 from darr.utils import fit_frames, write_jsonfile
-from .utils import tempdir, tempfile
+from .utils import tempdir, tempdirfile
 
 class WriteJsonFile(unittest.TestCase):
 
@@ -12,7 +12,7 @@ class WriteJsonFile(unittest.TestCase):
                               data={'a': 1})
 
     def test_wrongtype(self):
-        with tempfile() as filename:
+        with tempdirfile() as filename:
             self.assertRaises(TypeError, write_jsonfile, path=filename,
                               data=unittest, overwrite=True)
 

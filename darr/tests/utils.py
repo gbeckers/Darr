@@ -20,17 +20,18 @@ def tempdir(dirname='.', keep=False, report=False):
                 print('removed temp dir {}'.format(tempdirname))
 
 @contextmanager
-def tempfile(dirname='.', keep=False, report=False):
-    """Yields a temporary file which is removed when context is closed."""
+def tempdirfile(dirname='.', keep=False, report=False):
+    """Yields a file named "tempfile" in a temporary directory which is
+    removed when context is closed."""
     try:
-        _, tempfilename = tf.mkstemp(dir=dirname)
+        tempdirname = tf.mkdtemp(dir=dirname)
         if report:
-            print('created tempfile {}'.format(tempfilename))
-        yield Path(tempfilename)
+            print('created tempfile {}'.format(tempdirname))
+        yield Path(tempdirname) / "tempfile"
     except:
         raise
     finally:
         if not keep:
-            Path(tempfilename).unlink()
+            shutil.rmtree(tempdirname)
             if report:
-                print('removed temp file {}'.format(tempfilename))
+                print('removed temp dir {}'.format(tempdirname))
