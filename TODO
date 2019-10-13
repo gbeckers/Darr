@@ -1,4 +1,4 @@
-- improve tests so that tempfiles work on windows
+- fix truncate on windows
 - conda
 - split classes in array over different modules
 - add axis labels?
