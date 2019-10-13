@@ -96,7 +96,7 @@ class RaggedArray(BaseDataDir):
         """Storage size in megabytes of the ragged array.
 
         """
-        return self._values._mb + self._indices._mb
+        return self._values.mb + self._indices.mb
 
     @property
     def size(self):
