@@ -1,15 +1,17 @@
 import os
 import unittest
 import numpy as np
+import tempfile
 from numpy.testing import assert_equal, assert_array_equal
 
 from pathlib import Path
 from darr.raggedarray import create_raggedarray, asraggedarray, \
     delete_raggedarray
 from .utils import tempdirfile
+from .test_array import DarrTestCase
 
 
-class RaggedArray(unittest.TestCase):
+class RaggedArray(DarrTestCase):
 
     def test_1darray(self):
         with tempdirfile() as filename:
@@ -53,6 +55,58 @@ class RaggedArray(unittest.TestCase):
             self.assertEqual(dal._indices.accessmode, 'r')
             self.assertRaises(ValueError, setattr, dal, 'accessmode', 'w')
             self.assertRaises(ValueError, setattr, dal, 'accessmode', 'a')
+
+class RaggedArrayIndexing(DarrTestCase):
+
+    def setUp(self):
+        self.temparpath = Path(tempfile.mkdtemp()) / 'testra.ra'
+        self.tempar = create_raggedarray(self.temparpath, atom=(),
+                                         dtype='float64', metadata=None,
+                                         accessmode='r+',
+                                         overwrite=True)
+        self.input = np.array([[1,2,3,4],[4,5,6,7]], dtype='float64')
+        self.tempar.iterappend(self.input)
+
+    def tearDown(self):
+        delete_raggedarray(self.tempar)
+
+    def test_validint(self):
+        self.assertArrayIdentical(self.tempar[0], self.input[0])
+        self.assertArrayIdentical(self.tempar[1], self.input[1])
+
+    def test_nonvalidindex(self):
+        self.assertRaises(IndexError, self.tempar.__getitem__, 2)
+
+    def test_iterarrays(self):
+        ars = [a for a in self.tempar.iter_arrays()]
+        self.assertArrayIdentical(ars[0], self.input[0])
+        self.assertArrayIdentical(ars[1], self.input[1])
+
+
+
+# FIXME not complete
+class RaggedArrayAttrs(unittest.TestCase):
+
+    def setUp(self):
+        self.temparpath = Path(tempfile.mkdtemp()) / 'testra.ra'
+        self.tempar = create_raggedarray(self.temparpath, atom=(),
+                                         dtype='float64', metadata=None,
+                                         accessmode='r+',
+                                         overwrite=True)
+        self.tempar.iterappend([[1,2,3],[4,5,6,7]])
+
+    def tearDown(self):
+        delete_raggedarray(self.tempar)
+
+    def test_narrays(self):
+        self.assertEqual(self.tempar.narrays, 2)
+
+    def test_mb(self):
+        self.assertAlmostEqual(self.tempar.mb, 8.8e-05)
+
+    def test_size(self):
+        self.assertEqual(self.tempar.size, 7)
+
 
 
 class IterAppendRaggedArray(unittest.TestCase):
