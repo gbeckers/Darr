@@ -330,7 +330,7 @@ def delete_raggedarray(rar):
     """
     try:
         if not isinstance(rar, RaggedArray):
-            rar = RaggedArray(rar)
+            rar = RaggedArray(rar, accessmode='r+')
     except:
         raise TypeError(f"'{rar}' not recognized as a Darr array list")
 
