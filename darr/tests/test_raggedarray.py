@@ -162,7 +162,7 @@ class DeleteRaggedArray(unittest.TestCase):
             self.assertEqual(len(os.listdir(filename.parent)), 0)
 
     def test_invalidtarget(self):
-         self.assertRaises(TypeError, 1.)
+         self.assertRaises(TypeError, delete_raggedarray, 1.)
 
     def test_notwriteable(self):
         with tempdirfile() as filename:
