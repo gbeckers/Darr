@@ -171,7 +171,7 @@ class DeleteRaggedArray(unittest.TestCase):
 
     def test_donotremovenondarrfiles(self):
         with tempdirfile() as filename:
-            dal = create_raggedarray(filename, atom=(2,), accessmode='r')
+            dal = create_raggedarray(filename, atom=(2,), accessmode='r+')
             dal._write_txt('test.txt', text='abc')
             self.assertRaises(OSError, delete_raggedarray, dal)
 
