@@ -491,7 +491,7 @@ class Array(BaseDataDir):
             except Exception:
                 raise
             finally:
-                # self._memmap._mmap.close() # may need this for Windows
+                #self._memmap._mmap.close() # *may need this for Windows*
                 self._memmap = None
                 self._valuesfd = None
 
@@ -1270,6 +1270,7 @@ def truncate_array(a, index):
         raise TypeError(f"'index' should be an int (is {type(index)})")
     with a.view() as v:
         newlen = len(v[:index])
+    del v
     lenincrease = newlen - len(a)
     if 0 < newlen < len(a):
         i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize
