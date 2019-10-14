@@ -12,6 +12,7 @@ from darr.array import asarray, create_array, create_basedir, Array, \
     numtypedescriptiontxt
 from .utils import tempdir, tempdirfile
 
+# TODO clean up overwrite parameters, not necessary anymore
 
 class DarrTestCase(unittest.TestCase):
 
