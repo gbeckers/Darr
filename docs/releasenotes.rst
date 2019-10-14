@@ -5,6 +5,7 @@ Version 0.1.12
 --------------
 - improved explanation in array README
 - better documentation of ragged arrays
+- fixed truncate bug that sometimes occured in Windows
 
 Version 0.1.11
 --------------
