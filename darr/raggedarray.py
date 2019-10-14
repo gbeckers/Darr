@@ -332,10 +332,10 @@ def delete_raggedarray(rar):
         if not isinstance(rar, RaggedArray):
             rar = RaggedArray(rar, accessmode='r+')
     except:
-        raise TypeError(f"'{rar}' not recognized as a Darr array list")
+        raise TypeError(f"'{rar}' not recognized as a Darr ragged array")
 
     if not rar.accessmode == 'r+':
-        raise OSError('Darr ragged arrays is read-only; set accessmode to '
+        raise OSError('Darr ragged array is read-only; set accessmode to '
                       '"r+" to change')
     for fn in rar._filenames:
         path = rar.path.joinpath(fn)
@@ -346,7 +346,8 @@ def delete_raggedarray(rar):
     try:
         rar._path.rmdir()
     except OSError as error:
-        message = f"Error: could not fully delete Darr array list directory " \
+        message = f"Error: could not fully delete Darr ragged array " \
+                  f"directory " \
                   f"'{rar.path}'. It may contain additional files that are " \
                   f"not part of the darr. If so, these should be removed " \
                   f"manually."
