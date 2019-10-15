@@ -294,18 +294,18 @@ readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
                  'the values array.') + '\n\n'
 
 
-def readcodetxt(dra):
+def readcodetxt(ra):
     """Returns text on how to read a Darr ragged array numeric binary data in
     various programming languages.
 
     Parameters
     ----------
-    dra: Darr raggedarray
+    ra: Darr raggedarray
 
     """
 
     s = readmetxt
-    s += wrap(f'This ragged array has {len(dra)} subarrays. ') + '\n\n' + \
+    s += wrap(f'This ragged array has {len(ra)} subarrays. ') + '\n\n' + \
          wrap(f'Example code for reading the data') + '\n' + \
          wrap(f'=================================') + '\n\n'
     languages = (
@@ -314,13 +314,13 @@ def readcodetxt(dra):
         ("Matlab:", "matlab")
     )
     for heading, language in languages:
-        codetext = readcode(dra, language)
+        codetext = readcode(ra, language)
         if codetext is not None:
             s += f"{heading}\n{'-' * len(heading)}\n{codetext}\n"
     return s
 
 
-def delete_raggedarray(rar):
+def delete_raggedarray(ra):
     """
     Delete Darr ragged array data from disk.
 
@@ -330,36 +330,36 @@ def delete_raggedarray(rar):
 
     """
     try:
-        if not isinstance(rar, RaggedArray):
-            rar = RaggedArray(rar, accessmode='r+')
+        if not isinstance(ra, RaggedArray):
+            ra = RaggedArray(ra, accessmode='r+')
     except:
-        raise TypeError(f"'{rar}' not recognized as a Darr ragged array")
+        raise TypeError(f"'{ra}' not recognized as a Darr ragged array")
 
-    if not rar.accessmode == 'r+':
+    if not ra.accessmode == 'r+':
         raise OSError('Darr ragged array is read-only; set accessmode to '
                       '"r+" to change')
-    for fn in rar._filenames:
-        path = rar.path.joinpath(fn)
+    for fn in ra._filenames:
+        path = ra.path.joinpath(fn)
         if path.exists() and not path.is_dir():
             path.unlink()
-    delete_array(rar._values)
-    delete_array(rar._indices)
+    delete_array(ra._values)
+    delete_array(ra._indices)
     try:
-        rar._path.rmdir()
+        ra._path.rmdir()
     except OSError as error:
         message = f"Error: could not fully delete Darr ragged array " \
                   f"directory " \
-                  f"'{rar.path}'. It may contain additional files that are " \
+                  f"'{ra.path}'. It may contain additional files that are " \
                   f"not part of the darr. If so, these should be removed " \
                   f"manually."
         raise OSError(message) from error
 
-def truncate_raggedarray(a, index):
+def truncate_raggedarray(ra, index):
     """Truncate darr ragged array.
 
     Parameters
     ----------
-    a: array or str or pathlib.Path
+    ra: array or str or pathlib.Path
        The darr object to be truncated or file system path to it.
     index: int
         The index along the first axis at which the darr ragged array should
@@ -369,30 +369,30 @@ def truncate_raggedarray(a, index):
 
     """
     try:
-        if not isinstance(a, RaggedArray):
-            a = RaggedArray(a, accessmode='r+')
+        if not isinstance(ra, RaggedArray):
+            ra = RaggedArray(ra, accessmode='r+')
     except Exception:
-        raise TypeError(f"'{a}' not recognized as a darr Ragged Array")
+        raise TypeError(f"'{ra}' not recognized as a darr Ragged Array")
     # FIXME allow for numpy ints
     if not isinstance(index, int):
         raise TypeError(f"'index' should be an int (is {type(index)})")
-    with a._indices._open_array() as (mmap, _):
+    with ra._indices._open_array() as (mmap, _):
         newlen = len(mmap[:index])
     del mmap
-    a._values.check_arraywriteable()
-    a._indices.check_arraywriteable()
-    if 0 <= newlen < len(a):
-        truncate_array(a._indices, index=newlen)
+    ra._values.check_arraywriteable()
+    ra._indices.check_arraywriteable()
+    if 0 <= newlen < len(ra):
+        truncate_array(ra._indices, index=newlen)
         if newlen == 0:
             vi = 0
         else:
-            vi = int(a._indices[-1][-1])
-        truncate_array(a._values, index=vi)
-        a._update_readmetxt()
-        a._update_arraydescr(len=len(a._indices), size=a._values.size)
+            vi = int(ra._indices[-1][-1])
+        truncate_array(ra._values, index=vi)
+        ra._update_readmetxt()
+        ra._update_arraydescr(len=len(ra._indices), size=ra._values.size)
     else:
         raise IndexError(f"'index' {index} would yield a ragged array of "
                          f"length {newlen}, which is invalid (current length "
-                         f"is {len(a)})")
+                         f"is {len(ra)})")
 
 
