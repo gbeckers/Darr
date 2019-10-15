@@ -185,3 +185,6 @@ class MetaData(unittest.TestCase):
             dal = create_raggedarray(filename, atom=(), dtype='float64',
                                      metadata=md)
             self.assertDictEqual(dict(dal.metadata), md)
+
+if __name__ == '__main__':
+    unittest.main()

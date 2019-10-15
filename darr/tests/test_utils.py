@@ -75,3 +75,6 @@ class FitChunks(unittest.TestCase):
                           steplen=-1)
         self.assertRaises(ValueError, fit_frames, totallen=3, chunklen=2,
                           steplen=-1.)
+
+if __name__ == '__main__':
+    unittest.main()

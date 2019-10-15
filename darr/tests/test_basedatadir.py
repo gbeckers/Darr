@@ -112,5 +112,5 @@ class TestArchiving(unittest.TestCase):
             checksums = bdd.sha256[str(bdd.path / filename)]
             self.assertEqual(checksums, filesha256(bdd.path / filename))
 
-
-
+if __name__ == '__main__':
+    unittest.main()

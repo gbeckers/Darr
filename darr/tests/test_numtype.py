@@ -32,3 +32,5 @@ class ArrayInfoDtype(unittest.TestCase):
         info['byteorder'] = 'middle'
         self.assertRaises(ValueError, arrayinfotodtype, info)
 
+if __name__ == '__main__':
+    unittest.main()
