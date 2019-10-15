@@ -364,7 +364,7 @@ def truncate_raggedarray(ra, index):
     index: int
         The index along the first axis at which the darr ragged array should
         be truncated. Negative indices can be used but the resulting length of
-        the truncated darr should be larger than 0 and smaller than the
+        the truncated darr should be 0 or larger and smaller than the
         current length.
 
     """
