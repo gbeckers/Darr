@@ -144,15 +144,15 @@ be writable first:
 Efficient I/O
 -------------
 
-To get maximum speed when doing multiple operations, open a direct view
-on the disk-based array so as to open and close the underlying files only once:
+To get maximum speed when doing multiple operations, first open the disk-based
+array so as to open and close the underlying files only once:
 
 .. code:: python
 
-    >>> with a.view() as v:
-    ...     v[0,0] = 3.
-    ...     v[0,2] = 4.
-    ...     v[1,[0,2,-1]] = 5.
+    >>> with a.open():
+    ...     a[0,0] = 3.
+    ...     a[0,2] = 4.
+    ...     a[1,[0,2,-1]] = 5.
     >>> a
     array([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
           [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
@@ -206,11 +206,12 @@ nicely with darr. I'll base the example on a small array though:
 .. code:: python
 
     >>> import dask.array
-    >>> a = da.create_array('ar1.da', shape=(1024**2), fill=2.5, overwrite=True)
+    >>> a = da.create_array('ar1.da', shape=(1024**2), fill=2.5e)
     >>> a
     array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
-    >>> dara = dask.array.from_array(a, chunks=(512))
-    >>> ((dara + 1) / 2).store(a)
+    >>> with a.open():
+    ...     dara = dask.array.from_array(a, chunks=(512))
+    ...     ((dara + 1) / 2).store(a)
     >>> a
     array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
@@ -221,18 +222,6 @@ to the `Dask
 documentation <https://dask.pydata.org/en/latest/index.html>`__. The
 point here is that darr arrays can be both sources and stores for Dask.
 
-Alternatively, you can use the
-`NumExpr <https://numexpr.readthedocs.io/en/latest/>`__ library using a
-view of the Darr array, like so:
-
-.. code:: python
-
-    >>> import numexpr as ne
-    >>> a = da.create_array('a3.da', shape=(1024**2), fill=2.5)
-    >>> with a.view() as v:
-    ...     ne.evaluate('(v + 1) / 2', out=v)
-    >>> a
-    array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
 Metadata
 --------

@@ -495,20 +495,16 @@ class Array(BaseDataDir):
                 self._memmap = None
                 self._valuesfd = None
 
-    # TODO rethink this, references to mmap after view closes are not a good
-    # idea
     @contextmanager
-    def view(self, accessmode=None):
-        """Open a memory-mapped view of the array data.
+    def open(self, accessmode=None):
+        """Open the array for efficient multiple read or write operations.
 
         Although read and write operations can be performed conveniently using
         indexing notation on the Darr object, this can be relatively slow
         when performing multiple access operations in a row. To read data, the
         disk file needs to be opened, data copied into memory, and after which
-        the file is closed. I such cases, it is much faster to use a *view* of
-        the disk-based data. Whenever possible, indexing operations on this
-        view return new views on the data, not copies. These views are lost
-        when the context closes.
+        the file is closed. I such cases, it is much faster to first open
+        the disk-based data.
 
         Parameters
         ----------
@@ -518,22 +514,21 @@ class Array(BaseDataDir):
 
         Yields
         -------
-        ndarray
-            view of disk-based array
+        None
 
         Examples
         --------
         >>> import darr as da
         >>> d = da.create_array('test.da', shape=(1000,3), overwrite=True)
-        >>> with d.view(accessmode='r+') as v:
-                s1 = v[:10,1:].sum()
-                s2 = v[20:25,:2].sum()
-                v[500:] = 3.33
+        >>> with d.open(accessmode='r+'):
+                s1 = d[:10,1:].sum()
+                s2 = d[20:25,:2].sum()
+                d[500:] = 3.33
 
         """
 
         with self._open_array(accessmode=accessmode) as (memmap, _):
-            yield memmap
+            yield None
 
     def _read_arraydescr(self):
         """
@@ -746,18 +741,16 @@ class Array(BaseDataDir):
                 raise AppendDataError(s)
         self._update_len(lenincrease=lenincrease)
 
-    def iterview(self, chunklen, stepsize=None, startindex=None,
-                 endindex=None, include_remainder=True, accessmode=None):
-        """View the data array of the darr iteratively in chunks of a
-        given length and with a given stepsize.
+    def iterindices(self, chunklen, stepsize=None, startindex=None,
+                     endindex=None, include_remainder=True):
+        """Generate indices of chunks of a given length and with a given
+        stepsize.
 
-        This method does not copy the underlying data to a new numpy array,
-        and is therefore relatively fast. It can also be used to change the
-        darr.
+        This method keeps the underlying data file open during iteration,
+        and is therefore relatively fast.
 
         Parameters
         ----------
-
         chunklen: int
             Size of chunk for across the first axis. Note that the last chunk
             may be smaller than `chunklen`, depending on the size of the
@@ -790,20 +783,19 @@ class Array(BaseDataDir):
         --------
         >>> import darr as da
         >>> d = da.create_array('test.da', shape=(12,), accesmode= 'r+')
-        >>> for i,ar in enumerate(d.iterview(chunklen=2, stepsize=3)):
-                ar[:] = i+1
+        >>> for start, end in enumerate(d.iterindices(chunklen=2, stepsize=3)):
+                d[:] = 1
         >>> print(d)
-        [ 1.  1.  0.  2.  2.  0.  3.  3.  0.  4.  4.  0.]
-
+        [ 1.  1.  0.  1.  1.  0.  1.  1.  0.  1.  1.  0.]
 
         """
+
         if stepsize is None:
             stepsize = chunklen
         if startindex is None:
             startindex = 0
         if endindex is None:
             endindex = self.shape[0]
-
         if endindex > self.shape[0]:
             raise ValueError("endindex is too high")
         if startindex >= endindex:
@@ -814,14 +806,70 @@ class Array(BaseDataDir):
             steplen=stepsize)
         framestart = startindex
         frameend = framestart + chunklen
+        for _ in range(nframes):
+            yield (framestart, frameend)
+            framestart += stepsize
+            frameend = framestart + chunklen
+        if include_remainder and (remainder > 0) and (
+                framestart < endindex):
+            yield (framestart, endindex)
+
+    def iterchunks(self, chunklen, stepsize=None, startindex=None,
+                   endindex=None, include_remainder=True, accessmode=None):
+        """Iterate over data array of the darr yielding chunks of a
+        given length and with a given stepsize.
+
+        This method keeps the underlying data file open during iteration,
+        and is therefore relatively fast.
+
+        Parameters
+        ----------
+        chunklen: int
+            Size of chunk for across the first axis. Note that the last chunk
+            may be smaller than `chunklen`, depending on the size of the
+            first axis.
+        stepsize: <int, None>
+            Size of the shift per iteration across the first axis.
+            Default is None, which means that `stepsize` equals `chunklen`.
+        include_remainder: <bool, True>
+            Determines whether remainder (< chunklen) should be included.
+        startindex: <int, None>
+            Start index value.
+            Default is None, which means to start at the beginning.
+        endindex: <int, None>
+            End index value.
+            Default is None, which means to end at the end.
+        include_remainder: <True, False>
+            Determines if the remainder at the end of the array, if it exist,
+            should be yielded or not. The remainder is smaller than `chunklen`.
+            Default is True.
+        accessmode:  {'r', 'r+'}, default 'r'
+            File access mode of the darr data. `r` means read-only, `r+`
+            means read-write.
+
+        Returns
+        -------
+        generator
+            a generator that produces numpy array chunks.
+
+        Examples
+        --------
+        >>> import darr as da
+        >>> fillfunc = lambda i: i # fill with index number
+        >>> d1 = da.create_array('test1.da', shape=(12,), fillfunc=fillfunc)
+        >>> print(d1)
+        [  0.   1.   2.   3.   4.   5.   6.   7.   8.   9.  10.  11.]
+        >>> d2 = darr.asarray('test2.da', d.iterchunks(chunklen=2, stepsize=3))
+        >>> print(d2)
+        [  0.   1.   3.   4.   6.   7.   9.  10.]
+
+        """
         with self._open_array(accessmode=accessmode) as (ar, _):
-            for _ in range(nframes):
-                yield ar[framestart:frameend]
-                framestart += stepsize
-                frameend = framestart + chunklen
-            if include_remainder and (remainder > 0) and (
-                    framestart < endindex):
-                yield ar[framestart:endindex]
+            for framestart, frameend in \
+                    self.iterindices(chunklen, stepsize=stepsize,
+                                     startindex=startindex, endindex=endindex,
+                                     include_remainder=include_remainder):
+                yield np.array(ar[framestart:frameend], copy=True)
 
     def copy(self, path, dtype=None, chunklen=None, accessmode='r',
              overwrite=False):
@@ -933,7 +981,7 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
         for chunk in array:
             yield np.asarray(chunk, dtype=dtype)
     elif isinstance(array, Array):
-        for chunk in array.iterview(chunklen=chunklen):
+        for chunk in array.iterchunks(chunklen=chunklen):
             yield chunk
     elif hasattr(array, '__len__') and not hasattr(array, 'keys'):
         # may be numpy array or sequence
@@ -1225,7 +1273,6 @@ def delete_array(da):
         raise OSError(message) from error
 
 
-# FIXME does not always work on windows
 def truncate_array(a, index):
     """Truncate darr data.
 
@@ -1270,9 +1317,9 @@ def truncate_array(a, index):
     a.check_arraywriteable()
     if not isinstance(index, int):
         raise TypeError(f"'index' should be an int (is {type(index)})")
-    with a.view() as v:
-        newlen = len(v[:index])
-    del v # need this for Windows
+    with a._open_array() as (mmap, _):
+        newlen = len(mmap[:index])
+    del mmap # need this for Windows
     lenincrease = newlen - len(a)
     if 0 < newlen < len(a):
         i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize

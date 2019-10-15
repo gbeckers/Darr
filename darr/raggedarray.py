@@ -148,8 +148,8 @@ class RaggedArray(BaseDataDir):
 
     @contextmanager
     def _view(self, accessmode=None):
-        with self._indices.view(accessmode=accessmode) as iv,\
-             self._values.view(accessmode=accessmode) as vv:
+        with self._indices._open_array(accessmode=accessmode) as (iv, _), \
+             self._values._open_array(accessmode=accessmode) as (vv, _):
             yield iv, vv
 
     def iter_arrays(self, startindex=0, endindex=None, stepsize=1,

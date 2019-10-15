@@ -468,7 +468,7 @@ class TestCheckArraywriteable(DarrTestCase):
             self.assertRaises(OSError, dar.check_arraywriteable)
 
 
-class IterView(DarrTestCase):
+class IterFrames(DarrTestCase):
 
     def setUp(self):
         self.tempearpath = tempfile.mkdtemp() # even array
@@ -487,25 +487,24 @@ class IterView(DarrTestCase):
         shutil.rmtree(str(self.tempnonarpath))
 
     def test_defaultparams_fit(self):
-        l = [c for c in self.tempear.iterview(chunklen=2)]
+        l = [c for c in self.tempear.iterchunks(chunklen=2)]
         self.assertEqual(len(l), 6)
         self.assertArrayIdentical(np.concatenate(l), self.tempear[:])
 
-
     def test_remainderfalse_fit(self):
-            l = [c for c in self.tempear.iterview(chunklen=2,
-                                                  include_remainder=False)]
+            l = [c for c in self.tempear.iterchunks(chunklen=2,
+                                                    include_remainder=False)]
             self.assertEqual(len(l), 6)
             self.assertArrayIdentical(np.concatenate(l), self.tempear[:])
 
     def test_defaultparams_nofit(self):
-            l = [c for c in self.tempoar.iterview(chunklen=2)]
+            l = [c for c in self.tempoar.iterchunks(chunklen=2)]
             self.assertEqual(len(l), 7)
             self.assertArrayIdentical(np.concatenate(l), self.tempoar[:])
 
     def test_remainderfalse_nofit(self):
             l = [c for c in
-                 self.tempoar.iterview(chunklen=2, include_remainder=False)]
+                 self.tempoar.iterchunks(chunklen=2, include_remainder=False)]
             self.assertEqual(len(l), 6)
             self.assertArrayIdentical(np.concatenate(l), self.tempoar[:12])
 
@@ -621,7 +620,7 @@ class AppendData(DarrTestCase):
     #     dar._check_consistency()
 
 
-class TestIterView(DarrTestCase):
+class TestIterFrames(DarrTestCase):
 
     def setUp(self):
         self.temparpath = tempfile.mkdtemp()
@@ -631,15 +630,15 @@ class TestIterView(DarrTestCase):
     def tearDown(self):
         shutil.rmtree(str(self.temparpath))
 
-    def test_iterviewstartindextoohigh(self):
+    def test_iterframesstartindextoohigh(self):
         with self.assertRaises(ValueError):
-           _ = [f for f in self.tempar.iterview(chunklen=2, startindex=12,
-                                                endindex=2)]
+           _ = [f for f in self.tempar.iterchunks(chunklen=2, startindex=12,
+                                                  endindex=2)]
 
-    def test_iterviewendindextoohigh(self):
+    def test_iterframesendindextoohigh(self):
         with self.assertRaises(ValueError):
-            _ = [f for f in self.tempar.iterview(chunklen=2, startindex=1,
-                                                 endindex=12)]
+            _ = [f for f in self.tempar.iterchunks(chunklen=2, startindex=1,
+                                                   endindex=12)]
 
 
 class MetaData(DarrTestCase):

@@ -64,8 +64,7 @@ Pro's:
    `JSON <https://en.wikipedia.org/wiki/JSON>`__ text file.
 -  **Minimal dependencies**, only `NumPy <http://www.numpy.org/>`__.
 -  **Integrates easily** with the
-   `Dask <https://dask.pydata.org/en/latest/>`__ or
-   `NumExpr <https://numexpr.readthedocs.io/en/latest/>`__ libraries for
+   `Dask <https://dask.pydata.org/en/latest/>`__ library for
    **numeric computation on very large Darr arrays**.
 
 Con's:
