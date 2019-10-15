@@ -1,7 +1,7 @@
 from .array import *
 from .raggedarray import *
 
-from .tests import test
+#from .tests import test
 
 
 
