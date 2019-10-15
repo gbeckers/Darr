@@ -158,7 +158,7 @@ class RaggedArray(BaseDataDir):
             endindex = self.narrays
         with self._view(accessmode=accessmode):
             for i in range(startindex, endindex, stepsize):
-                yield self[i]
+                yield np.array(self[i], copy=True)
 
     def iterappend(self, arrayiterable):
         """Iteratively append data from a data iterable.
