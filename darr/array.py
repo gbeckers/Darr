@@ -501,10 +501,10 @@ class Array(BaseDataDir):
 
         Although read and write operations can be performed conveniently using
         indexing notation on the Darr object, this can be relatively slow
-        when performing multiple access operations in a row. To read data, the
-        disk file needs to be opened, data copied into memory, and after which
-        the file is closed. I such cases, it is much faster to first open
-        the disk-based data.
+        when performing multiple access operations after each other. To read
+        data, the disk file needs to be opened, data copied into memory, and
+        after which the file is closed. In such cases, it is much faster to
+        first open the disk-based data.
 
         Parameters
         ----------
