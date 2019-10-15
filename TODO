@@ -1,4 +1,3 @@
-- fix truncate on windows
 - conda
 - split classes in array over different modules
 - add axis labels?
