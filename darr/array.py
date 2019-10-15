@@ -597,7 +597,7 @@ class Array(BaseDataDir):
     def check_arraywriteable(self):
         with self._open_array() as (ar, fd):
             if not ar.flags.writeable:
-                raise OSError("darr not writeable; change 'accessmode' "
+                raise OSError("darr array not writeable; change 'accessmode' "
                               "attribute to 'r+'")
 
     def _update_len(self, lenincrease):
@@ -1313,7 +1313,7 @@ def truncate_array(a, index):
         if not isinstance(a, Array):
             a = Array(a, accessmode='r+')
     except Exception:
-        raise TypeError(f"'{a}' not recognized as a darr")
+        raise TypeError(f"'{a}' not recognized as a darr Array")
     a.check_arraywriteable()
     if not isinstance(index, int):
         raise TypeError(f"'index' should be an int (is {type(index)})")
@@ -1321,7 +1321,7 @@ def truncate_array(a, index):
         newlen = len(mmap[:index])
     del mmap # need this for Windows
     lenincrease = newlen - len(a)
-    if 0 < newlen < len(a):
+    if 0 <= newlen < len(a):
         i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize
         os.truncate(a._datapath, i)
         a._update_len(lenincrease)

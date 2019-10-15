@@ -8,14 +8,13 @@ import numpy as np
 from ._version import get_versions
 
 from .array import BaseDataDir, Array, MetaData, asarray, \
-    create_basedir, check_accessmode, delete_array, create_array
+    create_basedir, check_accessmode, delete_array, create_array, \
+    truncate_array
 from .readcoderaggedarray import readcode
 from .utils import wrap
 
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
-           'delete_raggedarray']
-
-# TODO truncate
+           'delete_raggedarray', 'truncate_raggedarray']
 
 class RaggedArray(BaseDataDir):
     """
@@ -354,3 +353,46 @@ def delete_raggedarray(rar):
                   f"not part of the darr. If so, these should be removed " \
                   f"manually."
         raise OSError(message) from error
+
+def truncate_raggedarray(a, index):
+    """Truncate darr ragged array.
+
+    Parameters
+    ----------
+    a: array or str or pathlib.Path
+       The darr object to be truncated or file system path to it.
+    index: int
+        The index along the first axis at which the darr ragged array should
+        be truncated. Negative indices can be used but the resulting length of
+        the truncated darr should be larger than 0 and smaller than the
+        current length.
+
+    """
+    try:
+        if not isinstance(a, RaggedArray):
+            a = RaggedArray(a, accessmode='r+')
+    except Exception:
+        raise TypeError(f"'{a}' not recognized as a darr Ragged Array")
+    # FIXME allow for numpy ints
+    if not isinstance(index, int):
+        raise TypeError(f"'index' should be an int (is {type(index)})")
+    with a._indices._open_array() as (mmap, _):
+        newlen = len(mmap[:index])
+    del mmap
+    a._values.check_arraywriteable()
+    a._indices.check_arraywriteable()
+    if 0 <= newlen < len(a):
+        truncate_array(a._indices, index=newlen)
+        if newlen == 0:
+            vi = 0
+        else:
+            vi = int(a._indices[-1][-1])
+        truncate_array(a._values, index=vi)
+        a._update_readmetxt()
+        a._update_arraydescr(len=len(a._indices), size=a._values.size)
+    else:
+        raise IndexError(f"'index' {index} would yield a ragged array of "
+                         f"length {newlen}, which is invalid (current length "
+                         f"is {len(a)})")
+
+
