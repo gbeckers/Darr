@@ -46,8 +46,7 @@ Pro's:
 -  Includes **examples of how to read the array** in popular
    analysis environments such as Python (without Darr), R, Julia,
    Octave/Matlab, GDL/IDL, and Mathematica.
--  Supports **very large data arrays** through **memory-mapped** file
-   access.
+-  Supports **very large data arrays**, larger than RAM.
 -  Data read/write access is simple through **NumPy indexing** (see
    `here <https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html>`__).
 -  Data is easily **appendable**.
