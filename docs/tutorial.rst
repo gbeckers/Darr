@@ -101,8 +101,7 @@ Creating array from NumPy array
 Reading data
 ------------
 
-The disk-based array is memory-mapped and can be used to read data into
-RAM using NumPy indexing.
+The disk-based array can be used to read data into RAM using NumPy indexing.
 
 .. code:: python
 
@@ -121,8 +120,7 @@ data first as a NumPy array:
            [2., 2., 2., ..., 2., 2., 2.]])
 
 If your data is too large to read into RAM, you could use the
-`Dask <https://dask.pydata.org/en/latest/>`__ or the
-`NumExpr <https://numexpr.readthedocs.io/en/latest/>`__ library for
+`Dask <https://dask.pydata.org/en/latest/>`__ library for
 computation (see example below).
 
 Writing data
