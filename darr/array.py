@@ -495,6 +495,8 @@ class Array(BaseDataDir):
                 self._memmap = None
                 self._valuesfd = None
 
+    # TODO rethink this, references to mmap after view closes are not a good
+    # idea
     @contextmanager
     def view(self, accessmode=None):
         """Open a memory-mapped view of the array data.

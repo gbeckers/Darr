@@ -15,6 +15,8 @@ from .utils import wrap
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
            'delete_raggedarray']
 
+# TODO truncate
+
 class RaggedArray(BaseDataDir):
     """
     Disk-based sequence of arrays that may have a variable length in maximally
