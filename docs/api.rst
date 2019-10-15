@@ -58,3 +58,8 @@ Deleting ragged arrays
 ----------------------
 
 .. autofunction:: darr.delete_raggedarray
+
+Truncating ragged arrays
+----------------------
+
+.. autofunction:: darr.truncate_raggedarray
