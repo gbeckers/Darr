@@ -3,6 +3,7 @@ Release notes
 
 Version 0.1.12
 --------------
+- implement truncate ragged array
 - remove 'view' method as it created problems on Windows
 - added 'open' method to partially replace view
 - fixed truncate bug that sometimes occured in Windows
