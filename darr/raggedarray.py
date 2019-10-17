@@ -354,6 +354,7 @@ def delete_raggedarray(ra):
                   f"manually."
         raise OSError(message) from error
 
+
 def truncate_raggedarray(ra, index):
     """Truncate darr ragged array.
 

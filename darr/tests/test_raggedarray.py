@@ -6,7 +6,7 @@ from numpy.testing import assert_equal, assert_array_equal
 
 from pathlib import Path
 from darr.raggedarray import create_raggedarray, asraggedarray, \
-    delete_raggedarray, RaggedArray
+    delete_raggedarray, truncate_raggedarray, RaggedArray, create_basedir
 from .utils import tempdirfile
 from .test_array import DarrTestCase
 
@@ -174,6 +174,45 @@ class DeleteRaggedArray(unittest.TestCase):
             dal = create_raggedarray(filename, atom=(2,), accessmode='r+')
             dal._write_txt('test.txt', text='abc')
             self.assertRaises(OSError, delete_raggedarray, dal)
+
+class RaggedArrayTruncate(DarrTestCase):
+
+    def test_truncate1d(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='int64')
+            self.assertEqual(len(ra), 3)
+            truncate_raggedarray(ra, 2)
+            self.assertEqual(len(ra),2)
+            ra = RaggedArray(filename)
+            self.assertEqual(len(ra),2)
+
+    def test_truncatebydirname(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='int64')
+            truncate_raggedarray(filename, 2)
+            ra = RaggedArray(filename)
+            self.assertEqual(len(ra), 2)
+
+    def test_donottruncatenondarrdir(self):
+        with tempdirfile() as filename:
+            bd = create_basedir(filename)
+            bd._write_jsondict('test.json', {'a': 1})
+            self.assertRaises(TypeError, truncate_raggedarray, filename, 3)
+
+    def test_truncateinvalidindextype(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='int64')
+            self.assertRaises(TypeError, truncate_raggedarray, ra, 'a')
+
+    def test_truncateindextoohigh(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='int64')
+            self.assertRaises(IndexError, truncate_raggedarray, ra, 10)
+
 
 
 # this is already tested with simple Arrays, so a brief check will suffice
