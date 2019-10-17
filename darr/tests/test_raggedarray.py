@@ -213,6 +213,16 @@ class RaggedArrayTruncate(DarrTestCase):
                                dtype='int64')
             self.assertRaises(IndexError, truncate_raggedarray, ra, 10)
 
+    def test_truncatetolen0(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='int64')
+            truncate_raggedarray(ra, 0)
+            self.assertEqual(len(ra), 0)
+            ra = RaggedArray(filename)
+            self.assertEqual(len(ra), 0)
+
+
 
 
 # this is already tested with simple Arrays, so a brief check will suffice

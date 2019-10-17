@@ -782,6 +782,16 @@ class TruncateData(DarrTestCase):
                           accessmode='r+')
             self.assertRaises(IndexError, truncate_array, dar, 10)
 
+    def test_truncatetolen0(self):
+        with tempdirfile() as filename:
+            a = asarray(path=filename, array=[0, 1, 2, 3, 4],
+                               dtype='int64', accessmode='r+')
+            truncate_array(a, 0)
+            self.assertEqual(len(a), 0)
+            ra = Array(filename)
+            self.assertEqual(len(a), 0)
+
+
 
 
 class DeleteArray(DarrTestCase):
