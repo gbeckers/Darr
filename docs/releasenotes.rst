@@ -3,6 +3,7 @@ Release notes
 
 Version 0.1.12
 --------------
+- improved the ability to work with multiple references to same array
 - implement truncate ragged array
 - remove 'view' method as it created problems on Windows
 - added 'open' method to partially replace view
