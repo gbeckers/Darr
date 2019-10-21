@@ -411,30 +411,30 @@ class TestConsistency(DarrTestCase):
         with tempdirfile() as filename:
             dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
-            self.assertIsNone(dar._check_consistency())
+            self.assertIsNone(dar._check_arrayinfoconsistency())
             dar.append([0,0])
-            self.assertIsNone(dar._check_consistency())
+            self.assertIsNone(dar._check_arrayinfoconsistency())
 
     def test_consistencyincorrectinfoshape(self):
         with tempdirfile() as filename:
             dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             dar._update_arrayinfo({'shape': (3,)})
-            self.assertRaises(ValueError, dar._check_consistency)
+            self.assertRaises(ValueError, dar._check_arrayinfoconsistency)
 
     def test_consistencywronginfoitemsize(self):
         with tempdirfile() as filename:
             dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             dar._update_arrayinfo({'numtype': 'int32'})
-            self.assertRaises(ValueError, dar._check_consistency)
+            self.assertRaises(ValueError, dar._check_arrayinfoconsistency)
 
     def test_consistencyincorrectinfofileshape(self):
         with tempdirfile() as filename:
             dar = create_array(path=filename, shape=(2,), fill=0,
                                dtype='int64', overwrite=True)
             dar._update_arrayinfo({'shape': (3,)})
-            self.assertRaises(ValueError, dar._check_consistency)
+            self.assertRaises(ValueError, dar._check_arrayinfoconsistency)
             self.assertRaises(ValueError, Array, dar.path)
 
     def test_consistencywronginfofileitemsize(self):
@@ -445,7 +445,7 @@ class TestConsistency(DarrTestCase):
             arrayinfo['numtype'] = 'int32'
             dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
                                 overwrite=True)
-            self.assertRaises(ValueError, dar._check_consistency)
+            self.assertRaises(ValueError, dar._check_arrayinfoconsistency)
             self.assertRaises(ValueError, Array, dar.path)
 
 class TestCheckArraywriteable(DarrTestCase):
