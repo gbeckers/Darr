@@ -370,7 +370,7 @@ class Array(BaseDataDir):
         self._datapath = self._path / self._datafilename
         self._accessmode = check_accessmode(accessmode)
         self._arraydescrpath = self._path / self._arraydescrfilename
-        self._arrayinfo = self._read_arraydescr()
+        #self._arrayinfo = self._read_arraydescr()
         self._memmap = None
         self._valuesfd = None
         self._check_arrayinfoconsistency()
@@ -380,6 +380,11 @@ class Array(BaseDataDir):
             self._size = ar.size
         self._metadata = MetaData(self._path / self._metadatafilename,
                                   accessmode=accessmode)
+
+    @property
+    def _arrayinfo(self):
+        """dict with info on numeric data type and layout"""
+        return self._read_arraydescr()
 
     @property
     def accessmode(self):
@@ -600,14 +605,18 @@ class Array(BaseDataDir):
                 raise OSError("darr array not writeable; change 'accessmode' "
                               "attribute to 'r+'")
 
+    def _update_arrayinfo(self, *args, **kwargs):
+        arrayinfo = self._arrayinfo
+        arrayinfo.update( *args, **kwargs)
+        self._write_jsondict(filename=self._arraydescrfilename,
+                             d=arrayinfo, overwrite=True)
+
     def _update_len(self, lenincrease):
         newshape = list(self.shape)
         newshape[0] += lenincrease
         self._shape = tuple(newshape)
         self._size = np.product(self._shape)
-        self._arrayinfo.update(shape=self._shape)
-        self._write_jsondict(filename=self._arraydescrfilename,
-                             d=self._arrayinfo, overwrite=True)
+        self._update_arrayinfo(shape=self._shape)
         self._update_readmetxt()
 
     def _update_readmetxt(self):
@@ -1085,8 +1094,7 @@ def asarray(path, array, dtype=None, accessmode='r',
         raise TypeError(f"darr cannot have type "
                         f"'{firstchunk.dtype.name}'")
     dtype = firstchunk.dtype
-    bd = create_basedir(path=path,
-                        overwrite=overwrite)
+    bd = create_basedir(path=path, overwrite=overwrite)
     datapath = path.joinpath(Array._datafilename)
     arraylen = firstchunk.shape[0]
     with open(datapath, 'wb') as df:
