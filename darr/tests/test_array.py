@@ -332,6 +332,12 @@ class TestArray(DarrTestCase):
         self.assertArrayIdentical(self.tempar[:], dar2[:])
         self.assertEqual(dict(self.tempar.metadata), dict(dar2.metadata))
 
+    # FIXME more tests open accessmode
+    def test_open(self):
+        with self.tempar.open() as r:
+            self.assertIsNone(r)
+
+
 
 class TestReadArrayDescr(DarrTestCase):
 

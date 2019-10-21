@@ -500,6 +500,7 @@ class Array(BaseDataDir):
                 self._memmap = None
                 self._valuesfd = None
 
+    # FIXME doc accessmode
     @contextmanager
     def open(self, accessmode=None):
         """Open the array for efficient multiple read or write operations.
