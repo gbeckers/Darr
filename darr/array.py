@@ -592,13 +592,6 @@ class Array(BaseDataDir):
                 f"binary file size ({actualfilesize}) is different from file "
                 f"size as expected from array info file ({expectedfilesize})")
 
-    # we currently do not use this in Darr
-    def _check_consistency(self):
-        if not (self._read_arraydescr() == self._arrayinfo):
-            raise ValueError("in-memory and on-disk array info not "
-                             "the same")
-        self._check_arrayinfoconsistency()
-
     def check_arraywriteable(self):
         with self._open_array() as (ar, fd):
             if not ar.flags.writeable:
