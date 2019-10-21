@@ -477,7 +477,7 @@ class IterFrames(DarrTestCase):
         self.tempear = create_array(path=self.tempearpath, shape=(12,),
                                     dtype='int64', metadata={'a': 1},
                                     overwrite=True)
-        self.tempoar = create_array(path=self.tempearpath, shape=(13,),
+        self.tempoar = create_array(path=self.tempoarpath, shape=(13,),
                                     dtype='int64', metadata={'a': 1},
                                     overwrite=True)
 
