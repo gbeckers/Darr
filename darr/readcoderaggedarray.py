@@ -20,10 +20,12 @@ def readcodenumpymemmap(dra, varname='a'):
         j, position = 0, 'first'
     rca = f'{varname} = get_subarray({j})  # example to read {position} ' \
           f'subarray\n'
-    if (rci is None) or (rcv is None):
-        return None
-    else:
-        return f'{rci}{rcv}{rff}{rca}'
+    ## the mext is never going to happen as Darr is based on memmap
+    ## comment out
+    # if (rci is None) or (rcv is None):
+    #     return None
+    # else:
+    return f'{rci}{rcv}{rff}{rca}'
 
 
 def readcoder(dra, varname='a'):

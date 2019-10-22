@@ -1,4 +1,5 @@
 - conda
+- lock when writing?
 - split classes in array over different modules
 - add axis labels?
 - look at concurrent write access

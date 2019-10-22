@@ -7,6 +7,7 @@ from numpy.testing import assert_equal, assert_array_equal
 from pathlib import Path
 from darr.raggedarray import create_raggedarray, asraggedarray, \
     delete_raggedarray, truncate_raggedarray, RaggedArray, create_basedir
+from darr.readcoderaggedarray import readcodematlab, readcoder
 from .utils import tempdirfile
 from .test_array import DarrTestCase
 
@@ -223,6 +224,31 @@ class RaggedArrayTruncate(DarrTestCase):
             self.assertEqual(len(ra), 0)
 
 
+class TestReadCodeArray(DarrTestCase):
+
+    def test_matlabcomplex128none(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='complex128')
+            self.assertIsNone(readcodematlab(ra))
+
+    def test_matlabcomplex64none(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='complex64')
+            self.assertIsNone(readcodematlab(ra))
+
+    def test_matlabfloat16none(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='float16')
+            self.assertIsNone(readcodematlab(ra))
+
+    def test_rcomplex64none(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='complex64')
+            self.assertIsNone(readcodematlab(ra))
 
 
 # this is already tested with simple Arrays, so a brief check will suffice
