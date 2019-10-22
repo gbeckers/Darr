@@ -7,7 +7,7 @@ from numpy.testing import assert_equal, assert_array_equal
 from pathlib import Path
 from darr.raggedarray import create_raggedarray, asraggedarray, \
     delete_raggedarray, truncate_raggedarray, RaggedArray, create_basedir
-from darr.readcoderaggedarray import readcodematlab, readcoder
+from darr.readcoderaggedarray import readcodematlab, readcoder, readcode
 from .utils import tempdirfile
 from .test_array import DarrTestCase
 
@@ -248,7 +248,14 @@ class TestReadCodeArray(DarrTestCase):
         with tempdirfile() as filename:
             ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
                                dtype='complex64')
-            self.assertIsNone(readcodematlab(ra))
+            self.assertIsNone(readcoder(ra))
+
+    def test_readcodeunsupportedlanguage(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename,
+                               arrayiterable=[[0, 1], [2], [3, 4]],
+                               dtype='float64')
+            self.assertRaises(ValueError, readcode, ra, 'perl')
 
 
 # this is already tested with simple Arrays, so a brief check will suffice
