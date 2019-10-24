@@ -1073,7 +1073,7 @@ def numtypedescriptiontxt(da):
          + "\n\n"
     s += wrap("If the Darr library is not available, it should be "
               "straightforward to access the data based on the information "
-              "below. There is example code for a quite a number of "
+              "below. This includes code for a number of popular "
               "platforms, in which case it is a matter of copying a few "
               "lines.")  + "\n\n\n"
     s+= f"Description of data format\n==========================\n\n"
