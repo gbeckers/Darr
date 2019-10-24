@@ -1,13 +1,17 @@
-This directory contains a numeric array that can be accessed most easily in Python using the Darr
-library (https://pypi.org/project/darr/), as follows:
+This directory contains a numeric array that can be accessed in Python using
+the Darr library (https://pypi.org/project/darr/), but that can also be
+accessed  easily in other environments. In Darr, do:
 
->>> import darr as da
->>> a = da.Array('path_to_array_dir')
+>>> import darr
+>>> a = darr.Array('path_to_array_dir')
 
-where 'path_to_array_dir' is the name of the array directory.
+where 'path_to_array_dir' is the name of the array directory, which is the one
+that also contains this README.
 
-If the Darr library is not available, it is straightforward to read the data in other environments
-based on the information below.
+If the Darr library is not available, it should be straightforward to access
+the data based on the information below. There is example code for a quite a
+number of platforms, in which case it is a matter of copying a few lines.
+
 
 Description of data format
 ==========================
@@ -24,7 +28,9 @@ The file only contains the raw binary values, without header information.
 Format details are also stored in json format in the separate UTF-8 text file,
 'arraydescription.json' to facilitate automatic reading by a program.
 
-If present, the file 'metadata.json' contains metadata in json UTF-8 text format.
+If present, the file 'metadata.json' contains metadata in json UTF-8 text
+format.
+
 
 Example code for reading the numeric data without Darr
 =======================================================

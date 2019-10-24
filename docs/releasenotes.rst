@@ -10,6 +10,7 @@ Version 0.1.12
 - fixed truncate bug that sometimes occured in Windows
 - improved explanation in array README
 - better documentation of ragged arrays
+- refactoring code into more, smaller modules
 
 
 Version 0.1.11

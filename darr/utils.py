@@ -82,4 +82,4 @@ def filesha256(filepath, blocksize=2 ** 20):
     return m.hexdigest()
 
 def wrap(s):
-    return textwrap.fill(s, width=98, replace_whitespace=False)
+    return textwrap.fill(s, width=78, replace_whitespace=False)

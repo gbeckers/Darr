@@ -264,13 +264,14 @@ readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
                  'data is to use the Darr library '
                  '(https://pypi.org/project/darr/) in Python, as follows:') \
             + '\n\n' \
-            + '>>> import darr as da\n' \
-            + ">>> a = da.RaggedArray('path_to_array_dir')\n\n" + \
+            + '>>> import darr\n' \
+            + ">>> a = darr.RaggedArray('path_to_array_dir')\n\n" + \
             wrap("where 'path_to_array_dir' is the name of the array "
-              "directory.") + "\n\n" + \
+              "directory, which is the one that also contains this README.")\
+               + "\n\n" + \
             wrap('If Darr is not available, the data can also be read in '\
                  'other environments, with more effort, using the '\
-                 'description below.') + '\n\n' \
+                 'description and example code below.') + '\n\n\n' \
             + 'Description of data storage\n' \
             + '---------------------------\n' + \
             wrap('There are two subdirectories, each containing an array '
@@ -293,7 +294,7 @@ readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
                  'indices to be used on the values array. To read the n-th '
                  'subarray, read the nt-h start and end indices from the '
                  'indices array and use these to read the array data from '
-                 'the values array.') + '\n\n'
+                 'the values array.') + '\n\n\n'
 
 
 def readcodetxt(ra):

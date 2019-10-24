@@ -1062,16 +1062,20 @@ def numtypedescriptiontxt(da):
                           'with memory address'
     else:
         raise ValueError(f'arrayorder type "{arrayorder}" unknown')
-    s = wrap("This directory contains a numeric array that can "
-             "be accessed most easily in Python using the Darr library "
-             "(https://pypi.org/project/darr/), as follows:") + "\n\n"
-    s +=     ">>> import darr as da\n" \
-             ">>> a = da.Array('path_to_array_dir')\n\n"
+    s = wrap("This directory contains a numeric array that can be accessed "
+             "in Python using the Darr library "
+             "(https://pypi.org/project/darr/), but that can also be "
+             "accessed  easily in other environments. In Darr, do:") + "\n\n"
+    s +=     ">>> import darr\n" \
+             ">>> a = darr.Array('path_to_array_dir')\n\n"
     s += wrap("where 'path_to_array_dir' is the name of the array "
-             "directory.") + "\n\n"
-    s += wrap("If the Darr library is not available, "
-             "it is straightforward to read the data in other "
-             "environments based on the information below.") + "\n\n"
+              "directory, which is the one that also contains this README.")\
+         + "\n\n"
+    s += wrap("If the Darr library is not available, it should be "
+              "straightforward to access the data based on the information "
+              "below. There is example code for a quite a number of "
+              "platforms, in which case it is a matter of copying a few "
+              "lines.")  + "\n\n\n"
     s+= f"Description of data format\n==========================\n\n"
     s += wrap("The file 'arrayvalues.bin' contains a numeric array in the "
               "following format:") + "\n\n"
@@ -1088,5 +1092,5 @@ def numtypedescriptiontxt(da):
               "UTF-8 text file, 'arraydescription.json' to facilitate "
               "automatic reading by a program.") + "\n\n"
     s += wrap("If present, the file 'metadata.json' contains metadata in json "
-              "UTF-8 text format.") + "\n\n"
+              "UTF-8 text format.") + "\n\n\n"
     return s
