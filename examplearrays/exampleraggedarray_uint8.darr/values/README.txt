@@ -9,8 +9,8 @@ where 'path_to_array_dir' is the name of the array directory, which is the one
 that also contains this README.
 
 If the Darr library is not available, it should be straightforward to access
-the data based on the information below. There is example code for a quite a
-number of platforms, in which case it is a matter of copying a few lines.
+the data based on the information below. This includes code for a number of
+popular platforms, in which case it is a matter of copying a few lines.
 
 
 Description of data format
