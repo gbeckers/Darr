@@ -20,9 +20,10 @@ from contextlib import contextmanager
 from pathlib import Path
 
 from .basedatadir import BaseDataDir, create_basedatadir
+from .metadata import MetaData
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode
-from .utils import fit_frames, wrap, write_jsonfile
+from .utils import fit_frames, wrap, check_accessmode
 from ._version import get_versions
 
 
@@ -37,151 +38,6 @@ __all__ = ['Array', 'asarray', 'create_array', 'delete_array',
 
 class AppendDataError(Exception):
     pass
-
-
-class MetaData:
-    """Dictionary-like access to disk based metadata.
-
-    If there is no metadata, the metadata file does not exist, rather than
-    being empty. This saves a block of disk space (potentially 4kb).
-
-    """
-
-    def __init__(self, path, accessmode='r'):
-
-        path = Path(path)
-        self._path = path
-        self._accessmode = check_accessmode(accessmode)
-
-    @property
-    def path(self):
-        return self._path
-
-    @property
-    def accessmode(self):
-        """
-        Set data access mode of metadata.
-
-        Parameters
-        ----------
-        accessmode: {'r', 'r+'}, default 'r'
-            File access mode of the data. `r` means read-only, `r+`
-            means read-write.
-
-        """
-        return self._accessmode
-
-    @accessmode.setter
-    def accessmode(self, value):
-        self._accessmode = check_accessmode(value)
-
-    def __getitem__(self, item):
-        return self._read()[item]
-
-    def __setitem__(self, key, value):
-        self.update({key: value})
-
-    def __delitem__(self, key):
-        self.pop(key)
-
-    def __len__(self):
-        return len(self.keys())
-
-    def __repr__(self):
-        return str(self._read())
-
-    __str__ = __repr__
-
-    def _read(self):
-        if not self._path.exists():
-            return {}
-        with open(self._path, 'r') as fp:
-            return json.load(fp)
-
-    def get(self, *args):
-        """metadata.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.
-
-        """
-        return self._read().get(*args)
-
-    def items(self):
-        """a set-like object providing a view on D's items"""
-        return self._read().items()
-
-    def keys(self):
-        """D.keys() -> a set-like object providing a view on D's keys"""
-        return self._read().keys()
-
-    def pop(self, *args):
-        """D.pop(k[,d]) -> v, remove specified key and return the corresponding
-        value. If key is not found, d is returned if given, otherwise KeyError
-        is raised
-        """
-        if self._accessmode == 'r':
-            raise OSError("metadata not writeable; change 'accessmode' to "
-                          "'r+'")
-        metadata = self._read()
-        val = metadata.pop(*args)
-        if metadata:
-            write_jsonfile(self.path, data=metadata, sort_keys=True,
-                           ensure_ascii=True, overwrite=True)
-        else:
-            self._path.unlink()
-        return val
-
-    def popitem(self):
-        """D.pop() -> k, v, returns and removes an arbitrary element (key,
-        value) pair from the dictionary.
-        """
-        if self._accessmode == 'r':
-            raise OSError("metadata not writeable; change 'accessmode' to "
-                          "'r+'")
-        metadata = self._read()
-        key, val = metadata.popitem()
-        if metadata:
-            write_jsonfile(self.path, data=metadata, sort_keys=True,
-                           ensure_ascii=True, overwrite=True)
-        else:
-            self._path.unlink()
-        return key, val
-
-    def values(self):
-        return self._read().values()
-
-    def update(self, *arg, **kwargs):
-        """Updates metadata.
-
-        Metadata are written to disk.
-
-        Parameters
-        ----------
-        arg: a dictionary with metadata keys and values, optional
-        kwargs: keyword arguments, corresponding to keys and values, optional
-
-        Returns
-        -------
-            None
-
-        Examples
-        --------
-        >>> import darr as da
-        >>> d = da.create_array('test.da', shape=(12,), accesmode= 'r+')
-        >>> d.metadata.update({'starttime': '2017-08-31T17:00:00'})
-        >>> print(d.metadata)
-        {'starttime': '2017-08-31T17:00:00'}
-        >>> d.metadata['samplingrate'] = 22050)
-        >>> print(d.metadata)
-        {'samplingrate': 22050, 'starttime': '2017-08-31T17:00:00'}
-
-        """
-        if self._accessmode == 'r':
-            raise OSError("metadata not writeable; change 'accessmode' to "
-                          "'r+'")
-        metadata = self._read()
-        metadata.update(*arg, **kwargs)
-
-        write_jsonfile(self.path, data=metadata, sort_keys=True,
-                       ensure_ascii=True, overwrite=True)
 
 
 class Array(BaseDataDir):
@@ -968,16 +824,6 @@ def asarray(path, array, dtype=None, accessmode='r',
     d = Array(path, accessmode=accessmode)
     d._update_readmetxt()
     return d
-
-
-def check_accessmode(accessmode, validmodes=('r', 'r+'), makebinary=False):
-    if accessmode not in validmodes:
-        raise ValueError(f"Mode should be one of {validmodes}, not "
-                         f"'{accessmode}'")
-    if makebinary:
-        accessmode += 'b'
-    return accessmode
-
 
 
 # FIXME non-first axis len 0

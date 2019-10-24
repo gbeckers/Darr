@@ -11,6 +11,7 @@ from .array import Array, MetaData, asarray, \
     check_accessmode, delete_array, create_array, \
     truncate_array
 from .basedatadir import BaseDataDir, create_basedatadir
+from .metadata import MetaData
 from .readcoderaggedarray import readcode
 from .utils import wrap
 

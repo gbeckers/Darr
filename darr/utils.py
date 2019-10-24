@@ -4,6 +4,15 @@ import json
 from pathlib import Path
 
 
+def check_accessmode(accessmode, validmodes=('r', 'r+'), makebinary=False):
+    if accessmode not in validmodes:
+        raise ValueError(f"Mode should be one of {validmodes}, not "
+                         f"'{accessmode}'")
+    if makebinary:
+        accessmode += 'b'
+    return accessmode
+
+
 def write_jsonfile(path, data, sort_keys=True, indent=4, ensure_ascii=True,
                    overwrite=False):
     path = Path(path)
