@@ -7,9 +7,10 @@ from contextlib import contextmanager
 import numpy as np
 from ._version import get_versions
 
-from .array import BaseDataDir, Array, MetaData, asarray, \
-    create_basedir, check_accessmode, delete_array, create_array, \
+from .array import Array, MetaData, asarray, \
+    check_accessmode, delete_array, create_array, \
     truncate_array
+from .basedatadir import BaseDataDir, create_basedatadir
 from .readcoderaggedarray import readcode
 from .utils import wrap
 
@@ -190,7 +191,7 @@ def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
     path = Path(path)
     if not hasattr(arrayiterable, 'next'):
         arrayiterable = (a for a in arrayiterable)
-    bd = create_basedir(path=path, overwrite=overwrite)
+    bd = create_basedatadir(path=path, overwrite=overwrite)
     firstarray = np.asarray(next(arrayiterable), dtype=dtype)
     dtype = firstarray.dtype
     valuespath = bd.path.joinpath(RaggedArray._valuesdirname)

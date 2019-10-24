@@ -3,11 +3,11 @@ import unittest
 import numpy as np
 import tempfile
 from numpy.testing import assert_equal, assert_array_equal
-
 from pathlib import Path
 from darr.raggedarray import create_raggedarray, asraggedarray, \
-    delete_raggedarray, truncate_raggedarray, RaggedArray, create_basedir
+    delete_raggedarray, truncate_raggedarray, RaggedArray, create_basedatadir
 from darr.readcoderaggedarray import readcodematlab, readcoder, readcode
+
 from .utils import tempdirfile
 from .test_array import DarrTestCase
 
@@ -198,7 +198,7 @@ class RaggedArrayTruncate(DarrTestCase):
 
     def test_donottruncatenondarrdir(self):
         with tempdirfile() as filename:
-            bd = create_basedir(filename)
+            bd = create_basedatadir(filename)
             bd._write_jsondict('test.json', {'a': 1})
             self.assertRaises(TypeError, truncate_raggedarray, filename, 3)
 

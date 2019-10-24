@@ -1,7 +1,7 @@
 import unittest
 from contextlib import contextmanager
 from pathlib import Path
-from darr.array import BaseDataDir, create_basedir
+from darr.basedatadir import BaseDataDir, create_basedatadir
 from darr.utils import filesha256
 from .utils import tempdir
 
@@ -21,11 +21,11 @@ class TestCreateBaseDir(unittest.TestCase):
 
     def test_pathexistsnotoverwrite(self):
         with tempdir() as dirname:
-            self.assertRaises(OSError, create_basedir, dirname)
+            self.assertRaises(OSError, create_basedatadir, dirname)
 
     def test_pathexistsoverwrite(self):
         with tempdir() as dirname:
-            create_basedir(dirname, overwrite=True)
+            create_basedatadir(dirname, overwrite=True)
 
 
 class TestBaseDataDir(unittest.TestCase):
