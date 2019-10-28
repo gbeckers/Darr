@@ -1,7 +1,7 @@
 Release notes
 =============
 
-Version 0.1.12
+Version 0.2.0
 --------------
 - improved the ability to work with multiple references to same array
 - implement truncate ragged array
