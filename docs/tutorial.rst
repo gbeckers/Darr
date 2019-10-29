@@ -37,7 +37,7 @@ Creating an array
 The default is to fill the array with zeros (of type float64) but this
 can be changed by the 'fill' and 'fillfunc' parameters. See the api.
 
-The data is now stored on disk in a directory named 'ar1.da', containing
+The data is now stored on disk in a directory named 'a1.da', containing
 a flat binary file ('arrayvalues.bin') and a human-readble
 `JSON <https://en.wikipedia.org/wiki/JSON>`__ text file
 ('arraydescription.json'), with information on the array dimensionality,
