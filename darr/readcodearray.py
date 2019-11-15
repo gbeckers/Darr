@@ -10,6 +10,12 @@ languages to read the numeric information of a Darr array.
 # Julia: https://docs.julialang.org/en/release-0.4/manual/integers-and- floating-point-numbers/
 # Maple: https://www.maplesoft.com/support/help/maple/view.aspx?path=FileTools%2FBinary%2FRead
 
+
+# Considerations
+# --------------
+# Matlab has memmapfile, but it will only read correctly if endianness of
+# data is the same as that of the host system.
+
 import numpy as np
 
 typedescr_numpy = {'int8': 'i1',
