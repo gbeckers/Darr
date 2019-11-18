@@ -101,6 +101,14 @@ class TestBaseDataDir(unittest.TestCase):
             bd._write_txt('test1.txt', 'hello')
             bd._write_txt('test1.txt', 'hello', overwrite=True)
 
+    def test_deletefiles(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            bd._write_txt('test1.txt', 'hello')
+            bd._write_txt('test2.txt', 'hello')
+            bd._delete_files(('test1.txt', 'test2.txt', 'test3.txt'))
+
+
 
 class TestArchiving(unittest.TestCase):
 

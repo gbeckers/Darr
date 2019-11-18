@@ -92,6 +92,13 @@ class BaseDataDir(object):
             checksums[str(filepath)] = filesha256(filepath)
         return checksums
 
+    def _delete_files(self, filenames):
+        for filename in filenames:
+            path = self.path.joinpath(filename)
+            if path.exists():
+                path.unlink()
+
+
     @contextmanager
     def open_file(self, filename, mode='r', buffering=-1, encoding=None,
                   errors=None, newline=None, closefd=True):
