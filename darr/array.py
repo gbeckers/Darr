@@ -319,7 +319,7 @@ class Array(BaseDataDir):
 
     def _update_readmetxt(self):
         txt = readcodetxt(self)
-        self._write_txt(self._readmefilename, txt)
+        self._write_txt(self._readmefilename, txt, overwrite=True)
 
     def append(self, array):
         """ Add array-like objects to darr to the end of the dataset.

@@ -83,6 +83,24 @@ class TestBaseDataDir(unittest.TestCase):
             bd._write_jsonfile('test1.json', [1,2,3])
             self.assertRaises(TypeError, bd._read_jsondict, 'test1.json')
 
+    def test_writetxt(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            bd._write_txt('test1.txt', 'hello')
+            self.assertEqual(bd._read_txt('test1.txt'), 'hello')
+
+    def test_writetxtdonotoverwrite(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            bd._write_txt('test1.txt', 'hello')
+            self.assertRaises(OSError, bd._write_txt, 'test1.txt', 'hello')
+
+    def test_writetxtoverwrite(self):
+        with tempdir() as dirname:
+            bd = BaseDataDir(dirname)
+            bd._write_txt('test1.txt', 'hello')
+            bd._write_txt('test1.txt', 'hello', overwrite=True)
+
 
 class TestArchiving(unittest.TestCase):
 

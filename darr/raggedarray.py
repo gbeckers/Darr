@@ -120,7 +120,7 @@ class RaggedArray(BaseDataDir):
 
     def _update_readmetxt(self):
         txt = readcodetxt(self)
-        self._write_txt(self._readmefilename, txt)
+        self._write_txt(self._readmefilename, txt, overwrite=True)
 
     def _update_arraydescr(self, **kwargs):
         self._arrayinfo.update(kwargs)

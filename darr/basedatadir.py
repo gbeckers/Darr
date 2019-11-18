@@ -71,11 +71,20 @@ class BaseDataDir(object):
         self._write_jsondict(filename=filename, d=d2, overwrite=True)
         return d2
 
-    def _write_txt(self, filename, text):
-        # utf-8 is ascii-compatible
-        with open(self._path.joinpath(filename), 'w', encoding='utf-8') as f:
-            f.write(text)
-            f.flush()
+    def _write_txt(self, filename, text, overwrite=False):
+        path = self._path.joinpath(filename)
+        if not path.exists() or overwrite:
+            # utf-8 is ascii-compatible
+            with open(path, 'w', encoding='utf-8') as f:
+                f.write(text)
+                f.flush()
+        else:
+            raise OSError(f'File "{path}" exists, use `overwrite` parameter"')
+
+    def _read_txt(self, filename):
+        path = self._path.joinpath(filename)
+        with open(path, 'r') as fp:
+            return fp.read()
 
     def _sha256checksums(self):
         checksums = {}
