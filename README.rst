@@ -2,7 +2,7 @@ Darr
 ====
 
 |Travis Status| |Appveyor Status| |PyPi version| |Coverage Status|
-|Docs Status| |Repo Status| |Codacy Badge| |PyUp Badge|
+|Docs Status| |Repo Status| |PyUp Badge|
 
 
 Darr is a Python science library that enables you to work efficiently with
