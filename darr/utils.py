@@ -2,6 +2,14 @@ import hashlib
 import textwrap
 import json
 from pathlib import Path
+from functools import reduce
+from operator import mul
+
+# believe it or not Python <3.8 does not has such a function
+# and numpy.product returns int32 by default (!) causing disaster
+# when calculating the size of large files
+def product(iterable):
+    return reduce(mul, iterable, 1)
 
 
 def check_accessmode(accessmode, validmodes=('r', 'r+'), makebinary=False):

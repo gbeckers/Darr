@@ -23,7 +23,7 @@ from .basedatadir import BaseDataDir, create_basedatadir
 from .metadata import MetaData
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode
-from .utils import fit_frames, wrap, check_accessmode
+from .utils import fit_frames, wrap, check_accessmode, product
 from ._version import get_versions
 
 
@@ -187,7 +187,7 @@ class Array(BaseDataDir):
                     self._valuesfd = fd
                     d = self._arrayinfo
                     dtypedescr = arrayinfotodtype(d)
-                    if np.product(d['shape']) == 0:  # empty file/array
+                    if product(d['shape']) == 0:  # empty file/array
                         self._memmap = np.zeros(d['shape'], dtype=dtypedescr,
                                                 order=d['arrayorder'])
                     else:
@@ -290,7 +290,7 @@ class Array(BaseDataDir):
     def _check_arrayinfoconsistency(self):
         ai = self._arrayinfo
         dtype = np.dtype(arrayinfotodtype(ai))
-        expectedfilesize = np.product(ai['shape']) * dtype.itemsize
+        expectedfilesize = product(ai['shape']) * dtype.itemsize
         actualfilesize = self._datapath.stat().st_size
         if actualfilesize != expectedfilesize:
             raise ValueError(
@@ -313,7 +313,7 @@ class Array(BaseDataDir):
         newshape = list(self.shape)
         newshape[0] += lenincrease
         self._shape = tuple(newshape)
-        self._size = np.product(self._shape)
+        self._size = product(self._shape)
         self._update_arrayinfo(shape=self._shape)
         self._update_readmetxt()
 
@@ -659,8 +659,8 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
         raise ValueError("either 'fill' or 'fillfunc' should be provided, "
                          "not both")
     if chunklen is None:
-        chunklen = max(int((80 * 1024 ** 2) // (np.product(shape[1:]) *
-                                                dtype.itemsize)), 1)
+        chunklen = max((80 * 1024 ** 2) // (product(shape[1:]) *
+                                            dtype.itemsize), 1)
     nchunks, restlen = divmod(shape[0], chunklen)
     chunkshape = [chunklen] + list(shape[1:])
     chunk = np.empty(chunkshape, dtype=dtype)
@@ -679,10 +679,10 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
 def _archunkgenerator(array, dtype=None, chunklen=None):
     if chunklen is None:  # we try to make a reasonable guess
         if hasattr(array, 'shape') and hasattr(array, 'dtype'):
-            chunklen = int((80 * 1024 ** 2) // (np.product(array.shape[1:]) *
-                                                array.dtype.itemsize))
+            chunklen = (80 * 1024 ** 2) // (product(array.shape[1:]) *
+                                                array.dtype.itemsize)
         else:
-            chunklen = (1024 ** 2)
+            chunklen = 1024 ** 2
     chunklen = max(chunklen, 1)
     if hasattr(array, '__next__'):  # is already an iterator, ignore chunklen
         for chunk in array:
@@ -995,7 +995,7 @@ def truncate_array(a, index):
     del mmap # need this for Windows
     lenincrease = newlen - len(a)
     if 0 <= newlen < len(a):
-        i = newlen * np.product(a.shape[1:]) * a.dtype.itemsize
+        i = newlen * product(a.shape[1:]) * a.dtype.itemsize
         os.truncate(a._datapath, i)
         a._update_len(lenincrease)
     else:

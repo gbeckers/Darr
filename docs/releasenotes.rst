@@ -1,6 +1,11 @@
 Release notes
 =============
 
+Version 0.2.1
+-------------
+- fixed bug checking file consistency for very large files
+
+
 Version 0.2.0
 --------------
 - improved the ability to work with multiple references to same array
