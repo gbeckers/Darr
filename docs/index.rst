@@ -136,5 +136,5 @@ Indices and tables
    :target: https://pyup.io/repos/github/gbeckers/Darr/
    :alt: Updates
 
-Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
+Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2020, Gabriël
 Beckers
