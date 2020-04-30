@@ -1,6 +1,23 @@
 import unittest
-from darr.utils import fit_frames, write_jsonfile
+import numpy as np
+from darr.utils import fit_frames, write_jsonfile, product
 from .utils import tempdir, tempdirfile
+
+
+class Product(unittest.TestCase):
+
+    def multiply_list(self):
+        self.assertEqual(product([1,2,3,4]), 24)
+
+    def multiply_tuple(self):
+        self.assertEqual(product([1, 2, 3, 4]), 24)
+
+    def multiply_array(self):
+        self.assertEqual(product(np.array([1,2,3,4])), 24)
+
+    def overflow32bitints(self):
+        self.assertEqual(product((np.iinfo(np.int32).max, 2)), 4294967294)
+
 
 class WriteJsonFile(unittest.TestCase):
 

@@ -5,8 +5,6 @@ from pathlib import Path
 from functools import reduce
 from operator import mul
 
-#TODO add test for next function to check for overflow 32 bit problems
-
 # believe it or not Python <3.8 does not has such a function
 # and numpy.product returns int32 by default (!) causing disaster
 # when calculating the size of large files
