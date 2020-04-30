@@ -200,7 +200,9 @@ class Array(BaseDataDir):
             except Exception:
                 raise
             finally:
-                #self._memmap._mmap.close() # *may need this for Windows*
+                if hasattr(self._memmap, '_mmap'):
+                    self._memmap._mmap.close() # *may need this for Windows*
+                self._valuesfd.close()
                 self._memmap = None
                 self._valuesfd = None
 
