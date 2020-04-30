@@ -1,6 +1,12 @@
 Release notes
 =============
 
+Version 0.2.2
+-------------
+- fixed bug that sometimes wouldn't allow for deleting a file on Windows
+  because of a Windows timing issue
+- add more tests
+
 Version 0.2.1
 -------------
 - fixed bug checking file consistency for very large files
@@ -12,7 +18,7 @@ Version 0.2.0
 - implement truncate ragged array
 - remove 'view' method as it created problems on Windows
 - added 'open' method to partially replace view
-- fixed truncate bug that sometimes occured in Windows
+- fixed truncate bug that sometimes occurred in Windows
 - improved explanation in array README
 - better documentation of ragged arrays
 - refactoring code into more, smaller modules
