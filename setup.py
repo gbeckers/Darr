@@ -8,14 +8,14 @@ if sys.version_info < (3,6):
 
 long_description = \
 """
-Darr is a Python science library that enables you to work efficiently with
-disk-based numeric arrays without depending on tool-specific data formats.
-This makes it easy to share your data with those who do not use Darr or even
-Python. No exporting required and, as the data is saved in a self-explanatory
-way, not much explanation required either. Tool-independent and easy access
-to data is in line with good scientific practice as it promotes wide and
-long-term availability, to others but also to yourself. More rationale for this
-approach is provided
+Darr is a Python science library that enables you to store and access
+disk-based numeric arrays, without depending on tool-specific data formats.
+This makes it painless to access your data in many different languages and on
+different analysis platforms. No exporting required and, as the data is saved
+in a self-explanatory way, not much explanation required either when sharing
+or archiving your data. Tool-independent and easy access to data is in line
+with good scientific practice as it promotes wide and long-term availability,
+to others but also to yourself. More rationale for this approach is provided
 `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
 Darr supports efficient read/write/append access and is based on universally
@@ -34,9 +34,10 @@ See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
 for a brief introduction, or the
 `documentation <http://darr.readthedocs.io/>`__ for more info.
 
-Darr is currently pre-1.0, still undergoing significant development. It is
-open source and freely available under the `New BSD License
-<https://opensource.org/licenses/BSD-3-Clause>`__ terms.
+Darr is currently pre-1.0, still undergoing significant development. However
+we have been using it in practice in our lab for more than a year on both
+Linux and Windows machines. It is open source and freely available under the
+`New BSD License <https://opensource.org/licenses/BSD-3-Clause>`__ terms.
 
 Features
 --------

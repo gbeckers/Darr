@@ -5,14 +5,14 @@ Darr
 |Docs Status| |Repo Status| |PyUp Badge|
 
 
-Darr is a Python science library that enables you to work efficiently with
-disk-based numeric arrays without depending on tool-specific data formats.
-This makes it easy to share your data with those who do not use Darr or even
-Python. No exporting required and, as the data is saved in a self-explanatory
-way, not much explanation required either. Tool-independent and easy access
-to data is in line with good scientific practice as it promotes wide and
-long-term availability, to others but also to yourself. More rationale for this
-approach is provided
+Darr is a Python science library that enables you to store and access
+disk-based numeric arrays, without depending on tool-specific data formats.
+This makes it painless to access your data in many different languages and on
+different analysis platforms. No exporting required and, as the data is saved
+in a self-explanatory way, not much explanation required either when sharing
+or archiving your data. Tool-independent and easy access to data is in line
+with good scientific practice as it promotes wide and long-term availability,
+to others but also to yourself. More rationale for this approach is provided
 `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
 Darr supports efficient read/write/append access and is based on universally
@@ -31,19 +31,21 @@ See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
 for a brief introduction, or the
 `documentation <http://darr.readthedocs.io/>`__ for more info.
 
-Darr is currently pre-1.0, still undergoing significant development. It is
-open source and freely available under the `New BSD License
-<https://opensource.org/licenses/BSD-3-Clause>`__ terms.
+Darr is currently pre-1.0, still undergoing significant development. However
+we have been using it in practice in our lab for more than a year on both
+Linux and Windows machines. It is open source and freely available under the
+`New BSD License <https://opensource.org/licenses/BSD-3-Clause>`__ terms.
 
 Features
 --------
 
 Pro's:
 
--  Purely based on **flat binary** and **text** files, tool independence.
+-  Data storage purely based on **flat binary** and **text** files, tool
+   independence.
 -  **Human-readable explanation of how the binary data is stored** is
    saved in a README text file.
--  Includes **examples of how to read the array** in popular
+-  README includes **examples of how to read the particular array** in popular
    analysis environments such as Python (without Darr), R, Julia,
    Octave/Matlab, GDL/IDL, and Mathematica.
 -  Supports **very large data arrays**, larger than RAM.
@@ -57,16 +59,17 @@ Pro's:
 -  **Minimal dependencies**, only `NumPy <http://www.numpy.org/>`__.
 -  **Integrates easily** with the
    `Dask <https://dask.pydata.org/en/latest/>`__ library for
-   **numeric computation on very large Darr arrays**.
+   **numeric computation on very large arrays**.
 -  Supports **ragged arrays** (still experimental).
 
 Con's:
 
--  **No compression**, although it is of course possible to compress darr files
-   for archiving purposes.
+-  **No compression**, although compression for archiving purposes is
+   supported.
 -  **Inefficient (storage-wise) for very small arrays**. If you have a
-   zillion small arrays, and storage space is a concern, use other approaches.
-
+   zillion small arrays, and storage space is a concern, use other
+   approaches, unless you can concatenate them in a ragged array, which Darr
+   does support (experimentally).
 
 Installation
 ------------
