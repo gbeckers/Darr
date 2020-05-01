@@ -7,7 +7,7 @@ Darr
 
 Darr is a Python science library that enables you to store and access
 disk-based numeric arrays, without depending on tool-specific data formats.
-This makes it painless to access your data in many different languages and on
+This makes it easy to access the same data in many different languages and on
 different analysis platforms. No exporting required and, as the data is saved
 in a self-explanatory way, not much explanation required either when sharing
 or archiving your data. Tool-independent and easy access to data is in line
