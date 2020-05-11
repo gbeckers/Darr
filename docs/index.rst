@@ -7,7 +7,7 @@ Darr
 ====
 
 
-|Travis Status| |Appveyor Status| |PyPi version| |Coverage Status|
+|Travis Status| |Appveyor Status| |PyPi version| |Conda Forge| |Coverage Status|
 |Docs Status| |Repo Status| |PyUp Badge|
 
 
@@ -79,17 +79,18 @@ Con's:
    does support (experimentally).
 
 
-Installation
-------------
-
 Darr depends on Python 3.6 or higher and NumPy 1.12 or higher.
 
 Install Darr from PyPI::
 
     $ pip install darr
 
+Or,iInstall Darr via conda::
 
-If you insist on the latest master version from github::
+    $ conda install -c conda-forge darr
+
+To install the latest development version, use pip with the latest GitHub
+master::
 
     $ pip install git+https://github.com/gbeckers/darr@master
 
@@ -127,6 +128,8 @@ Indices and tables
    :target: https://ci.appveyor.com/project/gbeckers/darr
 .. |PyPi version| image:: https://img.shields.io/badge/pypi-0.2.1-orange.svg
    :target: https://pypi.org/project/darr/
+.. |Conda Forge| image:: https://camo.githubusercontent.com/2593f6b7a8118cd866588efe0018cbc87f89cee9/68747470733a2f2f696d672e736869656c64732e696f2f636f6e64612f766e2f636f6e64612d666f7267652f646172722e737667
+   :target: https://anaconda.org/conda-forge/darr
 .. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
    :target: https://coveralls.io/github/gbeckers/Darr?branch=master
 .. |Docs Status| image:: https://readthedocs.org/projects/darr/badge/?version=latest
