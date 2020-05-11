@@ -85,7 +85,7 @@ Install Darr from PyPI::
 
     $ pip install darr
 
-Or,iInstall Darr via conda::
+Or, install Darr via conda::
 
     $ conda install -c conda-forge darr
 
