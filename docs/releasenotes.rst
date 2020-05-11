@@ -6,6 +6,8 @@ Version 0.2.2
 - fixed bug that sometimes wouldn't allow for deleting a file on Windows
   because of a Windows timing issue
 - add more tests
+- create conda-forge package
+
 
 Version 0.2.1
 -------------
