@@ -128,7 +128,7 @@ Indices and tables
    :target: https://ci.appveyor.com/project/gbeckers/darr
 .. |PyPi version| image:: https://img.shields.io/badge/pypi-0.2.2-orange.svg
    :target: https://pypi.org/project/darr/
-.. |Conda Forge| image:: https://camo.githubusercontent.com/2593f6b7a8118cd866588efe0018cbc87f89cee9/68747470733a2f2f696d672e736869656c64732e696f2f636f6e64612f766e2f636f6e64612d666f7267652f646172722e737667
+.. |Conda Forge| image:: https://anaconda.org/conda-forge/darr/badges/version.svg
    :target: https://anaconda.org/conda-forge/darr
 .. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
    :target: https://coveralls.io/github/gbeckers/Darr?branch=master
