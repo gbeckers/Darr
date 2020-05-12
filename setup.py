@@ -44,9 +44,8 @@ Features
 
 Pro's:
 
-Data storage purely based on **flat binary** and **text** files, 
-tool independence.
-
+-  Data storage purely based on **flat binary** and **text** files, 
+   tool independence.
 -  **Human-readable explanation of how the binary data is stored** is
    saved in a README text file.
 -  README includes **examples of how to read the particular array** in popular
