@@ -65,7 +65,7 @@ Pro's:
    **numeric computation on very large arrays**.
 -  Supports **ragged arrays** (still experimental).
 
-See the [documentation](http://darr.readthedocs.io/) for more information.
+See the `documentation <http://darr.readthedocs.io/>`__ for more information.
 
 """
 
