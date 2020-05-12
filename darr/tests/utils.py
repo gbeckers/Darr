@@ -1,5 +1,4 @@
 import os
-import time
 import shutil
 import tempfile as tf
 from contextlib import contextmanager
