@@ -83,7 +83,8 @@ class Array(BaseDataDir):
             self._shape = ar.shape
             self._size = ar.size
         self._metadata = MetaData(self._path / self._metadatafilename,
-                                  accessmode=accessmode)
+                                  accessmode=accessmode,
+                                  callatfilecreationordeletion=self._update_readmetxt)
 
     @property
     def _arrayinfo(self):
@@ -1087,6 +1088,7 @@ def numtypedescriptiontxt(da):
     s += wrap("Format details are also stored in json format in the separate "
               "UTF-8 text file, 'arraydescription.json' to facilitate "
               "automatic reading by a program.") + "\n\n"
-    s += wrap("If present, the file 'metadata.json' contains metadata in json "
-              "UTF-8 text format.") + "\n\n\n"
+    if len(da.metadata) > 0:
+        s += wrap("The file 'metadata.json' contains metadata in json UTF-8 "\
+                  "text format.") + "\n\n\n"
     return s

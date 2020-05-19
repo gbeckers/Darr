@@ -11,11 +11,12 @@ class MetaData:
 
     """
 
-    def __init__(self, path, accessmode='r'):
+    def __init__(self, path, accessmode='r', callatfilecreationordeletion=None):
 
         path = Path(path)
         self._path = path
         self._accessmode = check_accessmode(accessmode)
+        self._callatfilecreationordeletion = callatfilecreationordeletion
 
     @property
     def path(self):
@@ -76,6 +77,7 @@ class MetaData:
         """D.keys() -> a set-like object providing a view on D's keys"""
         return self._read().keys()
 
+    # FIXME remove overlap with popitem
     def pop(self, *args):
         """D.pop(k[,d]) -> v, remove specified key and return the corresponding
         value. If key is not found, d is returned if given, otherwise KeyError
@@ -91,6 +93,7 @@ class MetaData:
                            ensure_ascii=True, overwrite=True)
         else:
             self._path.unlink()
+            self._callatfilecreationordeletion()
         return val
 
     def popitem(self):
@@ -107,6 +110,7 @@ class MetaData:
                            ensure_ascii=True, overwrite=True)
         else:
             self._path.unlink()
+            self._callatfilecreationordeletion()
         return key, val
 
     def values(self):
@@ -146,4 +150,6 @@ class MetaData:
 
         write_jsonfile(self.path, data=metadata, sort_keys=True,
                        ensure_ascii=True, overwrite=True)
+        if metadata:
+            self._callatfilecreationordeletion()
 
