@@ -1017,9 +1017,10 @@ def readcodetxt(da):
     """
 
     s = numtypedescriptiontxt(da)
-    s += "Example code for reading the numeric data without Darr\n" \
-         "=======================================================\n\n"
+    s += "Example code for reading the numeric data\n" \
+         "=========================================\n\n"
     languages = (
+        ("Python with Darr:", "darr"),
         ("Python with Numpy:", "numpy"),
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),
@@ -1064,21 +1065,14 @@ def numtypedescriptiontxt(da):
                           'with memory address'
     else:
         raise ValueError(f'arrayorder type "{arrayorder}" unknown')
-    s = wrap("This directory contains a numeric array that can be accessed "
-             "in Python using the Darr library "
-             "(https://pypi.org/project/darr/), but that can also be "
-             "accessed  easily in other environments. In Darr, do:") + "\n\n"
-    s +=     ">>> import darr\n" \
-             ">>> a = darr.Array('path_to_array_dir')\n\n"
-    s += wrap("where 'path_to_array_dir' is the name of the array "
-              "directory, which is the one that also contains this README.")\
-         + "\n\n"
-    s += wrap("If the Darr library is not available, it should be "
-              "straightforward to access the data based on the information "
-              "below. This includes code for a number of popular "
-              "platforms, in which case it is a matter of copying a few "
-              "lines.")  + "\n\n\n"
-    s+= f"Description of data format\n==========================\n\n"
+    s = wrap("This directory contains a numeric array that is stored in an "
+             "open and simple format and that is easy to access in most "\
+             "analysis environments. In Python, you can use the Darr "\
+             "library (https://pypi.org/project/darr/), which was used to "\
+             "create the data. If Darr is not available, it is "\
+             "straightforward to access the data using the information "\
+             "below, which includes code for a number of popular platforms.")  + "\n\n\n"
+    s+= f"Data format\n===========\n\n"
     s += wrap("The file 'arrayvalues.bin' contains a numeric array in the "
               "following format:") + "\n\n"
     s +=f"  Numeric type: {typedescr}\n" \

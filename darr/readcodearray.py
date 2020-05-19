@@ -18,6 +18,14 @@ languages to read the numeric information of a Darr array.
 
 import numpy as np
 
+def readcodedarr(numtype, shape, endianness, filepath='path_to_data_dir',
+                  varname='a'):
+    ct = f"import darr\n" \
+         f"# path_to_data_dir is the directory that contains this README\n" \
+         f"{varname} = darr.Array(path='path_to_data_dir')\n"
+    return ct
+
+
 typedescr_numpy = {'int8': 'i1',
                    'int16': 'i2',
                    'int32': 'i4',
@@ -265,6 +273,7 @@ def readcodemaple(numtype, shape, endianness, filepath='arrayvalues.bin',
 
 
 readcodefunc = {
+        'darr': readcodedarr,
         'idl': readcodeidl,
         'julia_ver0': readcodejulia0,
         'julia_ver1': readcodejulia1,
