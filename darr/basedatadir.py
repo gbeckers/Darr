@@ -5,6 +5,8 @@ from contextlib import contextmanager
 
 from .utils import filesha256, write_jsonfile
 
+# implement nice __repr__ and __str__
+# implement accessmode?
 class BaseDataDir(object):
     """Use a directory for managing data of a subclass. Has methods for reading
     and writing json data, and text data. Upon initialization it expects and

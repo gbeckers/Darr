@@ -1,31 +1,24 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Darr &#8212; darr 0.1.7 documentation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darr &#8212; darr 0.2.2 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1.7',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorial" href="tutorial.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -38,7 +31,8 @@
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">darr 0.1.7 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">darr 0.2.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Darr</a></li> 
       </ul>
     </div>  
 
@@ -49,63 +43,81 @@
             
   <div class="section" id="darr">
 <h1>Darr<a class="headerlink" href="#darr" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://travis-ci.org/gbeckers/Darr?branch=master"><img alt="Travis Status" src="https://travis-ci.org/gbeckers/Darr.svg?branch=master" /></a> <a class="reference external" href="https://ci.appveyor.com/project/gbeckers/darr"><img alt="Appveyor Status" src="https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true" /></a> <a class="reference external" href="https://pypi.org/project/darr/"><img alt="PyPy version" src="https://img.shields.io/badge/pypi-v0.1.9-orange.svg" /></a> <a class="reference external" href="https://coveralls.io/github/gbeckers/Darr?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master" /></a> <a class="reference external" href="https://darr.readthedocs.io/en/latest/"><img alt="Docs Status" src="https://readthedocs.org/projects/darr/badge/?version=latest" /></a></p>
-<p>Darr is a Python science library for storing and sharing numeric data arrays
-in a way that is open, simple, and self-explanatory. It also enables fast
-memory-mapped read/write access to such disk-based data, the ability to append
-data, and the flexible use of metadata. It is primarily designed for
-scientific use cases. Save and use your numeric arrays and metadata with one
-line of code while long-term and tool-independent accessibility and easy
-shareability is ensured.</p>
-<p>To avoid dependency on specific tools, Darr is based on a combination of
-flat binary and human-readable text files. It automatically saves a clear
-text description of how the data is stored, together with code for reading
-the specific data in a variety of current scientific data tools such as
-Python, R, Julia, IDL, Matlab, Maple and Mathematica (see <a class="reference external" href="https://github.com/gbeckers/Darr/tree/master/examplearray.darr">example array</a>).</p>
-<p>Darr is currently pre-1.0, still undergoing significant development. It
-is open source and freely available under the <a class="reference external" href="https://opensource.org/licenses/BSD-3-Clause">New BSD
-License</a> terms.</p>
-<p>Code can be found on GitHub: <a class="reference external" href="https://github.com/gbeckers/Darr">https://github.com/gbeckers/Darr</a></p>
+<p><a class="reference external" href="https://travis-ci.org/gbeckers/Darr?branch=master"><img alt="Travis Status" src="https://travis-ci.org/gbeckers/Darr.svg?branch=master" /></a> <a class="reference external" href="https://ci.appveyor.com/project/gbeckers/darr"><img alt="Appveyor Status" src="https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true" /></a> <a class="reference external" href="https://pypi.org/project/darr/"><img alt="PyPi version" src="https://img.shields.io/badge/pypi-0.2.2-orange.svg" /></a> <a class="reference external" href="https://anaconda.org/conda-forge/darr"><img alt="Conda Forge" src="https://anaconda.org/conda-forge/darr/badges/version.svg" /></a> <a class="reference external" href="https://coveralls.io/github/gbeckers/Darr?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master" /></a>
+<a class="reference external" href="https://darr.readthedocs.io/en/latest/"><img alt="Docs Status" src="https://readthedocs.org/projects/darr/badge/?version=latest" /></a> <a class="reference external" href="https://www.repostatus.org/#active"><img alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." src="https://www.repostatus.org/badges/latest/active.svg" /></a> <a class="reference external" href="https://pyup.io/repos/github/gbeckers/Darr/"><img alt="Updates" src="https://pyup.io/repos/github/gbeckers/Darr/shield.svg" /></a></p>
+<p>Darr is a Python science library that enables you to work efficiently with
+disk-based numeric arrays without depending on tool-specific data formats.
+This makes it easy to share your data with those who do not use Darr or even
+Python. No exporting required and, as the data is saved in a self-explanatory
+way, not much explanation required either. Tool-independent and easy access
+to data is in line with good scientific practice as it promotes wide and
+long-term availability, to others but also to yourself. More rationale for this
+approach is provided
+<a class="reference external" href="https://darr.readthedocs.io/en/latest/rationale.html">here</a>.</p>
+<p>Darr supports efficient read/write/append access and is based on universally
+readable flat binary files and automatically generated text files, containing
+human-readable explanation of precisely how your binary data is stored. It
+also provides specific code that reads the data in a variety of current
+scientific data tools such as Python, R, Julia, IDL, Matlab, Maple, and
+Mathematica (see
+<a class="reference external" href="https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr">example array</a>).</p>
+<p>Darr currently supports numerical N-dimensional arrays, and experimentally
+supports numerical ragged arrays, i.e. a series of arrays in which one
+dimension varies in length.</p>
+<p>See this <a class="reference external" href="https://darr.readthedocs.io/en/latest/tutorial.html">tutorial</a>
+for a brief introduction, or the
+<a class="reference external" href="http://darr.readthedocs.io/">documentation</a> for more info.</p>
+<p>Darr is currently pre-1.0, still undergoing significant development. It is
+open source and freely available under the <a class="reference external" href="https://opensource.org/licenses/BSD-3-Clause">New BSD License</a> terms.</p>
 <div class="section" id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
 <p>Pro’s:</p>
+<dl class="simple">
+<dt>Data storage purely based on <strong>flat binary</strong> and <strong>text</strong> files, tool</dt><dd><p>independence.</p>
+</dd>
+</dl>
 <ul class="simple">
-<li><strong>Transparent data format</strong> based on <strong>flat binary</strong> and <strong>text</strong>
-files.</li>
-<li><strong>Human-readable explanation of how the binary data is stored</strong> is
-saved in a README text file.</li>
-<li>Includes <strong>examples of how to read the array</strong> in popular
+<li><p><strong>Human-readable explanation of how the binary data is stored</strong> is
+saved in a README text file.</p></li>
+<li><p>README includes <strong>examples of how to read the particular array</strong> in popular
 analysis environments such as Python (without Darr), R, Julia,
-Octave/Matlab, GDL/IDL, and Mathematica.</li>
-<li>Supports <strong>very large data arrays</strong> through <strong>memory-mapped</strong> file
-access.</li>
-<li>Data read/write access through <strong>NumPy indexing</strong> (see
-<a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html">here</a>).</li>
-<li>Data is easily <strong>appendable</strong>.</li>
-<li><strong>Many numeric types</strong> are supported: (u)int8-(u)int64,
-float16-float64, complex64, complex128.</li>
-<li>Easy use of <strong>metadata</strong>, stored in a separate
-<a class="reference external" href="https://en.wikipedia.org/wiki/JSON">JSON</a> text file.</li>
-<li><strong>Minimal dependencies</strong>, only <a class="reference external" href="http://www.numpy.org/">NumPy</a>.</li>
-<li><strong>Integrates easily</strong> with the
-<a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> or
-<a class="reference external" href="https://numexpr.readthedocs.io/en/latest/">NumExpr</a> libraries for
-<strong>numeric computation on very large Darr arrays</strong>.</li>
+Octave/Matlab, GDL/IDL, and Mathematica.</p></li>
+<li><p>Supports <strong>very large data arrays</strong>, larger than RAM, through memory-mapping.</p></li>
+<li><p>Data read/write access is simple and powerful through <strong>NumPy indexing</strong>
+(see
+<a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html">here</a>).</p></li>
+<li><p>Data is easily <strong>appendable</strong>.</p></li>
+<li><p><strong>Many numeric types</strong> are supported: (u)int8-(u)int64, float16-float64,
+complex64, complex128.</p></li>
+<li><p>Easy use of <strong>metadata</strong>, stored in a separate
+<a class="reference external" href="https://en.wikipedia.org/wiki/JSON">JSON</a> text file.</p></li>
+<li><p><strong>Minimal dependencies</strong>, only <a class="reference external" href="http://www.numpy.org/">NumPy</a>.</p></li>
+<li><p><strong>Integrates easily</strong> with the
+<a class="reference external" href="https://dask.pydata.org/en/latest/">Dask</a> library for
+<strong>numeric computation on very large arrays</strong>.</p></li>
+<li><p>Supports <strong>ragged arrays</strong> (still experimental).</p></li>
 </ul>
 <p>Con’s:</p>
 <ul class="simple">
-<li><strong>No direct access to compressed data</strong>, although it is of course possible
-to simply compress darr files for archiving purposes.</li>
-<li><strong>Inefficient (storage-wise) for very small arrays</strong>. If you have a
+<li><p><strong>No compression</strong>, although compression for archiving purposes is
+supported.</p></li>
+<li><p><strong>Inefficient (storage-wise) for very small arrays</strong>. If you have a
 zillion small arrays, and storage space is a concern, use other
-approaches.</li>
+approaches, unless you can concatenate them in a ragged array, which Darr
+does support (experimentally).</p></li>
 </ul>
-</div>
-<div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Darr depends on Python 3.6 or higher and NumPy 1.12 or higher.</p>
 <p>Install Darr from PyPI:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ pip install darr
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install darr
+</pre></div>
+</div>
+<p>Or, install Darr via conda:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge darr
+</pre></div>
+</div>
+<p>To install the latest development version, use pip with the latest GitHub
+master:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install git+https://github.com/gbeckers/darr@master
 </pre></div>
 </div>
 </div>
@@ -119,6 +131,7 @@ naming of some functions/methods may still change.</p>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#accessing-an-existing-array">Accessing an existing array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#creating-an-array">Creating an array</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#different-numeric-type">Different numeric type</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#creating-array-from-numpy-array">Creating array from NumPy array</a></li>
@@ -135,6 +148,10 @@ naming of some functions/methods may still change.</p>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Darr</a></li>
 <li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releasenotes.html">Release notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-2-2">Version 0.2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-2-1">Version 0.2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-2-0">Version 0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-11">Version 0.1.11</a></li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-10">Version 0.1.10</a></li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-9">Version 0.1.9</a></li>
 <li class="toctree-l2"><a class="reference internal" href="releasenotes.html#version-0-1-8">Version 0.1.8</a></li>
@@ -145,10 +162,8 @@ naming of some functions/methods may still change.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Darr API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#creating-arrays">Creating arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#accessing-arrays">Accessing arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#deleting-arrays">Deleting arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#truncating-arrays">Truncating arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#arrays">Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#ragged-arrays">Ragged Arrays</a></li>
 </ul>
 </li>
 </ul>
@@ -158,15 +173,16 @@ naming of some functions/methods may still change.</p>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-<p>Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2018, Gabriël
+<p>Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2020, Gabriël
 Beckers</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -176,15 +192,15 @@ Beckers</p>
   <p class="topless"><a href="tutorial.html"
                         title="next chapter">Tutorial</a></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -201,12 +217,13 @@ Beckers</p>
         <li class="right" >
           <a href="tutorial.html" title="Tutorial"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">darr 0.1.7 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">darr 0.2.2 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Darr</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, Gabriel Beckers.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+        &#169; Copyright 2017-2020, Gabriel Beckers.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>

@@ -3,6 +3,7 @@ import json
 
 from .utils import write_jsonfile, check_accessmode
 
+# implement __contains__
 class MetaData:
     """Dictionary-like access to disk based metadata.
 
