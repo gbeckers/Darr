@@ -713,6 +713,7 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
             f"cannot convert object of type '{type(array)}' to an array")
 
 
+# FIXME what it iter produces a different first dimension?
 def asarray(path, array, dtype=None, accessmode='r',
             metadata=None, chunklen=None, overwrite=False):
     """Save an array or array generator as a Darr array to file system path.
