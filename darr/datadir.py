@@ -5,22 +5,20 @@ from contextlib import contextmanager
 
 from .utils import filesha256, write_jsonfile
 
-# implement nice __repr__ and __str__
-# FIXME accessmode?
 class DataDir(object):
     """A directory for managing data. Has methods for reading
     and writing json data, and text data.
 
-    Subdirectories are not allowed. Just files.
-
     Parameters
     ----------
     path: str or pathlib.Path
-    filenames: sequence | None
-      Sequence of filenames that should be considered part of the data. If
-      None, all files in the directory are included. Default: None.
+    protectedpaths: sequence | None
+      Sequence of paths that should be considered part of the data,
+      and that will not be changed using the normal methods of DataDir.
+      Default: None.
 
     """
+
     def __init__(self, path, protectedpaths=None):
         path = Path(path)
         if not path.exists():
@@ -43,6 +41,11 @@ class DataDir(object):
     def sha256(self):
         """Checksums (sha256) of files."""
         return self.sha256checksums()
+
+    def __repr__(self):
+        return f'DataDir at "{self._path}"'
+
+    __str__ = __repr__
 
     def read_jsonfile(self, filename):
         path = self._path.joinpath(filename)
