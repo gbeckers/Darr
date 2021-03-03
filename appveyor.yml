@@ -33,7 +33,7 @@ test_script:
   - "%PYTHON%\\python.exe -m darr.tests.test_array"
   - "%PYTHON%\\python.exe -m darr.tests.test_raggedarray"
   - "%PYTHON%\\python.exe -m darr.tests.test_numtype"
-  - "%PYTHON%\\python.exe -m darr.tests.test_basedatadir"
+  - "%PYTHON%\\python.exe -m darr.tests.test_datadir"
   - "%PYTHON%\\python.exe -m darr.tests.test_utils"
 
 after_test:
