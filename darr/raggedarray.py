@@ -18,6 +18,7 @@ from .utils import wrap
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
            'delete_raggedarray', 'truncate_raggedarray']
 
+# FIXME needs doc
 class RaggedArray:
     """
     Disk-based sequence of arrays that may have a variable length in maximally
@@ -132,6 +133,12 @@ class RaggedArray:
 
     def __len__(self):
         return self._indices.shape[0]
+
+    def __repr__(self):
+        return f'darr ragged array ({self.narrays} arrays with at' \
+               f'om shape {self.atom}, {self.accessmode})'
+
+    __str__ = __repr__
 
     def _update_readmetxt(self):
         txt = readcodetxt(self)
