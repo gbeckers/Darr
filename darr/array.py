@@ -19,7 +19,7 @@ import numpy as np
 from contextlib import contextmanager
 from pathlib import Path
 
-from .basedatadir import BaseDataDir, create_basedatadir
+from .datadir import DataDir, create_basedatadir
 from .metadata import MetaData
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode
@@ -39,8 +39,8 @@ __all__ = ['Array', 'asarray', 'create_array', 'delete_array',
 class AppendDataError(Exception):
     pass
 
-
-class Array(BaseDataDir):
+#FIXME do not subclass from BaseDataDir, instead make this an attribute
+class Array:
     """Instantiate a Darr array from disk.
 
     A darr array corresponds to a directory containing 1) a binary file with
@@ -64,13 +64,15 @@ class Array(BaseDataDir):
     _arraydescrfilename = 'arraydescription.json'
     _metadatafilename = 'metadata.json'
     _readmefilename = 'README.txt'
-    _filenames = {_arraydescrfilename, _datafilename,
-                  _readmefilename,
-                  _metadatafilename} | BaseDataDir._filenames
+    _protectedfiles = {_arraydescrfilename, _datafilename,
+                       _readmefilename,
+                       _metadatafilename}
     _formatversion = get_versions()['version']
 
     def __init__(self, path, accessmode='r'):
-        BaseDataDir.__init__(self, path=path)
+        self._datadir = DataDir(path=path,
+                                protectedfiles=self._protectedfiles)
+        self._path = self._datadir._path
         self._datapath = self._path / self._datafilename
         self._accessmode = check_accessmode(accessmode)
         self._arraydescrpath = self._path / self._arraydescrfilename
@@ -103,6 +105,11 @@ class Array(BaseDataDir):
         self._metadata.accessmode = value
 
     @property
+    def datadir(self):
+        """Data directory object with many useful methods"""
+        return self._datadir
+
+    @property
     def dtype(self):
         """Numpy data type of the array values."""
         return self._dtype
@@ -131,6 +138,11 @@ class Array(BaseDataDir):
     def ndim(self):
         """Number of dimensions """
         return len(self._shape)
+
+    @property
+    def path(self):
+        """File system path to array data"""
+        return self._path
 
     @property
     def shape(self):
@@ -260,8 +272,8 @@ class Array(BaseDataDir):
         """
         requiredkeys = {'numtype', 'shape', 'arrayorder', 'darrversion'}
         try:
-            d = self._read_jsondict(filename=self._arraydescrfilename,
-                                    requiredkeys=requiredkeys)
+            d = self._datadir.read_jsondict(filename=self._arraydescrfilename,
+                                            requiredkeys=requiredkeys)
         except Exception as e:
             m = f". Could not read array description from "\
                 f"'{self._arraydescrpath}. '"
@@ -309,8 +321,8 @@ class Array(BaseDataDir):
     def _update_arrayinfo(self, *args, **kwargs):
         arrayinfo = self._arrayinfo
         arrayinfo.update( *args, **kwargs)
-        self._write_jsondict(filename=self._arraydescrfilename,
-                             d=arrayinfo, overwrite=True)
+        self._datadir._write_jsondict(filename=self._arraydescrfilename,
+                                      d=arrayinfo, overwrite=True)
 
     def _update_len(self, lenincrease):
         newshape = list(self.shape)
@@ -322,7 +334,7 @@ class Array(BaseDataDir):
 
     def _update_readmetxt(self):
         txt = readcodetxt(self)
-        self._write_txt(self._readmefilename, txt, overwrite=True)
+        self._datadir._write_txt(self._readmefilename, txt, overwrite=True)
 
     def append(self, array):
         """ Add array-like objects to darr to the end of the dataset.
@@ -936,7 +948,7 @@ def delete_array(da):
     except Exception:
         raise TypeError(f"'{da}' not recognized as a Darr array")
     da.check_arraywriteable()
-    for fn in da._filenames:
+    for fn in da._protectedfiles:
         path = da.path.joinpath(fn)
         if path.exists():
             path.unlink()

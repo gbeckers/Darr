@@ -355,7 +355,7 @@ class TestReadArrayDescr(DarrTestCase):
             arrayinfo = dar._arrayinfo.copy()
             vs = f"1{arrayinfo['darrversion']}"
             arrayinfo['darrversion'] = vs
-            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+            dar._datadir._write_jsondict(dar._arraydescrfilename, arrayinfo,
                                 overwrite=True)
             self.assertWarns(UserWarning, Array, dar.path)
 
@@ -365,7 +365,7 @@ class TestReadArrayDescr(DarrTestCase):
                                dtype='int64', overwrite=True)
             arrayinfo = dar._arrayinfo.copy()
             arrayinfo['shape'] = ['a', 3]
-            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+            dar._datadir._write_jsondict(dar._arraydescrfilename, arrayinfo,
                                 overwrite=True)
             self.assertRaises(TypeError, Array, dar.path)
 
@@ -375,11 +375,11 @@ class TestReadArrayDescr(DarrTestCase):
                                dtype='int64', overwrite=True)
             arrayinfo = dar._arrayinfo.copy()
             arrayinfo['arrayorder'] = 'D'
-            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+            dar._datadir._write_jsondict(dar._arraydescrfilename, arrayinfo,
                                 overwrite=True)
             self.assertRaises(ValueError, Array, dar.path)
             arrayinfo['arrayorder'] = '[D]'
-            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+            dar._datadir._write_jsondict(dar._arraydescrfilename, arrayinfo,
                                 overwrite=True)
             self.assertRaises(Exception, Array, dar.path)
 
@@ -387,7 +387,7 @@ class TestReadArrayDescr(DarrTestCase):
         with tempdirfile() as filename:
             dar = create_array(path=filename, shape=(2,4), fill=0,
                                dtype='int64', overwrite=True)
-            dar._update_jsondict(dar._arraydescrpath.absolute(),
+            dar._datadir._update_jsondict(dar._arraydescrpath.absolute(),
                                  {'arrayorder': 'F'})
             dar = Array(filename)
             self.assertIn("Column-major", numtypedescriptiontxt(dar))
@@ -396,7 +396,7 @@ class TestReadArrayDescr(DarrTestCase):
         with tempdirfile() as filename1, tempdirfile() as filename2:
             dar = create_array(path=filename1, shape=(2, 4), fill=0,
                                dtype='int64', overwrite=True)
-            dar._update_jsondict(dar._arraydescrpath.absolute(),
+            dar._datadir._update_jsondict(dar._arraydescrpath.absolute(),
                                  {'arrayorder': 'F'})
             dar = Array(filename1)
             self.assertWarns(UserWarning, asarray, path=filename2, array=dar,
@@ -449,7 +449,7 @@ class TestConsistency(DarrTestCase):
                                dtype='int64', overwrite=True)
             arrayinfo = dar._arrayinfo.copy()
             arrayinfo['numtype'] = 'int32'
-            dar._write_jsondict(dar._arraydescrfilename, arrayinfo,
+            dar._datadir._write_jsondict(dar._arraydescrfilename, arrayinfo,
                                 overwrite=True)
             self.assertRaises(ValueError, dar._check_arrayinfoconsistency)
             self.assertRaises(ValueError, Array, dar.path)
@@ -648,7 +648,7 @@ class TestOpenFile(DarrTestCase):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(0, 2), dtype='int64',
                                overwrite=True, accessmode='r+')
-            with dar.open_file('notes.txt', 'a') as f:
+            with dar._datadir.open_file('notes.txt', 'a') as f:
                 f.write('test\n')
             path = dar.path / 'notes.txt'
             self.assertEqual(path.exists(), True)
@@ -657,9 +657,9 @@ class TestOpenFile(DarrTestCase):
         with tempdir() as dirname:
             dar = create_array(path=dirname, shape=(0, 2), dtype='int64',
                                overwrite=True, accessmode='r+')
-            for fn in dar._filenames:
+            for fn in dar._protectedfiles:
                 with self.assertRaises(OSError):
-                    with dar.open_file(fn, 'a') as f:
+                    with dar._datadir.open_file(fn, 'a') as f:
                         f.write('test\n')
 
 
@@ -732,7 +732,7 @@ class DeleteArray(DarrTestCase):
     def test_donotdeletenondarrfile(self):
         with tempdirfile() as filename:
             dar = create_array(path=filename, shape=(0, 2), dtype='int64')
-            dar._write_jsondict('test.json', {'a': 1})
+            dar._datadir._write_jsondict('test.json', {'a': 1})
             testpath = dar._path.joinpath('test.json')
             self.assertRaises(OSError, delete_array, dar)
             self.assertEqual(testpath.exists(), True)

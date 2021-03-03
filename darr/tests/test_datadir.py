@@ -1,7 +1,7 @@
 import unittest
 from contextlib import contextmanager
 from pathlib import Path
-from darr.basedatadir import BaseDataDir, create_basedatadir
+from darr.datadir import DataDir, create_basedatadir
 from darr.utils import filesha256
 from .utils import tempdir
 
@@ -12,7 +12,7 @@ def create_testbasedatadir(filename='test.json', datadict=None):
     with tempdir() as dirname:
         bdddirname = Path(dirname) / 'data.bd'
         bdddirname.mkdir()
-        bdd = BaseDataDir(bdddirname)
+        bdd = DataDir(bdddirname)
         bdd._write_jsondict(filename, datadict)
         yield bdd
 
@@ -32,81 +32,81 @@ class TestBaseDataDir(unittest.TestCase):
 
     def test_nonexistingpath(self):
         with self.assertRaises(OSError):
-            BaseDataDir("lkjhlkihlkblhhhgdhg") # assume that doesn't exist
+            DataDir("lkjhlkihlkblhhhgdhg") # assume that doesn't exist
 
     def test_writejsondictcorrectinput(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
-            bd._write_jsondict('test1.json', {'a': 1})
+            bd = DataDir(dirname)
+            bd.write_jsondict('test1.json', {'a': 1})
 
     def test_writejsondictincorrectinput(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
+            bd = DataDir(dirname)
             with self.assertRaises(TypeError):
-                bd._write_jsondict('test1.json', 3)
+                bd.write_jsondict('test1.json', 3)
             with self.assertRaises(TypeError):
-                bd._write_jsondict('test1.json', 'a')
+                bd.write_jsondict('test1.json', 'a')
 
     def test_updatejsondictcorrect(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
-            bd._write_jsondict('test1.json', {'a': 1})
-            bd._update_jsondict('test1.json', {'a': 2, 'b':3})
+            bd = DataDir(dirname)
+            bd.write_jsondict('test1.json', {'a': 1})
+            bd.update_jsondict('test1.json', {'a': 2, 'b':3})
 
     def test_readjsondict(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
+            bd = DataDir(dirname)
             wd = {'a': 1, 'b': [1,2,3], 'c': 'k'}
-            bd._write_jsondict('test1.json', wd)
-            rd = bd._read_jsondict('test1.json')
+            bd.write_jsondict('test1.json', wd)
+            rd = bd.read_jsondict('test1.json')
             self.assertDictEqual(wd, rd)
 
     def test_readjsondictrequiredkeypresent(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
+            bd = DataDir(dirname)
             wd = {'a': 1, 'b': [1,2,3], 'c': 'k'}
-            bd._write_jsondict('test1.json', wd)
-            rd = bd._read_jsondict('test1.json', requiredkeys=('a', 'c'))
+            bd.write_jsondict('test1.json', wd)
+            rd = bd.read_jsondict('test1.json', requiredkeys=('a', 'c'))
             self.assertDictEqual(wd, rd)
 
     def test_readjsondictrequiredkeynotpresent(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
+            bd = DataDir(dirname)
             wd = {'a': 1, 'b': [1,2,3], 'c': 'k'}
-            bd._write_jsondict('test1.json', wd)
-            self.assertRaises(ValueError, bd._read_jsondict, 'test1.json',
+            bd.write_jsondict('test1.json', wd)
+            self.assertRaises(ValueError, bd.read_jsondict, 'test1.json',
                               requiredkeys=('a', 'd'))
 
     def test_readjsondictnotdict(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
-            bd._write_jsonfile('test1.json', [1,2,3])
-            self.assertRaises(TypeError, bd._read_jsondict, 'test1.json')
+            bd = DataDir(dirname)
+            bd.write_jsonfile('test1.json', [1,2,3])
+            self.assertRaises(TypeError, bd.read_jsondict, 'test1.json')
 
     def test_writetxt(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
-            bd._write_txt('test1.txt', 'hello')
-            self.assertEqual(bd._read_txt('test1.txt'), 'hello')
+            bd = DataDir(dirname)
+            bd.write_txt('test1.txt', 'hello')
+            self.assertEqual(bd.read_txt('test1.txt'), 'hello')
 
     def test_writetxtdonotoverwrite(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
-            bd._write_txt('test1.txt', 'hello')
+            bd = DataDir(dirname)
+            bd.write_txt('test1.txt', 'hello')
             self.assertRaises(OSError, bd._write_txt, 'test1.txt', 'hello')
 
     def test_writetxtoverwrite(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
-            bd._write_txt('test1.txt', 'hello')
-            bd._write_txt('test1.txt', 'hello', overwrite=True)
+            bd = DataDir(dirname)
+            bd.write_txt('test1.txt', 'hello')
+            bd.write_txt('test1.txt', 'hello', overwrite=True)
 
     def test_deletefiles(self):
         with tempdir() as dirname:
-            bd = BaseDataDir(dirname)
-            bd._write_txt('test1.txt', 'hello')
-            bd._write_txt('test2.txt', 'hello')
-            bd._delete_files(('test1.txt', 'test2.txt', 'test3.txt'))
+            bd = DataDir(dirname)
+            bd.write_txt('test1.txt', 'hello')
+            bd.write_txt('test2.txt', 'hello')
+            bd.delete_files(('test1.txt', 'test2.txt', 'test3.txt'))
 
 
 
