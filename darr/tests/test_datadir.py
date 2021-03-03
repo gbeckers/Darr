@@ -110,12 +110,12 @@ class TestDataDir(unittest.TestCase):
 
     def test_protectedfiles(self):
         with tempdir() as dirname:
-            bd = DataDir(dirname, protectedfiles=('test.dat',))
+            bd = DataDir(dirname, protectedpaths=('test.dat',))
             self.assertEqual(bd.protectedfiles, set(('test.dat',)))
 
     def test_deleteprotectedfile(self):
         with tempdir() as dirname:
-            bd = DataDir(dirname, protectedfiles=('test.dat',))
+            bd = DataDir(dirname, protectedpaths=('test.dat',))
             self.assertRaises(OSError, bd.delete_files, (('test.dat',)))
 
 

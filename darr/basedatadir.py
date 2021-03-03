@@ -3,14 +3,19 @@
 import warnings
 from .datadir import DataDir, create_datadir
 
+def warn():
+    warnings.warn("The use of `BaseDataDir` is deprecated in "
+                  "versions of Darr > 2.2. Use `DataDir`, and its "
+                  "associated function `create_datadir` instead.",
+                  FutureWarning)
+
 class BaseDataDir(DataDir):
 
     def __init__(self, path, filenames=None):
-        warnings.warn("The use of `BaseDataDir` is deprecated in "
-                      "versions of Darr > 2.2. Use `DataDir`, and its "
-                      "associated function `create_datadir` instead.",
-                      FutureWarning)
-        DataDir.__init__(self, path=path, protectedfiles=filenames)
+        warn()
+        DataDir.__init__(self, path=path, protectedpaths=filenames)
 
 
-create_basedatadir = create_datadir
+def create_basedatadir(path, overwrite=False):
+    warn()
+    return create_datadir(path=path, overwrite=overwrite)

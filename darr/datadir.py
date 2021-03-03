@@ -21,14 +21,14 @@ class DataDir(object):
       None, all files in the directory are included. Default: None.
 
     """
-    def __init__(self, path, protectedfiles=None):
+    def __init__(self, path, protectedpaths=None):
         path = Path(path)
         if not path.exists():
             raise OSError(f"'{path}' does not exist")
         self._path = path
-        if protectedfiles is None:
-            protectedfiles = set()
-        self._protectedfiles = set(protectedfiles)
+        if protectedpaths is None:
+            protectedpaths = set()
+        self._protectedpaths = set(protectedpaths)
 
     @property
     def path(self):
@@ -37,7 +37,7 @@ class DataDir(object):
     @property
     def protectedfiles(self):
         """Files that methods will not overwrite"""
-        return self._protectedfiles
+        return self._protectedpaths
 
     @property
     def sha256(self):
@@ -132,7 +132,7 @@ class DataDir(object):
         return self._delete_files(filenames=filenames)
 
     def _check_writeprotected(self, filename, accessmode):
-        if accessmode != 'r' and filename in self._protectedfiles:
+        if accessmode != 'r' and filename in self._protectedpaths:
             raise OSError(f'Cannot modify protected file "{filename}"')
 
     # FIXME overwrite parameter?

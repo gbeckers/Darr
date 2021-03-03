@@ -71,7 +71,7 @@ class Array:
 
     def __init__(self, path, accessmode='r'):
         self._datadir = DataDir(path=path,
-                                protectedfiles=self._protectedfiles)
+                                protectedpaths=self._protectedfiles)
         self._path = self._datadir._path
         self._datapath = self._path / self._datafilename
         self._accessmode = check_accessmode(accessmode)
