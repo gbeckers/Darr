@@ -37,7 +37,7 @@ class DataDir(object):
     @property
     def protectedfiles(self):
         """Files that methods will not overwrite"""
-        return self.protectedfiles
+        return self._protectedfiles
 
     @property
     def sha256(self):
