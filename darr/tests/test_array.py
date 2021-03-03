@@ -295,6 +295,12 @@ class TestArray(DarrTestCase):
         self.assertArrayIdentical(self.tempar[2:4],
                                   np.array([1, 1], dtype=self.tempar.dtype))
 
+    def test_datadirexistence(self):
+        with tempdirfile() as filename:
+            dar = create_array(path=filename, shape=(2,), fill=0,
+                               dtype='int64', overwrite=True)
+            self.assertEqual(filename, dar.datadir.path)
+
     def test_str(self):
         with tempdirfile() as filename:
             dar = create_array(path=filename, shape=(2,), fill=0,

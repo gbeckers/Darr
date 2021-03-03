@@ -117,6 +117,8 @@ class RaggedArrayAttrs(unittest.TestCase):
     def test_size(self):
         self.assertEqual(self.tempar.size, 7)
 
+    def test_datadirexistence(self):
+        self.assertEqual(self.temparpath, self.tempar.datadir.path)
 
 
 class IterAppendRaggedArray(unittest.TestCase):
