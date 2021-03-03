@@ -106,7 +106,9 @@ class Array:
 
     @property
     def datadir(self):
-        """Data directory object with many useful methods"""
+        """Data directory object with many useful methods, such as
+        writing information to text or json files, archiving all data,
+        calculating checksums etc."""
         return self._datadir
 
     @property
