@@ -1,6 +1,13 @@
 Release notes
 =============
 
+Version 0.3.0
+-------------
+- Array and RaggedArray now have a `datadir` attribute instead of being a
+  subclass of BaseDataDir.
+- BasedDataDir renamed to DataDir
+
+
 Version 0.2.2
 -------------
 - fixed bug that sometimes wouldn't allow for deleting a file on Windows

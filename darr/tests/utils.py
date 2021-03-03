@@ -20,6 +20,7 @@ def tempdir(dirname='.', keep=False, report=False):
             if report:
                 print('removed temp dir {}'.format(tempdirname))
 
+# FIXME does not yield a name but a path
 @contextmanager
 def tempdirfile(dirname='.', keep=False, report=False):
     """Yields a file named "tempfile" in a temporary directory which is

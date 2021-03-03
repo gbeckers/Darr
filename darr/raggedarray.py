@@ -10,7 +10,7 @@ from ._version import get_versions
 from .array import Array, MetaData, asarray, \
     check_accessmode, delete_array, create_array, \
     truncate_array
-from .basedatadir import BaseDataDir, create_basedatadir
+from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .readcoderaggedarray import readcode
 from .utils import wrap
@@ -18,7 +18,7 @@ from .utils import wrap
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
            'delete_raggedarray', 'truncate_raggedarray']
 
-class RaggedArray(BaseDataDir):
+class RaggedArray:
     """
     Disk-based sequence of arrays that may have a variable length in maximally
     one dimension.
@@ -29,16 +29,19 @@ class RaggedArray(BaseDataDir):
     _arraydescrfilename = 'arraydescription.json'
     _metadatafilename = 'metadata.json'
     _readmefilename = 'README.txt'
-    _filenames = {_valuesdirname, _indicesdirname,
-                  _readmefilename, _metadatafilename,
-                  _arraydescrfilename} | BaseDataDir._filenames
+    _protectedfiles = {_valuesdirname, _indicesdirname,
+                       _readmefilename, _metadatafilename,
+                       _arraydescrfilename}
     _formatversion = get_versions()['version']
 
     def __init__(self, path, accessmode='r'):
-        BaseDataDir.__init__(self, path=path)
+
+        self._datadir = DataDir(path=path,
+                                protectedpaths=self._protectedfiles)
+        self._path = self._datadir._path
         self._accessmode = check_accessmode(accessmode)
-        self._valuespath = self.path / self._valuesdirname
-        self._indicespath = self.path / self._indicesdirname
+        self._valuespath = self._path / self._valuesdirname
+        self._indicespath = self._path / self._indicesdirname
         self._arraydescrpath = self._path / self._arraydescrfilename
         self._values = Array(self._valuespath, accessmode=self._accessmode)
         self._indices = Array(self._indicespath, accessmode=self._accessmode)
@@ -80,6 +83,13 @@ class RaggedArray(BaseDataDir):
         return tuple(self._values._shape[1:])
 
     @property
+    def datadir(self):
+        """Data directory object with many useful methods, such as
+        writing information to text or json files, archiving all data,
+        calculating checksums etc."""
+        return self._datadir
+
+    @property
     def narrays(self):
         """Numpy data type of the array values.
 
@@ -102,6 +112,11 @@ class RaggedArray(BaseDataDir):
         return self._values.mb + self._indices.mb
 
     @property
+    def path(self):
+        """File system path to array data"""
+        return self._path
+
+    @property
     def size(self):
         """Total number of values in the data array.
 
@@ -120,12 +135,12 @@ class RaggedArray(BaseDataDir):
 
     def _update_readmetxt(self):
         txt = readcodetxt(self)
-        self._write_txt(self._readmefilename, txt, overwrite=True)
+        self._datadir._write_txt(self._readmefilename, txt, overwrite=True)
 
     def _update_arraydescr(self, **kwargs):
         self._arrayinfo.update(kwargs)
-        self._write_jsondict(filename=self._arraydescrfilename,
-                           d=self._arrayinfo, overwrite=True)
+        self._datadir._write_jsondict(filename=self._arraydescrfilename,
+                                      d=self._arrayinfo, overwrite=True)
 
     def _append(self, array):
         size = len(array)
@@ -192,7 +207,7 @@ def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
     path = Path(path)
     if not hasattr(arrayiterable, 'next'):
         arrayiterable = (a for a in arrayiterable)
-    bd = create_basedatadir(path=path, overwrite=overwrite)
+    bd = create_datadir(path=path, overwrite=overwrite)
     firstarray = np.asarray(next(arrayiterable), dtype=dtype)
     dtype = firstarray.dtype
     valuespath = bd.path.joinpath(RaggedArray._valuesdirname)
@@ -341,7 +356,7 @@ def delete_raggedarray(ra):
     if not ra.accessmode == 'r+':
         raise OSError('Darr ragged array is read-only; set accessmode to '
                       '"r+" to change')
-    for fn in ra._filenames:
+    for fn in ra._protectedfiles:
         path = ra.path.joinpath(fn)
         if path.exists() and not path.is_dir():
             path.unlink()

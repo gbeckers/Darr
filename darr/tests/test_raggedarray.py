@@ -5,7 +5,7 @@ import tempfile
 from numpy.testing import assert_equal, assert_array_equal
 from pathlib import Path
 from darr.raggedarray import create_raggedarray, asraggedarray, \
-    delete_raggedarray, truncate_raggedarray, RaggedArray, create_basedatadir
+    delete_raggedarray, truncate_raggedarray, RaggedArray, create_datadir
 from darr.readcoderaggedarray import readcodematlab, readcoder, readcode
 
 from .utils import tempdirfile
@@ -117,6 +117,8 @@ class RaggedArrayAttrs(unittest.TestCase):
     def test_size(self):
         self.assertEqual(self.tempar.size, 7)
 
+    def test_datadirexistence(self):
+        self.assertEqual(self.temparpath, self.tempar.datadir.path)
 
 
 class IterAppendRaggedArray(unittest.TestCase):
@@ -173,7 +175,7 @@ class DeleteRaggedArray(unittest.TestCase):
     def test_donotremovenondarrfiles(self):
         with tempdirfile() as filename:
             dal = create_raggedarray(filename, atom=(2,), accessmode='r+')
-            dal._write_txt('test.txt', text='abc')
+            dal._datadir._write_txt('test.txt', text='abc')
             self.assertRaises(OSError, delete_raggedarray, dal)
 
 class RaggedArrayTruncate(DarrTestCase):
@@ -198,7 +200,7 @@ class RaggedArrayTruncate(DarrTestCase):
 
     def test_donottruncatenondarrdir(self):
         with tempdirfile() as filename:
-            bd = create_basedatadir(filename)
+            bd = create_datadir(filename)
             bd._write_jsondict('test.json', {'a': 1})
             self.assertRaises(TypeError, truncate_raggedarray, filename, 3)
 
