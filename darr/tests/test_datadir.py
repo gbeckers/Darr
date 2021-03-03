@@ -28,7 +28,7 @@ class TestCreateBaseDir(unittest.TestCase):
             create_basedatadir(dirname, overwrite=True)
 
 
-class TestBaseDataDir(unittest.TestCase):
+class TestDataDir(unittest.TestCase):
 
     def test_nonexistingpath(self):
         with self.assertRaises(OSError):
@@ -108,6 +108,15 @@ class TestBaseDataDir(unittest.TestCase):
             bd.write_txt('test2.txt', 'hello')
             bd.delete_files(('test1.txt', 'test2.txt', 'test3.txt'))
 
+    def test_protectedfiles(self):
+        with tempdir() as dirname:
+            bd = DataDir(dirname, protectedfiles=('test.dat',))
+            self.assertEqual(bd.protectedfiles, set(('test.dat',)))
+
+    def test_deleteprotectedfile(self):
+        with tempdir() as dirname:
+            bd = DataDir(dirname, protectedfiles=('test.dat',))
+            self.assertRaises(OSError, bd.delete_files, (('test.dat',)))
 
 
 class TestArchiving(unittest.TestCase):
