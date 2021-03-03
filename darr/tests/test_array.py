@@ -5,7 +5,7 @@ import shutil
 
 import numpy as np
 
-from darr.array import asarray, create_array, create_basedatadir, Array, \
+from darr.array import asarray, create_array, create_datadir, Array, \
     numtypesdescr, truncate_array, delete_array, AppendDataError, \
     numtypedescriptiontxt
 from .utils import tempdir, tempdirfile
@@ -694,7 +694,7 @@ class TruncateData(DarrTestCase):
 
     def test_donottruncatenondarrdir(self):
         with tempdirfile() as filename:
-            bd = create_basedatadir(filename)
+            bd = create_datadir(filename)
             bd._write_jsondict('test.json', {'a': 1})
             self.assertRaises(TypeError, truncate_array, filename, 3)
 
@@ -745,7 +745,7 @@ class DeleteArray(DarrTestCase):
 
     def test_donotdeletenondarrdir(self):
         with tempdirfile() as filename:
-            bd = create_basedatadir(filename, overwrite=True)
+            bd = create_datadir(filename, overwrite=True)
             self.assertRaises(TypeError, delete_array, filename)
             bd._write_jsondict('test.json', {'a': 1})
             self.assertRaises(TypeError, delete_array, filename)

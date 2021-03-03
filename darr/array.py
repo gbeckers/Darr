@@ -19,7 +19,7 @@ import numpy as np
 from contextlib import contextmanager
 from pathlib import Path
 
-from .datadir import DataDir, create_basedatadir
+from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode
@@ -810,7 +810,7 @@ def asarray(path, array, dtype=None, accessmode='r',
         raise TypeError(f"darr cannot have type "
                         f"'{firstchunk.dtype.name}'")
     dtype = firstchunk.dtype
-    bd = create_basedatadir(path=path, overwrite=overwrite)
+    bd = create_datadir(path=path, overwrite=overwrite)
     datapath = path.joinpath(Array._datafilename)
     arraylen = firstchunk.shape[0]
     with open(datapath, 'wb') as df:

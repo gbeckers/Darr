@@ -203,7 +203,7 @@ class DataDir(object):
         return Path(filepath)
 
 
-def create_basedatadir(path, overwrite=False):
+def create_datadir(path, overwrite=False):
     """
     Parameters
     ----------

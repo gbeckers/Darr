@@ -10,7 +10,7 @@ from ._version import get_versions
 from .array import Array, MetaData, asarray, \
     check_accessmode, delete_array, create_array, \
     truncate_array
-from .datadir import DataDir, create_basedatadir
+from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .readcoderaggedarray import readcode
 from .utils import wrap
@@ -207,7 +207,7 @@ def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
     path = Path(path)
     if not hasattr(arrayiterable, 'next'):
         arrayiterable = (a for a in arrayiterable)
-    bd = create_basedatadir(path=path, overwrite=overwrite)
+    bd = create_datadir(path=path, overwrite=overwrite)
     firstarray = np.asarray(next(arrayiterable), dtype=dtype)
     dtype = firstarray.dtype
     valuespath = bd.path.joinpath(RaggedArray._valuesdirname)
