@@ -1,7 +1,7 @@
 Release notes
 =============
 
-Version 0.3.0
+Version 0.3.1
 -------------
 - Array and RaggedArray now have a `datadir` attribute instead of being a
   subclass of BaseDataDir.
