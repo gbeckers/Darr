@@ -7,16 +7,16 @@ To run the test suite:
 
     >>> import darr as da
     >>> da.test()
-    ..........................................................................................................................................................................................
+    ..................................................................................................................................................................................................
     ----------------------------------------------------------------------
-    Ran 186 tests in 23.077s
+    Ran 194 tests in 13.130s
 
     OK
     <unittest.runner.TextTestResult run=178 errors=0 failures=0>
 
     >>>
 
-Note that tests require the creation and delete of temporary files. In some
+Note that tests require the creation and deletion of temporary files. In some
 operation systems you cannot delete a file if another process accesses it,
 which may be the case when files are synchronized by something like Dropbox or
 read by a virus scanner. If, so you may get errors when testing that are not
