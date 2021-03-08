@@ -15,3 +15,9 @@ To run the test suite:
     <unittest.runner.TextTestResult run=178 errors=0 failures=0>
 
     >>>
+
+Note that tests require the creation and delete of temporary files. In some
+operation systems you cannot delete a file if another process accesses it,
+which may be the case when files are synchronized by something like Dropbox or
+read by a virus scanner. If, so you may get errors when testing that are not
+related to Darr, but to other programs that are accessing Darr files.

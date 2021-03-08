@@ -1,6 +1,3 @@
-# EXPERIMENTAL! This code is still experimental, and is probably going to
-# change
-
 from pathlib import Path
 from contextlib import contextmanager
 
