@@ -39,7 +39,7 @@ __all__ = ['Array', 'asarray', 'create_array', 'delete_array',
 class AppendDataError(Exception):
     pass
 
-#FIXME do not subclass from BaseDataDir, instead make this an attribute
+#TODO __eq__ method
 class Array:
     """Instantiate a Darr array from disk.
 

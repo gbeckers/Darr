@@ -1,5 +1,6 @@
 import json
 import tarfile
+import shutil
 from pathlib import Path
 from contextlib import contextmanager
 
@@ -204,6 +205,15 @@ class DataDir(object):
         with tarfile.open(filepath, f"{filemode}:{compressiontype}") as tf:
             tf.add(self.path)
         return Path(filepath)
+
+    # TODO tests for this function
+    def copy(self, dst):
+        if Path(dst).exists():
+            raise OSError(f"'{dst}' already exist")
+        p = shutil.copytree(self.path, dst, symlinks=False, ignore=None,
+                            ignore_dangling_symlinks=False,
+                            dirs_exist_ok=False)
+        return DataDir(p)
 
 
 def create_datadir(path, overwrite=False):

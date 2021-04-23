@@ -1,6 +1,11 @@
 Release notes
 =============
 
+Version 0.3.2
+-------------
+- copy function DataDir
+
+
 Version 0.3.1
 -------------
 - Array and RaggedArray now have a `datadir` attribute instead of being a
