@@ -22,14 +22,14 @@ def check_accessmode(accessmode, validmodes=('r', 'r+'), makebinary=False):
 
 
 def write_jsonfile(path, data, sort_keys=True, indent=4, ensure_ascii=True,
-                   overwrite=False):
+                   skipkeys=False, overwrite=False):
     path = Path(path)
     if path.exists() and not overwrite:
         raise OSError(f"'{path}' exists, use 'overwrite' argument")
     try:
-        json_string = json.dumps(data, sort_keys=sort_keys,
+        json_string = json.dumps(data, sort_keys=sort_keys, skipkeys=skipkeys,
                                  ensure_ascii=ensure_ascii, indent=indent)
-    except Exception:
+    except TypeError:
         s = f"Unable to serialize the metadata to JSON: {data}.\n" \
             f"Use character strings as dictionary keys, and only " \
             f"character strings, numbers, booleans, None, lists, " \

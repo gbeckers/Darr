@@ -53,17 +53,19 @@ class DataDir(object):
         with open(path, 'r') as fp:
             return json.load(fp)
 
-    def _write_jsonfile(self, filename, data, sort_keys=True, indent=4,
-                        overwrite=False):
+    def _write_jsonfile(self, filename, data, sort_keys=True,
+                        skipkeys=False, indent=4, overwrite=False):
         path = self._path.joinpath(filename)
-        write_jsonfile(path, data=data, sort_keys=sort_keys, indent=indent,
+        write_jsonfile(path, data=data, sort_keys=sort_keys,
+                       skipkeys=skipkeys, indent=indent,
                        ensure_ascii=True, overwrite=overwrite)
 
-    def write_jsonfile(self, filename, data, sort_keys=True, indent=4,
-                       overwrite=False):
+    def write_jsonfile(self, filename, data, sort_keys=True,
+                       skipkeys=False, indent=4, overwrite=False):
         self._check_writeprotected(filename=filename, accessmode='w')
         self._write_jsonfile(filename=filename, data=data,
-                             sort_keys=sort_keys, indent=indent,
+                             sort_keys=sort_keys, skipkeys=skipkeys,
+                             indent=indent,
                              overwrite=overwrite)
 
     def read_jsondict(self, filename, requiredkeys=None):
@@ -78,15 +80,15 @@ class DataDir(object):
                 raise ValueError(f"required keys {difference} not present")
         return d
 
-    def _write_jsondict(self, filename, d, overwrite=False):
+    def _write_jsondict(self, filename, d, skipkeys=False, overwrite=False):
         if not isinstance(d, dict):
             raise TypeError('json data must be a dictionary')
         return self._write_jsonfile(filename=filename, data=d,
-                                    overwrite=overwrite)
+                                    skipkeys=skipkeys, overwrite=overwrite)
 
-    def write_jsondict(self, filename, d, overwrite=False):
+    def write_jsondict(self, filename, d, skipkeys=False, overwrite=False):
         self._check_writeprotected(filename=filename, accessmode='w')
-        return self._write_jsondict(filename=filename, d=d,
+        return self._write_jsondict(filename=filename, d=d, skipkeys=skipkeys,
                                     overwrite=overwrite)
 
     def _update_jsondict(self, filename, *args, **kwargs):
