@@ -4,6 +4,7 @@ Release notes
 Version 0.3.2
 -------------
 - copy function DataDir
+- add skipkeys argument for saving json data in DataDir
 
 
 Version 0.3.1
