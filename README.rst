@@ -68,9 +68,11 @@ Con's:
 -  **No compression**, although compression for archiving purposes is
    supported.
 -  **Inefficient (storage-wise) for very small arrays**. If you have a
-   zillion small arrays, and storage space is a concern, use other
-   approaches, unless you can concatenate them in a ragged array, which Darr
-   does support (experimentally).
+   zillion small and variable multi-dimensional arrays, and storage space is a
+   concern, use other approaches. However, if your zillion arrays are
+   1-dimensional, or they are multi-dimensional but their length varies only
+   in one dimension, you can store them as a ragged array in Darr (still
+   experimental).
 
 Installation
 ------------
