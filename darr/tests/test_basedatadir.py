@@ -2,7 +2,7 @@
 
 import unittest
 from darr.basedatadir import BaseDataDir, create_basedatadir
-from .utils import tempdir
+from darr.utils import tempdir
 
 
 class TestCreateBaseDataDir(unittest.TestCase):

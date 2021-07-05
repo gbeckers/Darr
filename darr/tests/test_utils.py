@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 from darr.utils import fit_frames, write_jsonfile, product
-from .utils import tempdir, tempdirfile
+from darr.utils import tempdir, tempdirfile
 
 
 class Product(unittest.TestCase):

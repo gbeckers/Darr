@@ -2,8 +2,7 @@ import unittest
 from contextlib import contextmanager
 from pathlib import Path
 from darr.datadir import DataDir, create_datadir
-from darr.utils import filesha256
-from .utils import tempdir
+from darr.utils import filesha256, tempdir
 
 @contextmanager
 def create_testbasedatadir(filename='test.json', datadict=None):

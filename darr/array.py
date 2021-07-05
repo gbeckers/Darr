@@ -23,7 +23,7 @@ from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode
-from .utils import fit_frames, wrap, check_accessmode, product
+from .utils import fit_frames, wrap, check_accessmode, product, tempdirfile
 from ._version import get_versions
 
 
@@ -32,8 +32,8 @@ from ._version import get_versions
 # - All text is written in UTF-8. This is compatible with ASCII, widely used
 #   and capable of encoding all 1,112,064 valid code points in Unicode
 
-__all__ = ['Array', 'asarray', 'create_array', 'delete_array',
-           'truncate_array']
+__all__ = ['Array', 'asarray', 'create_array', 'create_temparray',
+           'delete_array', 'truncate_array']
 
 
 class AppendDataError(Exception):
@@ -932,6 +932,16 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
                          fillfunc=fillfunc, chunklen=chunklen)
     return asarray(path=path, array=gen, accessmode=accessmode,
                    metadata=metadata, overwrite=overwrite)
+
+@contextmanager
+def create_temparray(shape, dtype='float64', fill=None, fillfunc=None,
+                     accessmode='r+', chunklen=None, metadata=None,
+                     report=True, overwrite=False):
+    with tempdirfile(report=report) as path:
+        yield create_array(path=path, shape=shape, dtype=dtype, fill=fill,
+                           fillfunc=fillfunc, accessmode=accessmode,
+                           chunklen=chunklen, metadata=metadata,
+                           overwrite=overwrite)
 
 
 def delete_array(da):

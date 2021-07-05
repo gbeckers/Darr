@@ -4,6 +4,10 @@ import json
 from pathlib import Path
 from functools import reduce
 from operator import mul
+import os
+import shutil
+import tempfile as tf
+from contextlib import contextmanager
 
 # believe it or not Python <3.8 does not has such a function
 # and numpy.product returns int32 by default (!) causing disaster
@@ -91,3 +95,54 @@ def filesha256(filepath, blocksize=2 ** 20):
 
 def wrap(s):
     return textwrap.fill(s, width=78, replace_whitespace=False)
+
+
+
+@contextmanager
+def tempdir(dirname='.', keep=False, report=False):
+    """Yields a temporary directory which is removed when context is closed."""
+    try:
+        tempdirname = tf.mkdtemp(dir=dirname)
+        if report:
+            print('created tempdir {}'.format(tempdirname))
+        yield Path(tempdirname)
+    except:
+        raise
+    finally:
+        if not keep:
+            shutil.rmtree(tempdirname)
+            if report:
+                print('removed temp dir {}'.format(tempdirname))
+
+# FIXME does not yield a name but a path
+@contextmanager
+def tempdirfile(dirname=None, keep=False, report=False):
+    """Yields a file named "tempfile" in a temporary directory which is
+    removed when context is closed."""
+    tempdirname = None
+    tempfilename = None
+    try:
+        tempdirname = tf.mkdtemp(dir=dirname)
+        if report:
+            print(f'created temporary directory {tempdirname}')
+        tempfilename = Path(tempdirname) / "tempfile"
+        yield tempfilename
+    except:
+        raise
+    finally:
+        if not keep:
+            if tempfilename is not None:
+                for root, dirs, files in os.walk(tempfilename):
+                    for file in files:
+                        os.remove(Path(root) / file)
+                for root, dirs, files in os.walk(tempfilename):
+                    for dir in dirs:
+                        os.rmdir(Path(root) / dir)
+                try:
+                    os.rmdir(tempfilename)
+                except FileNotFoundError:
+                     pass
+            if tempdirname is not None:
+                os.rmdir(tempdirname)
+            if report:
+                print('removed tempdir {}'.format(tempdirname))

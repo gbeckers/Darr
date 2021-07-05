@@ -8,7 +8,7 @@ import numpy as np
 from darr.array import asarray, create_array, create_datadir, Array, \
     numtypesdescr, truncate_array, delete_array, AppendDataError, \
     numtypedescriptiontxt
-from .utils import tempdir, tempdirfile
+from darr.utils import tempdir, tempdirfile
 
 # TODO clean up overwrite parameters, not necessary anymore
 
@@ -271,8 +271,8 @@ class CreateDiskArray(DarrTestCase):
 class TestArray(DarrTestCase):
 
     def setUp(self):
-        self.temparpath = tempfile.mkdtemp()
-        self.tempnonarpath = tempfile.mkdtemp()
+        self.temparpath = tempfile.mkdtemp(dir=None)
+        self.tempnonarpath = tempfile.mkdtemp(dir=None)
         self.tempar = create_array(path=self.temparpath, shape=(12,),
                                    dtype='int64', metadata={'a': 1},
                                    overwrite=True)

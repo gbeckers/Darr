@@ -8,7 +8,7 @@ from darr.raggedarray import create_raggedarray, asraggedarray, \
     delete_raggedarray, truncate_raggedarray, RaggedArray, create_datadir
 from darr.readcoderaggedarray import readcodematlab, readcoder, readcode
 
-from .utils import tempdirfile
+from darr.utils import tempdirfile
 from .test_array import DarrTestCase
 
 
