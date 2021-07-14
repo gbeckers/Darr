@@ -117,7 +117,7 @@ Beckers
    :target: https://travis-ci.com/gbeckers/Darr?branch=master
 .. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
    :target: https://ci.appveyor.com/project/gbeckers/darr
-.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.3.1-orange.svg
+.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.3.2-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Conda Forge| image:: https://anaconda.org/conda-forge/darr/badges/version.svg
    :target: https://anaconda.org/conda-forge/darr
