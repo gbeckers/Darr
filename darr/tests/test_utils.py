@@ -1,4 +1,5 @@
 import unittest
+import json
 import numpy as np
 from darr.utils import fit_frames, write_jsonfile, product
 from darr.utils import tempdir, tempdirfile
@@ -32,6 +33,35 @@ class WriteJsonFile(unittest.TestCase):
         with tempdirfile() as filename:
             self.assertRaises(TypeError, write_jsonfile, path=filename,
                               data=unittest, overwrite=True)
+
+    def test_acceptnumpyobjects(self):
+        with tempdirfile() as filename:
+            d1 = {'a': np.int8(1),
+                  'b': np.int16(1),
+                  'c': np.int32(1),
+                  'd': np.int64(1),
+                  'e': np.float16(1),
+                  'f': np.float32(1),
+                  'g': np.float64(1),
+                  'h': np.array([1,2], np.int32),
+                  'i': np.array([1, 2], np.int64),
+                  'j': np.array([1, 2], np.float32),
+                  'k': np.array([1, 2], np.float64),
+                  }
+            write_jsonfile(path=filename, data=d1, overwrite=True)
+            with open(filename, 'r') as fp:
+                d2 = json.load(fp)
+                for k in 'abcd':
+                    self.assertEqual(d2[k], 1)
+                for k in 'efg':
+                    self.assertEqual(d2[k], 1.0)
+                for k in 'hi':
+                    self.assertEqual(d2[k], [1, 2])
+                for k in 'jk':
+                    self.assertEqual(d2[k], [1., 2.])
+
+
+
 
 class FitChunks(unittest.TestCase):
 

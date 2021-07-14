@@ -1,6 +1,7 @@
 import hashlib
 import textwrap
 import json
+import numpy as np
 from pathlib import Path
 from functools import reduce
 from operator import mul
@@ -25,14 +26,37 @@ def check_accessmode(accessmode, validmodes=('r', 'r+'), makebinary=False):
     return accessmode
 
 
+class DDJSONEncoder(json.JSONEncoder):
+    """This JSON encoder fixes the problem that numpy objects aren't
+    serialized to JSON with the json library default JSONEncode. Since data
+    often involves numpy, and many scientific libraries produce numpy objects,
+    we convert these silently to something that is a Python primitive type
+
+    """
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif hasattr(obj, 'decode'):
+            return obj.decode("utf-8")
+        else:
+            return super(DDJSONEncoder, self).default(obj)
+
+
 def write_jsonfile(path, data, sort_keys=True, indent=4, ensure_ascii=True,
-                   skipkeys=False, overwrite=False):
+                   skipkeys=False, cls=None, overwrite=False):
     path = Path(path)
+    if cls is None:
+        cls = DDJSONEncoder
     if path.exists() and not overwrite:
         raise OSError(f"'{path}' exists, use 'overwrite' argument")
     try:
         json_string = json.dumps(data, sort_keys=sort_keys, skipkeys=skipkeys,
-                                 ensure_ascii=ensure_ascii, indent=indent)
+                                 ensure_ascii=ensure_ascii, indent=indent,
+                                 cls=cls)
     except TypeError:
         s = f"Unable to serialize the metadata to JSON: {data}.\n" \
             f"Use character strings as dictionary keys, and only " \
@@ -115,12 +139,43 @@ def tempdir(dirname='.', keep=False, report=False):
                 print('removed temp dir {}'.format(tempdirname))
 
 # FIXME does not yield a name but a path
+# @contextmanager
+# def tempdirfile(dirname=None, keep=False, report=False):
+#     """Yields a file named "tempfile" in a temporary directory which is
+#     removed when context is closed."""
+#     tempdirname = None
+#     tempfilename = None
+#     try:
+#         tempdirname = tf.mkdtemp(dir=dirname)
+#         if report:
+#             print(f'created temporary directory {tempdirname}')
+#         tempfilename = Path(tempdirname) / "tempfile"
+#         yield tempfilename
+#     except:
+#         raise
+#     finally:
+#         if not keep:
+#             if tempfilename is not None:
+#                 for root, dirs, files in os.walk(tempfilename):
+#                     for file in files:
+#                         os.remove(Path(root) / file)
+#                 for root, dirs, files in os.walk(tempfilename):
+#                     for dir in dirs:
+#                         os.rmdir(Path(root) / dir)
+#                 try:
+#                     os.rmdir(tempfilename)
+#                 except FileNotFoundError:
+#                      pass
+#             if tempdirname is not None:
+#                 os.rmdir(tempdirname)
+#             if report:
+#                 print('removed tempdir {}'.format(tempdirname))
+
 @contextmanager
 def tempdirfile(dirname=None, keep=False, report=False):
     """Yields a file named "tempfile" in a temporary directory which is
     removed when context is closed."""
     tempdirname = None
-    tempfilename = None
     try:
         tempdirname = tf.mkdtemp(dir=dirname)
         if report:
@@ -131,18 +186,10 @@ def tempdirfile(dirname=None, keep=False, report=False):
         raise
     finally:
         if not keep:
-            if tempfilename is not None:
-                for root, dirs, files in os.walk(tempfilename):
-                    for file in files:
-                        os.remove(Path(root) / file)
-                for root, dirs, files in os.walk(tempfilename):
-                    for dir in dirs:
-                        os.rmdir(Path(root) / dir)
-                try:
-                    os.rmdir(tempfilename)
-                except FileNotFoundError:
-                     pass
-            if tempdirname is not None:
-                os.rmdir(tempdirname)
-            if report:
-                print('removed tempdir {}'.format(tempdirname))
+            shutil.rmtree(tempdirname)
+        if report:
+            if keep:
+                verb = 'kept'
+            else:
+                verb = 'removed'
+            print(f'{verb} tempdir {tempdirname}')

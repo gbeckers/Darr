@@ -1,6 +1,7 @@
 import json
 import tarfile
 import shutil
+import numpy as np
 from pathlib import Path
 from contextlib import contextmanager
 
@@ -54,11 +55,11 @@ class DataDir(object):
             return json.load(fp)
 
     def _write_jsonfile(self, filename, data, sort_keys=True,
-                        skipkeys=False, indent=4, overwrite=False):
+                        skipkeys=False, indent=4, cls=None, overwrite=False):
         path = self._path.joinpath(filename)
         write_jsonfile(path, data=data, sort_keys=sort_keys,
                        skipkeys=skipkeys, indent=indent,
-                       ensure_ascii=True, overwrite=overwrite)
+                       ensure_ascii=True, cls=cls, overwrite=overwrite)
 
     def write_jsonfile(self, filename, data, sort_keys=True,
                        skipkeys=False, indent=4, overwrite=False):
@@ -80,16 +81,19 @@ class DataDir(object):
                 raise ValueError(f"required keys {difference} not present")
         return d
 
-    def _write_jsondict(self, filename, d, skipkeys=False, overwrite=False):
+    def _write_jsondict(self, filename, d, skipkeys=False,
+                        cls=None, overwrite=False):
         if not isinstance(d, dict):
             raise TypeError('json data must be a dictionary')
         return self._write_jsonfile(filename=filename, data=d,
-                                    skipkeys=skipkeys, overwrite=overwrite)
+                                    skipkeys=skipkeys, cls=cls,
+                                    overwrite=overwrite)
 
-    def write_jsondict(self, filename, d, skipkeys=False, overwrite=False):
+    def write_jsondict(self, filename, d, skipkeys=False,
+                       cls=None, overwrite=False):
         self._check_writeprotected(filename=filename, accessmode='w')
         return self._write_jsondict(filename=filename, d=d, skipkeys=skipkeys,
-                                    overwrite=overwrite)
+                                    cls=cls, overwrite=overwrite)
 
     def _update_jsondict(self, filename, *args, **kwargs):
         d2 = self.read_jsondict(filename)
