@@ -113,8 +113,8 @@ If Darr is not exactly what you are looking for, have a look at these projects:
 Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2021, Gabriël
 Beckers
 
-.. |Travis Status| image:: https://travis-ci.org/gbeckers/Darr.svg?branch=master
-   :target: https://travis-ci.org/gbeckers/Darr?branch=master
+.. |Travis Status| image:: https://travis-ci.com/gbeckers/Darr.svg?branch=master
+   :target: https://travis-ci.com/gbeckers/Darr?branch=master
 .. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
    :target: https://ci.appveyor.com/project/gbeckers/darr
 .. |PyPi version| image:: https://img.shields.io/badge/pypi-0.3.1-orange.svg
