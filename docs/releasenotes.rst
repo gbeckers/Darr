@@ -5,6 +5,7 @@ Version 0.3.2
 -------------
 - copy function DataDir
 - add skipkeys argument for saving json data in DataDir
+- improve json handling by converting numpy objects automatically
 
 
 Version 0.3.1
