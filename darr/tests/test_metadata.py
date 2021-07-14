@@ -81,5 +81,9 @@ class MetaData(DarrTestCase):
         self.assertTupleEqual((('fs', 20000), ('x', 33.3)),
                               tuple(self.tempar.metadata.items()))
 
+    def test_contains(self):
+        self.assertTrue('fs' in self.tempar.metadata)
+        self.assertFalse('a' in self.tempar.metadata)
+
 if __name__ == '__main__':
     unittest.main()
