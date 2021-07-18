@@ -18,7 +18,7 @@ different environments. No need to export anything or to provide much
 explanation, and no need to assume that a specific tool will be available.
 
 Tool-independent and easy access to data is in line with good scientific
-practice as it promotes wide and long-term availability, to others but also
+practice as it promotes wide and long-term availability, to others and
 to yourself. More rationale for this approach is provided
 `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
