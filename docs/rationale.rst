@@ -16,10 +16,10 @@ special libraries or having to look up things. You also want to share data
 without any hassle with your colleagues, who work with, say, R
 instead of Python. Sometimes you want to try out an algorithm that someone
 wrote in Matlab, and you do not want to have to start exporting large data
-sets into some different format. These things should be simple and painless.
-Unfortunately they often are not (see this `blog by Cyrille Rossant
-<http://cyrille.rossant.net/moving-away-hdf5/>`__ that echos my own
-experiences), which is why I wrote Darr.
+sets into some different format. These things often could be, and should be
+simple and painless. Unfortunately they often are not (see this `blog by
+Cyrille Rossant <http://cyrille.rossant.net/moving-away-hdf5/>`__ that echos
+my own experiences), which is why I wrote Darr.
 
 The **first objective of Darr** is to help you save and use numeric data
 arrays from within Python in a way that makes them trivially easy to use in

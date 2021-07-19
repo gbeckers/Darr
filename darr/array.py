@@ -1095,11 +1095,12 @@ def numtypedescriptiontxt(da):
              "open and simple format and that is easy to access in most "\
              "analysis environments. In Python, you can use the Darr "\
              "library (https://pypi.org/project/darr/), which was used to "\
-             "create the data. If Darr is not available, it is "\
-             "straightforward to access the data using the information "\
-             "below, which includes code for a number of popular platforms.")  + "\n\n\n"
+             "create the data. Alternatively, to access the data in Python "
+             "or other environments directly, use the information below, "\
+             "which includes code for a number of popular platforms.")  + "\n\n\n"
     s+= f"Data format\n===========\n\n"
-    s += wrap("The file 'arrayvalues.bin' contains a numeric array in the "
+    s += wrap("The file 'arrayvalues.bin' contains the raw binary values of "
+              "the numeric array, without header information, in the "
               "following format:") + "\n\n"
     s +=f"  Numeric type: {typedescr}\n" \
         f"  Byte order: {endianness} ({endiannessdescr})\n"
@@ -1108,12 +1109,9 @@ def numtypedescriptiontxt(da):
     else:
         s += f"  Array dimensions: {shape}\n"
     s += f"  Array order layout:  {arrayorder} ({arrayorderdescr})\n\n"
-    s += wrap("The file only contains the raw binary values, without header "
-              "information.") + "\n\n"
-    s += wrap("Format details are also stored in json format in the separate "
-              "UTF-8 text file, 'arraydescription.json' to facilitate "
-              "automatic reading by a program.") + "\n\n"
+    s += wrap("These details are also stored in JSON format in the separate "
+              "UTF-8 text file, 'arraydescription.json'.") + "\n\n"
     if len(da.metadata) > 0:
-        s += wrap("The file 'metadata.json' contains metadata in json UTF-8 "\
+        s += wrap("The file 'metadata.json' contains metadata in JSON UTF-8 "\
                   "text format.") + "\n\n\n"
     return s
