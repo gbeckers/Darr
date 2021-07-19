@@ -192,4 +192,4 @@ def tempdirfile(dirname=None, keep=False, report=False):
                 verb = 'kept'
             else:
                 verb = 'removed'
-            print(f'{verb} tempdir {tempdirname}')
+            print(f'{verb} temporary directory {tempdirname}')

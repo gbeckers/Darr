@@ -937,6 +937,67 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
 def create_temparray(shape, dtype='float64', fill=None, fillfunc=None,
                      accessmode='r+', chunklen=None, metadata=None,
                      report=True, overwrite=False):
+    """Creates a temporary `darr array` that is deleted automatically after
+    use.
+
+    Parameters
+    ----------
+    shape : int ot sequence of ints
+        Shape of the `darr`.
+    dtype : dtype, optional
+        The type of the `darr`. Default is 'float64'
+    fill : number, optional
+        The value used to fill the array with. Default is `None`, which will
+        lead to the array being filled with zeros.
+    fillfunc : function, optional
+        A function that generates the fill values, potentially on the basis of
+        the index numbers of the first axis of the array. This function should
+        only have one argument, which will be automatically provided during
+        filling and which represents the index numbers along the first axis for
+        all dimensions (see example below). If `fillfunc` is provided, `fill`
+        should be `None`.  And vice versa. Default is None.
+    accessmode : <`r`, `r+`>, optional
+        File access mode of the darr data. `r` means real-only, `r+`
+        means read-write, i.e. values can be changed. Default `r`.
+    chunklen: <int, None>
+        The length of chunks (along first axis) that are written during
+        creation. If None, it is chosen so that chunks are 10 Mb in total size.
+    metadata: {None, dict}
+        Dictionary with metadata to be saved in a separate JSON file. Default
+        None
+    report: bool
+        Prints info on the path of the array when it is created, and when it
+        is deleted. This is handy in case something goes wrong, and you need
+        to delete the array by hand.
+    overwrite: <True, False>, optional
+        Overwrites existing darr data if it exists. Note that a darr
+        paths is a directory. If that directory contains additional files,
+        these will not be removed and an OSError is raised.
+        Default is `False`.
+
+    Returns
+    -------
+    Array
+        A Darr `array` instance.
+
+    See Also
+    --------
+    create_array : create a non-temporary darr array.
+
+    Examples
+    --------
+    >>> import darr
+    >>> import numpy as np
+    >>> with darr.create_temparray(shape=(5,2)) as a:
+        a[:] = 3
+        b = np.product(a)
+    created temporary directory C:\Users\Gabriel\AppData\Local\Temp\tmpc8z0alnh
+    removed temporary directory C:\Users\Gabriel\AppData\Local\Temp\tmpc8z0alnh
+
+    >>> b
+        59049.0
+
+    """
     with tempdirfile(report=report) as path:
         yield create_array(path=path, shape=shape, dtype=dtype, fill=fill,
                            fillfunc=fillfunc, accessmode=accessmode,
