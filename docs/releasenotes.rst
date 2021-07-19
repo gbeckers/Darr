@@ -5,6 +5,8 @@ Version 0.3.3
 -------------
 - create temporary arrays that are deleted after use in context
 - add readcode methods to Array and RaggedArray, to produce code strings
+- improved matlab/octave read code RaggedArray (now based on anonymous
+  function).
 
 
 Version 0.3.2
