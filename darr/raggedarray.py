@@ -9,7 +9,7 @@ from .array import Array, MetaData, asarray, \
     truncate_array
 from .datadir import DataDir, create_datadir
 from .metadata import MetaData
-from .readcoderaggedarray import readcode
+from .readcoderaggedarray import readcode, readcodefunc
 from .utils import wrap
 
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
@@ -203,6 +203,41 @@ class RaggedArray:
         self._update_readmetxt()
         self._update_arraydescr(len=len(self._indices),
                                 size=self._values.size)
+
+    def readcode(self, language):
+        """Generate code to read the array in a different language.
+
+        Note that this does not include reading the metadata, which is just
+        based on a text file in JSON format.
+
+        Parameter
+        ---------
+        language: str
+            One of the languages that are supported. Choose from:
+            'matlab', 'numpymemmap', 'R'.
+
+        Example
+        -------
+        >>> import darr
+        >>> a = darr.asraggedarray('test.darr', [[1],[2,3],[4,5,6],[7,8,9,10]], overwrite=True)
+        >>> print(a.readcode('matlab'))
+        fileid = fopen('indices/arrayvalues.bin');
+        i = fread(fileid, [2, 4], '*int64', 'ieee-le');
+        fclose(fileid);
+        fileid = fopen('values/arrayvalues.bin');
+        v = fread(fileid, 10, '*int32', 'ieee-le');
+        fclose(fileid);
+        % example to read third subarray
+        startindex = i(1,3) + 1;  % matlab starts counting from 1
+        endindex = i(2,3);  % matlab has inclusive end index
+        a = v(startindex:endindex);
+
+        """
+        if language not in readcodefunc.keys():
+            raise ValueError(f'Language "{language}" not supported, choose '
+                             f'from {readcodefunc.keys()}')
+        d = self._arrayinfo
+        return readcodefunc[language](self)
 
 
 # FIXME empty arrayiterable

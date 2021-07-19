@@ -66,10 +66,13 @@ def readcodematlab(dra, varname='a'):
         j, position = 2, 'second'
     else:
         j, position = 1, 'first'
-    rca = f'# example to read {position} subarray\n' \
-          f'startindex = i(1,{j}) + 1;  # matlab starts counting from 1\n' \
-          f'endindex = i(2,{j});  # matlab has inclusive end index\n' \
-          f'{varname} = v(:,startindex:endindex);'
+    rca = f'% example to read {position} subarray\n' \
+          f'startindex = i(1,{j}) + 1;  % matlab starts counting from 1\n' \
+          f'endindex = i(2,{j});  % matlab has inclusive end index\n'
+    if len(dra._arrayinfo['atom']) == 0:
+          rca += f'{varname} = v(startindex:endindex);'
+    else:
+          rca += f'{varname} = v(:,startindex:endindex);'
     if (rci is None) or (rcv is None):
         return None
     else:

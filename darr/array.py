@@ -22,7 +22,7 @@ from pathlib import Path
 from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
-from .readcodearray import readcode
+from .readcodearray import readcode, readcodefunc
 from .utils import fit_frames, wrap, check_accessmode, product, tempdirfile
 from ._version import get_versions
 
@@ -631,6 +631,36 @@ class Array:
         return asarray(path=path, array=self, dtype=dtype,
                        accessmode=accessmode, metadata=metadata,
                        chunklen=chunklen, overwrite=overwrite)
+
+    def readcode(self, language):
+        """Generate code to read the array in a different language.
+
+        Note that this does not include reading the metadata, which is just
+        based on a text file in JSON format.
+        
+        Parameter
+        ---------
+        language: str
+            One of the languages that are supported. Choose from:
+            'darr', 'idl', 'julia_ver0', 'julia_ver1', 'mathematica',
+            'matlab', 'maple', 'numpy', 'numpymemmap', 'R'.
+        Example
+        -------
+        >>> import darr
+        >>> a = darr.asarray('test.darr', [[1,2,3],[4,5,6]])
+        >>> print(a.readcode('matlab'))
+        fileid = fopen('arrayvalues.bin');
+        a = fread(fileid, [3, 2], '*int32', 'ieee-le');
+        fclose(fileid);
+
+        """
+        if language not in readcodefunc.keys():
+            raise ValueError(f'Language "{language}" not supported, choose '
+                             f'from {readcodefunc.keys()}')
+        d = self._arrayinfo
+        return readcodefunc[language](numtype=d['numtype'],
+                                      shape=d['shape'],
+                                      endianness=d['byteorder'])
 
 
 def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
