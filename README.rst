@@ -92,6 +92,12 @@ Documentation
 -------------
 See the `documentation <http://darr.readthedocs.io/>`_ for more information.
 
+Contributing
+------------
+Any help / suggestions / ideas / contributions are welcome and very much
+appreciated. For any comment, question, or error, please open an issue or
+propose a pull request.
+
 
 Other interesting projects
 --------------------------
