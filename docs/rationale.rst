@@ -6,8 +6,8 @@ advantages they offer go hand in hand with complexity and dependence on
 external libraries, or on specific knowledge that is not included with the
 data. This is necessary and tolerable in specific use cases. Yet, it can be
 a hindrance when sharing data with other people who work with different
-tools, or even when you want to use your own data in a different
-analysis environment.
+tools, or even when you want to use explore your own data different
+ways.
 
 In many cases life as a scientist is a lot easier if data is stored in a way
 that is simple and self-explanatory. You want to be able to use the data
@@ -19,7 +19,7 @@ wrote in Matlab, and you do not want to have to start exporting large data
 sets into some different format. These things often could be, and should be
 simple and painless. Unfortunately they often are not (see this `blog by
 Cyrille Rossant <http://cyrille.rossant.net/moving-away-hdf5/>`__ that echos
-my own experiences), which is why I wrote Darr.
+my own experiences), which is why Darr was created.
 
 The **first objective of Darr** is to help you save and use numeric data
 arrays from within Python in a way that makes them trivially easy to use in
