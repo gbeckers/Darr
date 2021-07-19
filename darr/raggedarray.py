@@ -273,15 +273,17 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
     ra._update_arraydescr(len=0, size=0)
     return RaggedArray(ra.path, accessmode=accessmode)
 
-
+# TODO, simplify explanation if subarrays are 1-dimensional
+# TODO add readcode for more languages
 readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
             wrap('====================================') + '\n\n' + \
-            wrap('This directory is a data store for a numeric ragged array, '
-                 'which is a sequence of arrays in which one dimension varies '
-                 'in length. On disk, these arrays are concatenated along '
-                 'their variable dimension. The easiest way to access the '
-                 'data is to use the Darr library '
-                 '(https://pypi.org/project/darr/) in Python, as follows:') \
+            wrap('This directory is a data store for a numeric ragged array. '
+                 'A ragged array is a sequence of arrays that may vary in '
+                 'length in their first dimension only. On disk, these arrays '
+                 'are concatenated along their variable dimension. The '\
+                 'easiest way to access the data is to use the Darr '\
+                 'library (https://pypi.org/project/darr/) in Python, as '\
+                 'follows:') \
             + '\n\n' \
             + '>>> import darr\n' \
             + ">>> a = darr.RaggedArray('path_to_array_dir')\n\n" + \
@@ -289,8 +291,8 @@ readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
               "directory, which is the one that also contains this README.")\
                + "\n\n" + \
             wrap('If Darr is not available, the data can also be read in '\
-                 'other environments, with more effort, using the '\
-                 'description and example code below.') + '\n\n\n' \
+                 'other environments, with a little more effort, using the '\
+                 'description or example code below.') + '\n\n\n' \
             + 'Description of data storage\n' \
             + '---------------------------\n' + \
             wrap('There are two subdirectories, each containing an array '

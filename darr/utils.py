@@ -122,7 +122,8 @@ def wrap(s):
 
 
 
-#FIXME avoid double code in next two functions
+#TODO avoid double code in next two functions; and do we really need both
+# after switching to shutil for removinf dirtree?
 @contextmanager
 def tempdir(dirname='.', keep=False, report=False):
     """Yields a temporary directory which is removed when context is closed."""
