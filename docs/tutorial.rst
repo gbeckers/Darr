@@ -204,7 +204,7 @@ nicely with darr. I'll base the example on a small array though:
 .. code:: python
 
     >>> import dask.array
-    >>> a = da.create_array('ar1.da', shape=(1024**2), fill=2.5e)
+    >>> a = da.create_array('ar1.da', shape=(1024**2), fill=2.5)
     >>> a
     array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
     >>> with a.open():
@@ -254,4 +254,8 @@ python objects. You can only store:
 -  None
 -  lists
 -  dictionaries with string keys
+
+Darr tries its best to convert numpy objects in metadata to corresponding
+Python objects. I.e. if you have a numpy.float64 object and save it as
+metadata, it will be converted to a Python float.
 
