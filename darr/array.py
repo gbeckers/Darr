@@ -1156,8 +1156,8 @@ def numtypedescriptiontxt(da):
              "open and simple format and that is easy to access in most "\
              "analysis environments. In Python, you can use the Darr "\
              "library (https://pypi.org/project/darr/), which was used to "\
-             "create the data. Alternatively, to access the data in Python "
-             "or other environments directly, use the information below, "\
+             "create the data. Alternatively, to access the data directly in "
+             "Python or other environments, use the information below, "\
              "which includes code for a number of popular platforms.")  + "\n\n\n"
     s+= f"Data format\n===========\n\n"
     s += wrap("The file 'arrayvalues.bin' contains the raw binary values of "
