@@ -1,6 +1,7 @@
 import unittest
 import json
 import numpy as np
+import shutil
 from pathlib import Path
 from darr.utils import fit_frames, write_jsonfile, product
 from darr.utils import tempdir, tempdirfile
@@ -137,6 +138,17 @@ class CreateTempDir(unittest.TestCase):
             pass
         self.assertFalse(td.exists())
 
+    def test_report(self):
+        with tempdir(report=True) as td:
+            pass # see at least if this doesn't fail
+
+    def test_keep(self):
+        with tempdir(keep=True) as td:
+            pass
+        self.assertTrue(td.exists())
+        shutil.rmtree(td)
+
+
 
 class CreateTempDirFile(unittest.TestCase):
 
@@ -152,6 +164,17 @@ class CreateTempDirFile(unittest.TestCase):
             pass
         self.assertFalse(td.exists())
         self.assertFalse(td.parent.exists())
+
+    def test_report(self):
+        with tempdirfile(report=True) as td:
+            pass # see at least if this doesn't fail
+
+    def test_keep(self):
+        with tempdirfile(keep=True) as td:
+            pass
+        self.assertTrue(td.parent.exists())
+        shutil.rmtree(td.parent)
+
 
 if __name__ == '__main__':
     unittest.main()
