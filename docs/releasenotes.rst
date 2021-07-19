@@ -1,6 +1,11 @@
 Release notes
 =============
 
+Version 0.3.3
+-------------
+- create temporary arrays that are deleted after use in context
+
+
 Version 0.3.2
 -------------
 - copy function DataDir

@@ -145,8 +145,9 @@ def tempdir(dirname='.', keep=False, report=False):
 
 @contextmanager
 def tempdirfile(dirname=None, keep=False, report=False):
-    """Yields a file named "tempfile" in a temporary directory which is
-    removed when context is closed."""
+    """Yields a filename "tempfile" in a temporary directory which is
+    removed when context is closed. Note that the directory is created,
+    but the file "tempfile" not."""
     tempdirname = None
     try:
         tempdirname = tf.mkdtemp(dir=dirname)

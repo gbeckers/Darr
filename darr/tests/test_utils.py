@@ -130,12 +130,28 @@ class CreateTempDir(unittest.TestCase):
         with tempdir() as td:
             self.assertIsInstance(td, Path)
             self.assertTrue(td.exists())
+            self.assertTrue(td.is_dir())
 
     def test_isdeleted(self):
         with tempdir() as td:
             pass
         self.assertFalse(td.exists())
 
+
+class CreateTempDirFile(unittest.TestCase):
+
+    def test_ispath(self):
+        with tempdirfile() as tdf:
+            td = tdf.parent
+            self.assertIsInstance(tdf, Path)
+            self.assertTrue(td.is_dir())
+            self.assertFalse(tdf.exists())
+
+    def test_isdeleted(self):
+        with tempdirfile() as td:
+            pass
+        self.assertFalse(td.exists())
+        self.assertFalse(td.parent.exists())
 
 if __name__ == '__main__':
     unittest.main()
