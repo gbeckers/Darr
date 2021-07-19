@@ -24,13 +24,14 @@ my own experiences), which is why I wrote Darr.
 The **first objective of Darr** is to help you save and use numeric data
 arrays from within Python in a way that makes them trivially easy to use in
 different analysis environments. Darr is not a file format, but a way of saving
-numerical data arrays that maximizes readability.
+your numerical data arrays and metadata using the two most widely used file
+formats: binary and text files.
 
 Darr stores the data itself in a flat binary file. This is a future-proof
 way of storing numeric data, as long as clear information is provided on how
-the binary data is organized. There is no header; information about the
+the binary data is organized. There is no header. Information about the
 organization of the data is provided in separate text files that are both
-human- and computer-readable. For a variety of current analysis tools Darr
+human- and computer-readable. For a variety of current analysis tools, Darr
 helps you make your data even more accessible as it generates a README text
 file that, in addition to explaining the format, contains example code of how
 to read the data. E.g. Python/NumPy (without the Darr library), R, Julia,
@@ -47,12 +48,17 @@ widely readable in this format than in specific formats such as
 `HDF5 <https://www.hdfgroup.org/>`__ or
 `.npy <https://docs.scipy.org/doc/numpy-dev/neps/npy-format.html>`__.
 
-The **second objective of Darr** is to provide memmory-mapped access to these
-stored arrays. In many science applications data arrays can be very large.
-It is not always neccesary or even possible to load the whole array in RAM for
-analysis. For example, long sound or electrophysiology recordings.
-Memmory-mapped arrays provide a very fast, easy and efficient way of working
+The **second objective of Darr** is to provide direct, out-of-core access to
+these disk-persistent arrays. In many science applications data arrays can be
+very large. It is not always neccesary or even possible to load the whole
+array in RAM for analysis. For example, long sound or brain activity
+recordings. Darr provide a very fast, easy and efficient way of working
 with such data.
+
+In principle, working with Darr arrays is very similar to working with NumPy
+memmory-mapped arrays (which is uses under the hood), but in addition it
+provides self-documentation, easy use of metadata, append functionality, ragged
+arrays, and archiving functionality.
 
 There are of course also disadvantages to Darr's approach.
 
@@ -64,8 +70,8 @@ There are of course also disadvantages to Darr's approach.
    small text files (~150 b - 1.7 kb). In many file systems, files take up a
    minimum amount of disk space (normally 512 b - 4 kb) even if the data
    they contain is not that large. Darr's way of storing data is thus
-   space-inefficient if you have zillions of very small data arrays stored
-   separately.
+   space-inefficient if you have zillions of very small, non-uniform data
+   arrays stored separately.
 
 **Other interesting projects**
 
