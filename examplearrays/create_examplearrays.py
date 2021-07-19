@@ -9,7 +9,7 @@ def create_arrays():
             9
         ],
         "comments": "This example array has metadata, which is stored in a "
-                    "separate JSON file. Metadata in dArray is a dictionary "
+                    "separate JSON file. Metadata in Darr is a dictionary "
                     "that can contain anything that is JSON serializable.",
         "date": "20181124",
         "samplingrate": 25000.0
