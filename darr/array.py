@@ -937,7 +937,7 @@ def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
 def create_temparray(shape, dtype='float64', fill=None, fillfunc=None,
                      accessmode='r+', chunklen=None, metadata=None,
                      report=True, overwrite=False):
-    """Creates a temporary `darr array` that is deleted automatically after
+    """Creates a temporary darr array that is deleted automatically after
     use.
 
     Parameters
@@ -991,8 +991,8 @@ def create_temparray(shape, dtype='float64', fill=None, fillfunc=None,
     >>> with darr.create_temparray(shape=(5,2)) as a:
         a[:] = 3
         b = np.product(a)
-    created temporary directory C:\Users\Gabriel\AppData\Local\Temp\tmpc8z0alnh
-    removed temporary directory C:\Users\Gabriel\AppData\Local\Temp\tmpc8z0alnh
+    created temporary directory C://Users/Gabriel/AppData/Local/Temp/tmpc8z0alnh
+    removed temporary directory C://Users/Gabriel/AppData/Local/Temp/tmpc8z0alnh
 
     >>> b
         59049.0

@@ -122,6 +122,7 @@ def wrap(s):
 
 
 
+#FIXME avoid double code in next two functions
 @contextmanager
 def tempdir(dirname='.', keep=False, report=False):
     """Yields a temporary directory which is removed when context is closed."""
@@ -135,41 +136,12 @@ def tempdir(dirname='.', keep=False, report=False):
     finally:
         if not keep:
             shutil.rmtree(tempdirname)
-            if report:
-                print('removed temp dir {}'.format(tempdirname))
-
-# FIXME does not yield a name but a path
-# @contextmanager
-# def tempdirfile(dirname=None, keep=False, report=False):
-#     """Yields a file named "tempfile" in a temporary directory which is
-#     removed when context is closed."""
-#     tempdirname = None
-#     tempfilename = None
-#     try:
-#         tempdirname = tf.mkdtemp(dir=dirname)
-#         if report:
-#             print(f'created temporary directory {tempdirname}')
-#         tempfilename = Path(tempdirname) / "tempfile"
-#         yield tempfilename
-#     except:
-#         raise
-#     finally:
-#         if not keep:
-#             if tempfilename is not None:
-#                 for root, dirs, files in os.walk(tempfilename):
-#                     for file in files:
-#                         os.remove(Path(root) / file)
-#                 for root, dirs, files in os.walk(tempfilename):
-#                     for dir in dirs:
-#                         os.rmdir(Path(root) / dir)
-#                 try:
-#                     os.rmdir(tempfilename)
-#                 except FileNotFoundError:
-#                      pass
-#             if tempdirname is not None:
-#                 os.rmdir(tempdirname)
-#             if report:
-#                 print('removed tempdir {}'.format(tempdirname))
+        if report:
+            if keep:
+                verb = 'kept'
+            else:
+                verb = 'removed'
+            print(f'{verb} temporary directory {tempdirname}')
 
 @contextmanager
 def tempdirfile(dirname=None, keep=False, report=False):

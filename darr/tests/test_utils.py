@@ -1,6 +1,7 @@
 import unittest
 import json
 import numpy as np
+from pathlib import Path
 from darr.utils import fit_frames, write_jsonfile, product
 from darr.utils import tempdir, tempdirfile
 
@@ -122,6 +123,19 @@ class FitChunks(unittest.TestCase):
                           steplen=-1)
         self.assertRaises(ValueError, fit_frames, totallen=3, chunklen=2,
                           steplen=-1.)
+
+class CreateTempDir(unittest.TestCase):
+
+    def test_ispath(self):
+        with tempdir() as td:
+            self.assertIsInstance(td, Path)
+            self.assertTrue(td.exists())
+
+    def test_isdeleted(self):
+        with tempdir() as td:
+            pass
+        self.assertFalse(td.exists())
+
 
 if __name__ == '__main__':
     unittest.main()
