@@ -228,6 +228,14 @@ class RaggedArrayTruncate(DarrTestCase):
 
 class TestReadCodeArray(DarrTestCase):
 
+    # FIXME test more elaborately
+    def test_readcodemethod(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='float64')
+            self.assertIsInstance(ra.readcode('matlab'),str)
+
+
     def test_matlabcomplex128none(self):
         with tempdirfile() as filename:
             ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
