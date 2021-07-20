@@ -50,7 +50,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'darr'
-copyright = '2017-2020, Gabriel Beckers'
+copyright = '2017-2021, Gabriel Beckers'
 author = 'Gabriel Beckers'
 
 # The version info for the project you're documenting, acts as replacement for
