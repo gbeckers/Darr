@@ -6,33 +6,33 @@ Accessing an existing array
 
 .. code:: python
 
-    >>> import darr as da
-    >>> a = da.Array('data.da')
+    >>> import darr
+    >>> a = darr.Array('data.da')
     >>> a
-    >>> array([[1., 2., 3., ..., 97., 98., 99.],
-               [0., 0., 0., ..., 0., 0., 0.]]) (r)
+    >>> darr array([[1., 2., 3., ..., 97., 98., 99.],
+                    [0., 0., 0., ..., 0., 0., 0.]]) (r)
 
 If you intend to overwrite (part of) the data or append data (see below how)
 you need to specify that and set 'accesmode' to 'r+'.
 
 .. code:: python
 
-    >>> import darr as da
-    >>> a = da.Array('data.da', accessmode='r+')
+    >>> import darr
+    >>> a = darr.Array('data.da', accessmode='r+')
     >>> a
-    >>> array([[1., 2., 3., ..., 97., 98., 99.],
-               [0., 0., 0., ..., 0., 0., 0.]]) (r+)
+    >>> darr array([[1., 2., 3., ..., 97., 98., 99.],
+                    [0., 0., 0., ..., 0., 0., 0.]]) (r+)
 
 Creating an array
 -----------------
 
 .. code:: python
 
-    >>> import darr as da
-    >>> a = da.create_array('a1.da', shape=(2,1024))
+    >>> import darr
+    >>> a = darr.create_array('a1.da', shape=(2,1024))
     >>> a
-    >>> array([[0., 0., 0., ..., 0., 0., 0.],
-               [0., 0., 0., ..., 0., 0., 0.]]) (r+)
+    darr array([[0., 0., 0., ..., 0., 0., 0.],
+                [0., 0., 0., ..., 0., 0., 0.]]) (r+)
 
 The default is to fill the array with zeros (of type float64) but this
 can be changed by the 'fill' and 'fillfunc' parameters. See the api.
@@ -69,6 +69,15 @@ Or in `Julia <https://julialang.org/>`__:
     x = map(ltoh, read(fid, Float64, (1024, 2)));
     close(fid);
 
+Such code can also be generated on the fly:
+
+.. code:: python
+
+    >>> print(a.readcode('mathematica'))
+    a = BinaryReadList["arrayvalues.bin", "Real64", ByteOrdering -> -1];
+    a = ArrayReshape[a, {2, 1024}];
+
+
 To see the files that correspond to a Darr array, see 'examplearray.da' in
 the source `repo <https://github.com/gbeckers/Darr>`__.
 
@@ -81,10 +90,10 @@ Different numeric type
 
 .. code:: python
 
-    >>> a = da.create_array('a2.da', shape=(2,1024), dtype='uint8')
+    >>> a = darr.create_array('a2.da', shape=(2,1024), dtype='uint8')
     >>> a
-    array([[0, 0, 0, ..., 0, 0, 0],
-           [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
+    darr array([[0, 0, 0, ..., 0, 0, 0],
+                [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
 
 Creating array from NumPy array
 -------------------------------
@@ -93,10 +102,10 @@ Creating array from NumPy array
 
     >>> import numpy as np
     >>> na = np.ones((2,1024))
-    >>> a = da.asarray('a3.da', na)
+    >>> a = darr.asarray('a3.da', na)
     >>> a
-    array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
-           [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
+    darr array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
+                [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
 
 Reading data
 ------------
@@ -106,7 +115,7 @@ The disk-based array can be used to read data into RAM using NumPy indexing.
 .. code:: python
 
     >>> a[:,-2]
-    array([ 1.,  1.])
+    darr array([ 1.,  1.])
 
 Note that that creates a NumPy array. The darr array itself is not a NumPy
 array, nor does it behave like one except for indexing. The simplest way
@@ -116,8 +125,8 @@ data first as a NumPy array:
 .. code:: python
 
     >>> 2 * a[:]
-    array([[2., 2., 2., ..., 2., 2., 2.],
-           [2., 2., 2., ..., 2., 2., 2.]])
+    darr array([[2., 2., 2., ..., 2., 2., 2.],
+                [2., 2., 2., ..., 2., 2., 2.]])
 
 If your data is too large to read into RAM, you could use the
 `Dask <https://dask.pydata.org/en/latest/>`__ library for
@@ -136,8 +145,8 @@ be writable first:
     >>> a.set_accessmode('r+')
     >>> a[:,1] = 2.
     >>> a
-    array([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
-           [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
+    darr array([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
+                [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
 
 Efficient I/O
 -------------
@@ -152,8 +161,8 @@ array so as to open and close the underlying files only once:
     ...     a[0,2] = 4.
     ...     a[1,[0,2,-1]] = 5.
     >>> a
-    array([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
-          [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
+    darr array([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
+                [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
 
 Appending data
 --------------
@@ -167,11 +176,11 @@ restriction is that you can only append to the first axis:
 
     >>> a.append(np.ones((3,1024)))
     >>> a
-    array([[3., 2., 4., ..., 1., 1., 1.],
-           [5., 2., 5., ..., 1., 1., 5.],
-           [1., 1., 1., ..., 1., 1., 1.],
-           [1., 1., 1., ..., 1., 1., 1.],
-           [1., 1., 1., ..., 1., 1., 1.]]) (r+)
+    darr array([[3., 2., 4., ..., 1., 1., 1.],
+                [5., 2., 5., ..., 1., 1., 5.],
+                [1., 1., 1., ..., 1., 1., 1.],
+                [1., 1., 1., ..., 1., 1., 1.],
+                [1., 1., 1., ..., 1., 1., 1.]]) (r+)
 
 The associated 'README.txt' and 'arraydescription.json' texts files are
 also automatically updated to reflect these changes. There is an
@@ -185,11 +194,11 @@ Copying and type casting data
     >>> ac = a.copy('ac.da')
     >>> acf16 = a.copy('acf16.da', dtype='float16')
     >>> acf16
-    array([[3., 2., 4., ..., 1., 1., 1.],
-           [5., 2., 5., ..., 1., 1., 5.],
-           [1., 1., 1., ..., 1., 1., 1.],
-           [1., 1., 1., ..., 1., 1., 1.],
-           [1., 1., 1., ..., 1., 1., 1.]], dtype=float16) (r)
+    darr array([[3., 2., 4., ..., 1., 1., 1.],
+                [5., 2., 5., ..., 1., 1., 5.],
+                [1., 1., 1., ..., 1., 1., 1.],
+                [1., 1., 1., ..., 1., 1., 1.],
+                [1., 1., 1., ..., 1., 1., 1.]], dtype=float16) (r)
 
 Note that the type of the array can be changed when copying. Data is
 copied in chunks, so very large arrays will not flood RAM memory.
@@ -204,14 +213,14 @@ nicely with darr. I'll base the example on a small array though:
 .. code:: python
 
     >>> import dask.array
-    >>> a = da.create_array('ar1.da', shape=(1024**2), fill=2.5)
+    >>> a = darr.create_array('ar1.da', shape=(1024**2), fill=2.5)
     >>> a
-    array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
+    darr array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
     >>> with a.open():
     ...     dara = dask.array.from_array(a, chunks=(512))
     ...     ((dara + 1) / 2).store(a)
     >>> a
-    array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
+    darr array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
 So in this case we overwrote the data in a with the results of the
 computation, but we could have stored the result in a different darr array
@@ -225,7 +234,7 @@ Metadata
 --------
 
 Metadata can be read and written like a dictionary. Changes correspond
-to changes in a human-readable and editable JSON text file that holds
+directly to changes in a human-readable and editable JSON text file that holds
 the metadata on disk.
 
 .. code:: python
@@ -258,4 +267,3 @@ python objects. You can only store:
 Darr tries its best to convert numpy objects in metadata to corresponding
 Python objects. I.e. if you have a numpy.float64 object and save it as
 metadata, it will be converted to a Python float.
-
