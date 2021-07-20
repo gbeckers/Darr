@@ -1,16 +1,21 @@
 Tutorial
 ========
 
+.. contents:: Table of Contents
+    :depth: 3
+
+.. _access:
+
 Accessing an existing array
 ---------------------------
 
 .. code:: python
 
     >>> import darr
-    >>> a = darr.Array('data.da')
+    >>> a = darr.Array('data.darr')
     >>> a
-    >>> darr array([[1., 2., 3., ..., 97., 98., 99.],
-                    [0., 0., 0., ..., 0., 0., 0.]]) (r)
+    darr array([[1., 2., 3., ..., 97., 98., 99.],
+                [0., 0., 0., ..., 0., 0., 0.]]) (r)
 
 If you intend to overwrite (part of) the data or append data (see below how)
 you need to specify that and set 'accesmode' to 'r+'.
@@ -18,10 +23,12 @@ you need to specify that and set 'accesmode' to 'r+'.
 .. code:: python
 
     >>> import darr
-    >>> a = darr.Array('data.da', accessmode='r+')
+    >>> a = darr.Array('data.darr', accessmode='r+')
     >>> a
-    >>> darr array([[1., 2., 3., ..., 97., 98., 99.],
-                    [0., 0., 0., ..., 0., 0., 0.]]) (r+)
+    darr array([[1., 2., 3., ..., 97., 98., 99.],
+                [0., 0., 0., ..., 0., 0., 0.]]) (r+)
+
+.. _creating:
 
 Creating an array
 -----------------
@@ -69,16 +76,6 @@ Or in `Julia <https://julialang.org/>`__:
     x = map(ltoh, read(fid, Float64, (1024, 2)));
     close(fid);
 
-Such code can also be generated on the fly, for immediate copy-pasting to
-work on your array in a different environment:
-
-.. code:: python
-
-    >>> print(a.readcode('mathematica'))
-    a = BinaryReadList["arrayvalues.bin", "Real64", ByteOrdering -> -1];
-    a = ArrayReshape[a, {2, 1024}];
-
-
 To see the files that correspond to a Darr array, see the example arrays in
 the source `repo <https://github.com/gbeckers/Darr/tree/master/examplearrays>`__.
 
@@ -86,8 +83,9 @@ Note that this way Darr arrays are intended to be widely and easily readable
 without Darr or Python, but the easiest of course is still to use Darr if that
 is available.
 
-Different numeric type
-----------------------
+.. _numptype:
+
+To specify the numeric type, use the dtype argument:
 
 .. code:: python
 
@@ -95,6 +93,8 @@ Different numeric type
     >>> a
     darr array([[0, 0, 0, ..., 0, 0, 0],
                 [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
+
+.. _fromnumpy:
 
 Creating array from NumPy array
 -------------------------------
@@ -107,6 +107,8 @@ Creating array from NumPy array
     >>> a
     darr array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
                 [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
+
+.. _readdata:
 
 Reading data
 ------------
@@ -133,6 +135,8 @@ If your data is too large to read into RAM, you could use the
 `Dask <https://dask.pydata.org/en/latest/>`__ library for
 computation (see example below).
 
+.. _writedata:
+
 Writing data
 ------------
 
@@ -149,6 +153,8 @@ be writable first:
     darr array([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
                 [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
 
+.. _efficientio:
+
 Efficient I/O
 -------------
 
@@ -164,6 +170,8 @@ array so as to open and close the underlying files only once:
     >>> a
     darr array([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
                 [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
+
+.. _appending:
 
 Appending data
 --------------
@@ -187,6 +195,8 @@ The associated 'README.txt' and 'arraydescription.json' texts files are
 also automatically updated to reflect these changes. There is an
 'iterappend' method for efficient serial appending. See the api.
 
+.. _copying:
+
 Copying and type casting data
 -----------------------------
 
@@ -204,10 +214,12 @@ Copying and type casting data
 Note that the type of the array can be changed when copying. Data is
 copied in chunks, so very large arrays will not flood RAM memory.
 
-Larger than memory computation
-------------------------------
+.. _outofcore:
 
-For computing with very large darr arrays, I recommend the
+Out of core computation
+-----------------------
+
+For computations on larger-than-RAM arrays, I recommend the
 `Dask <https://dask.pydata.org/en/latest/>`__ library, which works
 nicely with darr. I'll base the example on a small array though:
 
@@ -230,6 +242,7 @@ to the `Dask
 documentation <https://dask.pydata.org/en/latest/index.html>`__. The
 point here is that darr arrays can be both sources and stores for Dask.
 
+.. _metadata:
 
 Metadata
 --------
@@ -268,3 +281,33 @@ python objects. You can only store:
 Darr tries its best to convert numpy objects in metadata to corresponding
 Python objects. I.e. if you have a numpy.float64 object and save it as
 metadata, it will be converted to a Python float.
+
+Quickly reading your array in a different language
+--------------------------------------------------
+
+Darr automatically provides code to read the array in different languages (e.g.
+Matlab, R, Julia, Mathematica) in the README that comes with it, but
+you can also get that code on-the-fly:
+
+.. code:: python
+
+    >>> print(a.readcode('mathematica'))
+    a = BinaryReadList["arrayvalues.bin", "Real64", ByteOrdering -> -1];
+    a = ArrayReshape[a, {2, 1024}];
+
+For Darr Arrays, you can choose from the following languages:
+
+- idl: for IDL/GDL
+- julia_ver0: for Julia, versions < 1.0
+- julia_ver1: for Julia, versions > 1.0
+- mathematica: for Mathematica
+- matlab: for Matlab or Octave
+- maple: for Maple
+- numpy: for Numpy (without Darr)
+- numpymemmap: for Numpy, using memmap (for large arrays)
+- R: for R
+
+Note that not every numeric type is readable in all languages. For example
+float16 cannot be read in Matlab, and Darr will not produce code for it.
+
+Darr Ragged Arrays do not support all these languages yet.
