@@ -32,10 +32,13 @@ def readcoder(dra, varname='a'):
     rci = readcodearray.readcode(dra._indices, 'R',
                                  filepath='indices/arrayvalues.bin',
                                  varname='i')
-    rci = f"# read array of indices to be used on values array\n{rci}"
     rcv = readcodearray.readcode(dra._values, 'R',
                                  filepath='values/arrayvalues.bin',
                                  varname='v')
+    if (rci is None) or (rcv is None):
+        return None
+    rci = f"# read array of indices to be used on values array\n{rci}"
+
     rcv = f"# read array of values:\n{rcv}"
     rff = 'get_subarray <- function(j){\n' \
           '    starti = i[1,j]+1  # R starts counting from 1\n' \
@@ -51,19 +54,18 @@ def readcoder(dra, varname='a'):
         j, position = 1, 'first'
     rca =  f"# example to read {position} subarray:\n"
     rca = f"{rca}# get_subarray({j})\n"
-    if (rci is None) or (rcv is None):
-        return None
-    else:
-        return f'{rci}{rcv}{rff}{rca}'
+    return f'{rci}{rcv}{rff}{rca}'
 
 def readcodematlab(dra, varname='a'):
     rci = readcodearray.readcode(dra._indices, 'matlab',
                                  filepath='indices/arrayvalues.bin',
                                  varname='i')
-    rci = f"% read array of indices to be used on values array:\n{rci}"
     rcv = readcodearray.readcode(dra._values, 'matlab',
                                  filepath='values/arrayvalues.bin',
                                  varname='v')
+    if (rci is None) or (rcv is None):
+        return None
+    rci = f"% read array of indices to be used on values array:\n{rci}"
     rcv = f"% read array of values:\n{rcv}"
     if len(dra) > 2:
        j, position = 3, 'third'
@@ -77,13 +79,7 @@ def readcodematlab(dra, varname='a'):
     rca = f"{rca}s = @(j) v({dims}i(1,j)+1:i(2,j));\n"
     rca =  f'{rca}% example to read {position} subarray:\n' \
            f'% s({j})'
-    if (rci is None) or (rcv is None):
-        return None
-    else:
-        return f'{rci}{rcv}{rca}'
-
-
-
+    return f'{rci}{rcv}{rca}'
 
 
 readcodefunc = {
