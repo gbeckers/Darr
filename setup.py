@@ -8,22 +8,24 @@ if sys.version_info < (3,6):
 
 long_description = \
 """
-Darr is a Python science library that enables you to store and access
-disk-based numeric arrays, without depending on tool-specific data formats.
-This makes it easy to access the same data in many different languages and on
-different analysis platforms. No exporting required and, as the data is saved
-in a self-explanatory way, not much explanation required either when sharing
-or archiving your data. Tool-independent and easy access to data is in line
-with good scientific practice as it promotes wide and long-term availability,
-to others but also to yourself. More rationale for this approach is provided
+Darr is a Python science library for working efficiently with potentially
+large, disk-based numeric arrays and metadata, without depending on
+tool-specific or complicated data formats. Data is persistent on disk in a
+self-explanatory way, making it trivially easy to share it and use it in
+different environments. No need to export anything or to provide much
+explanation, and no need to assume that a specific tool will be available.
+
+Tool-independent and easy access to data is in line with good scientific
+practice as it promotes wide and long-term availability, to others and
+to yourself. More rationale for this approach is provided
 `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
-Darr supports efficient read/write/append access and is based on universally
-readable flat binary files and automatically generated text files, containing
-human-readable explanation of precisely how your binary data is stored. It
-also provides specific code that reads the data in a variety of current
-scientific data tools such as Python, R, Julia, IDL, Matlab, Maple, and
-Mathematica (see
+Darr supports efficient out-of-core read/write/append access and is based
+on universally readable flat binary files and automatically generated text
+files that explain precisely the nature of your array data and how it is
+stored. It also automatically generates specific code that reads the data in
+a variety of  current scientific data tools such as Python, R, Julia, IDL,
+Matlab, Maple, and Mathematica (see
 `example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
 
 Darr currently supports numerical N-dimensional arrays, and experimentally
@@ -34,35 +36,34 @@ See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
 for a brief introduction, or the
 `documentation <http://darr.readthedocs.io/>`__ for more info.
 
-Darr is currently pre-1.0, still undergoing significant development. However
-we have been using it in practice in our lab for more than a year on both
-Linux and Windows machines. It is open source and freely available under the
-`New BSD License <https://opensource.org/licenses/BSD-3-Clause>`__ terms.
+Darr is currently pre-1.0, still undergoing significant development. It is
+open source and freely available under the `New BSD License
+<https://opensource.org/licenses/BSD-3-Clause>`__ terms.
 
 Features
 --------
 
 Pro's:
 
--  Data storage purely based on **flat binary** and **text** files, 
-   tool independence.
--  **Human-readable explanation of how the binary data is stored** is
-   saved in a README text file.
--  README includes **examples of how to read the particular array** in popular
-   analysis environments such as Python (without Darr), R, Julia,
+-  Data persists on-disk, purely based on flat binary and text files,
+   **tool independence**.
+-  README text file with **human-readable explanation** of how the binary data
+   is stored.
+-  README includes **examples of how to read the array** in a number of popular
+   data analysis environments, such as Python (without Darr), R, Julia,
    Octave/Matlab, GDL/IDL, and Mathematica.
--  Supports **very large data arrays**, larger than RAM, through memory-mapping.
--  Data read/write access is simple and powerful through **NumPy indexing** 
-   (see `here <https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html>`__).
+-  Works with **data arrays larger than RAM**.
+-  Data read/write access is simple and powerful through **NumPy indexing**
+   (see
+   `here <https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html>`__).
 -  Data is easily **appendable**.
 -  **Many numeric types** are supported: (u)int8-(u)int64, float16-float64,
    complex64, complex128.
 -  Easy use of **metadata**, stored in a separate
    `JSON <https://en.wikipedia.org/wiki/JSON>`__ text file.
 -  **Minimal dependencies**, only `NumPy <http://www.numpy.org/>`__.
--  **Integrates easily** with the
-   `Dask <https://dask.pydata.org/en/latest/>`__ library for
-   **numeric computation on very large arrays**.
+-  Integrates easily with the `Dask <https://dask.pydata.org/en/latest/>`__
+   library for out-of-core **computation on very large arrays**.
 -  Supports **ragged arrays** (still experimental).
 
 See the `documentation <http://darr.readthedocs.io/>`__ for more information.
