@@ -1,27 +1,26 @@
 This directory contains a numeric array that is stored in an open and simple
 format and that is easy to access in most analysis environments. In Python,
 you can use the Darr library (https://pypi.org/project/darr/), which was used
-to create the data. If Darr is not available, it is straightforward to access
-the data using the information below, which includes code for a number of
-popular platforms.
+to create the data. Alternatively, to access the data directly in Python or
+other environments, use the information below, which includes code for a
+number of popular platforms.
 
 
 Data format
 ===========
 
-The file 'arrayvalues.bin' contains a numeric array in the following format:
+The file 'arrayvalues.bin' contains the raw binary values of the numeric
+array, without header information, in the following format:
 
   Numeric type: 16-bit half precision float (sign bit, 5 bits exponent, 10 bits mantissa)
   Byte order: little (most-significant byte last)
   Array dimensions: (8, 2)
   Array order layout:  C (Row-major; last dimension varies most rapidly with memory address)
 
-The file only contains the raw binary values, without header information.
+These details are also stored in JSON format in the separate UTF-8 text file,
+'arraydescription.json'.
 
-Format details are also stored in json format in the separate UTF-8 text file,
-'arraydescription.json' to facilitate automatic reading by a program.
-
-The file 'metadata.json' contains metadata in json UTF-8 text format.
+The file 'metadata.json' contains metadata in JSON UTF-8 text format.
 
 
 Example code for reading the numeric data

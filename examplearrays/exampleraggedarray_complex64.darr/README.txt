@@ -1,11 +1,11 @@
 Disk-based storage of a ragged array
 ====================================
 
-This directory is a data store for a numeric ragged array, which is a sequence
-of arrays in which one dimension varies in length. On disk, these arrays are
-concatenated along their variable dimension. The easiest way to access the
-data is to use the Darr library (https://pypi.org/project/darr/) in Python, as
-follows:
+This directory is a data store for a numeric ragged array. A ragged array
+(also called a jagged array) is a sequence of arrays that may vary in length
+in their first dimension only. On disk, these arrays are concatenated along
+their variable dimension. The easiest way to access the data is to use the
+Darr library (https://pypi.org/project/darr/) in Python, as follows:
 
 >>> import darr
 >>> a = darr.RaggedArray('path_to_array_dir')
@@ -14,7 +14,7 @@ where 'path_to_array_dir' is the name of the array directory, which is the one
 that also contains this README.
 
 If Darr is not available, the data can also be read in other environments,
-with more effort, using the description and example code below.
+with a little more effort, using the description or example code below.
 
 
 Description of data storage

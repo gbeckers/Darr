@@ -1,11 +1,11 @@
 Disk-based storage of a ragged array
 ====================================
 
-This directory is a data store for a numeric ragged array, which is a sequence
-of arrays in which one dimension varies in length. On disk, these arrays are
-concatenated along their variable dimension. The easiest way to access the
-data is to use the Darr library (https://pypi.org/project/darr/) in Python, as
-follows:
+This directory is a data store for a numeric ragged array. A ragged array
+(also called a jagged array) is a sequence of arrays that may vary in length
+in their first dimension only. On disk, these arrays are concatenated along
+their variable dimension. The easiest way to access the data is to use the
+Darr library (https://pypi.org/project/darr/) in Python, as follows:
 
 >>> import darr
 >>> a = darr.RaggedArray('path_to_array_dir')
@@ -14,7 +14,7 @@ where 'path_to_array_dir' is the name of the array directory, which is the one
 that also contains this README.
 
 If Darr is not available, the data can also be read in other environments,
-with more effort, using the description and example code below.
+with a little more effort, using the description or example code below.
 
 
 Description of data storage
@@ -54,30 +54,36 @@ a = get_subarray(2)  # example to read third subarray
 
 R:
 --
+# read array of indices to be used on values array
 fileid = file("indices/arrayvalues.bin", "rb")
 i = readBin(con=fileid, what=integer(), n=6, size=8, signed=TRUE, endian="little")
 i = array(data=i, dim=c(2, 3), dimnames=NULL)
 close(fileid)
+# read array of values:
 fileid = file("values/arrayvalues.bin", "rb")
 v = readBin(con=fileid, what=integer(), n=48, size=1, signed=TRUE, endian="little")
 v = array(data=v, dim=c(2, 24), dimnames=NULL)
 close(fileid)
-get_subarray <- function(seqno){
-    starti = i[seqno,1] + 1  # R starts counting from 1
-    endi = i[seqno,2]  # R has inclusive end index
-    return (v[,starti:endi])
-}
-a = get_subarray(3)  # example to read third subarray
+get_subarray <- function(j){
+    starti = i[1,j]+1  # R starts counting from 1
+    endi = i[2,j]  # R has inclusive end index
+    return (v[,starti:endi])}
+# create function to get subarrays:
+# example to read third subarray:
+# get_subarray(3)
 
 Matlab:
 -------
+% read array of indices to be used on values array:
 fileid = fopen('indices/arrayvalues.bin');
 i = fread(fileid, [2, 3], '*int64', 'ieee-le');
 fclose(fileid);
+% read array of values:
 fileid = fopen('values/arrayvalues.bin');
 v = fread(fileid, [2, 24], '*int8', 'ieee-le');
 fclose(fileid);
-# example to read third subarray
-startindex = i(1,3) + 1;  # matlab starts counting from 1
-endindex = i(2,3);  # matlab has inclusive end index
-a = v(:,startindex:endindex);
+% create an anonymous function that returns the j-th subarray
+% from the values array:
+s = @(j) v(:,i(1,j)+1:i(2,j));
+% example to read third subarray:
+% s(3)
