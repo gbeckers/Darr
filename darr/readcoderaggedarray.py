@@ -45,7 +45,7 @@ def readcoder(dra, varname='a'):
           '    endi = i[2,j]  # R has inclusive end index\n'
     commas = len(dra._arrayinfo['atom'])*','
     rff = f'{rff}    return (v[{commas}starti:endi])}}\n'
-    rff = f"{rff}# create function to get subarrays:\n"
+    rff = f"# create function to get subarrays:\n{rff}"
     if len(dra) > 2:
        j, position = 3, 'third'
     elif len(dra) == 2:
