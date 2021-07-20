@@ -313,11 +313,12 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
 readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
             wrap('====================================') + '\n\n' + \
             wrap('This directory is a data store for a numeric ragged array. '
-                 'A ragged array is a sequence of arrays that may vary in '
-                 'length in their first dimension only. On disk, these arrays '
-                 'are concatenated along their variable dimension. The '\
-                 'easiest way to access the data is to use the Darr '\
-                 'library (https://pypi.org/project/darr/) in Python, as '\
+                 'A ragged array (also called a jagged array) is a sequence '
+                 'of arrays that may vary in length in their first '\
+                 'dimension only. On disk, these arrays are concatenated '\
+                 'along their variable dimension. The easiest way to '\
+                 'access the data is to use the Darr library '\
+                 '(https://pypi.org/project/darr/) in Python, as '\
                  'follows:') \
             + '\n\n' \
             + '>>> import darr\n' \
