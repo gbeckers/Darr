@@ -295,6 +295,9 @@ you can also get that code on-the-fly:
     a = BinaryReadList["arrayvalues.bin", "Real64", ByteOrdering -> -1];
     a = ArrayReshape[a, {2, 1024}];
 
+Just copy-paste the output code in, e.g., Mathematica, access you data from
+there.
+
 For Darr Arrays, you can choose from the following languages:
 
 - idl: for IDL/GDL
