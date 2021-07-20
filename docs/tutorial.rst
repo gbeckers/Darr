@@ -69,7 +69,8 @@ Or in `Julia <https://julialang.org/>`__:
     x = map(ltoh, read(fid, Float64, (1024, 2)));
     close(fid);
 
-Such code can also be generated on the fly:
+Such code can also be generated on the fly, for immediate copy-pasting to
+work on your array in a different environment:
 
 .. code:: python
 
@@ -78,8 +79,8 @@ Such code can also be generated on the fly:
     a = ArrayReshape[a, {2, 1024}];
 
 
-To see the files that correspond to a Darr array, see 'examplearray.da' in
-the source `repo <https://github.com/gbeckers/Darr>`__.
+To see the files that correspond to a Darr array, see the example arrays in
+the source `repo <https://github.com/gbeckers/Darr/tree/master/examplearrays>`__.
 
 Note that this way Darr arrays are intended to be widely and easily readable
 without Darr or Python, but the easiest of course is still to use Darr if that
