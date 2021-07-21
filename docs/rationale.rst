@@ -25,7 +25,7 @@ my own experiences). This is why Darr was created.
 
 The **first objective of Darr** is to provide an easy way of working with
 with numeric data array and metadata, without having to worry about the
-things above. Date are persistent on disk in a self-explaining way, making
+things above. Data are persistent on disk in a self-explaining way, making
 them trivially easy to access in different analysis environments without
 needing additional explanation of how data is stored.
 
