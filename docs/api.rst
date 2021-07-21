@@ -42,8 +42,8 @@ Ragged Arrays
 =============
 
 .. warning::
-Note that Ragged Arrays are still experimental! They do not support setting
-values yet, only creating, appending, and reading.
+   Note that Ragged Arrays are still experimental! They do not support setting
+   values yet, only creating, appending, and reading.
 
 
 Accessing ragged arrays
