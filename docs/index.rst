@@ -126,8 +126,8 @@ Indices and tables
    :target: https://anaconda.org/conda-forge/darr
 .. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
    :target: https://coveralls.io/github/gbeckers/Darr?branch=master
-.. |Docs Status| image:: https://readthedocs.org/projects/darr/badge/?version=latest
-   :target: https://darr.readthedocs.io/en/latest/
+.. |Docs Status| image:: https://readthedocs.org/projects/darr/badge/?version=stable
+   :target: https://darr.readthedocs.io/en/stable/
 .. |Repo Status| image:: https://www.repostatus.org/badges/latest/active.svg
    :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
    :target: https://www.repostatus.org/#active
