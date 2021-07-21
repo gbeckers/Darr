@@ -125,7 +125,7 @@ Beckers
 .. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
    :target: https://coveralls.io/github/gbeckers/Darr?branch=master&kill_cache=1
 .. |Docs Status| image:: https://readthedocs.org/projects/darr/badge/?version=stable
-   :target: https://darr.readthedocs.io/en/latest/
+   :target: https://darr.readthedocs.io/en/stable/
 .. |Repo Status| image:: https://www.repostatus.org/badges/latest/active.svg
    :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
    :target: https://www.repostatus.org/#active
