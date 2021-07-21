@@ -262,35 +262,9 @@ nicely with darr. I'll base the example on a small array though:
     So in this case we overwrote the data in a with the results of the
     computation, but we could have stored the result in a different darr array
     of the same shape. Dask can do more powerful things, for which I refer
-    to the
-        >>> a = darr.create_array('ar1.darr', shape=(1024**2), fill=2.5)
-        >>> a
-        darr array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
-        >>> with a.open_array():
-        ...     dara = dask.array.from_array(a, chunks=(512))
-        ...     ((dara + 1) / 2).store(a)
-        >>> a
-        darr array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
-
-    So in this case we overwrote the data in a with the results of the
-    computation, but we could have stored the result in a different darr array
-    of the same shape. Dask can do more powerful things, for which I refer
-    to the
-    >>> a = darr.create_array('ar1.darr', shape=(1024**2), fill=2.5)
-    >>> a
-    darr array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
-    >>> with a.open_array():
-    ...     dara = dask.array.from_array(a, chunks=(512))
-    ...     ((dara + 1) / 2).store(a)
-    >>> a
-    darr array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
-
-So in this case we overwrote the data in a with the results of the
-computation, but we could have stored the result in a different darr array
-of the same shape. Dask can do more powerful things, for which I refer
-to the `Dask
-documentation <https://dask.pydata.org/en/latest/index.html>`__. The
-point here is that darr arrays can be both sources and stores for Dask.
+    to the `Dask documentation <https://dask.pydata.org/en/latest/index
+    .html>`__. The point here is that darr arrays can be both sources and
+    stores for Dask.
 
 .. _metadata:
 
