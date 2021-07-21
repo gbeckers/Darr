@@ -110,6 +110,22 @@ Creating array from NumPy array
 
 .. _readdata:
 
+Creating an array from an iterable
+----------------------------------
+Sometimes you have something that produces values in chunks. Say output from
+a filter over a long signal. The 'asarray' method reads iterables:
+
+.. code:: python
+
+    >>> def yield_values():
+    ...     yield [1,2]
+    ...     yield [3,4]
+    ...     yield [5,6]
+    >>> b = darr.asarray('b.darr', yield_values())
+    >>> b
+    darr array ([1, 2, 3, 4, 5, 6]) (r)
+
+
 Reading data
 ------------
 
