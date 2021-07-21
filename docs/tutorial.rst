@@ -96,8 +96,8 @@ To specify the numeric type, use the dtype argument:
 
 .. _fromnumpy:
 
-Creating array from NumPy array
--------------------------------
+Creating an array from a NumPy array or a sequence
+--------------------------------------------------
 
 .. code:: python
 
@@ -108,7 +108,8 @@ Creating array from NumPy array
     darr array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
                 [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
 
-.. _readdata:
+This also works for anything that can be converted into a numpy array, such
+as lists, tuples.
 
 Creating an array from an iterable
 ----------------------------------
@@ -125,6 +126,7 @@ a filter over a long signal. The 'asarray' method reads iterables:
     >>> b
     darr array ([1, 2, 3, 4, 5, 6]) (r)
 
+.. _readdata:
 
 Reading data
 ------------
