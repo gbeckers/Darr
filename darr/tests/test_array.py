@@ -340,7 +340,7 @@ class TestArray(DarrTestCase):
 
     # FIXME more tests open accessmode
     def test_open(self):
-        with self.tempar.open() as r:
+        with self.tempar.open_array() as r:
             self.assertIsNone(r)
 
 

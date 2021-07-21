@@ -15,7 +15,8 @@ from .utils import wrap
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
            'delete_raggedarray', 'truncate_raggedarray']
 
-# FIXME needs doc
+# TODO needs doc
+# TODO an open_array method
 class RaggedArray:
     """
     Disk-based sequence of arrays that may have a variable length in maximally

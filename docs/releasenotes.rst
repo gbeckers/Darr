@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Version 0.4.0
+-------------
+- changed name 'open' method to 'open_array' for Arrays.
+
 Version 0.3.3
 -------------
 - create temporary arrays that are deleted after use in context

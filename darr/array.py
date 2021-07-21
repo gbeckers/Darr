@@ -221,9 +221,16 @@ class Array:
                 self._memmap = None
                 self._valuesfd = None
 
-    # FIXME doc accessmode
     @contextmanager
     def open(self, accessmode=None):
+        warnings.warn("The use of the `open` method is deprecated in "
+                      "versions of Darr >= 0.4 Use `open_array` instead.",
+                      FutureWarning)
+        yield self.open_array(accessmode=accessmode)
+
+
+    @contextmanager
+    def open_array(self, accessmode=None):
         """Open the array for efficient multiple read or write operations.
 
         Although read and write operations can be performed conveniently using
@@ -247,7 +254,7 @@ class Array:
         --------
         >>> import darr as da
         >>> d = da.create_array('test.da', shape=(1000,3), overwrite=True)
-        >>> with d.open(accessmode='r+'):
+        >>> with d.open_array(accessmode='r+'):
                 s1 = d[:10,1:].sum()
                 s2 = d[20:25,:2].sum()
                 d[500:] = 3.33
