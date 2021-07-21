@@ -36,7 +36,7 @@ Creating an array
 .. code:: python
 
     >>> import darr
-    >>> a = darr.create_array('a1.da', shape=(2,1024))
+    >>> a = darr.create_array('a1.darr', shape=(2,1024))
     >>> a
     darr array([[0., 0., 0., ..., 0., 0., 0.],
                 [0., 0., 0., ..., 0., 0., 0.]]) (r+)
@@ -44,7 +44,7 @@ Creating an array
 The default is to fill the array with zeros (of type float64) but this
 can be changed by the 'fill' and 'fillfunc' parameters. See the api.
 
-The data is now stored on disk in a directory named 'a1.da', containing
+The data is now stored on disk in a directory named 'a1.darr', containing
 a flat binary file ('arrayvalues.bin') and a human-readble
 `JSON <https://en.wikipedia.org/wiki/JSON>`__ text file
 ('arraydescription.json'), with information on the array dimensionality,
@@ -89,7 +89,7 @@ To specify the numeric type, use the dtype argument:
 
 .. code:: python
 
-    >>> a = darr.create_array('a2.da', shape=(2,1024), dtype='uint8')
+    >>> a = darr.create_array('a2.darr', shape=(2,1024), dtype='uint8')
     >>> a
     darr array([[0, 0, 0, ..., 0, 0, 0],
                 [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
@@ -103,7 +103,7 @@ Creating an array from a NumPy array or a sequence
 
     >>> import numpy as np
     >>> na = np.ones((2,1024))
-    >>> a = darr.asarray('a3.da', na)
+    >>> a = darr.asarray('a3.darr', na)
     >>> a
     darr array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
                 [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
@@ -226,8 +226,8 @@ Copying and type casting data
 
 .. code:: python
 
-    >>> ac = a.copy('ac.da')
-    >>> acf16 = a.copy('acf16.da', dtype='float16')
+    >>> ac = a.copy('ac.darr')
+    >>> acf16 = a.copy('acf16.darr', dtype='float16')
     >>> acf16
     darr array([[3., 2., 4., ..., 1., 1., 1.],
                 [5., 2., 5., ..., 1., 1., 5.],
@@ -250,7 +250,7 @@ nicely with darr. I'll base the example on a small array though:
 .. code:: python
 
     >>> import dask.array
-        >>> a = darr.create_array('ar1.da', shape=(1024**2), fill=2.5)
+        >>> a = darr.create_array('ar1.darr', shape=(1024**2), fill=2.5)
         >>> a
         darr array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
         >>> with a.open_array():
@@ -263,7 +263,7 @@ nicely with darr. I'll base the example on a small array though:
     computation, but we could have stored the result in a different darr array
     of the same shape. Dask can do more powerful things, for which I refer
     to the
-        >>> a = darr.create_array('ar1.da', shape=(1024**2), fill=2.5)
+        >>> a = darr.create_array('ar1.darr', shape=(1024**2), fill=2.5)
         >>> a
         darr array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
         >>> with a.open_array():
@@ -276,10 +276,10 @@ nicely with darr. I'll base the example on a small array though:
     computation, but we could have stored the result in a different darr array
     of the same shape. Dask can do more powerful things, for which I refer
     to the
-    >>> a = darr.create_array('ar1.da', shape=(1024**2), fill=2.5)
+    >>> a = darr.create_array('ar1.darr', shape=(1024**2), fill=2.5)
     >>> a
     darr array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
-    >>> with a.open():
+    >>> with a.open_array():
     ...     dara = dask.array.from_array(a, chunks=(512))
     ...     ((dara + 1) / 2).store(a)
     >>> a
