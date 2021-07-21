@@ -6,8 +6,10 @@ advantages they offer go hand in hand with complexity and dependence on
 external libraries, or on specific knowledge that is not included with the
 data. This is necessary and tolerable in specific use cases. Yet, it can be
 a hindrance when sharing data with other people who work with different
-tools, or even when you want to use explore your own data different
-ways.
+tools. Complex data format can even hinder you in exploring your own data,
+when you use different tools for different types of analyses, or just when
+you want to have a look at that data you worked on a few years ago, and
+you don't have the old analysis environment available any more.
 
 In many cases life as a scientist is a lot easier if data is stored in a way
 that is simple and self-explanatory. You want to be able to use the data
@@ -19,42 +21,43 @@ wrote in Matlab, and you do not want to have to start exporting large data
 sets into some different format. These things often could be, and should be
 simple and painless. Unfortunately they often are not (see this `blog by
 Cyrille Rossant <http://cyrille.rossant.net/moving-away-hdf5/>`__ that echos
-my own experiences), which is why Darr was created.
+my own experiences). This is why Darr was created.
 
-The **first objective of Darr** is to help you use numeric data arrays and
-metadata that are stored in a self-explaining way, making them trivially easy
-to access in different analysis environments and by others.
+The **first objective of Darr** is to provide an easy way of working with
+with numeric data array and metadata, without having to worry about the
+things above. Date are persistent on disk in a self-explaining way, making
+them trivially easy to access in different analysis environments without
+needing additional explanation of how data is stored.
 
-Darr stores the numeric array data in a flat binary file. This is a
-future-proof way of storing numeric data, as long as clear information is
-provided on how the binary data is organized. There is no header.
-Information about the organization of the data is provided in separate text
+Darr stores the numeric array data in a flat binary file (i.e. no header).
+This is a future-proof way of storing numeric data, as long as clear
+information is  provided on how the binary data is organized. Information
+about the organization of the data is provided in separate text-based
 files that are both human- and computer-readable. For a variety of current
-analysis tools, Darr helps you make your data even more accessible as it
-generates a README text file that, in addition to explaining the format,
-contains example code of how to read the data. E.g. Python/NumPy (without the
-Darr library), R, Julia, MatLab/Octave, and Mathematica. Just copy and paste
-the code in the README to read the data. Every array that you create can be
-simply be provided as such to others with minimal explanation.
+analysis tools, Darr even provides example code of how to read the data. E.g.
+Python/NumPy (without the Darr library), R, Julia, MatLab/Octave, and
+Mathematica. Just copy and paste the code in the README to read the data.
+Every array that you create can be simply be provided as such to others with
+minimal explanation.
 
 The combination of flat binary and text files leads to a
 self-documenting format that anyone can easily explore on any computer,
 operating system, and programming language, without installing
 dependencies, and without any specific pre-existing knowledge on the
-format. In decades to come, your files are much more likely to be
-widely readable in this format than in specific formats such as
-`HDF5 <https://www.hdfgroup.org/>`__ or
+format or reading long format specifications. In decades to come, your files
+are much more likely to be widely readable in this format than in specific
+formats such as `HDF5 <https://www.hdfgroup.org/>`__ or
 `.npy <https://docs.scipy.org/doc/numpy-dev/neps/npy-format.html>`__.
 
 The **second objective of Darr** is to provide direct, out-of-core access to
 these disk-persistent arrays. In many science applications data arrays can be
-very large. It is not always neccesary or even possible to load the whole
+very large. It is not always necessary or even possible to load the whole
 array in RAM for analysis. For example, long sound or brain activity
 recordings. Darr provide a very fast, easy and efficient way of working
 with such data.
 
 In principle, working with Darr arrays is very similar to working with NumPy
-memmory-mapped arrays (which is uses under the hood), but in addition it
+memmory-mapped arrays (which it uses under the hood), but in addition it
 provides self-documentation, easy use of metadata, append functionality, ragged
 arrays, and archiving functionality.
 
