@@ -8,7 +8,7 @@ Darr
 
 
 |Travis Status| |Appveyor Status| |PyPi version| |Conda Forge| |Coverage Status|
-|Docs Status| |Repo Status| |PyUp Badge|
+|Docs Status| |Repo Status|
 
 Darr is a Python science library for working efficiently with potentially
 large, disk-based numeric arrays and metadata, without depending on
