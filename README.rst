@@ -2,7 +2,7 @@ Darr
 ====
 
 |Travis Status| |Appveyor Status| |PyPi version| |Conda Forge| |Coverage Status|
-|Docs Status| |Repo Status|
+|Docs Status| |Repo Status| |PyUp Badge|
 
 
 
