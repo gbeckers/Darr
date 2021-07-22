@@ -1,0 +1,8 @@
+update: all
+
+requirements:
+  - requirements.txt
+
+schedule: "every day"
+
+search: False
