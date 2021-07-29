@@ -6,7 +6,7 @@ advantages they offer go hand in hand with complexity and dependence on
 external libraries, or on specific knowledge that is not included with the
 data. This is necessary and tolerable in specific use cases. Yet, it can be
 a hindrance when sharing data with other people who work with different
-tools. Complex data format can even hinder you in exploring your own data,
+tools. Complex data formats can even hinder you in exploring your own data,
 when you use different tools for different types of analyses, or just when
 you want to have a look at that data you worked on a few years ago, and
 you don't have the old analysis environment available any more.
@@ -76,6 +76,7 @@ There are of course also disadvantages to Darr's approach.
 
 **Other interesting projects**
 
+-  `asdf <https://github.com/asdf-format/asdf>`__
 -  `exdir <https://github.com/CINPLA/exdir/>`__
 -  `h5py <https://github.com/h5py/h5py>`__
 -  `pyfbf <https://github.com/davidh-ssec/pyfbf>`__

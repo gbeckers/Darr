@@ -6,33 +6,37 @@
 Darr
 ====
 
-
 |Travis Status| |Appveyor Status| |PyPi version| |Conda Forge| |Coverage Status|
 |Docs Status| |Repo Status| |PyUp Badge|
 
-Darr is a Python science library for working efficiently with potentially
-large, disk-based numeric arrays and metadata, without depending on
-tool-specific or complicated data formats. Data is persistent on disk in a
-self-explanatory way, making it trivially easy to share it and use it in
-different environments. No need to export anything or to provide much
-explanation, and no need to assume that a specific tool will be available.
+Darr is a Python library for working efficiently with disk-persistent NumPy
+arrays and metadata that are stored in a simple and self-explanatory way.
+Universally readable flat binary files and (JSON) text files are accompanied
+by a README text file that explains how the specific data is stored and
+that includes code for reading the array in a variety of current scientific
+data tools such as Python, R, Julia, IDL, Matlab, Maple, and Mathematica. It
+is trivially easy to share your data with others or even with yourself when
+working in different computing environments, because it is always
+stored with a clear and specific description of how to read it. No need to
+export anything or to provide elaborate explanation. No dependence on
+complicated formats or
+specialized tools.
 
 Tool-independent and easy access to data is in line with good scientific
 practice as it promotes wide and long-term availability, to others and
 to yourself. More rationale for this approach is provided
 `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
-Darr supports efficient out-of-core read/write/append access and is based
-on universally readable flat binary files and automatically generated text
-files that explain precisely the nature of your array data and how it is
-stored. It also automatically generates specific code that reads the data in
-a variety of  current scientific data tools such as Python, R, Julia, IDL,
-Matlab, Maple, and Mathematica (see
-`example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
+Darr uses NumPy memmory-mapped arrays under the hood, which you can
+access directly for full NumPy compatibility and efficient out-of-core
+read/write access to potentially very large arrays. In comparison with
+using NumPy memmap directly, Darr is even easier to use and adds automatic
+self-documentation, the easy use of associated metadata, the possibility to
+append or truncate arrays, and the use of ragged arrays.
 
-Darr currently supports numerical N-dimensional arrays, and experimentally
-supports numerical ragged arrays, i.e. a series of arrays in which one
-dimension varies in length.
+Darr currently only supports numerical N-dimensional arrays (simple data types,
+not structured arrays), and experimentally supports numerical ragged arrays,
+i.e. a sequence of arrays in which one dimension varies in length.
 
 See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
 for a brief introduction, or the
@@ -50,7 +54,8 @@ Pro's:
 -  Data persists on-disk, purely based on flat binary and text files,
    **tool independence**.
 -  README text file with **human-readable explanation** of how the binary data
-   is stored.
+   is stored (see
+`example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
 -  README includes **examples of how to read the array** in a number of popular
    data analysis environments, such as Python (without Darr), R, Julia,
    Octave/Matlab, GDL/IDL, and Mathematica.
@@ -91,9 +96,9 @@ master::
 
 Status
 ------
-Darr is relatively new, and therefore in its alpha stage. It is being used in
-practice in the lab, and test coverage is allmost 100%, but first beta release
-will have to wait until the API is more stable. The naming of some
+Darr is relatively new, and therefore in its beta stage. It is being used in
+practice in the lab, and test coverage is allmost 100%, but first official
+release will have to wait until the API is more stable. The naming of some
 functions/methods may still change.
 
 
