@@ -259,12 +259,12 @@ nicely with darr. I'll base the example on a small array though:
         >>> a
         darr array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
-    So in this case we overwrote the data in a with the results of the
-    computation, but we could have stored the result in a different darr array
-    of the same shape. Dask can do more powerful things, for which I refer
-    to the `Dask documentation <https://dask.pydata.org/en/latest/index
-    .html>`__. The point here is that darr arrays can be both sources and
-    stores for Dask.
+So in this case we overwrote the data in a with the results of the
+computation, but we could have stored the result in a different darr array
+of the same shape. Dask can do more powerful things, for which I refer
+to the `Dask documentation <https://dask.pydata.org/en/latest/index
+.html>`__. The point here is that darr arrays can be both sources and
+stores for Dask.
 
 .. _metadata:
 
