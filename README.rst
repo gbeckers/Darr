@@ -52,8 +52,7 @@ Pro's:
    is stored.
 -  README includes **examples of how to read the array** in a number of popular
    data analysis environments, such as Python (without Darr), R, Julia,
-   Octave/Matlab, GDL/IDL, and Mathematica (see
-`example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
+   Octave/Matlab, GDL/IDL, and Mathematica (see `example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
 -  Works with **data arrays larger than RAM**.
 -  Data read/write access is simple and powerful through **NumPy indexing**
    (see

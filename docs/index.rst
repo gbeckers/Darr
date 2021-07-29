@@ -54,8 +54,7 @@ Pro's:
 -  Data persists on-disk, purely based on flat binary and text files,
    **tool independence**.
 -  README text file with **human-readable explanation** of how the binary data
-   is stored (see
-`example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
+   is stored (see `example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
 -  README includes **examples of how to read the array** in a number of popular
    data analysis environments, such as Python (without Darr), R, Julia,
    Octave/Matlab, GDL/IDL, and Mathematica.
