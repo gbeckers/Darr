@@ -250,14 +250,14 @@ nicely with darr. I'll base the example on a small array though:
 .. code:: python
 
     >>> import dask.array
-        >>> a = darr.create_array('ar1.darr', shape=(1024**2), fill=2.5)
-        >>> a
-        darr array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
-        >>> with a.open_array():
-        ...     dara = dask.array.from_array(a, chunks=(512))
-        ...     ((dara + 1) / 2).store(a)
-        >>> a
-        darr array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
+    >>> a = darr.create_array('ar1.darr', shape=(1024**2), fill=2.5)
+    >>> a
+    darr array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
+    >>> with a.open_array():
+    ...     dara = dask.array.from_array(a, chunks=(512))
+    ...     ((dara + 1) / 2).store(a)
+    >>> a
+    darr array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
 So in this case we overwrote the data in a with the results of the
 computation, but we could have stored the result in a different darr array
