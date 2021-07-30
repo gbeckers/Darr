@@ -17,14 +17,15 @@ without complications in different environments without having to install
 special libraries or having to look up things. You also want to share data
 without any hassle with your colleagues, who work with, say, R
 instead of Python. Sometimes you want to try out an algorithm that someone
-wrote in Matlab, and you do not want to have to start exporting large data
-sets into some different format. These things often could be, and should be
-simple and painless. Unfortunately they often are not (see this `blog by
-Cyrille Rossant <http://cyrille.rossant.net/moving-away-hdf5/>`__ that echos
-my own experiences). This is why Darr was created.
+wrote in Matlab, but you do not want to exporting large amounts of data into
+some different format, or even spend time on figuring out how to do this.
+These things often could be, and should be simple and painless. Unfortunately
+they often are not (see this
+`blog by Cyrille Rossant <http://cyrille.rossant.net/moving-away-hdf5/>`__
+that echos my own experiences). This is why Darr was created.
 
 The **first objective of Darr** is to provide an easy way of working with
-with numeric data array and metadata, without having to worry about the
+with numeric data arrays and metadata, without having to worry about the
 things above. Data are persistent on disk in a self-explaining way, making
 them trivially easy to access in different analysis environments without
 needing additional explanation of how data is stored.

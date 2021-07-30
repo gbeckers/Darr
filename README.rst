@@ -4,34 +4,31 @@ Darr
 |Travis Status| |Appveyor Status| |PyPi version| |Conda Forge| |Coverage Status|
 |Docs Status| |Repo Status| |PyUp Badge|
 
-Darr is a Python library for working efficiently with disk-persistent NumPy
-arrays and metadata that are stored in a simple and self-explanatory way.
-Universally readable flat binary files and (JSON) text files are accompanied
-by a README text file that explains how the specific data is stored and
-that includes code for reading the array in a variety of current scientific
-data tools such as Python, R, Julia, IDL, Matlab, Maple, and Mathematica. It
-is trivially easy to share your data with others or even with yourself when
-working in different computing environments, because it is always
-stored with a clear and specific description of how to read it. No need to
-export anything or to provide elaborate explanation. No dependence on
-complicated formats or
-specialized tools.
+Darr is a Python science library to work with potentially large NumPy arrays
+and metadata that persist on disk, in a format that is simple,
+self-documented and tool-independent. The goal is to keep your data easily
+accessible on the short and long term, from a wide range of computing
+environments. Keeping data universally readable and documented is in line with
+good scientific practice. It not only makes it easy to share data with
+others, but also to look at you own data with different tools. More rationale
+for this approach is provided
+`here <https://darr.readthedocs.io/en/latest/rationale .html>`__.
 
-Tool-independent and easy access to data is in line with good scientific
-practice as it promotes wide and long-term availability, to others and
-to yourself. More rationale for this approach is provided
-`here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
+Flat binary files and (JSON) text files are accompanied by a README text file
+that explains how the specific data and metadata are stored and how they can
+be read. This includes code for reading the array in a variety of current
+scientific data tools such as Python, R, Julia, IDL, Matlab, Maple, and
+Mathematica. It is trivially easy to share your data with others or with
+yourself when working in different computing environments, because it always
+contains a clear and specific description of how to read it. No need to export
+anything or to provide elaborate explanation. No dependence on complicated
+formats or specialized tools.
 
 Darr uses NumPy memmory-mapped arrays under the hood, which you can
 access directly for full NumPy compatibility and efficient out-of-core
-read/write access to potentially very large arrays. In comparison with
-using NumPy memmap directly, Darr is even easier to use and adds automatic
-self-documentation, the easy use of associated metadata, the possibility to
-append or truncate arrays, and the use of ragged arrays.
-
-Darr currently only supports numerical N-dimensional arrays (simple data types,
-not structured arrays), and experimentally supports numerical ragged arrays,
-i.e. a sequence of arrays in which one dimension varies in length.
+read/write access to potentially very large arrays. In addition, Darr supports
+the possibility to append or truncate arrays, and the use of ragged arrays
+(still experimental).
 
 See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
 for a brief introduction, or the
