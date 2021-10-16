@@ -1,8 +1,8 @@
-update: all
+update: insecure
 
 requirements:
   - requirements.txt
 
-schedule: "every day"
+schedule: "every week"
 
 search: False
