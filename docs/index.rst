@@ -32,7 +32,7 @@ formats or specialized tools.
 Darr uses NumPy memmory-mapped arrays under the hood, which you can
 access directly for full NumPy compatibility and efficient out-of-core
 read/write access to potentially very large arrays. In addition, Darr supports
-the possibility to append or truncate arrays, and the use of ragged arrays
+the possibility to append and truncate arrays, and the use of ragged arrays
 (still experimental).
 
 See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
