@@ -136,7 +136,7 @@ The disk-based array can be used to read data into RAM using NumPy indexing.
 .. code:: python
 
     >>> a[:,-2]
-    darr array([ 1.,  1.])
+    array([ 1.,  1.])
 
 Note that that creates a NumPy array. The darr array itself is not a NumPy
 array, nor does it behave like one except for indexing. The simplest way
@@ -146,8 +146,8 @@ data first as a NumPy array:
 .. code:: python
 
     >>> 2 * a[:]
-    darr array([[2., 2., 2., ..., 2., 2., 2.],
-                [2., 2., 2., ..., 2., 2., 2.]])
+    array([[2., 2., 2., ..., 2., 2., 2.],
+           [2., 2., 2., ..., 2., 2., 2.]])
 
 If your data is too large to read into RAM, you could use the
 `Dask <https://dask.pydata.org/en/latest/>`__ library for
