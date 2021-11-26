@@ -17,7 +17,7 @@ without complications in different environments without having to install
 special libraries or having to look up things. You also want to share data
 without any hassle with your colleagues, who work with, say, R
 instead of Python. Sometimes you want to try out an algorithm that someone
-wrote in Matlab, but you do not want to exporting large amounts of data into
+wrote in Matlab, but you do not want to export large amounts of data into
 some different format, or even spend time on figuring out how to do this.
 These things often could be, and should be simple and painless. Unfortunately
 they often are not (see this
