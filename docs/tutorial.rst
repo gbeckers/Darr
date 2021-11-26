@@ -79,7 +79,7 @@ Or in `Julia <https://julialang.org/>`__:
 To see the files that correspond to a Darr array, see the example arrays in
 the source `repo <https://github.com/gbeckers/Darr/tree/master/examplearrays>`__.
 
-Note that this way Darr arrays are intended to be widely and easily readable
+Note that this way Darr arrays are widely and easily readable
 without Darr or Python, but the easiest of course is still to use Darr if that
 is available.
 
@@ -131,17 +131,17 @@ a filter over a long signal. The 'asarray' method reads iterables:
 Reading data
 ------------
 
-The disk-based array can be used to read data into RAM using NumPy indexing.
+The disk-based array can be read as a numpy array into RAM by using
+NumPy indexing.
 
 .. code:: python
 
     >>> a[:,-2]
     array([ 1.,  1.])
 
-Note that that creates a NumPy array. The darr array itself is not a NumPy
-array, nor does it behave like one except for indexing. The simplest way
-to use the data for computation is to, read (or view, see below) the
-data first as a NumPy array:
+Note that the darr array itself is not a NumPy array, nor does it behave
+like one except for indexing. The simplest way to use the data for
+computation is to, read (or view, see below) the data first as a NumPy array:
 
 .. code:: python
 
