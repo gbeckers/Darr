@@ -4,6 +4,7 @@ Release notes
 Version 0.4.0
 -------------
 - changed name 'open' method to 'open_array' for Arrays.
+- fixed bug setting metadata on RaggedArrays (would generate error)
 
 Version 0.3.3
 -------------
