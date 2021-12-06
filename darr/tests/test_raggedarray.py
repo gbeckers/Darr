@@ -278,5 +278,22 @@ class MetaData(unittest.TestCase):
                                      metadata=md)
             self.assertDictEqual(dict(dal.metadata), md)
 
+    def test_setmetadatawhenempty(self):
+        with tempdirfile() as filename:
+            md = {'fs': 20000, 'x': 33.3}
+            dal = create_raggedarray(filename, atom=(), dtype='float64')
+            dal.metadata.update(md)
+            self.assertDictEqual(dict(dal.metadata), md)
+
+    def test_setmetadatawhenpresent(self):
+        with tempdirfile() as filename:
+            md = {'fs': 20000, 'x': 33.3}
+            dal = create_raggedarray(filename, atom=(), dtype='float64',
+                                     metadata=md)
+            md['fs'] = 3000
+            dal.metadata.update(md)
+            self.assertDictEqual(dict(dal.metadata), md)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -15,6 +15,8 @@ class MetaData:
     def __init__(self, path, accessmode='r', callatfilecreationordeletion=None):
 
         path = Path(path)
+        if callatfilecreationordeletion is None:
+            callatfilecreationordeletion = lambda *args: None
         self._path = path
         self._accessmode = check_accessmode(accessmode)
         self._callatfilecreationordeletion = callatfilecreationordeletion
