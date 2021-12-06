@@ -64,11 +64,11 @@ fileid = file("values/arrayvalues.bin", "rb")
 v = readBin(con=fileid, what=integer(), n=48, size=4, signed=TRUE, endian="little")
 v = array(data=v, dim=c(2, 24), dimnames=NULL)
 close(fileid)
+# create function to get subarrays:
 get_subarray <- function(j){
     starti = i[1,j]+1  # R starts counting from 1
     endi = i[2,j]  # R has inclusive end index
     return (v[,starti:endi])}
-# create function to get subarrays:
 # example to read third subarray:
 # get_subarray(3)
 
