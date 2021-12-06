@@ -26,7 +26,8 @@ Mathematica. It is trivially easy to share your data with others or with
 yourself when working in different computing environments, because it always
 contains a clear and specific description of how to read it. No need to export
 anything or to provide elaborate explanation. No dependence on complicated
-formats or specialized tools.
+formats or specialized tools. Self-documentation and code examples are
+automatically updated as your array changes.
 
 Darr uses NumPy memmory-mapped arrays under the hood, which you can
 access directly for full NumPy compatibility and efficient out-of-core
