@@ -1141,8 +1141,8 @@ def readcodetxt(da):
     """
 
     s = numtypedescriptiontxt(da)
-    s += "Example code for reading the numeric data\n" \
-         "=========================================\n\n"
+    s += "Code snippets for reading the numeric data\n" \
+         "==========================================\n\n"
     languages = (
         ("Python with Darr:", "darr"),
         ("Python with Numpy:", "numpy"),
