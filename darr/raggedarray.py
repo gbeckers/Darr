@@ -329,7 +329,7 @@ readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
                + "\n\n" + \
             wrap('If Darr is not available, the data can also be read in '\
                  'other environments, with a little more effort, using the '\
-                 'description or example code below.') + '\n\n\n' \
+                 'description or code snippets below.') + '\n\n\n' \
             + 'Description of data storage\n' \
             + '---------------------------\n' + \
             wrap('There are two subdirectories, each containing an array '
