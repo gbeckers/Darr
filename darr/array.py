@@ -1185,15 +1185,14 @@ def numtypedescriptiontxt(da):
         endiannessdescr = 'most-significant byte last'
     elif endianness == 'big':
         endiannessdescr = 'most-significant byte first'
-    if ismultid: # we include arrayorder info only if array is multidimensional
-        if arrayorder == 'C':
-            arrayorderdescr = 'Row-major; last dimension varies most rapidly ' \
-                              'with memory address'
-        elif arrayorder == 'F':
-            arrayorderdescr = 'Column-major; first dimension varies most rapidly ' \
-                              'with memory address'
-        else:
-            raise ValueError(f'arrayorder type "{arrayorder}" unknown')
+    if arrayorder == 'C':
+        arrayorderdescr = 'Row-major; last dimension varies most rapidly ' \
+                          'with memory address'
+    elif arrayorder == 'F':
+        arrayorderdescr = 'Column-major; first dimension varies most rapidly ' \
+                          'with memory address'
+    else:
+        raise ValueError(f'arrayorder type "{arrayorder}" unknown')
     s = wrap("This directory contains a numeric array that is stored in an "
              "open and simple format. It should be easy to access the data in "
              "most analysis environments. In Python, you can use the Darr "\
@@ -1213,8 +1212,9 @@ def numtypedescriptiontxt(da):
         s += f"  Array length: {shape[0]}\n"
     else:
         s += f"  Array dimensions: {shape}\n"
-    s += f"  Array order layout:  {arrayorder} ({arrayorderdescr})\n\n"
-    s += wrap("These details are also stored in JSON format in the separate "
+    if ismultid:  # we include arrayorder info only if array is multidimensional
+        s += f"  Array order layout:  {arrayorder} ({arrayorderdescr})\n"
+    s += wrap("\nThese details are also stored in JSON format in the separate "
               "UTF-8 text file, 'arraydescription.json'.") + "\n\n"
     if len(da.metadata) > 0:
         s += wrap("The file 'metadata.json' contains metadata in JSON UTF-8 "\
