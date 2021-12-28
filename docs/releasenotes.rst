@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Master
+------
+- improve array format README description.
+
 Version 0.4.0
 -------------
 - changed name 'open' method to 'open_array' for Arrays.
