@@ -1174,6 +1174,10 @@ def numtypedescriptiontxt(da):
     """
     d = da._arrayinfo
     shape = d['shape']
+    if len(shape) > 1:
+        ismultid = True
+    else:
+        ismultid = False
     typedescr = numtypesdescr[d['numtype']]
     arrayorder = d['arrayorder']
     endianness = d['byteorder']
@@ -1181,14 +1185,15 @@ def numtypedescriptiontxt(da):
         endiannessdescr = 'most-significant byte last'
     elif endianness == 'big':
         endiannessdescr = 'most-significant byte first'
-    if arrayorder == 'C':
-        arrayorderdescr = 'Row-major; last dimension varies most rapidly ' \
-                          'with memory address'
-    elif arrayorder == 'F':
-        arrayorderdescr = 'Column-major; first dimension varies most rapidly ' \
-                          'with memory address'
-    else:
-        raise ValueError(f'arrayorder type "{arrayorder}" unknown')
+    if ismultid: # we include arrayorder info only if array is multidimensional
+        if arrayorder == 'C':
+            arrayorderdescr = 'Row-major; last dimension varies most rapidly ' \
+                              'with memory address'
+        elif arrayorder == 'F':
+            arrayorderdescr = 'Column-major; first dimension varies most rapidly ' \
+                              'with memory address'
+        else:
+            raise ValueError(f'arrayorder type "{arrayorder}" unknown')
     s = wrap("This directory contains a numeric array that is stored in an "
              "open and simple format. It should be easy to access the data in "
              "most analysis environments. In Python, you can use the Darr "\
