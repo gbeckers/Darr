@@ -3,15 +3,15 @@ import numpy as np
 
 
 numtypesdescr = {
-    'int8': '8-bit signed integer (-128 to 127)',
-    'int16': '16‐bit signed integer (-32768 to 32767)',
-    'int32': '32‐bit signed integer (-2147483648 to 2147483647)',
-    'int64': '64‐bit signed integer (-9223372036854775808 to '
+    'int8': '8-bit signed integer (range: -128 to 127)',
+    'int16': '16‐bit signed integer (range: -32768 to 32767)',
+    'int32': '32‐bit signed integer (range: -2147483648 to 2147483647)',
+    'int64': '64‐bit signed integer (range: -9223372036854775808 to '
              '9223372036854775807)',
-    'uint8': '8‐bit unsigned integer (0 to 255)',
-    'uint16': '16‐bit unsigned integer (0 to 65535)',
-    'uint32': '32‐bit unsigned integer (0 to 4294967295)',
-    'uint64': '64‐bit unsigned integer (0 to 18446744073709551615)',
+    'uint8': '8‐bit unsigned integer (range: 0 to 255)',
+    'uint16': '16‐bit unsigned integer (range: 0 to 65535)',
+    'uint32': '32‐bit unsigned integer (range: 0 to 4294967295)',
+    'uint64': '64‐bit unsigned integer (range: 0 to 18446744073709551615)',
     'float16': '16-bit half precision float (sign bit, 5 bits exponent, 10 '
                'bits mantissa)',
     'float32': '32-bit IEEE single precision float (sign bit, 8 bits exponent, '
