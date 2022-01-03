@@ -1,0 +1,10 @@
+{
+    "arrayorder": "C",
+    "byteorder": "little",
+    "darrobject": "Array",
+    "darrversion": "0.4.0+9.g8921c6c.dirty",
+    "numtype": "uint32",
+    "shape": [
+        7
+    ]
+}
