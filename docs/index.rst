@@ -102,6 +102,7 @@ functions/methods may still change.
 
    tutorial
    rationale
+   readcode
    contributing
    testing
    releasenotes
