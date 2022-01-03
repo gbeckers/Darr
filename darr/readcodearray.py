@@ -271,6 +271,39 @@ def readcodemaple(numtype, shape, endianness, filepath='arrayvalues.bin',
         ct += f'{varname} := ArrayTools[Reshape]({varname}, {shape});\n'
     return ct
 
+typedescr_python = {'int8': 'b',
+                   'int16': 'h',
+                   'int32': 'l',
+                   'int64': 'q',
+                   'uint8': 'B',
+                   'uint16': 'H',
+                   'uint32': 'L',
+                   'uint64': 'Q',
+                   'float16': None,
+                   'float32': 'f',
+                   'float64': 'd',
+                   'complex64': None,
+                   'complex128': None,
+                  }
+
+endianness_python = {'little': '<',
+                    'big': '>'}
+
+def readcodepython(numtype, shape, endianness, filepath='arrayvalues.bin',
+                  varname='a'):
+    typeletter = typedescr_python[numtype]
+    endianness = endianness_python[endianness]
+    if typeletter is None:
+        return None
+    if len(shape) > 1:
+        return None
+    typedescr = f"{endianness}{shape[0]}{typeletter}"
+    ct = f"import array\n"\
+         f"import struct\n"\
+         f"with open('arrayvalues.bin', 'rb') as f:\n" \
+         f"    {varname} = array.array('{typeletter}', " \
+         f"struct.unpack('{typedescr}', f.read()))\n"
+    return ct
 
 readcodefunc = {
         'darr': readcodedarr,
@@ -282,6 +315,7 @@ readcodefunc = {
         'maple': readcodemaple,
         'numpy': readcodenumpy,
         'numpymemmap': readcodenumpymemmap,
+        'python': readcodepython,
         'R': readcoder,
 }
 

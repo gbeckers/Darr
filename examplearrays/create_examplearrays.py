@@ -21,6 +21,12 @@ def create_arrays():
         ar[:] = [[1, 2], [3, 4], [4, 6], [7, 8],
                  [9, 10], [11, 12], [13, 14], [15, 16]]
 
+    for numtype in numtypesdescr.keys():
+        ar = darr.create_array(f'examplearray_{numtype}_1D.darr', shape=(7,),
+                               dtype=numtype, metadata=metadata,
+                               overwrite=True)
+        ar[:] = [1,3,5,7,9,11,13]
+
 def create_raggedarrays():
     metadata = {
         "channels": [

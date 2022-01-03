@@ -1,9 +1,9 @@
 This directory contains a numeric array that is stored in an open and simple
-format and that is easy to access in most analysis environments. In Python,
-you can use the Darr library (https://pypi.org/project/darr/), which was used
-to create the data. Alternatively, to access the data directly in Python or
-other environments, use the information below, which includes code for a
-number of popular platforms.
+format. It should be easy to access the data in most analysis environments. In
+Python, you can use the Darr library (https://pypi.org/project/darr/), which
+was used to create the data. Alternatively, you can access the data directly
+using the code snippets below. If your language is not included, the full data
+format description should help.
 
 
 Data format
@@ -23,8 +23,8 @@ These details are also stored in JSON format in the separate UTF-8 text file,
 The file 'metadata.json' contains metadata in JSON UTF-8 text format.
 
 
-Example code for reading the numeric data
-=========================================
+Code snippets for reading the numeric data
+==========================================
 
 Python with Darr:
 -----------------

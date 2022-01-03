@@ -1144,6 +1144,7 @@ def readcodetxt(da):
     s += "Code snippets for reading the numeric data\n" \
          "==========================================\n\n"
     languages = (
+        ("Python:", 'python'),
         ("Python with Darr:", "darr"),
         ("Python with Numpy:", "numpy"),
         ("Python with Numpy (memmap):", "numpymemmap"),

@@ -2,7 +2,7 @@
     "arrayorder": "C",
     "byteorder": "little",
     "darrobject": "Array",
-    "darrversion": "0.4.0",
+    "darrversion": "0.4.0+9.g8921c6c.dirty",
     "numtype": "int64",
     "shape": [
         8,

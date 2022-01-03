@@ -4,6 +4,7 @@ Release notes
 Master
 ------
 - improve array format README description.
+- add pure Python read code for 1D arrays.
 
 Version 0.4.0
 -------------

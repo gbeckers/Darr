@@ -14,7 +14,7 @@ where 'path_to_array_dir' is the name of the array directory, which is the one
 that also contains this README.
 
 If Darr is not available, the data can also be read in other environments,
-with a little more effort, using the description or example code below.
+with a little more effort, using the description or code snippets below.
 
 
 Description of data storage
