@@ -18,7 +18,8 @@ to read the array in other analysis platforms. Currently supported are:
 
 However, not all arrays are supported in all environments. For example Maple
 does not have unsigned integers, and Python without numpy does not support
-multi-dimensional arrays. Hence Darr will not include code for such arrays.
+multi-dimensional arrays. Darr will not include code for incompatible array
+types.
 
 Example arrays with code can be found `here <https://github
 .com/gbeckers/Darr/tree/master/examplearrays>`__.
