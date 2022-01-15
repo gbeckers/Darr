@@ -51,7 +51,8 @@ Features
    **human-readable explanation** of how the data is stored.
 -  README includes **examples of how to read the array** in a number of popular
    data analysis environments, such as Python (without Darr), R, Julia,
-   Octave/Matlab, GDL/IDL, and Mathematica (see `example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_uint64.darr>`__).
+   Octave/Matlab, GDL/IDL, and Mathematica (see `example array
+   <https://github.com/gbeckers/Darr/tree/master/examplearrays/examplearray_float64.darr>`__).
 -  Data is easily **appendable**.
 -  **Many numeric types** are supported: (u)int8-(u)int64, float16-float64,
    complex64, complex128.
