@@ -24,8 +24,8 @@ include code for such arrays.
 Example arrays with code can be found `here <https://github
 .com/gbeckers/Darr/tree/master/examplearrays>`__.
 
-Compatibility data types in other environments
-----------------------------------------------
+Compatibility array data types in other environments
+----------------------------------------------------
 
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 |            | IDL | Julia | Maple | Mathematica | Matlab | Numpy | Python | R  |
@@ -57,3 +57,4 @@ Compatibility data types in other environments
 | complex128 | X   |   X   |       |      X      |        |   X   |        | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 
+X = supported
