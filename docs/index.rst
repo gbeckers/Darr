@@ -103,6 +103,7 @@ functions/methods may still change.
    tutorial
    rationale
    readcode
+   troubleshooting
    contributing
    testing
    releasenotes
