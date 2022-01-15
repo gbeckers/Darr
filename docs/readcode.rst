@@ -70,5 +70,5 @@ Compatibility multidimensional arrays in other environments
 | N-D array  |  X  |   X   |   X   |      X      |   X    |   X   |        | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 
-1-D : One-dimensional
+1-D : One-dimensional,
 N-D : Multi-dimensional
