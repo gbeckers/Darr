@@ -9,10 +9,7 @@ persist in a format that is simple, self-documented and tool-independent.
 Arrays may be larger than memory and contain metadata. The goal is to keep
 your data easily accessible on the short and long term and from a wide range of
 computing environments. Keeping data universally readable and documented is in
-line with good scientific practice. It not only makes it easy to share data
-with others, but also to look at you own data with different tools. More
-rationale for this approach is provided
-`here <https://darr.readthedocs.io/en/latest/rationale .html>`__.
+line with good scientific practice.
 
 Flat binary files and (JSON) text files are accompanied by a README text file
 that explains how the array and metadata are stored and how they can
@@ -23,7 +20,10 @@ yourself when working in different computing environments, because it always
 contains a clear and specific description of how to read it. No need to export
 anything or to provide elaborate explanation. No dependence on complicated
 formats or specialized tools. Self-documentation and code examples are
-automatically updated as your array changes.
+automatically updated as your array changes. It not only makes it easy to
+share data with others, but also to look at you own data with different
+tools. More rationale for this approach is provided
+`here <https://darr.readthedocs.io/en/latest/rationale .html>`__.
 
 Darr uses NumPy memmory-mapped arrays under the hood, which you can
 access directly for full NumPy compatibility and efficient out-of-core
