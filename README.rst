@@ -4,12 +4,15 @@ Darr
 |Travis Status| |Appveyor Status| |PyPi version| |Conda Forge| |Coverage Status|
 |Docs Status| |Repo Status| |PyUp Badge|
 
-Darr is a Python science library to work with disk-based NumPy arrays that
+Darr is a Python science library for disk-based NumPy arrays that
 persist in a format that is simple, self-documented and tool-independent.
-Arrays may be larger than memory and contain metadata. The goal is to keep
-your data easily accessible on the short and long term and from a wide range of
-computing environments. Keeping data universally readable and documented is in
-line with good scientific practice.
+It enables you to work efficiently with potentially very large arrays, while
+keeping your data easily accessible from a wide range of computing
+environments. Even if you don't work with very large arrays, Darr is a very
+convenient way to store your arrays in a way that keeps them universally
+readable and documented, which is in line with good scientific practice. More
+rationale for this approach is provided
+`here <https://darr.readthedocs.io/en/latest/rationale .html>`__.
 
 Flat binary files and (JSON) text files are accompanied by a README text file
 that explains how the array and metadata are stored and how they can
@@ -17,13 +20,11 @@ be read. This includes code for reading the array in a variety of current
 scientific data tools such as Python, R, Julia, IDL, Matlab, Maple, and
 Mathematica. It is trivially easy to share your data with others or with
 yourself when working in different computing environments, because it always
-contains a clear and specific description of how to read it. No need to export
+contains a clear and specific description of how to read it. Say you quickly
+want to run some R code from a colleague on your arrays. No need to export
 anything or to provide elaborate explanation. No dependence on complicated
 formats or specialized tools. Self-documentation and code examples are
-automatically updated as your array changes. It not only makes it easy to
-share data with others, but also to look at you own data with different
-tools. More rationale for this approach is provided
-`here <https://darr.readthedocs.io/en/latest/rationale .html>`__.
+automatically updated as you change your arrays when working with them.
 
 Darr uses NumPy memmory-mapped arrays under the hood, which you can
 access directly for full NumPy compatibility and efficient out-of-core
