@@ -2,6 +2,9 @@
 Darr API Documentation
 ======================
 
+.. contents:: :local:
+   :depth: 2
+
 Two types of numeric data structures are supported:
 
 * arrays_
@@ -64,6 +67,6 @@ Deleting ragged arrays
 .. autofunction:: darr.delete_raggedarray
 
 Truncating ragged arrays
-----------------------
+------------------------
 
 .. autofunction:: darr.truncate_raggedarray
