@@ -6,7 +6,10 @@ build:
     python: "3.9"
 
 python:
+  version: "3.9"
   install:
+    - method: pip
+      path: .
     - requirements: requirements.txt
 
 sphinx:
