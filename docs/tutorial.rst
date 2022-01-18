@@ -8,6 +8,8 @@ Tutorial
 
 Accessing an existing array
 ---------------------------
+Darr arrays are represented on disk by a folder with some files in it. Use
+the folder path ('data.darr' in the example) to access it:
 
 .. code:: python
 
@@ -22,16 +24,29 @@ you need to specify that and set 'accesmode' to 'r+'.
 
 .. code:: python
 
-    >>> import darr
     >>> a = darr.Array('data.darr', accessmode='r+')
-    >>> a
-    darr array([[1., 2., 3., ..., 97., 98., 99.],
-                [0., 0., 0., ..., 0., 0., 0.]]) (r+)
 
 .. _creating:
 
-Creating an array
------------------
+Creating an array from a NumPy array or a sequence
+--------------------------------------------------
+Use the 'asarray' function. It will take sequences, numpy arrays, and
+iterables.
+
+.. code:: python
+
+    >>> import numpy as np
+    >>> na = np.ones((2,1024))
+    >>> a = darr.asarray('a3.darr', na)
+    >>> a
+    darr array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
+                [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
+
+
+Creating an array from scratch
+------------------------------
+Use the 'create_array' function. Particularly useful if you want to create a
+gigantic array that does not fit in RAM memory.
 
 .. code:: python
 
@@ -44,7 +59,23 @@ Creating an array
 The default is to fill the array with zeros (of type float64) but this
 can be changed by the 'fill' and 'fillfunc' parameters. See the api.
 
-The data is now stored on disk in a directory named 'a1.darr', containing
+.. _numptype:
+
+To specify the numeric type, use the dtype argument:
+
+.. code:: python
+
+    >>> a = darr.create_array('a2.darr', shape=(2,1024), dtype='uint8')
+    >>> a
+    darr array([[0, 0, 0, ..., 0, 0, 0],
+                [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
+
+
+.. _documentation:
+
+Automatic self-documentation
+----------------------------
+Array data is stored on disk in a folder, containing
 a flat binary file ('arrayvalues.bin') and a human-readble
 `JSON <https://en.wikipedia.org/wiki/JSON>`__ text file
 ('arraydescription.json'), with information on the array dimensionality,
@@ -83,33 +114,8 @@ Note that this way Darr arrays are widely and easily readable
 without Darr or Python, but the easiest of course is still to use Darr if that
 is available.
 
-.. _numptype:
-
-To specify the numeric type, use the dtype argument:
-
-.. code:: python
-
-    >>> a = darr.create_array('a2.darr', shape=(2,1024), dtype='uint8')
-    >>> a
-    darr array([[0, 0, 0, ..., 0, 0, 0],
-                [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
-
 .. _fromnumpy:
 
-Creating an array from a NumPy array or a sequence
---------------------------------------------------
-
-.. code:: python
-
-    >>> import numpy as np
-    >>> na = np.ones((2,1024))
-    >>> a = darr.asarray('a3.darr', na)
-    >>> a
-    darr array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
-                [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
-
-This also works for anything that can be converted into a numpy array, such
-as lists, tuples.
 
 Creating an array from an iterable
 ----------------------------------
