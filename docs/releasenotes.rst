@@ -5,6 +5,7 @@ Master
 ------
 - improve array format README description.
 - add pure Python read code for 1D arrays.
+- add archive methods to arrays and raggedarrays
 
 Version 0.4.0
 -------------
