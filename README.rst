@@ -1,7 +1,7 @@
 Darr
 ====
 
-|Travis Status| |Appveyor Status| |PyPi version| |Conda Forge| |Coverage Status|
+|Github CI Status| |Appveyor Status| |PyPi version| |Conda Forge| |Coverage Status|
 |Docs Status| |Repo Status| |PyUp Badge|
 
 Darr is a Python science library for disk-based NumPy arrays that persist in
@@ -115,8 +115,8 @@ If Darr is not exactly what you are looking for, have a look at these projects:
 Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2022, Gabriël
 Beckers
 
-.. |Travis Status| image:: https://travis-ci.com/gbeckers/Darr.svg?branch=master
-   :target: https://travis-ci.com/gbeckers/Darr?branch=master
+.. |Github CI Status| image:: https://github.com/gbeckers/darr/actions/python_package.yml/badge.svg
+   :target: https://github.com/gbeckers/darr/actions/python_package.yml
 .. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
    :target: https://ci.appveyor.com/project/gbeckers/darr
 .. |PyPi version| image:: https://img.shields.io/badge/pypi-0.4.0-orange.svg
