@@ -4,8 +4,8 @@ Darr
 |Travis Status| |Appveyor Status| |PyPi version| |Conda Forge| |Coverage Status|
 |Docs Status| |Repo Status| |PyUp Badge|
 
-Darr is a Python science library for disk-based NumPy arrays that
-persist in a format that is simple, self-documented and tool-independent.
+Darr is a Python science library for disk-based NumPy arrays that persist in
+a format that is simple, self-documented and tool-independent.
 It enables you to work efficiently with potentially very large arrays, while
 keeping your data easily accessible from a wide range of computing
 environments. Even if you don't work with very large arrays, Darr is a very
