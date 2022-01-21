@@ -170,7 +170,7 @@ be writable first:
 
 .. code:: python
 
-    >>> a.set_accessmode('r+')
+    >>> a.accessmode = 'r+'
     >>> a[:,1] = 2.
     >>> a
     darr array([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
@@ -187,9 +187,9 @@ array so as to open and close the underlying files only once:
 .. code:: python
 
     >>> with a.open_array():
-    ...     a1[0,0] = 3.
-    ...     a1[0,2] = 4.
-    ...     a[11,[0,2,-1]] = 5.
+    ...     a[0,0] = 3.
+    ...     a[0,2] = 4.
+    ...     a[1,[0,2,-1]] = 5.
     >>> a
     darr array([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
                 [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)

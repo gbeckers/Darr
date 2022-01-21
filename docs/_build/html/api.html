@@ -4,16 +4,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Darr API Documentation &#8212; darr 0.4.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -41,24 +41,24 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="darr-api-documentation">
+  <div class="section" id="darr-api-documentation">
 <h1>Darr API Documentation<a class="headerlink" href="#darr-api-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#arrays" id="id2">Arrays</a></p>
+<li><p><a class="reference internal" href="#arrays" id="id3">Arrays</a></p>
 <ul>
-<li><p><a class="reference internal" href="#accessing-arrays" id="id3">Accessing arrays</a></p></li>
-<li><p><a class="reference internal" href="#creating-arrays" id="id4">Creating arrays</a></p></li>
-<li><p><a class="reference internal" href="#deleting-arrays" id="id5">Deleting arrays</a></p></li>
-<li><p><a class="reference internal" href="#truncating-arrays" id="id6">Truncating arrays</a></p></li>
+<li><p><a class="reference internal" href="#accessing-arrays" id="id4">Accessing arrays</a></p></li>
+<li><p><a class="reference internal" href="#creating-arrays" id="id5">Creating arrays</a></p></li>
+<li><p><a class="reference internal" href="#deleting-arrays" id="id6">Deleting arrays</a></p></li>
+<li><p><a class="reference internal" href="#truncating-arrays" id="id7">Truncating arrays</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#ragged-arrays" id="id7">Ragged Arrays</a></p>
+<li><p><a class="reference internal" href="#ragged-arrays" id="id8">Ragged Arrays</a></p>
 <ul>
-<li><p><a class="reference internal" href="#accessing-ragged-arrays" id="id8">Accessing ragged arrays</a></p></li>
-<li><p><a class="reference internal" href="#creating-ragged-arrays" id="id9">Creating ragged arrays</a></p></li>
-<li><p><a class="reference internal" href="#deleting-ragged-arrays" id="id10">Deleting ragged arrays</a></p></li>
-<li><p><a class="reference internal" href="#truncating-ragged-arrays" id="id11">Truncating ragged arrays</a></p></li>
+<li><p><a class="reference internal" href="#accessing-ragged-arrays" id="id9">Accessing ragged arrays</a></p></li>
+<li><p><a class="reference internal" href="#creating-ragged-arrays" id="id10">Creating ragged arrays</a></p></li>
+<li><p><a class="reference internal" href="#deleting-ragged-arrays" id="id11">Deleting ragged arrays</a></p></li>
+<li><p><a class="reference internal" href="#truncating-ragged-arrays" id="id12">Truncating ragged arrays</a></p></li>
 </ul>
 </li>
 </ul>
@@ -76,13 +76,13 @@ and lists, using the <strong>asarray</strong> function. Alternatively, darr arra
 created from scratch by the <strong>create_array</strong> function. Existing Darr data on
 disk can be accessed through the <strong>Array</strong> constructor. To remove a Darr
 array from disk, use <strong>delete_array</strong>.</p>
-<section id="arrays">
-<span id="id1"></span><h2><a class="toc-backref" href="#id2">Arrays</a><a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h2>
-<section id="accessing-arrays">
-<h3><a class="toc-backref" href="#id3">Accessing arrays</a><a class="headerlink" href="#accessing-arrays" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="arrays">
+<span id="id1"></span><h2><a class="toc-backref" href="#id3">Arrays</a><a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="accessing-arrays">
+<h3><a class="toc-backref" href="#id4">Accessing arrays</a><a class="headerlink" href="#accessing-arrays" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
-<dt class="sig sig-object py" id="darr.Array">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darr.</span></span><span class="sig-name descname"><span class="pre">Array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accessmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.Array">
+<em class="property">class </em><code class="sig-prename descclassname">darr.</code><code class="sig-name descname">Array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">accessmode</span><span class="o">=</span><span class="default_value">'r'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instantiate a Darr array from disk.</p>
 <p>A darr array corresponds to a directory containing 1) a binary file with
 the raw numeric array values, 2) a text file (json format) describing the
@@ -100,15 +100,15 @@ functions.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.accessmode">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">accessmode</span></span><a class="headerlink" href="#darr.Array.accessmode" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.accessmode">
+<em class="property">property </em><code class="sig-name descname">accessmode</code><a class="headerlink" href="#darr.Array.accessmode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Data access mode of metadata, {‘r’, ‘r+’}.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="darr.Array.append">
-<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.append" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.Array.append">
+<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add array-like objects to darr to the end of the dataset.</p>
 <p>Data will be appended along the first axis. The shape of the data and
 the darr must be compliant. When appending data repeatedly it is
@@ -142,8 +142,34 @@ numpy array.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="darr.Array.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunklen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accessmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.copy" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.Array.archive">
+<code class="sig-name descname">archive</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">compressiontype</span><span class="o">=</span><span class="default_value">'xz'</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Archive array data into a single compressed file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – Name of the archive. In None, it will be derived from the data’s
+path name.</p></li>
+<li><p><strong>compressiontype</strong> (<em>str</em>) – One of ‘xz’, ‘gz’, or ‘bz2’, corresponding to the gzip, bz2 and
+lzma compression algorithms supported by the Python standard
+library.</p></li>
+<li><p><strong>overwrite</strong> (<em>(</em><em>True</em><em>, </em><em>False</em><em>)</em><em>, </em><em>optional</em>) – Overwrites existing archive if it exists. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The path of the created archive</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pathlib.Path</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>See the <a class="reference external" href="https://docs.python.org/3/library/tarfile.html">tarfile library</a> for more info on archiving formats</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="darr.Array.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">chunklen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">accessmode</span><span class="o">=</span><span class="default_value">'r'</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copy darr to a different path, potentially changing its dtype.</p>
 <p>The copying is performed in chunks to avoid RAM memory overflow for
 very large darr arrays.</p>
@@ -173,29 +199,29 @@ raised. Default is <cite>False</cite>.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.datadir">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">datadir</span></span><a class="headerlink" href="#darr.Array.datadir" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.datadir">
+<em class="property">property </em><code class="sig-name descname">datadir</code><a class="headerlink" href="#darr.Array.datadir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Data directory object with many useful methods, such as
 writing information to text or json files, archiving all data,
 calculating checksums etc.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.dtype">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#darr.Array.dtype" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.dtype">
+<em class="property">property </em><code class="sig-name descname">dtype</code><a class="headerlink" href="#darr.Array.dtype" title="Permalink to this definition">¶</a></dt>
 <dd><p>Numpy data type of the array values.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.itemsize">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">itemsize</span></span><a class="headerlink" href="#darr.Array.itemsize" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.itemsize">
+<em class="property">property </em><code class="sig-name descname">itemsize</code><a class="headerlink" href="#darr.Array.itemsize" title="Permalink to this definition">¶</a></dt>
 <dd><p>The size in bytes of each item in the array.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="darr.Array.iterappend">
-<span class="sig-name descname"><span class="pre">iterappend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arrayiterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.iterappend" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.Array.iterappend">
+<code class="sig-name descname">iterappend</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arrayiterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.iterappend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iteratively append data from a data iterable.</p>
 <p>The iterable has to yield chunks of data that are array-like objects
 compliant with Darr arrays.</p>
@@ -231,8 +257,8 @@ compliant with Darr arrays.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="darr.Array.iterchunks">
-<span class="sig-name descname"><span class="pre">iterchunks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chunklen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startindex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endindex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_remainder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accessmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.iterchunks" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.Array.iterchunks">
+<code class="sig-name descname">iterchunks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chunklen</span></em>, <em class="sig-param"><span class="n">stepsize</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">startindex</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">endindex</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_remainder</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">accessmode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.iterchunks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterate over data array of the darr yielding chunks of a
 given length and with a given stepsize.</p>
 <p>This method keeps the underlying data file open during iteration,
@@ -278,8 +304,8 @@ means read-write.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="darr.Array.iterindices">
-<span class="sig-name descname"><span class="pre">iterindices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chunklen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startindex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endindex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_remainder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.iterindices" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.Array.iterindices">
+<code class="sig-name descname">iterindices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chunklen</span></em>, <em class="sig-param"><span class="n">stepsize</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">startindex</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">endindex</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">include_remainder</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.iterindices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate indices of chunks of a given length and with a given
 stepsize.</p>
 <p>This method keeps the underlying data file open during iteration,
@@ -322,33 +348,33 @@ means read-write.</p></li>
 </div>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.mb">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mb</span></span><a class="headerlink" href="#darr.Array.mb" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.mb">
+<em class="property">property </em><code class="sig-name descname">mb</code><a class="headerlink" href="#darr.Array.mb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Array size in megabytes, excluding metadata.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.metadata">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#darr.Array.metadata" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.metadata">
+<em class="property">property </em><code class="sig-name descname">metadata</code><a class="headerlink" href="#darr.Array.metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dictionary-like interface to metadata.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.nbytes">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nbytes</span></span><a class="headerlink" href="#darr.Array.nbytes" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.nbytes">
+<em class="property">property </em><code class="sig-name descname">nbytes</code><a class="headerlink" href="#darr.Array.nbytes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Array size in bytes, excluding metadata.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.ndim">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ndim</span></span><a class="headerlink" href="#darr.Array.ndim" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.ndim">
+<em class="property">property </em><code class="sig-name descname">ndim</code><a class="headerlink" href="#darr.Array.ndim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Number of dimensions</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="darr.Array.open_array">
-<span class="sig-name descname"><span class="pre">open_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accessmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.open_array" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.Array.open_array">
+<code class="sig-name descname">open_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">accessmode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.open_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open the array for efficient multiple read or write operations.</p>
 <p>Although read and write operations can be performed conveniently using
 indexing notation on the Darr object, this can be relatively slow
@@ -376,15 +402,15 @@ means read-write.</p>
 </div>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.path">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#darr.Array.path" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.path">
+<em class="property">property </em><code class="sig-name descname">path</code><a class="headerlink" href="#darr.Array.path" title="Permalink to this definition">¶</a></dt>
 <dd><p>File system path to array data</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="darr.Array.readcode">
-<span class="sig-name descname"><span class="pre">readcode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.readcode" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.Array.readcode">
+<code class="sig-name descname">readcode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">language</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.Array.readcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate code to read the array in a different language.</p>
 <p>Note that this does not include reading the metadata, which is just
 based on a text file in JSON format.</p>
@@ -405,26 +431,26 @@ based on a text file in JSON format.</p>
 </div>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.shape">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><a class="headerlink" href="#darr.Array.shape" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.shape">
+<em class="property">property </em><code class="sig-name descname">shape</code><a class="headerlink" href="#darr.Array.shape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tuple with sizes of each axis of the data array.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.Array.size">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#darr.Array.size" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.Array.size">
+<em class="property">property </em><code class="sig-name descname">size</code><a class="headerlink" href="#darr.Array.size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Total number of values in the data array.</p>
 </dd></dl>
 
 </dd></dl>
 
-</section>
-<section id="creating-arrays">
-<h3><a class="toc-backref" href="#id4">Creating arrays</a><a class="headerlink" href="#creating-arrays" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="creating-arrays">
+<h3><a class="toc-backref" href="#id5">Creating arrays</a><a class="headerlink" href="#creating-arrays" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
-<dt class="sig sig-object py" id="darr.asarray">
-<span class="sig-prename descclassname"><span class="pre">darr.</span></span><span class="sig-name descname"><span class="pre">asarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accessmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunklen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.asarray" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.asarray">
+<code class="sig-prename descclassname">darr.</code><code class="sig-name descname">asarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">array</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">accessmode</span><span class="o">=</span><span class="default_value">'r'</span></em>, <em class="sig-param"><span class="n">metadata</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">chunklen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.asarray" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save an array or array generator as a Darr array to file system path.</p>
 <p>Data is always written in ‘C’ order to disk, independent of the order of
 <cite>array</cite>.</p>
@@ -463,7 +489,7 @@ these will not be removed and an OSError is raised. Default is <cite>False</cite
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference internal" href="#darr.create_array" title="darr.create_array"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_array</span></code></a></dt><dd><p>create an array from scratch.</p>
+<dt><a class="reference internal" href="#darr.create_array" title="darr.create_array"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_array()</span></code></a></dt><dd><p>create an array from scratch.</p>
 </dd>
 </dl>
 </div>
@@ -485,8 +511,8 @@ these will not be removed and an OSError is raised. Default is <cite>False</cite
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="darr.create_array">
-<span class="sig-prename descclassname"><span class="pre">darr.</span></span><span class="sig-name descname"><span class="pre">create_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'float64'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillfunc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accessmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunklen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.create_array" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.create_array">
+<code class="sig-prename descclassname">darr.</code><code class="sig-name descname">create_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">shape</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">'float64'</span></em>, <em class="sig-param"><span class="n">fill</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fillfunc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">accessmode</span><span class="o">=</span><span class="default_value">'r+'</span></em>, <em class="sig-param"><span class="n">chunklen</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">metadata</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.create_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new <cite>darr array</cite> of given shape and type, filled with
 predetermined values. Data is always written in ‘C’ order to disk.</p>
 <dl class="field-list simple">
@@ -526,7 +552,7 @@ Default is <cite>False</cite>.</p></li>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference internal" href="#darr.asarray" title="darr.asarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asarray</span></code></a></dt><dd><p>create a darr array from existing array-like object or generator.</p>
+<dt><a class="reference internal" href="#darr.asarray" title="darr.asarray"><code class="xref py py-func docutils literal notranslate"><span class="pre">asarray()</span></code></a></dt><dd><p>create a darr array from existing array-like object or generator.</p>
 </dd>
 </dl>
 </div>
@@ -564,12 +590,12 @@ Default is <cite>False</cite>.</p></li>
 </div>
 </dd></dl>
 
-</section>
-<section id="deleting-arrays">
-<h3><a class="toc-backref" href="#id5">Deleting arrays</a><a class="headerlink" href="#deleting-arrays" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="deleting-arrays">
+<h3><a class="toc-backref" href="#id6">Deleting arrays</a><a class="headerlink" href="#deleting-arrays" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
-<dt class="sig sig-object py" id="darr.delete_array">
-<span class="sig-prename descclassname"><span class="pre">darr.</span></span><span class="sig-name descname"><span class="pre">delete_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">da</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.delete_array" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.delete_array">
+<code class="sig-prename descclassname">darr.</code><code class="sig-name descname">delete_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">da</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.delete_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete Darr array data from disk.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -578,12 +604,12 @@ Default is <cite>False</cite>.</p></li>
 </dl>
 </dd></dl>
 
-</section>
-<section id="truncating-arrays">
-<h3><a class="toc-backref" href="#id6">Truncating arrays</a><a class="headerlink" href="#truncating-arrays" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="truncating-arrays">
+<h3><a class="toc-backref" href="#id7">Truncating arrays</a><a class="headerlink" href="#truncating-arrays" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
-<dt class="sig sig-object py" id="darr.truncate_array">
-<span class="sig-prename descclassname"><span class="pre">darr.</span></span><span class="sig-name descname"><span class="pre">truncate_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.truncate_array" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.truncate_array">
+<code class="sig-prename descclassname">darr.</code><code class="sig-name descname">truncate_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">index</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.truncate_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Truncate darr data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -619,51 +645,77 @@ current length.</p></li>
 </div>
 </dd></dl>
 
-</section>
-</section>
-<section id="ragged-arrays">
-<span id="raggedarrays"></span><h2><a class="toc-backref" href="#id7">Ragged Arrays</a><a class="headerlink" href="#ragged-arrays" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="ragged-arrays">
+<span id="raggedarrays"></span><h2><a class="toc-backref" href="#id8">Ragged Arrays</a><a class="headerlink" href="#ragged-arrays" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Note that Ragged Arrays are still experimental! They do not support setting
 values yet, only creating, appending, and reading.</p>
 </div>
-<section id="accessing-ragged-arrays">
-<h3><a class="toc-backref" href="#id8">Accessing ragged arrays</a><a class="headerlink" href="#accessing-ragged-arrays" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="accessing-ragged-arrays">
+<h3><a class="toc-backref" href="#id9">Accessing ragged arrays</a><a class="headerlink" href="#accessing-ragged-arrays" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
-<dt class="sig sig-object py" id="darr.RaggedArray">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">darr.</span></span><span class="sig-name descname"><span class="pre">RaggedArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accessmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.RaggedArray" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.RaggedArray">
+<em class="property">class </em><code class="sig-prename descclassname">darr.</code><code class="sig-name descname">RaggedArray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">accessmode</span><span class="o">=</span><span class="default_value">'r'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.RaggedArray" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disk-based sequence of arrays that may have a variable length in maximally
 one dimension.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.RaggedArray.accessmode">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">accessmode</span></span><a class="headerlink" href="#darr.RaggedArray.accessmode" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.RaggedArray.accessmode">
+<em class="property">property </em><code class="sig-name descname">accessmode</code><a class="headerlink" href="#darr.RaggedArray.accessmode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Data access mode of metadata, {‘r’, ‘r+’}.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.RaggedArray.atom">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">atom</span></span><a class="headerlink" href="#darr.RaggedArray.atom" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.RaggedArray.archive">
+<code class="sig-name descname">archive</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filepath</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">compressiontype</span><span class="o">=</span><span class="default_value">'xz'</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.RaggedArray.archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Archive array data into a single compressed file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – Name of the archive. In None, it will be derived from the data’s
+path name.</p></li>
+<li><p><strong>compressiontype</strong> (<em>str</em>) – One of ‘xz’, ‘gz’, or ‘bz2’, corresponding to the gzip, bz2 and
+lzma compression algorithms supported by the Python standard
+library.</p></li>
+<li><p><strong>overwrite</strong> (<em>(</em><em>True</em><em>, </em><em>False</em><em>)</em><em>, </em><em>optional</em>) – Overwrites existing archive if it exists. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The path of the created archive</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pathlib.Path</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>See the <a class="reference external" href="https://docs.python.org/3/library/tarfile.html">tarfile library</a> for more info on archiving formats</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="darr.RaggedArray.atom">
+<em class="property">property </em><code class="sig-name descname">atom</code><a class="headerlink" href="#darr.RaggedArray.atom" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dimensions of the non-variable axes of the arrays.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.RaggedArray.datadir">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">datadir</span></span><a class="headerlink" href="#darr.RaggedArray.datadir" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.RaggedArray.datadir">
+<em class="property">property </em><code class="sig-name descname">datadir</code><a class="headerlink" href="#darr.RaggedArray.datadir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Data directory object with many useful methods, such as
 writing information to text or json files, archiving all data,
 calculating checksums etc.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.RaggedArray.dtype">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dtype</span></span><a class="headerlink" href="#darr.RaggedArray.dtype" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.RaggedArray.dtype">
+<em class="property">property </em><code class="sig-name descname">dtype</code><a class="headerlink" href="#darr.RaggedArray.dtype" title="Permalink to this definition">¶</a></dt>
 <dd><p>Numpy data type of the array values.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="darr.RaggedArray.iterappend">
-<span class="sig-name descname"><span class="pre">iterappend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arrayiterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.RaggedArray.iterappend" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.RaggedArray.iterappend">
+<code class="sig-name descname">iterappend</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arrayiterable</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.RaggedArray.iterappend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iteratively append data from a data iterable.</p>
 <p>The iterable has to yield array-like objects compliant with darr.
 The length of first dimension of these objects may be different,
@@ -681,33 +733,33 @@ but the length of other dimensions, if any, has to be the same.</p>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.RaggedArray.mb">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mb</span></span><a class="headerlink" href="#darr.RaggedArray.mb" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.RaggedArray.mb">
+<em class="property">property </em><code class="sig-name descname">mb</code><a class="headerlink" href="#darr.RaggedArray.mb" title="Permalink to this definition">¶</a></dt>
 <dd><p>Storage size in megabytes of the ragged array.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.RaggedArray.metadata">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#darr.RaggedArray.metadata" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.RaggedArray.metadata">
+<em class="property">property </em><code class="sig-name descname">metadata</code><a class="headerlink" href="#darr.RaggedArray.metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dictionary of meta data.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.RaggedArray.narrays">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">narrays</span></span><a class="headerlink" href="#darr.RaggedArray.narrays" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.RaggedArray.narrays">
+<em class="property">property </em><code class="sig-name descname">narrays</code><a class="headerlink" href="#darr.RaggedArray.narrays" title="Permalink to this definition">¶</a></dt>
 <dd><p>Numpy data type of the array values.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.RaggedArray.path">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#darr.RaggedArray.path" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.RaggedArray.path">
+<em class="property">property </em><code class="sig-name descname">path</code><a class="headerlink" href="#darr.RaggedArray.path" title="Permalink to this definition">¶</a></dt>
 <dd><p>File system path to array data</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="darr.RaggedArray.readcode">
-<span class="sig-name descname"><span class="pre">readcode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.RaggedArray.readcode" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.RaggedArray.readcode">
+<code class="sig-name descname">readcode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">language</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.RaggedArray.readcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate code to read the array in a different language.</p>
 <p>Note that this does not include reading the metadata, which is just
 based on a text file in JSON format.</p>
@@ -734,33 +786,33 @@ based on a text file in JSON format.</p>
 </div>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="darr.RaggedArray.size">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#darr.RaggedArray.size" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt id="darr.RaggedArray.size">
+<em class="property">property </em><code class="sig-name descname">size</code><a class="headerlink" href="#darr.RaggedArray.size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Total number of values in the data array.</p>
 </dd></dl>
 
 </dd></dl>
 
-</section>
-<section id="creating-ragged-arrays">
-<h3><a class="toc-backref" href="#id9">Creating ragged arrays</a><a class="headerlink" href="#creating-ragged-arrays" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="creating-ragged-arrays">
+<h3><a class="toc-backref" href="#id10">Creating ragged arrays</a><a class="headerlink" href="#creating-ragged-arrays" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
-<dt class="sig sig-object py" id="darr.asraggedarray">
-<span class="sig-prename descclassname"><span class="pre">darr.</span></span><span class="sig-name descname"><span class="pre">asraggedarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrayiterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accessmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.asraggedarray" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.asraggedarray">
+<code class="sig-prename descclassname">darr.</code><code class="sig-name descname">asraggedarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">arrayiterable</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">metadata</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">accessmode</span><span class="o">=</span><span class="default_value">'r+'</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.asraggedarray" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="darr.create_raggedarray">
-<span class="sig-prename descclassname"><span class="pre">darr.</span></span><span class="sig-name descname"><span class="pre">create_raggedarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'float64'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accessmode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r+'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.create_raggedarray" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.create_raggedarray">
+<code class="sig-prename descclassname">darr.</code><code class="sig-name descname">create_raggedarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">atom</span><span class="o">=</span><span class="default_value">()</span></em>, <em class="sig-param"><span class="n">dtype</span><span class="o">=</span><span class="default_value">'float64'</span></em>, <em class="sig-param"><span class="n">metadata</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">accessmode</span><span class="o">=</span><span class="default_value">'r+'</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.create_raggedarray" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</section>
-<section id="deleting-ragged-arrays">
-<h3><a class="toc-backref" href="#id10">Deleting ragged arrays</a><a class="headerlink" href="#deleting-ragged-arrays" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="deleting-ragged-arrays">
+<h3><a class="toc-backref" href="#id11">Deleting ragged arrays</a><a class="headerlink" href="#deleting-ragged-arrays" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
-<dt class="sig sig-object py" id="darr.delete_raggedarray">
-<span class="sig-prename descclassname"><span class="pre">darr.</span></span><span class="sig-name descname"><span class="pre">delete_raggedarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.delete_raggedarray" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.delete_raggedarray">
+<code class="sig-prename descclassname">darr.</code><code class="sig-name descname">delete_raggedarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ra</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.delete_raggedarray" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete Darr ragged array data from disk.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -769,12 +821,12 @@ based on a text file in JSON format.</p>
 </dl>
 </dd></dl>
 
-</section>
-<section id="truncating-ragged-arrays">
-<h3><a class="toc-backref" href="#id11">Truncating ragged arrays</a><a class="headerlink" href="#truncating-ragged-arrays" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="truncating-ragged-arrays">
+<h3><a class="toc-backref" href="#id12">Truncating ragged arrays</a><a class="headerlink" href="#truncating-ragged-arrays" title="Permalink to this headline">¶</a></h3>
 <dl class="py function">
-<dt class="sig sig-object py" id="darr.truncate_raggedarray">
-<span class="sig-prename descclassname"><span class="pre">darr.</span></span><span class="sig-name descname"><span class="pre">truncate_raggedarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.truncate_raggedarray" title="Permalink to this definition">¶</a></dt>
+<dt id="darr.truncate_raggedarray">
+<code class="sig-prename descclassname">darr.</code><code class="sig-name descname">truncate_raggedarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ra</span></em>, <em class="sig-param"><span class="n">index</span></em><span class="sig-paren">)</span><a class="headerlink" href="#darr.truncate_raggedarray" title="Permalink to this definition">¶</a></dt>
 <dd><p>Truncate darr ragged array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -789,9 +841,9 @@ current length.</p></li>
 </dl>
 </dd></dl>
 
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
             <div class="clearer"></div>
@@ -807,7 +859,7 @@ current length.</p></li>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -835,7 +887,7 @@ current length.</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2022, Gabriel Beckers.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>

@@ -4,16 +4,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Darr &#8212; darr 0.4.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -41,10 +41,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="darr">
+  <div class="section" id="darr">
 <h1>Darr<a class="headerlink" href="#darr" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://travis-ci.com/gbeckers/Darr?branch=master"><img alt="Travis Status" src="https://travis-ci.com/gbeckers/Darr.svg?branch=master" /></a> <a class="reference external" href="https://ci.appveyor.com/project/gbeckers/darr"><img alt="Appveyor Status" src="https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true" /></a> <a class="reference external" href="https://pypi.org/project/darr/"><img alt="PyPi version" src="https://img.shields.io/badge/pypi-0.4.0-orange.svg" /></a> <a class="reference external" href="https://anaconda.org/conda-forge/darr"><img alt="Conda Forge" src="https://anaconda.org/conda-forge/darr/badges/version.svg" /></a> <a class="reference external" href="https://coveralls.io/github/gbeckers/Darr?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master" /></a>
-<a class="reference external" href="https://darr.readthedocs.io/en/stable/"><img alt="Docs Status" src="https://readthedocs.org/projects/darr/badge/?version=stable" /></a> <a class="reference external" href="https://www.repostatus.org/#active"><img alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." src="https://www.repostatus.org/badges/latest/active.svg" /></a> <a class="reference external" href="https://pyup.io/repos/github/gbeckers/Darr/"><img alt="Updates" src="https://pyup.io/repos/github/gbeckers/Darr/shield.svg" /></a></p>
+<p><a class="reference external" href="https://github.com/gbeckers/Darr/actions/workflows/python_package.yml"><img alt="Github CI Status" src="https://github.com/gbeckers/Darr/actions/workflows/python_package.yml/badge.svg" /></a> <a class="reference external" href="https://ci.appveyor.com/project/gbeckers/darr"><img alt="Appveyor Status" src="https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true" /></a> <a class="reference external" href="https://pypi.org/project/darr/"><img alt="PyPi version" src="https://img.shields.io/badge/pypi-0.4.0-orange.svg" /></a> <a class="reference external" href="https://anaconda.org/conda-forge/darr"><img alt="Conda Forge" src="https://anaconda.org/conda-forge/darr/badges/version.svg" /></a>
+<a class="reference external" href="https://coveralls.io/github/gbeckers/Darr?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master" /></a> <a class="reference external" href="https://darr.readthedocs.io/en/stable/"><img alt="Docs Status" src="https://readthedocs.org/projects/darr/badge/?version=stable" /></a> <a class="reference external" href="https://www.repostatus.org/#active"><img alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." src="https://www.repostatus.org/badges/latest/active.svg" /></a> <a class="reference external" href="https://pyup.io/repos/github/gbeckers/Darr/"><img alt="Updates" src="https://pyup.io/repos/github/gbeckers/Darr/shield.svg" /></a></p>
 <p>Darr is a Python science library for disk-based NumPy arrays that
 persist in a format that is simple, self-documented and tool-independent.
 It enables you to work efficiently with potentially very large arrays, while
@@ -75,7 +75,7 @@ for a brief introduction, or the
 <a class="reference external" href="http://darr.readthedocs.io/">documentation</a> for more info.</p>
 <p>Darr is currently pre-1.0, still undergoing significant development. It is
 open source and freely available under the <a class="reference external" href="https://opensource.org/licenses/BSD-3-Clause">New BSD License</a> terms.</p>
-<section id="features">
+<div class="section" id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Disk-persistent array data is directly accessible through <a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.indexing.html">NumPy
@@ -117,15 +117,15 @@ master:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install git+https://github.com/gbeckers/darr@master
 </pre></div>
 </div>
-</section>
-<section id="status">
+</div>
+<div class="section" id="status">
 <h2>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
 <p>Darr is relatively new, and therefore in its beta stage. It is being used in
 practice in the lab, and test coverage is allmost 100%, but first official
 release will have to wait until the API is more stable. The naming of some
 functions/methods may still change.</p>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#accessing-an-existing-array">Accessing an existing array</a></li>
@@ -181,9 +181,9 @@ functions/methods may still change.</p>
 </li>
 </ul>
 </div>
-</section>
-</section>
-<section id="indices-and-tables">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
@@ -192,7 +192,7 @@ functions/methods may still change.</p>
 </ul>
 <p>Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2022, Gabriël
 Beckers</p>
-</section>
+</div>
 
 
             <div class="clearer"></div>
@@ -208,7 +208,7 @@ Beckers</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -236,7 +236,7 @@ Beckers</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017-2022, Gabriel Beckers.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>
