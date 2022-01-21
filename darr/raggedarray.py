@@ -240,6 +240,38 @@ class RaggedArray:
         d = self._arrayinfo
         return readcodefunc[language](self)
 
+    def archive(self, filepath=None, compressiontype='xz', overwrite=False):
+        """Archive array data into a single compressed file.
+
+        Parameters
+        ----------
+        filepath: str
+            Name of the archive. In None, it will be derived from the data's
+            path name.
+        compressiontype: str
+            One of 'xz', 'gz', or 'bz2', corresponding to the gzip, bz2 and
+            lzma compression algorithms supported by the Python standard
+            library.
+        overwrite: (True, False), optional
+            Overwrites existing archive if it exists. Default is False.
+
+        Returns
+        -------
+        pathlib.Path
+            The path of the created archive
+
+        Notes
+        -----
+        See the `tarfile library`_ for more info on archiving formats
+
+        .. _tarfile library:
+           https://docs.python.org/3/library/tarfile.html
+
+        """
+        return self._datadir.archive(filepath=filepath,
+                                     compressiontype=compressiontype,
+                                     overwrite=overwrite)
+
 
 # FIXME empty arrayiterable
 def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
