@@ -9,7 +9,7 @@ Tutorial
 Accessing an existing array
 ---------------------------
 Darr arrays are represented on disk by a folder with some files in it. Use
-the folder path ('data.darr' in the example) to access it:
+the folder path ('data.darr' in the example) for access:
 
 .. code:: python
 
@@ -18,6 +18,9 @@ the folder path ('data.darr' in the example) to access it:
     >>> a
     darr array([[1., 2., 3., ..., 97., 98., 99.],
                 [0., 0., 0., ..., 0., 0., 0.]]) (r)
+
+Note that the array data is **not** read into RAM. It remains on disk, and
+will be (partly) read into RAM as a numpy array only after indexing it.
 
 If you intend to overwrite (part of) the data or append data (see below how)
 you need to specify that and set 'accesmode' to 'r+'.
@@ -30,14 +33,14 @@ you need to specify that and set 'accesmode' to 'r+'.
 
 Creating an array from a NumPy array or a sequence
 --------------------------------------------------
-Use the 'asarray' function. It will take sequences, numpy arrays, and
+Use the 'asarray' function. It will take numpy arrays, sequences and
 iterables.
 
 .. code:: python
 
     >>> import numpy as np
     >>> na = np.ones((2,1024))
-    >>> a = darr.asarray('a3.darr', na)
+    >>> a = darr.asarray('a.darr', na)
     >>> a
     darr array([[ 1.,  1.,  1., ...,  1.,  1.,  1.],
                 [ 1.,  1.,  1., ...,  1.,  1.,  1.]]) (r)
@@ -51,8 +54,8 @@ gigantic array that does not fit in RAM memory.
 .. code:: python
 
     >>> import darr
-    >>> a = darr.create_array('a1.darr', shape=(2,1024))
-    >>> a
+    >>> b = darr.create_array('b.darr', shape=(2,1024))
+    >>> b
     darr array([[0., 0., 0., ..., 0., 0., 0.],
                 [0., 0., 0., ..., 0., 0., 0.]]) (r+)
 
@@ -65,11 +68,7 @@ To specify the numeric type, use the dtype argument:
 
 .. code:: python
 
-    >>> a = darr.create_array('a2.darr', shape=(2,1024), dtype='uint8')
-    >>> a
-    darr array([[0, 0, 0, ..., 0, 0, 0],
-                [0, 0, 0, ..., 0, 0, 0]], dtype=uint8) (r+)
-
+    >>> c = darr.create_array('c.darr', shape=(2,1024), dtype='uint8')
 
 .. _documentation:
 
@@ -128,8 +127,8 @@ a filter over a long signal. The 'asarray' method reads iterables:
     ...     yield [1,2]
     ...     yield [3,4]
     ...     yield [5,6]
-    >>> b = darr.asarray('b.darr', yield_values())
-    >>> b
+    >>> d = darr.asarray('d.darr', yield_values())
+    >>> d
     darr array ([1, 2, 3, 4, 5, 6]) (r)
 
 .. _readdata:
@@ -188,9 +187,9 @@ array so as to open and close the underlying files only once:
 .. code:: python
 
     >>> with a.open_array():
-    ...     a[0,0] = 3.
-    ...     a[0,2] = 4.
-    ...     a[1,[0,2,-1]] = 5.
+    ...     a1[0,0] = 3.
+    ...     a1[0,2] = 4.
+    ...     a[11,[0,2,-1]] = 5.
     >>> a
     darr array([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
                 [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
@@ -256,13 +255,13 @@ nicely with darr. I'll base the example on a small array though:
 .. code:: python
 
     >>> import dask.array
-    >>> a = darr.create_array('ar1.darr', shape=(1024**2), fill=2.5)
-    >>> a
+    >>> e = darr.create_array('e.darr', shape=(1024**2), fill=2.5)
+    >>> e
     darr array([2.5, 2.5, 2.5, ..., 2.5, 2.5, 2.5]) (r+)
-    >>> with a.open_array():
-    ...     dara = dask.array.from_array(a, chunks=(512))
-    ...     ((dara + 1) / 2).store(a)
-    >>> a
+    >>> with e.open_array():
+    ...     daskar = dask.array.from_array(e, chunks=(512))
+    ...     ((daskar + 1) / 2).store(e)
+    >>> e
     darr array([1.75, 1.75, 1.75, ..., 1.75, 1.75, 1.75]) (r+)
 
 So in this case we overwrote the data in a with the results of the
