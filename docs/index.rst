@@ -7,7 +7,7 @@ Darr
 ====
 
 |Github CI Status| |Appveyor Status| |PyPi version| |Conda Forge|
-|Coverage Status| |Docs Status| |Repo Status| |PyUp Badge|
+|Coverage Status| |Docs Status| |Zenodo Badge| |PyUp Badge|
 
 Darr is a Python science library for disk-based NumPy arrays that persist in
 a format that is simple, self-documented and tool-independent.
@@ -136,6 +136,8 @@ Indices and tables
 .. |PyUp Badge| image:: https://pyup.io/repos/github/gbeckers/Darr/shield.svg
    :target: https://pyup.io/repos/github/gbeckers/Darr/
    :alt: Updates
+.. |Zenodo Badge| image:: https://zenodo.org/badge/151593293.svg
+   :target: https://zenodo.org/badge/latestdoi/151593293
 
 Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2022, Gabriël
 Beckers

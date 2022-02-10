@@ -8,7 +8,7 @@ if sys.version_info < (3,6):
 
 long_description = \
 """
-DDarr is a Python science library for disk-based NumPy arrays that persist in
+Darr is a Python science library for disk-based NumPy arrays that persist in
 a format that is simple, self-documented and tool-independent.
 It enables you to work efficiently with potentially very large arrays, while
 keeping your data easily accessible from a wide range of computing
