@@ -211,8 +211,8 @@ class RaggedArray:
         Note that this does not include reading the metadata, which is just
         based on a text file in JSON format.
 
-        Parameter
-        ---------
+        Parameters
+        ----------
         language: str
             One of the languages that are supported. Choose from:
             'matlab', 'numpymemmap', 'R'.
