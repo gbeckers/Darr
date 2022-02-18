@@ -2,7 +2,7 @@ Darr
 ====
 
 |Github CI Status| |Appveyor Status| |PyPi version| |Conda Forge|
-|Coverage Status| |Docs Status| |Zenodo Badge| |PyUp Badge|
+|Codecov Badge| |Docs Status| |Zenodo Badge| |PyUp Badge|
 
 Darr is a Python science library for disk-based NumPy arrays that persist in
 a format that is simple, self-documented and tool-independent.
@@ -120,8 +120,6 @@ Beckers
    :target: https://pypi.org/project/darr/
 .. |Conda Forge| image:: https://anaconda.org/conda-forge/darr/badges/version.svg
    :target: https://anaconda.org/conda-forge/darr
-.. |Coverage Status| image:: https://coveralls.io/repos/github/gbeckers/Darr/badge.svg?branch=master
-   :target: https://coveralls.io/github/gbeckers/Darr?branch=master&kill_cache=1
 .. |Docs Status| image:: https://readthedocs.org/projects/darr/badge/?version=stable
    :target: https://darr.readthedocs.io/en/latest/
 .. |Repo Status| image:: https://www.repostatus.org/badges/latest/active.svg
@@ -135,3 +133,5 @@ Beckers
    :alt: Updates
 .. |Zenodo Badge| image:: https://zenodo.org/badge/151593293.svg
    :target: https://zenodo.org/badge/latestdoi/151593293
+.. |Codecov Badge| image:: https://codecov.io/gh/gbeckers/Darr/branch/master/graph/badge.svg?token=BBV0WDIUSJ
+   :target: https://codecov.io/gh/gbeckers/Darr
