@@ -39,5 +39,5 @@ jobs:
       run: |
         pytest --cov=darr --cov-report=xml --cov-config=.coveragerc
     - uses: codecov/codecov-action@v2
-        with:
-          verbose: true # optional (default = false)
+      with:
+        verbose: true # optional (default = false)
