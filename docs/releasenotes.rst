@@ -1,8 +1,8 @@
 Release notes
 =============
 
-Master
-------
+Version 0.4.1
+-------------
 - improve array format README description.
 - add pure Python read code for 1D arrays.
 - add archive methods to arrays and raggedarrays
