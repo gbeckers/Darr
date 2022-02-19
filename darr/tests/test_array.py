@@ -17,7 +17,7 @@ class DarrTestCase(unittest.TestCase):
     def assertArrayIdentical(self, x, y):
         self.assertEqual(x.dtype, y.dtype)
         self.assertEqual(x.shape, y.shape)
-        self.assertEqual(np.sum(x-y), 0)
+        self.assertEqual(np.sum((x-y)**2), 0)
 
 class AsArray(DarrTestCase):
 
