@@ -209,7 +209,7 @@ class DataDir(object):
                              f'compressiontype, use one of '
                              f'{supported_compressiontypes}.')
         with tarfile.open(filepath, f"{filemode}:{compressiontype}") as tf:
-            tf.add(self.path)
+            tf.add(self.path, arcname=self.path.name)
         return Path(filepath)
 
     # TODO tests for this function
