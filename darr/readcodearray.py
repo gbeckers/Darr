@@ -69,7 +69,7 @@ typedescr_matlab = {'int8': 'int8',
                     'uint16': 'uint16',
                     'uint32': 'uint32',
                     'uint64': 'uint64',
-                    'float16': None,
+                    'float16': 'uint16',
                     'float32': 'float32',
                     'float64': 'float64',
                     'complex64': '_special_case_',
@@ -101,6 +101,9 @@ def readcodematlab(numtype, shape, endianness,filepath='arrayvalues.bin',
     else:  # ndim > 2, we need reshape to get multidimensional array
         ct += f"{varname} = reshape(fread(fileid, {size}, '*{typedescr}', " \
               f"'{endianness}'), {shape});\n"
+    if numtype == 'float16':  # cannot be read directly by matlab, via uint8
+        ct += f"{varname} = half.typecast({varname}); % may not work in " \
+              f"Octave yet\n"
     return ct + "fclose(fileid);\n"
 
 def readcodematlab_complex(numtype, shape, endianness,
@@ -135,6 +138,12 @@ def readcodematlab_complex(numtype, shape, endianness,
                   f"'{skip}, {endianness}'), {shape});\n"
     ct += "fclose(fileid);\n"
     return ct + f"{varname} = complex(re, im);\n"
+
+def readcodematlab_float16(shape, endianness,
+                           filepath='arrayvalues.bin',
+                           varname='a'):
+    ct = f"fileid = fopen('{filepath}');\n"
+
 
 
 typedescr_r = {'int8': ('integer()', 1, 'TRUE'),

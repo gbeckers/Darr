@@ -5,6 +5,8 @@ Development Version
 -------------------
 - implement read code for complex types in Matlab/Octave (which cannot do
   this directly).
+- implement read code for float16 type in Matlab (which cannot do
+  this directly).
 
 Version 0.4.1
 -------------
