@@ -16,8 +16,7 @@ to read the array in other analysis platforms. Currently supported are:
 - Mathematica
 - Maple
 
-For example, for an 8 by 2 uint32 array, the README.txt will provide a code
-snippet to read the array data in Julia:
+For example, for an 8 by 2 unsigned int32 array, the README.txt will provide a code snippet to read the array data in Julia:
 
 .. code:: julia
 
@@ -31,11 +30,12 @@ without numpy does not support multi-dimensional arrays. Hence Darr will not
 include code for such arrays.
 
 In some environments, not all array numeric types can be read directly. For
-example, Matlab/Octave does not read complex numbers from file, or float16. In
-those cases, Darr generates slightly more involved code that still does what
-you want.
+example, Matlab/Octave does not read complex numbers from file, or float16.
+In those cases, Darr generates slightly more involved code that still does
+what you want.
 
-Example arrays with code can be found `here <https://github.com/gbeckers/Darr/tree/master/examplearrays>`__.
+Example arrays with code for all numeric types can be found `here
+<https://github.com/gbeckers/Darr/tree/master/examplearrays>`__.
 
 Compatibility read code numeric types in other environments
 -----------------------------------------------------------
