@@ -1,6 +1,11 @@
 Release notes
 =============
 
+Development Version
+-------------------
+- implement read code for complex types in Matlab/Octave (which cannot do
+  this directly).
+
 Version 0.4.1
 -------------
 - improve array format README description.

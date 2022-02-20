@@ -21,6 +21,10 @@ below). For example Maple does not have unsigned integers, and Python
 without numpy does not support multi-dimensional arrays. Hence Darr will not
 include code for such arrays.
 
+In some environments, not all array numeric types can be read directly. For
+example, Matlab/Octave does not read complex numbers from file. In those cases,
+Darr generates slightly more involved code that still does what you want.
+
 Example arrays with code can be found `here <https://github
 .com/gbeckers/Darr/tree/master/examplearrays>`__.
 
@@ -52,12 +56,13 @@ Compatibility darr array types in other environments
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 | float64    |  X  |   X   |   X   |      X      |   X    |   X   |   X    | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
-| complex64  |  X  |   X   |       |      X      |        |   X   |        |    |
+| complex64  |  X  |   X   |       |      X      |   X    |   X   |        |    |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
-| complex128 |  X  |   X   |       |      X      |        |   X   |        | X  |
+| complex128 |  X  |   X   |       |      X      |   X    |   X   |        | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 
 X : supported
+
 
 Compatibility multidimensional arrays in other environments
 -----------------------------------------------------------

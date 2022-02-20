@@ -65,20 +65,21 @@ def readcodematlab(dra, varname='a'):
                                  varname='v')
     if (rci is None) or (rcv is None):
         return None
+    numtype = dra.dtype.name
     rci = f"% read array of indices to be used on values array:\n{rci}"
-    rcv = f"% read array of values:\n{rcv}"
+    rcv = f"% read array of {numtype} values:\n{rcv}"
     if len(dra) > 2:
-       j, position = 3, 'third'
+       k, position = 3, 'third'
     elif len(dra) == 2:
-        j, position = 2, 'second'
+        k, position = 2, 'second'
     else:
-        j, position = 1, 'first'
-    rca = "% create an anonymous function that returns the j-th subarray\n" \
+        k, position = 1, 'first'
+    rca = "% create an anonymous function that returns the k-th subarray\n" \
           "% from the values array:\n"
     dims = len(dra._arrayinfo['atom'])*':,'
-    rca = f"{rca}s = @(j) v({dims}i(1,j)+1:i(2,j));\n"
+    rca = f"{rca}s = @(k) v({dims}i(1,k)+1:i(2,k));\n"
     rca =  f'{rca}% example to read {position} subarray:\n' \
-           f'% s({j})'
+           f'% s({k})'
     return f'{rci}{rcv}{rca}'
 
 

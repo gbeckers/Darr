@@ -72,8 +72,8 @@ typedescr_matlab = {'int8': 'int8',
                     'float16': None,
                     'float32': 'float32',
                     'float64': 'float64',
-                    'complex64': None,
-                    'complex128': None,
+                    'complex64': '_special_case_',
+                    'complex128': '_special_case_',
                    }
 
 endianness_matlab = {'little': 'ieee-le',
@@ -84,6 +84,10 @@ def readcodematlab(numtype, shape, endianness,filepath='arrayvalues.bin',
     typedescr = typedescr_matlab[numtype]
     if typedescr is None:
         return None
+    elif numtype.startswith('complex'): # cannot be read directly by matlab
+        return readcodematlab_complex(numtype=numtype, shape=shape,
+                                      endianness=endianness, filepath=filepath,
+                                      varname=varname)
     endianness = endianness_matlab[endianness]
     shape = list(shape)[::-1]  # darr is always C order, Matlab is F order
     size = np.product(shape)
@@ -98,6 +102,39 @@ def readcodematlab(numtype, shape, endianness,filepath='arrayvalues.bin',
         ct += f"{varname} = reshape(fread(fileid, {size}, '*{typedescr}', " \
               f"'{endianness}'), {shape});\n"
     return ct + "fclose(fileid);\n"
+
+def readcodematlab_complex(numtype, shape, endianness,
+                           filepath='arrayvalues.bin',
+                           varname='a'):
+    if numtype=='complex128':
+        skip = 8
+        typedescr =  typedescr_matlab['float64']
+    elif numtype == 'complex64':
+        skip = 4
+        typedescr = typedescr_matlab['float32']
+    else:
+        raise ValueError(f"numtype '{numtype}' not a complex64 or complex128")
+    endianness = endianness_matlab[endianness]
+    shape = list(shape)[::-1]  # darr is always C order, Matlab is F order
+    size = np.product(shape)
+    ndim = len(shape)
+    ct = f"fileid = fopen('{filepath}');\n"
+    for subvarname, offset in zip(('re', 'im'),(0, skip)):
+        if offset > 0:
+            ct += f"fseek(fileid, {offset}); % to read imaginary numbers\n"
+        if ndim == 1:
+            ct += f"{subvarname} = fread(fileid, {size}, '*{typedescr}'," \
+                  f" {skip}," \
+                  f"'{endianness}');\n"
+        elif ndim == 2:
+            ct += f"{subvarname} = fread(fileid, {shape}, '*{typedescr}', " \
+                  f"{skip}, '{endianness}');\n"
+        else:  # ndim > 2, we need reshape to get multidimensional array
+            ct += f"{subvarname} = reshape(fread(fileid, {size}, " \
+                  f"'*{typedescr}', " \
+                  f"'{skip}, {endianness}'), {shape});\n"
+    ct += "fclose(fileid);\n"
+    return ct + f"{varname} = complex(re, im);\n"
 
 
 typedescr_r = {'int8': ('integer()', 1, 'TRUE'),
