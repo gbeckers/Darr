@@ -16,6 +16,15 @@ to read the array in other analysis platforms. Currently supported are:
 - Mathematica
 - Maple
 
+For example, for an 8 by 2 uint32 array, the README.txt will provide a code
+snippet to read the array data in Julia:
+
+.. code:: julia
+
+    >>> fileid = open("arrayvalues.bin","r");
+    >>> a = map(ltoh, read!(fileid, Array{UInt32}(undef, 2, 8)));
+    >>> close(fileid);
+
 However, not all array types are supported in all environments (see table
 below). For example Maple does not have unsigned integers, and Python
 without numpy does not support multi-dimensional arrays. Hence Darr will not
@@ -26,11 +35,10 @@ example, Matlab/Octave does not read complex numbers from file, or float16. In
 those cases, Darr generates slightly more involved code that still does what
 you want.
 
-Example arrays with code can be found `here <https://github
-.com/gbeckers/Darr/tree/master/examplearrays>`__.
+Example arrays with code can be found `here <https://github.com/gbeckers/Darr/tree/master/examplearrays>`__.
 
-Compatibility darr array types in other environments
-----------------------------------------------------
+Compatibility read code numeric types in other environments
+-----------------------------------------------------------
 
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 |            | IDL | Julia | Maple | Mathematica | Matlab | Numpy | Python | R  |
