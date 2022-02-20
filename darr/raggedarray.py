@@ -4,9 +4,8 @@ from contextlib import contextmanager
 import numpy as np
 from ._version import get_versions
 
-from .array import Array, MetaData, asarray, \
-    check_accessmode, delete_array, create_array, \
-    truncate_array
+from .array import Array, asarray, check_accessmode, delete_array, \
+    create_array, truncate_array
 from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .readcoderaggedarray import readcode, readcodefunc
