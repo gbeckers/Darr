@@ -235,25 +235,6 @@ class TestReadCodeArray(DarrTestCase):
                                dtype='float64')
             self.assertIsInstance(ra.readcode('matlab'),str)
 
-
-    def test_matlabcomplex128none(self):
-        with tempdirfile() as filename:
-            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
-                               dtype='complex128')
-            self.assertIsNone(readcodematlab(ra))
-
-    def test_matlabcomplex64none(self):
-        with tempdirfile() as filename:
-            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
-                               dtype='complex64')
-            self.assertIsNone(readcodematlab(ra))
-
-    def test_matlabfloat16none(self):
-        with tempdirfile() as filename:
-            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
-                               dtype='float16')
-            self.assertIsNone(readcodematlab(ra))
-
     def test_rcomplex64none(self):
         with tempdirfile() as filename:
             ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
