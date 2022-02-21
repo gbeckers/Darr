@@ -5,8 +5,8 @@ The most important feature that makes Darr stand out for scientific
 use, is that it is self-documented and includes code to read the array in other
 analysis platforms. This maximizes the chances that your data will be
 relatively easily accessible in different environments. A quick copy-paste
-and you or any one else will be looking at your Python array in Matlab, R or
-Mathematica.
+and you or any one else will be looking at your Python array in, e.g., Matlab,
+R or Mathematica.
 
 Currently, Darr arrays have read code examples for:
 
