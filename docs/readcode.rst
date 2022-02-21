@@ -5,10 +5,10 @@ The most important feature that makes Darr stand out for scientific
 use, is that it is self-documented and includes code to read the array in other
 analysis platforms. This maximizes the chances that your data will be
 relatively easily accessible in different environments. A quick copy-paste
-and you or any one else will be looking at your Python array in, e.g., Matlab,
-R or Mathematica.
+from the README.txt file, and you or any one else will be looking at your
+Python array in, e.g., Matlab, R or Mathematica.
 
-Currently, Darr arrays have read code examples for:
+Currently, Darr arrays provide read code examples for:
 
 - Python (just standard library)
 - Python with Darr library
@@ -39,7 +39,8 @@ include code for for these environments with such arrays.
 In some environments, not all array numeric types can be read directly,
 although it can be done with more effort. For example, Matlab/Octave does not
 directly read complex numbers from file, or float16. In those cases, Darr
-generates slightly more involved code that still does what you want.
+generates slightly more involved code that still does what you want. You
+don't have to worry about it, because just copy-pasting the code will suffice.
 
 Example arrays with code for all numeric types can be found `here
 <https://github.com/gbeckers/Darr/tree/master/examplearrays>`__.
