@@ -1,6 +1,9 @@
-
+import time
 import darr
 from darr.numtype import numtypesdescr
+
+def datetimestring():
+    return time.strftime('%Y%m%d%H%M%S')
 
 def create_arrays():
     metadata = {
@@ -36,7 +39,7 @@ def create_raggedarrays():
         "comments": "This example array has metadata, which is stored in a "
                     "separate JSON file. Metadata in dArray is a dictionary "
                     "that can contain anything that is JSON serializable.",
-        "date": "20181124",
+        "datetime": f"{datetimestring()}",
         "samplingrate": 25000.0
     }
     for numtype in numtypesdescr.keys():
