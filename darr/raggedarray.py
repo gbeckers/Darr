@@ -350,48 +350,54 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
 
 # TODO, simplify explanation if subarrays are 1-dimensional
 # TODO add readcode for more languages
-readmetxt = wrap('Disk-based storage of a ragged array') + '\n' + \
-            wrap('====================================') + '\n\n' + \
-            wrap('This directory is a data store for a numeric ragged array. '
-                 'A ragged array (also called a jagged array) is a sequence '
-                 'of arrays that may vary in length in their first '\
-                 'dimension only. On disk, these arrays are concatenated '\
-                 'along their variable dimension. The easiest way to '\
-                 'access the data is to use the Darr library '\
-                 '(https://pypi.org/project/darr/) in Python, as '\
-                 'follows:') \
-            + '\n\n' \
-            + '>>> import darr\n' \
-            + ">>> a = darr.RaggedArray('path_to_array_dir')\n\n" + \
-            wrap("where 'path_to_array_dir' is the name of the array "
-              "directory, which is the one that also contains this README.")\
-               + "\n\n" + \
-            wrap('If Darr is not available, the data can also be read in '\
-                 'other environments, with a little more effort, using the '\
-                 'description or code snippets below.') + '\n\n\n' \
-            + 'Description of data storage\n' \
-            + '---------------------------\n' + \
-            wrap('There are two subdirectories, each containing an array '
-                 'stored in a self-explanatory format. See the READMEs in '
-                 'the corresponding directories to find out in detail out '
-                 'how to read them. Example code is provided below '
-                 'for a number of analysis environments, which in many cases '
-                 'is sufficient.') + '\n\n' + \
-            wrap('The subdirectory "values" holds the numerical data itself, '
-                 'where subarrays are simply appended along their variable '
-                 'length dimension (first axis). So the number of dimensions '
-                 'of the values array is one less than that of the ragged '
-                 'array. A particular subarray can be be retrieved using the '
-                 'appropriate start and end index along the first axis of the '
-                 'values array. These indices (counting from 0) are stored in '
-                 'a different 2-dimensional array in the subdirectory '
-                 '"indices". The first axis of the index array represents the '
-                 'sequence number of the subarray and the second axis '
-                 '(length 2) represents start and (non-inclusive) end '
-                 'indices to be used on the values array. To read the n-th '
-                 'subarray, read the nt-h start and end indices from the '
-                 'indices array and use these to read the array data from '
-                 'the values array.') + '\n\n\n'
+def readmetxt(ra):
+    n = len(ra)
+    ndsa  = len(ra.atom)
+    txt = wrap(f'Disk-based storage of a ragged array') + '\n' + \
+          wrap(f'====================================') + '\n\n'
+    if ndsa == 0: # 1D subarrays
+        txt += wrap(f'This directory stores a numeric ragged array (also '
+                    f'called a jagged array) that is a sequence of {n} '
+                    f'one-dimensional subarrays that vary in their length. '
+                    f'It can be read using the Darr library '
+                    f'(https://pypi.org/project/darr/), '
+                    f'which was used to create the data. If that is not available, '
+                    f'the last section of this README provides code snippets '
+                    f'for reading the data in a number of other environments. '
+                    f'If code for your environment is not provided, there is a '
+                    f'description of how the data can be read below.') + '\n\n'
+    else:
+        txt += wrap('This directory stores a numeric ragged array (also '
+                    f'called a jagged array) that is a sequence of {n} '
+                    f'{ndsa+1}-dimensional subarrays that vary in the length '
+                    f'of their first dimension. It can be read using the Darr '
+                    f'library (https://pypi.org/project/darr/), which was '
+                    f'used to create the data. If that is not available, '
+                    f'the last section of this README provides code snippets '
+                    f'for reading the data in a number of other environments. '
+                    f'If code for your environment is not provided, there is a '
+                    f'description of how the data can be read below.') + '\n\n'
+    txt += 'Description of data storage\n' \
+           '===========================\n\n'
+    txt += wrap('There are two subdirectories, "values" and "indices", each '
+                'containing an array stored in a self-explanatory format. '
+                'You first need to read these two arrays using '
+                'the information in the README.txt files in their '
+                'subdirectories. "values" holds the ragged array, where '
+                'subarrays are simply concatenated along their variable '
+                'length dimension (first axis). The n-th subarray can be '
+                'retrieved from the values array by using the appropriate '
+                'start and end index on the first axis of the values '
+                'array. These indices are stored in the two-dimensional '
+                'array in "indices". The first axis of the index array '
+                'corresponds to the sequence numbers of the subarrays, while '
+                'the length-2 second axis holds the start and end indices to '
+                'be used to retrieve the subarray from the values array. To '
+                'read the n-th subarray, read the nt-h start and end indices '
+                'from the indices array and use these to read the array data '
+                'from the values array. Note that the indices start counting '
+                'from zero, and end indices are non-inclusive.') + '\n\n\n'
+    return txt
 
 
 def readcodetxt(ra):
@@ -404,9 +410,8 @@ def readcodetxt(ra):
 
     """
 
-    s = readmetxt
-    s += wrap(f'This ragged array has {len(ra)} subarrays. ') + '\n\n' + \
-         wrap(f'Example code for reading the data') + '\n' + \
+    s = readmetxt(ra)
+    s += wrap(f'Example code for reading the data') + '\n' + \
          wrap(f'=================================') + '\n\n'
     languages = (
         ("Python with Numpy (memmap):", "numpymemmap"),
