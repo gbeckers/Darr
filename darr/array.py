@@ -9,7 +9,7 @@ disk can be accessed through the **Array** constructor. To remove a Darr
 array from disk, use **delete_array**.
 
 """
-
+# TODO replace distutils (is deprecated) with packaging
 import distutils.version
 import json
 import os
