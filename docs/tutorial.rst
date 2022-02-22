@@ -109,7 +109,7 @@ Or in `Julia <https://julialang.org/>`__:
 To see the files that correspond to a Darr array, see the example arrays in
 the source `repo <https://github.com/gbeckers/Darr/tree/master/examplearrays>`__.
 
-See `Reading data in other environments <readcode>`__ for more information on
+See :doc:`Reading data in other environments <readcode>` for more information on
 the languages that Darr can generate read code snippets for.
 
 Note that this way Darr arrays are widely and easily readable without Darr or
@@ -345,4 +345,4 @@ To see which languages are supported, use the 'readcodelanguages' property:
      'numpy',
      'numpymemmap')
 
-See `Reading data in other environments <readcode>`__ for more information.
+See :doc:`Reading data in other environments <readcode>` for more information.
