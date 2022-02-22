@@ -343,6 +343,10 @@ class TestArray(DarrTestCase):
         with self.tempar.open_array() as r:
             self.assertIsNone(r)
 
+    def test_readcodelanguages(self):
+        self.assertIsInstance(self.tempar.readcodelanguages, tuple)
+        self.assertIn('numpymemmap', self.tempar.readcodelanguages)
+
 
 
 class TestReadArrayDescr(DarrTestCase):

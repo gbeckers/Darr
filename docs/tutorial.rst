@@ -74,8 +74,8 @@ To specify the numeric type, use the dtype argument:
 
 Automatic self-documentation
 ----------------------------
-Array data is stored on disk in a folder, containing
-a flat binary file ('arrayvalues.bin') and a human-readble
+Array data is stored on disk in a folder, containing a flat binary file
+('arrayvalues.bin') and a human-readble
 `JSON <https://en.wikipedia.org/wiki/JSON>`__ text file
 ('arraydescription.json'), with information on the array dimensionality,
 layout and numeric type. It also contains a 'README.txt' file explaining
@@ -109,9 +109,11 @@ Or in `Julia <https://julialang.org/>`__:
 To see the files that correspond to a Darr array, see the example arrays in
 the source `repo <https://github.com/gbeckers/Darr/tree/master/examplearrays>`__.
 
-Note that this way Darr arrays are widely and easily readable
-without Darr or Python, but the easiest of course is still to use Darr if that
-is available.
+See `Reading data in other environments <readcode>`__ for more information on
+the languages that Darr can generate read code snippets for.
+
+Note that this way Darr arrays are widely and easily readable without Darr or
+Python, but the easiest of course is still to use Darr if that is available.
 
 .. _fromnumpy:
 
@@ -314,9 +316,9 @@ metadata, it will be converted to a Python float.
 Quickly reading your array in a different language
 --------------------------------------------------
 
-Darr automatically provides code to read the array in different languages (e.g.
-Matlab, R, Julia, Mathematica) in the README that comes with it, but
-you can also get that code on-the-fly:
+Darr automatically provides code snippets to read the array in different
+languages (e.g. Matlab, R, Julia, Mathematica) in the README that comes with
+it, but you can also get that code on-the-fly:
 
 .. code:: python
 
@@ -327,19 +329,20 @@ you can also get that code on-the-fly:
 Just copy-paste the output code in, e.g., Mathematica, access you data from
 there.
 
-For Darr Arrays, you can choose from the following languages:
+To see which languages are supported, use the 'readcodelanguages' property:
 
-- idl: for IDL/GDL
-- julia_ver0: for Julia, versions < 1.0
-- julia_ver1: for Julia, versions > 1.0
-- mathematica: for Mathematica
-- matlab: for Matlab or Octave
-- maple: for Maple
-- numpy: for Numpy (without Darr)
-- numpymemmap: for Numpy, using memmap (for large arrays)
-- R: for R
+.. code:: python
 
-Note that not every numeric type is readable in all languages. For example
-float16 cannot be read in Matlab, and Darr will not produce code for it.
+    >>> a.readcodelanguages
+    ('R',
+     'darr',
+     'idl',
+     'julia_ver0',
+     'julia_ver1',
+     'maple',
+     'mathematica',
+     'matlab',
+     'numpy',
+     'numpymemmap')
 
-Darr Ragged Arrays do not support all these languages yet.
+See `Reading data in other environments <readcode>`__ for more information.

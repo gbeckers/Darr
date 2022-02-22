@@ -16,7 +16,8 @@ to read the array in other analysis platforms. Currently supported are:
 - Mathematica
 - Maple
 
-For example, for an 8 by 2 unsigned int32 array, the README.txt will provide a code snippet to read the array data in Julia:
+For example, for an 8 by 2 unsigned int32 array, the README.txt will provide a
+code snippet to read the array data in Julia:
 
 .. code:: julia
 

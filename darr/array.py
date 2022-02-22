@@ -156,6 +156,17 @@ class Array:
         """Total number of values in the data array."""
         return int(self._size)
 
+    @property
+    def readcodelanguages(self):
+        """Tuple of the languages that the `readcode` method can produce
+        reading code for. Code in these languages is also included in the
+        README.txt file that is stored as part of the array ."""
+        languages = []
+        for lang in readcodefunc.keys():
+            if readcode(self, language=lang) is not None:
+                languages.append(lang)
+        return tuple(sorted(languages))
+
     def __getitem__(self, index):
         with self._open_array() as (ar, _):
             values = np.array(ar[index], copy=True)
@@ -665,10 +676,7 @@ class Array:
         if language not in readcodefunc.keys():
             raise ValueError(f'Language "{language}" not supported, choose '
                              f'from {readcodefunc.keys()}')
-        d = self._arrayinfo
-        return readcodefunc[language](numtype=d['numtype'],
-                                      shape=d['shape'],
-                                      endianness=d['byteorder'])
+        return readcode(self, language=language)
 
     def archive(self, filepath=None, compressiontype='xz', overwrite=False):
         """Archive array data into a single compressed file.

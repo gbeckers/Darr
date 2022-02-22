@@ -228,12 +228,13 @@ class RaggedArrayTruncate(DarrTestCase):
 
 class TestReadCodeArray(DarrTestCase):
 
+
     # FIXME test more elaborately
     def test_readcodemethod(self):
         with tempdirfile() as filename:
             ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
                                dtype='float64')
-            self.assertIsInstance(ra.readcode('matlab'),str)
+            self.assertIsInstance(ra.readcode('matlab'), str)
 
     def test_rcomplex64none(self):
         with tempdirfile() as filename:
@@ -247,6 +248,15 @@ class TestReadCodeArray(DarrTestCase):
                                arrayiterable=[[0, 1], [2], [3, 4]],
                                dtype='float64')
             self.assertRaises(ValueError, readcode, ra, 'perl')
+
+    def test_readcodelanguages(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename,
+                               arrayiterable=[[0, 1], [2], [3, 4]],
+                               dtype='float64')
+            self.assertIsInstance(ra.readcodelanguages, tuple)
+            self.assertIn('numpymemmap', ra.readcodelanguages)
+
 
 
 # this is already tested with simple Arrays, so a brief check will suffice

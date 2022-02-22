@@ -116,10 +116,19 @@ class RaggedArray:
 
     @property
     def size(self):
-        """Total number of values in the data array.
-
-        """
+        """Total number of values in the data array."""
         return int(self._values._size)
+
+    @property
+    def readcodelanguages(self):
+        """Tuple of the languages that the `readcode` method can produce
+                reading code for. Code in these languages is also included in the
+                README.txt file that is stored as part of the array ."""
+        languages = []
+        for lang in readcodefunc.keys():
+            if readcodefunc[lang](self) is not None:
+                languages.append(lang)
+        return tuple(sorted(languages))
 
     def __getitem__(self, item):
         if not np.issubdtype(type(item), np.integer):
@@ -236,7 +245,6 @@ class RaggedArray:
         if language not in readcodefunc.keys():
             raise ValueError(f'Language "{language}" not supported, choose '
                              f'from {readcodefunc.keys()}')
-        d = self._arrayinfo
         return readcodefunc[language](self)
 
     def archive(self, filepath=None, compressiontype='xz', overwrite=False):
