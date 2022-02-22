@@ -52,3 +52,21 @@ def get_subarray(seqno):
     return v[starti:endi]
 a = get_subarray(2)  # example to read third subarray
 
+Matlab:
+-------
+% read array of indices to be used on values array:
+fileid = fopen('indices/arrayvalues.bin');
+i = fread(fileid, [2, 3], '*int64', 'ieee-le');
+fclose(fileid);
+% read array of complex64 values:
+fileid = fopen('values/arrayvalues.bin');
+re = fread(fileid, [2, 24], '*float32', 4, 'ieee-le');
+fseek(fileid, 4); % to read imaginary numbers
+im = fread(fileid, [2, 24], '*float32', 4, 'ieee-le');
+fclose(fileid);
+v = complex(re, im);
+% create an anonymous function that returns the k-th subarray
+% from the values array:
+s = @(k) v(:,i(1,k)+1:i(2,k));
+% example to read third subarray:
+% s(3)

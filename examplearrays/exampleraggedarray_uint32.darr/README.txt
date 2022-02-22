@@ -78,12 +78,12 @@ Matlab:
 fileid = fopen('indices/arrayvalues.bin');
 i = fread(fileid, [2, 3], '*int64', 'ieee-le');
 fclose(fileid);
-% read array of values:
+% read array of uint32 values:
 fileid = fopen('values/arrayvalues.bin');
 v = fread(fileid, [2, 24], '*uint32', 'ieee-le');
 fclose(fileid);
-% create an anonymous function that returns the j-th subarray
+% create an anonymous function that returns the k-th subarray
 % from the values array:
-s = @(j) v(:,i(1,j)+1:i(2,j));
+s = @(k) v(:,i(1,k)+1:i(2,k));
 % example to read third subarray:
 % s(3)

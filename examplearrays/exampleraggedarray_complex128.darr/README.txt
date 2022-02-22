@@ -72,3 +72,21 @@ get_subarray <- function(j){
 # example to read third subarray:
 # get_subarray(3)
 
+Matlab:
+-------
+% read array of indices to be used on values array:
+fileid = fopen('indices/arrayvalues.bin');
+i = fread(fileid, [2, 3], '*int64', 'ieee-le');
+fclose(fileid);
+% read array of complex128 values:
+fileid = fopen('values/arrayvalues.bin');
+re = fread(fileid, [2, 24], '*float64', 8, 'ieee-le');
+fseek(fileid, 8); % to read imaginary numbers
+im = fread(fileid, [2, 24], '*float64', 8, 'ieee-le');
+fclose(fileid);
+v = complex(re, im);
+% create an anonymous function that returns the k-th subarray
+% from the values array:
+s = @(k) v(:,i(1,k)+1:i(2,k));
+% example to read third subarray:
+% s(3)

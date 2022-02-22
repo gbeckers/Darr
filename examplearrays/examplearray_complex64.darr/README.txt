@@ -43,6 +43,15 @@ Python with Numpy (memmap):
 import numpy as np
 a = np.memmap('arrayvalues.bin', dtype='<c8', shape=(8, 2), order='C')
 
+Matlab/Octave:
+--------------
+fileid = fopen('arrayvalues.bin');
+re = fread(fileid, [2, 8], '*float32', 4, 'ieee-le');
+fseek(fileid, 4); % to read imaginary numbers
+im = fread(fileid, [2, 8], '*float32', 4, 'ieee-le');
+fclose(fileid);
+a = complex(re, im);
+
 Julia (version < 1.0):
 ----------------------
 fileid = open("arrayvalues.bin","r");

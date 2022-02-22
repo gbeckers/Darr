@@ -50,6 +50,15 @@ a = readBin(con=fileid, what=complex(), n=16, size=16, signed=TRUE, endian="litt
 a = array(data=a, dim=c(2, 8), dimnames=NULL)
 close(fileid)
 
+Matlab/Octave:
+--------------
+fileid = fopen('arrayvalues.bin');
+re = fread(fileid, [2, 8], '*float64', 8, 'ieee-le');
+fseek(fileid, 8); % to read imaginary numbers
+im = fread(fileid, [2, 8], '*float64', 8, 'ieee-le');
+fclose(fileid);
+a = complex(re, im);
+
 Julia (version < 1.0):
 ----------------------
 fileid = open("arrayvalues.bin","r");

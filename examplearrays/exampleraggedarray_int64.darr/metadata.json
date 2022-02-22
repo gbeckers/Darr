@@ -4,6 +4,6 @@
         9
     ],
     "comments": "This example array has metadata, which is stored in a separate JSON file. Metadata in dArray is a dictionary that can contain anything that is JSON serializable.",
-    "date": "20181124",
+    "datetime": "20220222083418",
     "samplingrate": 25000.0
 }

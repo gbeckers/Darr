@@ -50,6 +50,13 @@ a = readBin(con=fileid, what=numeric(), n=16, size=2, signed=TRUE, endian="littl
 a = array(data=a, dim=c(2, 8), dimnames=NULL)
 close(fileid)
 
+Matlab/Octave:
+--------------
+fileid = fopen('arrayvalues.bin');
+a = fread(fileid, [2, 8], '*uint16', 'ieee-le');
+a = half.typecast(a); % may not work in Octave yet
+fclose(fileid);
+
 Julia (version < 1.0):
 ----------------------
 fileid = open("arrayvalues.bin","r");

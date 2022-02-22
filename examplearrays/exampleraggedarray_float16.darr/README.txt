@@ -72,3 +72,19 @@ get_subarray <- function(j){
 # example to read third subarray:
 # get_subarray(3)
 
+Matlab:
+-------
+% read array of indices to be used on values array:
+fileid = fopen('indices/arrayvalues.bin');
+i = fread(fileid, [2, 3], '*int64', 'ieee-le');
+fclose(fileid);
+% read array of float16 values:
+fileid = fopen('values/arrayvalues.bin');
+v = fread(fileid, [2, 24], '*uint16', 'ieee-le');
+v = half.typecast(v); % may not work in Octave yet
+fclose(fileid);
+% create an anonymous function that returns the k-th subarray
+% from the values array:
+s = @(k) v(:,i(1,k)+1:i(2,k));
+% example to read third subarray:
+% s(3)

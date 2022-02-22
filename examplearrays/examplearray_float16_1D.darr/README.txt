@@ -47,6 +47,13 @@ fileid = file("arrayvalues.bin", "rb")
 a = readBin(con=fileid, what=numeric(), n=7, size=2, signed=TRUE, endian="little")
 close(fileid)
 
+Matlab/Octave:
+--------------
+fileid = fopen('arrayvalues.bin');
+a = fread(fileid, 7, '*uint16', 'ieee-le');
+a = half.typecast(a); % may not work in Octave yet
+fclose(fileid);
+
 Julia (version < 1.0):
 ----------------------
 fileid = open("arrayvalues.bin","r");

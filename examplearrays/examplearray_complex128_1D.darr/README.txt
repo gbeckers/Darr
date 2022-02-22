@@ -47,6 +47,15 @@ fileid = file("arrayvalues.bin", "rb")
 a = readBin(con=fileid, what=complex(), n=7, size=16, signed=TRUE, endian="little")
 close(fileid)
 
+Matlab/Octave:
+--------------
+fileid = fopen('arrayvalues.bin');
+re = fread(fileid, 7, '*float64', 8,'ieee-le');
+fseek(fileid, 8); % to read imaginary numbers
+im = fread(fileid, 7, '*float64', 8,'ieee-le');
+fclose(fileid);
+a = complex(re, im);
+
 Julia (version < 1.0):
 ----------------------
 fileid = open("arrayvalues.bin","r");
