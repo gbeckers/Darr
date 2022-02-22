@@ -7,6 +7,8 @@ Development Version
   this directly).
 - implement read code for float16 type in Matlab (which cannot do
   this directly).
+- implement 'readcodelanguages' property to get the languages that an array
+  or ragged array can produce coding code for.
 
 Version 0.4.1
 -------------
