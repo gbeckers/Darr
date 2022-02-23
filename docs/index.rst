@@ -14,8 +14,8 @@ a format that is simple, self-documented and tool-independent.
 It enables you to work efficiently with potentially very large arrays, while
 keeping your data easily accessible from a wide range of computing
 environments. Keeping data universally readable and documented is a pillar of
-good scientific practice. More rationale for this approach is
-provided `here <https://darr.readthedocs.io/en/latest/rationale .html>`__.
+good scientific practice. More rationale for this approach is provided
+:doc:`here <rationale>`.
 
 Flat binary files and (JSON) text files are accompanied by a README text file
 that explains how the array and metadata are stored. It also provides code for
