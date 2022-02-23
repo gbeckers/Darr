@@ -40,7 +40,7 @@ files that are both human- and computer-readable. For a variety of current
 analysis tools, Darr even provides example code of how to read the data. E.g.
 Python/NumPy (without the Darr library), R, Julia, MatLab/Octave, and
 Mathematica. Just a quick copy-paste of the code in the README is enough
-to read your data in any of those environments ans start working with them.
+to read your data in any of those environments and start working with them.
 Every array that you work with can be simply be provided as such to others with
 minimal explanation.
 
