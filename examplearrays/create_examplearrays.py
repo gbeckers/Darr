@@ -18,18 +18,25 @@ def create_arrays():
         "date": "20181124",
         "samplingrate": 25000.0
     }
+    ar = [[1, 2], [3, 4], [4, 6], [7, 8],
+          [9, 10], [11, 12], [13, 14], [15, 16]]
+    car = np.array(ar, dtype='complex128') + 1.3j
     for numtype in numtypesdescr.keys():
-        ar = darr.create_array(f'examplearray_{numtype}.darr', shape=(8, 2),
-                               dtype=numtype, metadata=metadata,
-                               overwrite=True)
-        ar[:] = [[1, 2], [3, 4], [4, 6], [7, 8],
-                 [9, 10], [11, 12], [13, 14], [15, 16]]
-
+        if numtype.startswith('complex'):
+            a = car
+        else:
+            a = ar
+        darr.asarray(f'examplearray_{numtype}.darr', a, dtype=numtype,
+                     metadata=metadata, overwrite=True)
+    ar = [1, 3, 5, 7, 9, 11, 13]
+    car = np.array(ar, dtype='complex128') + 1.3j
     for numtype in numtypesdescr.keys():
-        ar = darr.create_array(f'examplearray_{numtype}_1D.darr', shape=(7,),
-                               dtype=numtype, metadata=metadata,
-                               overwrite=True)
-        ar[:] = [1,3,5,7,9,11,13]
+        if numtype.startswith('complex'):
+            a = car
+        else:
+            a = ar
+        ar = darr.asarray(f'examplearray_{numtype}_1D.darr', a,
+                          dtype=numtype, metadata=metadata, overwrite=True)
 
 def create_raggedarrays():
     metadata = {
@@ -51,7 +58,7 @@ def create_raggedarrays():
            [[41, 42], [43, 44], [45, 46]],
            [[47, 48]],
            [[49, 50], [51, 52]]]
-    rarj = [np.array(sa, dtype='complex128') + 1j for sa in rar]
+    rarj = [np.array(sa, dtype='complex128') + 1.3j for sa in rar]
     for numtype in numtypesdescr.keys():
         if numtype.startswith('complex'):
             ar = rarj
