@@ -1,3 +1,4 @@
+import numpy as np
 import time
 import darr
 from darr.numtype import numtypesdescr
@@ -42,16 +43,23 @@ def create_raggedarrays():
         "datetime": f"{datetimestring()}",
         "samplingrate": 25000.0
     }
+    rar = [[[1, 2], [3, 4], [4, 6], [7, 8], [9, 10], [11, 12]],
+           [[13, 14], [15, 16], [17, 18], [19, 20], [21, 22], [23, 24]],
+           [[25, 26], [27, 28], [29, 30]],
+           [[31, 32], [33, 34], [35, 36], [37, 38]],
+           [[39, 40]],
+           [[41, 42], [43, 44], [45, 46]],
+           [[47, 48]],
+           [[49, 50], [51, 52]]]
+    rarj = [np.array(sa, dtype='complex128') + 1j for sa in rar]
     for numtype in numtypesdescr.keys():
-        ar = darr.create_raggedarray(f'exampleraggedarray_{numtype}.darr',
-                                     atom=(2,), dtype=numtype,
-                                     metadata=metadata, overwrite=True)
-        ar.append([[1, 2], [3, 4], [4, 6], [7, 8],
-                   [9, 10], [11, 12], [13, 14], [15, 16]])
-        ar.append([[17, 18], [19, 20], [21, 22], [23, 24],
-                   [25, 26], [27, 28], [29, 30], [31, 32]])
-        ar.append([[33, 34], [35, 36], [37, 38], [39, 40],
-                   [41, 42], [43, 44], [45, 46], [47, 48]])
+        if numtype.startswith('complex'):
+            ar = rarj
+        else:
+            ar = rar
+        _ = darr.asraggedarray(f'exampleraggedarray_{numtype}.darr',
+                                ar, dtype=numtype, metadata=metadata,
+                                overwrite=True)
 
 
 if __name__ == "__main__":

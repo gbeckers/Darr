@@ -406,7 +406,7 @@ def readmetxt(ra):
     return txt
 
 def dimensionstxt(ra, firstnmax=5):
-    end = max(len(ra), firstnmax)
+    end = min(len(ra), firstnmax)
     lengths = np.diff(ra._indices[:end], axis=-1).flatten()
     if len(ra.atom) > 0:
         astr = str(ra.atom)[1:-2] + ')'
@@ -440,7 +440,7 @@ def readcodetxt(ra):
     languages = (
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),
-        ("Matlab:", "matlab")
+        ("Matlab/Octave:", "matlab")
     )
     for heading, language in languages:
         codetext = readcode(ra, language)
