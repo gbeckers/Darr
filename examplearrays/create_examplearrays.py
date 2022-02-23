@@ -15,7 +15,7 @@ def create_arrays():
         "comments": "This example array has metadata, which is stored in a "
                     "separate JSON file. Metadata in Darr is a dictionary "
                     "that can contain anything that is JSON serializable.",
-        "date": "20181124",
+        "datetime": f"{datetimestring()}",
         "samplingrate": 25000.0
     }
     ar = [[1, 2], [3, 4], [4, 6], [7, 8],
