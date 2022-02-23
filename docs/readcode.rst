@@ -91,15 +91,15 @@ Compatibility read code numeric types in other environments
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 | uint64     |  X  |   X   |       |      X      |   X    |   X   |   X    | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
-| float16    |     |   X   |       |             |   X    |   X*  |        | X  |
+| float16    |     |   X   |       |             |   X*   |   X   |        | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 | float32    |  X  |   X   |   X   |      X      |   X    |   X   |   X    | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 | float64    |  X  |   X   |   X   |      X      |   X    |   X   |   X    | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
-| complex64  |  X  |   X   |       |      X      |   X    |   X*  |   X**  |    |
+| complex64  |  X  |   X   |       |      X      |   X*   |   X   |   X**  |    |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
-| complex128 |  X  |   X   |       |      X      |   X    |   X*  |   X**  | X  |
+| complex128 |  X  |   X   |       |      X      |   X*   |   X   |   X**  | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 
 X : fully supported, i.e. efficient code can read the array data directly.
@@ -122,3 +122,20 @@ Compatibility multidimensional arrays in other environments
 
 1-D : One-dimensional,
 N-D : Multi-dimensional
+
+Advice for maximizing efficient readabiliy
+------------------------------------------
+
+- From the tables above it is clear that the following types are unproblematic
+  in all languages: int16, int32, int64, float32, float64. If possible, use
+  these types.
+
+- Complex128 is relatively well supported, except for Maple, but it needs
+  workaround code that is less efficient in Matlab and plain Python.
+
+- All unsigned integers are not supported in Maple.
+
+- float16 is not widely supported, but it is supported by the main modern,
+  open source computing packages: Julia, Python with Numpy, and R. Matlab
+  can read it using a temporary array and type casting, which is not bad but
+  can be problematic when arrays are very large and RAM is limited.
