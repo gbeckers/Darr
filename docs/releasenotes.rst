@@ -9,6 +9,8 @@ Development Version
   this directly).
 - implement 'readcodelanguages' property to get the languages that an array
   or ragged array can produce coding code for.
+- implement practical work around code to read complex arrays into plain
+  Python; we produce separate real and imaginary arrays.
 
 Version 0.4.1
 -------------

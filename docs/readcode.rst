@@ -97,13 +97,13 @@ Compatibility read code numeric types in other environments
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 | float64    |  X  |   X   |   X   |      X      |   X    |   X   |   X    | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
-| complex64  |  X  |   X   |       |      X      |   X    |   X   |        |    |
+| complex64  |  X  |   X   |       |      X      |   X    |   X   |   X*   |    |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
-| complex128 |  X  |   X   |       |      X      |   X    |   X   |        | X  |
+| complex128 |  X  |   X   |       |      X      |   X    |   X   |   X*   | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 
 X : supported
-
+*: not natively supported, but practical work around code is provided
 
 Compatibility multidimensional arrays in other environments
 -----------------------------------------------------------

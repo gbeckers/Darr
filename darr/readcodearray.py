@@ -329,8 +329,8 @@ typedescr_python = {'int8': 'b',
                    'float16': None,
                    'float32': 'f',
                    'float64': 'd',
-                   'complex64': None,
-                   'complex128': None,
+                   'complex64': 'f', # special case, we create two f arrays
+                   'complex128': 'd', # special case, we creats two d arrays
                   }
 
 endianness_python = {'little': '<',
@@ -338,19 +338,39 @@ endianness_python = {'little': '<',
 
 def readcodepython(numtype, shape, endianness, filepath='arrayvalues.bin',
                   varname='a'):
+    """We only support 1D arrays. Complex types are supported but lead to
+    separate real and imaginary arrays in Python, as the array type does not
+    support complex numbers natively"""
+
     typeletter = typedescr_python[numtype]
     endianness = endianness_python[endianness]
     if typeletter is None:
         return None
     if len(shape) > 1:
         return None
-    typedescr = f"{endianness}{shape[0]}{typeletter}"
-    ct = f"import array\n"\
-         f"import struct\n"\
-         f"with open('arrayvalues.bin', 'rb') as f:\n" \
-         f"    {varname} = array.array('{typeletter}', " \
-         f"struct.unpack('{typedescr}', f.read()))\n"
+    size = shape[0]
+    if numtype.startswith('complex'):
+        size *= 2 # we split real and imaginary numbers
+    typedescr = f"{endianness}{size}{typeletter}"
+    ct = f"import array\nimport struct\n"
+    if numtype.startswith('complex'):
+        fptype = {'f': 'float', 'd': 'double' }[typeletter]
+        ct += f"# file holds complex values but we need to read them as" \
+              f" {fptype} type\n"
+    ct += f"with open('arrayvalues.bin', 'rb') as f:\n" \
+          f"    {varname} = array.array('{typeletter}', " \
+          f"struct.unpack('{typedescr}', f.read()))\n"
+    if numtype.startswith('complex'):
+        ct += f"# array '{varname}' has real and imaginary values at " \
+              f"alternating positions\n" \
+              f"# we can split them into separate arrays\n" \
+              f"real = array.array('{typeletter}', ({varname}[i] for i in " \
+              f"range(0, len({varname}), 2)))\n"\
+              f"imag = array.array('{typeletter}', ({varname}[i] for i in " \
+              f"range(1, len({varname}), 2)))\n"
     return ct
+
+
 
 readcodefunc = {
         'darr': readcodedarr,
