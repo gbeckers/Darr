@@ -133,7 +133,7 @@ class RaggedArray:
     def __getitem__(self, item):
         if not np.issubdtype(type(item), np.integer):
             raise TypeError("Only integers can be used for indexing " \
-                            "darraylists, which '{}' is not".format(item))
+                            "RaggedArrays, which '{}' is not".format(item))
         index = slice(*self._indices[item])
         return self._values[index]
 
@@ -141,8 +141,8 @@ class RaggedArray:
         return self._indices.shape[0]
 
     def __repr__(self):
-        return f'darr ragged array ({self.narrays} arrays with at' \
-               f'om shape {self.atom}, {self.accessmode})'
+        return f'RaggedArray ({self.narrays} subarrays with atom shape '\
+                 '{self.atom}, {self.accessmode})'
 
     __str__ = __repr__
 
@@ -357,28 +357,34 @@ def readmetxt(ra):
           wrap(f'====================================') + '\n\n'
     if ndsa == 0: # 1D subarrays
         txt += wrap(f'This directory stores a numeric ragged array (also '
-                    f'called a jagged array) that is a sequence of {n} '
-                    f'one-dimensional subarrays that vary in their length. '
-                    f'It can be read using the Darr library '
-                    f'(https://pypi.org/project/darr/), '
-                    f'which was used to create the data. If that is not available, '
-                    f'the last section of this README provides code snippets '
-                    f'for reading the data in a number of other environments. '
-                    f'If code for your environment is not provided, there is a '
-                    f'description of how the data can be read below.') + '\n\n'
+                    f'called a jagged array). It is a sequence of {n} '
+                    f'one-dimensional subarrays that vary in their length.') \
+               +' \n\n'
+
     else:
         txt += wrap('This directory stores a numeric ragged array (also '
-                    f'called a jagged array) that is a sequence of {n} '
-                    f'{ndsa+1}-dimensional subarrays that vary in the length '
-                    f'of their first dimension. It can be read using the Darr '
-                    f'library (https://pypi.org/project/darr/), which was '
-                    f'used to create the data. If that is not available, '
-                    f'the last section of this README provides code snippets '
-                    f'for reading the data in a number of other environments. '
-                    f'If code for your environment is not provided, there is a '
-                    f'description of how the data can be read below.') + '\n\n'
-    txt += 'Description of data storage\n' \
-           '===========================\n\n'
+                    f'called a jagged array). It is a sequence of {n} '
+                    f'subarrays, each of which are {ndsa+1}-dimensional and '
+                    f'can vary in the length of their first dimension.') \
+                    + ' \n\n'
+    if len(ra) > 5:
+        dimtxt = wrap(f'The shape of the first five subarrays is (subarray ' 
+                      f'index: shape):') + '\n\n'
+    else:
+        dimtxt = wrap(f'The shape of the subarrays is (subarray index: '
+                        'shape):') + '\n\n'
+
+    txt += dimtxt + dimensionstxt(ra, firstnmax=5) + '\n\n'
+    txt += wrap(f'The ragged array can be read using the Python library Darr '
+                    f'(https://pypi.org/project/darr/), which was used to '
+                    f'create the data. If that is not available, you can '
+                    f'use the code snippets in the last section of this README '
+                    f'to read the data in a number of other environments. '
+                    f'If code for your environment is not provided, use the '
+                    f'description of how the data can be read in the '
+                    f'next section.') + '\n\n'
+    txt += 'Description of data format\n' \
+           '==========================\n\n'
     txt += wrap('There are two subdirectories, "values" and "indices", each '
                 'containing an array stored in a self-explanatory format. '
                 'You first need to read these two arrays using '
@@ -392,12 +398,30 @@ def readmetxt(ra):
                 'array in "indices". The first axis of the index array '
                 'corresponds to the sequence numbers of the subarrays, while '
                 'the length-2 second axis holds the start and end indices to '
-                'be used to retrieve the subarray from the values array. To '
+                'be used on the values array to retrieve a subarray. To '
                 'read the n-th subarray, read the nt-h start and end indices '
                 'from the indices array and use these to read the array data '
                 'from the values array. Note that the indices start counting '
                 'from zero, and end indices are non-inclusive.') + '\n\n\n'
     return txt
+
+def dimensionstxt(ra, firstnmax=5):
+    end = max(len(ra), firstnmax)
+    lengths = np.diff(ra._indices[:end], axis=-1).flatten()
+    if len(ra.atom) > 0:
+        astr = str(ra.atom)[1:-2] + ')'
+    else:
+        astr = ')'
+    lines = []
+    for i, l in enumerate(lengths):
+        lines.append(f'    {i}: ({l},{astr}')
+    if len(ra) > firstnmax:
+        lines.append('    ...')
+    return '\n'.join(lines)
+
+
+
+
 
 
 def readcodetxt(ra):
