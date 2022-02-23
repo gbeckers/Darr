@@ -39,7 +39,7 @@ about the organization of the data is provided in separate text-based
 files that are both human- and computer-readable. For a variety of current
 analysis tools, Darr even provides example code of how to read the data. E.g.
 Python/NumPy (without the Darr library), R, Julia, MatLab/Octave, and
-Mathematica. Just a quickycopy-paste of the code in the README is enough
+Mathematica. Just a quick copy-paste of the code in the README is enough
 to read your data in any of those environments ans start working with them.
 Every array that you work with can be simply be provided as such to others with
 minimal explanation.
@@ -49,7 +49,7 @@ format that anyone can easily explore on any computer, operating system, and
 programming language, without installing dependencies, and without any
 specific pre-existing knowledge on the format or reading long format
 specifications. In decades to come, your files are much more likely to be
-widely readable in this format than in specific formats such as
+widely readable in this format than in specialized formats such as
 `HDF5 <https://www.hdfgroup.org/>`__ or
 `npy <https://docs.scipy.org/doc/numpy-dev/neps/npy-format.html>`__.
 
