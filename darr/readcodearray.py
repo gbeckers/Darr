@@ -124,7 +124,8 @@ def readcodematlab_complex(numtype, shape, endianness,
     ct = f"fileid = fopen('{filepath}');\n"
     for subvarname, offset in zip(('re', 'im'),(0, skip)):
         if offset > 0:
-            ct += f"fseek(fileid, {offset}); % to read imaginary numbers\n"
+            ct += f"fseek(fileid, {offset}, 'bof'); % to read imaginary " \
+                  f"numbers\n"
         if ndim == 1:
             ct += f"{subvarname} = fread(fileid, {size}, '*{typedescr}'," \
                   f" {skip}," \
