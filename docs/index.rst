@@ -20,13 +20,13 @@ good scientific practice. More rationale for this approach is provided
 Flat binary files and (JSON) text files are accompanied by a README text file
 that explains how the array and metadata are stored. It also provides code for
 reading the array in a variety of current scientific data tools such as
-Python, R, Julia, IDL, Matlab, Maple, and Mathematica. It is trivially easy
-to share your data with others or with yourself when working in different
-computing environments, because it always contains clear documentation,
-including code to read it. No need to export anything or to provide
-elaborate explanation. No dependence on complicated formats or specialized
-tools. Self-documentation and code examples are automatically updated as you
-change your arrays when working with them.
+Python, R, Julia, IDL, Matlab, Maple, and Mathematica (see `here <readcode>`).
+It is trivially easy to share your data with others or with yourself when
+working in different computing environments, because it always contains clear
+documentation, including code to read it. No need to export anything or to
+provide elaborate explanation. No dependence on complicated formats or
+specialized tools. Self-documentation and code examples are automatically
+updated as you change your arrays when working with them.
 
 Darr uses NumPy memmory-mapped arrays under the hood, which you can
 access directly for full NumPy compatibility and efficient out-of-core
@@ -35,8 +35,7 @@ the possibility to append and truncate arrays, and the use of ragged arrays
 (still experimental).
 
 See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
-for a brief introduction, or the
-`documentation <http://darr.readthedocs.io/>`__ for more info.
+for a brief introduction.
 
 Darr is currently pre-1.0, still undergoing significant development. It is
 open source and freely available under the `New BSD License
