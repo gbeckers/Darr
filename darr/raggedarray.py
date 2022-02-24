@@ -353,20 +353,18 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
 def readmetxt(ra):
     n = len(ra)
     ndsa  = len(ra.atom)
-    txt = wrap(f'Disk-based storage of a ragged array') + '\n' + \
-          wrap(f'====================================') + '\n\n'
     if ndsa == 0: # 1D subarrays
-        txt += wrap(f'This directory stores a numeric ragged array (also '
-                    f'called a jagged array). It is a sequence of {n} '
-                    f'one-dimensional subarrays that vary in their length.') \
-               +' \n\n'
+        txt = wrap(f'This directory stores a numeric ragged array (also '
+                   f'called a jagged array). It is a sequence of {n} '
+                   f'one-dimensional subarrays that vary in their length.') \
+                   +' \n\n'
 
     else:
-        txt += wrap('This directory stores a numeric ragged array (also '
-                    f'called a jagged array). It is a sequence of {n} '
-                    f'subarrays, each of which are {ndsa+1}-dimensional and '
-                    f'can vary in the length of their first dimension.') \
-                    + ' \n\n'
+        txt = wrap('This directory stores a numeric ragged array (also '
+                   f'called a jagged array). It is a sequence of {n} '
+                   f'subarrays, each of which are {ndsa+1}-dimensional and '
+                   f'can vary in the length of their first dimension.') \
+                   + ' \n\n'
     if len(ra) > 5:
         dimtxt = wrap(f'The shape of the first five subarrays is (subarray ' 
                       f'index: shape):') + '\n\n'
