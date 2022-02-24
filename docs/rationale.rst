@@ -39,10 +39,10 @@ about the organization of the data is provided in separate text-based
 files that are both human- and computer-readable. For a variety of current
 analysis tools, Darr even provides example code of how to read the data. E.g.
 Python/NumPy (without the Darr library), R, Julia, MatLab/Octave, and
-Mathematica. Just a quick copy-paste of the code in the README is enough
-to read your data in any of those environments and start working with them.
-Every array that you work with can be simply be provided as such to others with
-minimal explanation.
+Mathematica (see :doc:`here <readcode>`). Just a quick copy-paste of the code
+in the README is enough to read your data in any of those environments and
+start working with them. Every array that you work with can be simply be
+provided as such to others with minimal explanation.
 
 The combination of flat binary and text files leads to a self-documenting
 format that anyone can easily explore on any computer, operating system, and
