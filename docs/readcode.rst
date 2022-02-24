@@ -2,7 +2,7 @@ Reading data in other environments
 ==================================
 
 The most important feature that makes Darr stand out for scientific use, is
-that it is self-documented and includes code to read the array in other
+that it is self-documented and includes code to read the array in many other
 analysis platforms. This maximizes the chances that your data will be
 accessible to anyone for a long time to come. In most cases, a quick
 copy-paste from the README.txt file will suffice to read your array data in
@@ -10,7 +10,7 @@ other scientific computing environments.
 
 Currently, Darr arrays provide read code examples for:
 
-- Python (just standard library)
+- Python with just standard library
 - Python with Darr library
 - Python with Numpy library
 - Python with Numpy, based on memmap for very large arrays
@@ -22,17 +22,17 @@ Currently, Darr arrays provide read code examples for:
 - Mathematica
 - Maple
 
-For example, for an 81 by 23 unsigned int32 array, the README.txt will
+For example, for an 810 by 23 unsigned int32 array, the README.txt will
 provide a code snippet to read the array data in Julia:
 
 .. code:: julia
 
     fileid = open("arrayvalues.bin","r");
-    a = map(ltoh, read!(fileid, Array{UInt32}(undef, 23, 81)));
+    a = map(ltoh, read!(fileid, Array{UInt32}(undef, 23, 810)));
     close(fileid);
 
 Read code can also be generated on the fly using the 'readcode' method on
-(ragged) arrays in Python:
+(ragged) arrays in Python. Example with a different array and language:
 
 .. code:: python
 
@@ -43,12 +43,10 @@ Read code can also be generated on the fly using the 'readcode' method on
 However, not all array types are supported in all environments (see table
 below). For example, Maple does not have unsigned integers, and Python
 without numpy does not support multi-dimensional arrays. Darr will not
-always include code for such cases, but it will include code if there are ways
-around this and the solution makes practical sense. For example, Matlab/Octave
-does not directly read complex numbers from file, or float16 numbers. But with
-slightly more involved code it can be done, and Darr will generate code for
-it. You don't have to worry about the code being more complex, because just
-copy-pasting the code will suffice.
+always include code for such cases, but it will include code if there
+are workaround solutions that makes practical sense. For example, Matlab/Octave
+does not directly read complex numbers or float16 numbers from file. But with
+workaround code it can be done, and Darr will provide it.
 
 To see which languages are supported, use the 'readcodelanguages' property:
 
@@ -130,12 +128,12 @@ Advice for maximizing efficient readabiliy
   in all languages: int16, int32, int64, float32, float64. If possible, use
   these types.
 
-- Complex128 is relatively well supported, except for Maple, but it needs
+- Complex128 is relatively well supported, except for Maple. It needs
   workaround code that is less efficient in Matlab and plain Python.
 
 - All unsigned integers are not supported in Maple.
 
 - float16 is not widely supported, but it is supported by the main modern,
   open source computing packages: Julia, Python with Numpy, and R. Matlab
-  can read it using a temporary array and type casting, which is not bad but
-  can be problematic when arrays are very large and RAM is limited.
+  can read it using a temporary array and type casting, which can be
+  problematic when arrays are very large and RAM is limited.
