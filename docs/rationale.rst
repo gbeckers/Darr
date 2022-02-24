@@ -26,7 +26,10 @@ that echos my own experiences). As a result, data that is difficult to read
 will be read less, which is an impediment to scientific progress. This is
 why Darr was created.
 
-The **first objective of Darr** is to provide an easy way of working with
+First objective of Darr
+-----------------------
+
+The first objective of Darr is to provide an easy way of working with
 with numeric data arrays and metadata, without having to worry about the
 things above. Data are persistent on disk in a self-explaining way, making
 them trivially easy to access in different analysis environments without
@@ -53,7 +56,10 @@ widely readable in this format than in specialized formats such as
 `HDF5 <https://www.hdfgroup.org/>`__ or
 `npy <https://docs.scipy.org/doc/numpy-dev/neps/npy-format.html>`__.
 
-The **second objective of Darr** is to provide direct, out-of-core access to
+Second objective of Darr
+------------------------
+
+The second objective of Darr is to provide direct, out-of-core access to
 these disk-persistent arrays. In many science applications data arrays can be
 very large. It is not always necessary or even possible to load the whole
 array in RAM for analysis. For example, long sound or brain activity
@@ -66,7 +72,10 @@ provides self-documentation including reading code snippets for different
 languages, easy use of metadata, append functionality, ragged arrays, and
 archiving functionality.
 
-There also disadvantages to Darr's approach.
+Potential disadvantages
+-----------------------
+
+There may also be disadvantages to Darr's approach.
 
 -  To keep things as simple as possible, Darr does not provide direct access
    to compressed data. However, it does provide an `archive` method that
