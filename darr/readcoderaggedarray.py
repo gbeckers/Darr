@@ -1,5 +1,7 @@
 from . import readcodearray
 
+# Row-major: Mathematica, Numpy
+# Column-major: Julia, Matlab, R
 
 def readcodenumpymemmap(dra, varname='a'):
     rci = readcodearray.readcode(dra._indices, 'numpymemmap',
@@ -114,11 +116,43 @@ def readcodejulia(dra, varname='a'):
     return f'{rci}{rcv}{rff}{rca}\n'
 
 
+def readcodemathematica(dra, varname='a'):
+    numtype = dra.dtype.name
+    rci = readcodearray.readcode(dra._indices, 'mathematica',
+                                 filepath='indices/arrayvalues.bin',
+                                 varname='i')
+    rci = f"(* read indices array, to be used on values array later: *)\n{rci}"
+    rcv = readcodearray.readcode(dra._values, 'mathematica',
+                                 filepath='values/arrayvalues.bin',
+                                 varname='v')
+    rcv = f"(* read {numtype} values array: *)\n{rcv}"
+    if (rci is None) or (rcv is None):
+        return None
+    if   len(dra) > 2:
+       k, position = 3, 'third'
+    elif len(dra) == 2:
+        k, position = 2, 'second'
+    else:
+        k, position = 1, 'first'
+    rff = f'(* create a function that returns the k-th subarray\n' \
+          f'   from the values array *):\n' \
+          f'getsubarray[k_?IntegerQ] := \n' \
+          f'    Module[{{l}},\n' \
+          f'        l = k;\n' \
+          f'        starti = i[[l,1]] + 1;\n' \
+          f'        endi = i[[l,2]];\n' \
+          f'        v[[starti;;endi]]]\n' \
+          f'(* example to read {position} (k={k}) subarray: *)\n'\
+          f'(* {varname} = getsubarray[{k}] *)\n'
+    return f'{rci}{rcv}{rff}\n'
+
+
 readcodefunc = {
-        'numpymemmap': readcodenumpymemmap,
-        'matlab': readcodematlab,
-        'R': readcoder,
         'julia': readcodejulia,
+        'mathematica': readcodemathematica,
+        'matlab': readcodematlab,
+        'numpymemmap': readcodenumpymemmap,
+        'R': readcoder,
 }
 
 def readcode(dra, language, varname='a'):

@@ -11,10 +11,14 @@ languages to read the numeric information of a Darr array.
 # Maple: https://www.maplesoft.com/support/help/maple/view.aspx?path=FileTools%2FBinary%2FRead
 
 
+# Row-major: Mathematica, Numpy
+# Column-major: Julia, Matlab, R
+
 # Considerations
 # --------------
 # Matlab has memmapfile, but it will only read correctly if endianness of
-# data is the same as that of the host system.
+# data is the same as that of the host system, which we can't guarantee.
+# Same for Julia. Workaround code possible?
 
 import numpy as np
 
