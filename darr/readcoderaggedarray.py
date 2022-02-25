@@ -80,7 +80,7 @@ def readcodematlab(dra, varname='a'):
     rca = f"{rca}s = @(k) v({dims}i(1,k)+1:i(2,k));\n"
     rca =  f'{rca}% example to read {position} subarray:\n' \
            f'% s({k})'
-    return f'{rci}{rcv}{rca}'
+    return f'{rci}{rcv}{rca}\n'
 
 # not supporting versions < 1 anymore
 def readcodejulia(dra, varname='a'):
@@ -95,13 +95,13 @@ def readcodejulia(dra, varname='a'):
     numtype = dra.dtype.name
     rci = f"# read indices array, to be used on values array later:\n{rci}"
     rcv = f"# read {numtype} values array:\n{rcv}"
-
-    rff = 'function get_subarray(seqno)\n' \
-          '    starti = i[1,seqno]+1  # Julia starts counting from 1\n' \
-          '    endi = i[2,seqno]  # Julia has inclusive end index\n' \
-          '    v[:,starti:endi]\n' \
-          'end\n'
-    rff = f"# create an anonymous function that returns the k-th subarray\n" \
+    dims = len(dra._arrayinfo['atom']) * ':,'
+    rff = f'function get_subarray(k)\n' \
+          f'    starti = i[1,k]+1  # Julia starts counting from 1\n' \
+          f'    endi = i[2,k]  # Julia has inclusive end index\n' \
+          f'    v[{dims}starti:endi]\n' \
+          f'end\n'
+    rff = f"# create a function that returns the k-th subarray\n" \
           f"# from the values array:\n{rff}"
     if   len(dra) > 2:
        k, position = 3, 'third'
@@ -111,7 +111,7 @@ def readcodejulia(dra, varname='a'):
         k, position = 1, 'first'
     rca =  f'# example to read {position} subarray:\n' \
            f'# get_subarray({k})'
-    return f'{rci}{rcv}{rff}{rca}'
+    return f'{rci}{rcv}{rff}{rca}\n'
 
 
 readcodefunc = {
