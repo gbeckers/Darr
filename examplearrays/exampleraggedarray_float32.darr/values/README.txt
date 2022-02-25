@@ -14,7 +14,7 @@ array, without header information, in the following format:
 
   Numeric type: 32-bit IEEE single precision float (sign bit, 8 bits exponent, 23 bits mantissa)
   Byte order: little (most-significant byte last)
-  Array dimensions: (24, 2)
+  Array dimensions: (26, 2)
   Array order layout:  C (Row-major; last dimension varies most rapidly with memory address)
 
 These details are also stored in JSON format in the separate UTF-8 text file,
@@ -33,49 +33,49 @@ Python with Numpy:
 ------------------
 import numpy as np
 a = np.fromfile('arrayvalues.bin', dtype='<f4')
-a = a.reshape((24, 2), order='C')
+a = a.reshape((26, 2), order='C')
 
 Python with Numpy (memmap):
 ---------------------------
 import numpy as np
-a = np.memmap('arrayvalues.bin', dtype='<f4', shape=(24, 2), order='C')
+a = np.memmap('arrayvalues.bin', dtype='<f4', shape=(26, 2), order='C')
 
 R:
 --
 fileid = file("arrayvalues.bin", "rb")
-a = readBin(con=fileid, what=numeric(), n=48, size=4, signed=TRUE, endian="little")
-a = array(data=a, dim=c(2, 24), dimnames=NULL)
+a = readBin(con=fileid, what=numeric(), n=52, size=4, signed=TRUE, endian="little")
+a = array(data=a, dim=c(2, 26), dimnames=NULL)
 close(fileid)
 
 Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');
-a = fread(fileid, [2, 24], '*float32', 'ieee-le');
+a = fread(fileid, [2, 26], '*float32', 'ieee-le');
 fclose(fileid);
 
 Julia (version < 1.0):
 ----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read(fileid, Float32, (2, 24)));
+a = map(ltoh, read(fileid, Float32, (2, 26)));
 close(fileid);
 
 Julia (version >= 1.0):
 -----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read!(fileid, Array{Float32}(undef, 2, 24)));
+a = map(ltoh, read!(fileid, Array{Float32}(undef, 2, 26)));
 close(fileid);
 
 IDL/GDL:
 --------
-a = read_binary("arrayvalues.bin", data_type=4, data_dims=[2, 24], endian="little")
+a = read_binary("arrayvalues.bin", data_type=4, data_dims=[2, 26], endian="little")
 
 Mathematica:
 ------------
 a = BinaryReadList["arrayvalues.bin", "Real32", ByteOrdering -> -1];
-a = ArrayReshape[a, {24, 2}];
+a = ArrayReshape[a, {26, 2}];
 
 Maple:
 ------
 a := FileTools[Binary][Read]("arrayvalues.bin", float[4], byteorder=little, output=Array);
-a := ArrayTools[Reshape](a, [2, 24]);
+a := ArrayTools[Reshape](a, [2, 26]);
 

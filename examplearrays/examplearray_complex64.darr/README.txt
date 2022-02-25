@@ -47,7 +47,7 @@ Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');
 re = fread(fileid, [2, 8], '*float32', 4, 'ieee-le');
-fseek(fileid, 4); % to read imaginary numbers
+fseek(fileid, 4, 'bof'); % to read imaginary numbers
 im = fread(fileid, [2, 8], '*float32', 4, 'ieee-le');
 fclose(fileid);
 a = complex(re, im);

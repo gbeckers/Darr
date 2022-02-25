@@ -25,6 +25,18 @@ The file 'metadata.json' contains metadata in JSON UTF-8 text format.
 Code snippets for reading the numeric data
 ==========================================
 
+Python:
+-------
+import array
+import struct
+# file holds complex values but we need to read them as double type
+with open('arrayvalues.bin', 'rb') as f:
+    a = array.array('d', struct.unpack('<14d', f.read()))
+# array 'a' has real and imaginary values at alternating positions
+# we can split them into separate arrays
+real = array.array('d', (a[i] for i in range(0, len(a), 2)))
+imag = array.array('d', (a[i] for i in range(1, len(a), 2)))
+
 Python with Darr:
 -----------------
 import darr
@@ -51,7 +63,7 @@ Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');
 re = fread(fileid, 7, '*float64', 8,'ieee-le');
-fseek(fileid, 8); % to read imaginary numbers
+fseek(fileid, 8, 'bof'); % to read imaginary numbers
 im = fread(fileid, 7, '*float64', 8,'ieee-le');
 fclose(fileid);
 a = complex(re, im);

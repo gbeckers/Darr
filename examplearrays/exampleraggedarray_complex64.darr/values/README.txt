@@ -14,7 +14,7 @@ array, without header information, in the following format:
 
   Numeric type: 64-bit IEEE single‐precision complex number, represented by two 32 - bit floats (real and imaginary components)
   Byte order: little (most-significant byte last)
-  Array dimensions: (24, 2)
+  Array dimensions: (26, 2)
   Array order layout:  C (Row-major; last dimension varies most rapidly with memory address)
 
 These details are also stored in JSON format in the separate UTF-8 text file,
@@ -33,40 +33,40 @@ Python with Numpy:
 ------------------
 import numpy as np
 a = np.fromfile('arrayvalues.bin', dtype='<c8')
-a = a.reshape((24, 2), order='C')
+a = a.reshape((26, 2), order='C')
 
 Python with Numpy (memmap):
 ---------------------------
 import numpy as np
-a = np.memmap('arrayvalues.bin', dtype='<c8', shape=(24, 2), order='C')
+a = np.memmap('arrayvalues.bin', dtype='<c8', shape=(26, 2), order='C')
 
 Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');
-re = fread(fileid, [2, 24], '*float32', 4, 'ieee-le');
-fseek(fileid, 4); % to read imaginary numbers
-im = fread(fileid, [2, 24], '*float32', 4, 'ieee-le');
+re = fread(fileid, [2, 26], '*float32', 4, 'ieee-le');
+fseek(fileid, 4, 'bof'); % to read imaginary numbers
+im = fread(fileid, [2, 26], '*float32', 4, 'ieee-le');
 fclose(fileid);
 a = complex(re, im);
 
 Julia (version < 1.0):
 ----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read(fileid, Complex{Float32}, (2, 24)));
+a = map(ltoh, read(fileid, Complex{Float32}, (2, 26)));
 close(fileid);
 
 Julia (version >= 1.0):
 -----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read!(fileid, Array{Complex{Float32}}(undef, 2, 24)));
+a = map(ltoh, read!(fileid, Array{Complex{Float32}}(undef, 2, 26)));
 close(fileid);
 
 IDL/GDL:
 --------
-a = read_binary("arrayvalues.bin", data_type=6, data_dims=[2, 24], endian="little")
+a = read_binary("arrayvalues.bin", data_type=6, data_dims=[2, 26], endian="little")
 
 Mathematica:
 ------------
 a = BinaryReadList["arrayvalues.bin", "Complex64", ByteOrdering -> -1];
-a = ArrayReshape[a, {24, 2}];
+a = ArrayReshape[a, {26, 2}];
 

@@ -3,8 +3,8 @@
         2
     ],
     "darrobject": "RaggedArray",
-    "darrversion": "0.4.1+20.g4d6367a",
-    "len": 3,
+    "darrversion": "0.4.1+44.g9af0767.dirty",
+    "len": 8,
     "numtype": "uint16",
-    "size": 48
+    "size": 52
 }

@@ -14,7 +14,7 @@ array, without header information, in the following format:
 
   Numeric type: 8-bit signed integer (range: -128 to 127)
   Byte order: little (most-significant byte last)
-  Array dimensions: (24, 2)
+  Array dimensions: (26, 2)
   Array order layout:  C (Row-major; last dimension varies most rapidly with memory address)
 
 These details are also stored in JSON format in the separate UTF-8 text file,
@@ -33,45 +33,45 @@ Python with Numpy:
 ------------------
 import numpy as np
 a = np.fromfile('arrayvalues.bin', dtype='<i1')
-a = a.reshape((24, 2), order='C')
+a = a.reshape((26, 2), order='C')
 
 Python with Numpy (memmap):
 ---------------------------
 import numpy as np
-a = np.memmap('arrayvalues.bin', dtype='<i1', shape=(24, 2), order='C')
+a = np.memmap('arrayvalues.bin', dtype='<i1', shape=(26, 2), order='C')
 
 R:
 --
 fileid = file("arrayvalues.bin", "rb")
-a = readBin(con=fileid, what=integer(), n=48, size=1, signed=TRUE, endian="little")
-a = array(data=a, dim=c(2, 24), dimnames=NULL)
+a = readBin(con=fileid, what=integer(), n=52, size=1, signed=TRUE, endian="little")
+a = array(data=a, dim=c(2, 26), dimnames=NULL)
 close(fileid)
 
 Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');
-a = fread(fileid, [2, 24], '*int8', 'ieee-le');
+a = fread(fileid, [2, 26], '*int8', 'ieee-le');
 fclose(fileid);
 
 Julia (version < 1.0):
 ----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read(fileid, Int8, (2, 24)));
+a = map(ltoh, read(fileid, Int8, (2, 26)));
 close(fileid);
 
 Julia (version >= 1.0):
 -----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read!(fileid, Array{Int8}(undef, 2, 24)));
+a = map(ltoh, read!(fileid, Array{Int8}(undef, 2, 26)));
 close(fileid);
 
 Mathematica:
 ------------
 a = BinaryReadList["arrayvalues.bin", "Integer8", ByteOrdering -> -1];
-a = ArrayReshape[a, {24, 2}];
+a = ArrayReshape[a, {26, 2}];
 
 Maple:
 ------
 a := FileTools[Binary][Read]("arrayvalues.bin", integer[1], byteorder=little, output=Array);
-a := ArrayTools[Reshape](a, [2, 24]);
+a := ArrayTools[Reshape](a, [2, 26]);
 

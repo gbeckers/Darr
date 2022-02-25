@@ -2,8 +2,8 @@
     "arrayorder": "C",
     "byteorder": "little",
     "darrobject": "Array",
-    "darrversion": "0.4.1+20.g4d6367a",
-    "numtype": "uint32",
+    "darrversion": "0.4.1+44.g9af0767.dirty",
+    "numtype": "int8",
     "shape": [
         7
     ]

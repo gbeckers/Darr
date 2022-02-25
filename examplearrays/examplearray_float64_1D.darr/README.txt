@@ -12,7 +12,7 @@ Data format
 The file 'arrayvalues.bin' contains the raw binary values of the numeric
 array, without header information, in the following format:
 
-  Numeric type: 64-bit IEEE double precision float (sign bit, 11 bits exponent, 52 bits mantissa)
+  Numeric type: 8-bit signed integer (range: -128 to 127)
   Byte order: little (most-significant byte last)
   Array length: 7
 
@@ -30,7 +30,7 @@ Python:
 import array
 import struct
 with open('arrayvalues.bin', 'rb') as f:
-    a = array.array('d', struct.unpack('<7d', f.read()))
+    a = array.array('b', struct.unpack('<7b', f.read()))
 
 Python with Darr:
 -----------------
@@ -41,47 +41,43 @@ a = darr.Array(path='path_to_data_dir')
 Python with Numpy:
 ------------------
 import numpy as np
-a = np.fromfile('arrayvalues.bin', dtype='<f8')
+a = np.fromfile('arrayvalues.bin', dtype='<i1')
 
 Python with Numpy (memmap):
 ---------------------------
 import numpy as np
-a = np.memmap('arrayvalues.bin', dtype='<f8', shape=(7,), order='C')
+a = np.memmap('arrayvalues.bin', dtype='<i1', shape=(7,), order='C')
 
 R:
 --
 fileid = file("arrayvalues.bin", "rb")
-a = readBin(con=fileid, what=numeric(), n=7, size=8, signed=TRUE, endian="little")
+a = readBin(con=fileid, what=integer(), n=7, size=1, signed=TRUE, endian="little")
 close(fileid)
 
 Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');
-a = fread(fileid, 7, '*float64', 'ieee-le');
+a = fread(fileid, 7, '*int8', 'ieee-le');
 fclose(fileid);
 
 Julia (version < 1.0):
 ----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read(fileid, Float64, (7,)));
+a = map(ltoh, read(fileid, Int8, (7,)));
 close(fileid);
 
 Julia (version >= 1.0):
 -----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read!(fileid, Array{Float64}(undef, 7)));
+a = map(ltoh, read!(fileid, Array{Int8}(undef, 7)));
 close(fileid);
-
-IDL/GDL:
---------
-a = read_binary("arrayvalues.bin", data_type=5, data_dims=[7], endian="little")
 
 Mathematica:
 ------------
-a = BinaryReadList["arrayvalues.bin", "Real64", ByteOrdering -> -1];
+a = BinaryReadList["arrayvalues.bin", "Integer8", ByteOrdering -> -1];
 a = ArrayReshape[a, {7}];
 
 Maple:
 ------
-a := FileTools[Binary][Read]("arrayvalues.bin", float[8], byteorder=little, output=Array);
+a := FileTools[Binary][Read]("arrayvalues.bin", integer[1], byteorder=little, output=Array);
 

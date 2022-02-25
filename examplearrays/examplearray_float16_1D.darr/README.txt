@@ -12,7 +12,7 @@ Data format
 The file 'arrayvalues.bin' contains the raw binary values of the numeric
 array, without header information, in the following format:
 
-  Numeric type: 16-bit half precision float (sign bit, 5 bits exponent, 10 bits mantissa)
+  Numeric type: 8-bit signed integer (range: -128 to 127)
   Byte order: little (most-significant byte last)
   Array length: 7
 
@@ -25,6 +25,13 @@ The file 'metadata.json' contains metadata in JSON UTF-8 text format.
 Code snippets for reading the numeric data
 ==========================================
 
+Python:
+-------
+import array
+import struct
+with open('arrayvalues.bin', 'rb') as f:
+    a = array.array('b', struct.unpack('<7b', f.read()))
+
 Python with Darr:
 -----------------
 import darr
@@ -34,35 +41,43 @@ a = darr.Array(path='path_to_data_dir')
 Python with Numpy:
 ------------------
 import numpy as np
-a = np.fromfile('arrayvalues.bin', dtype='<f2')
+a = np.fromfile('arrayvalues.bin', dtype='<i1')
 
 Python with Numpy (memmap):
 ---------------------------
 import numpy as np
-a = np.memmap('arrayvalues.bin', dtype='<f2', shape=(7,), order='C')
+a = np.memmap('arrayvalues.bin', dtype='<i1', shape=(7,), order='C')
 
 R:
 --
 fileid = file("arrayvalues.bin", "rb")
-a = readBin(con=fileid, what=numeric(), n=7, size=2, signed=TRUE, endian="little")
+a = readBin(con=fileid, what=integer(), n=7, size=1, signed=TRUE, endian="little")
 close(fileid)
 
 Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');
-a = fread(fileid, 7, '*uint16', 'ieee-le');
-a = half.typecast(a); % may not work in Octave yet
+a = fread(fileid, 7, '*int8', 'ieee-le');
 fclose(fileid);
 
 Julia (version < 1.0):
 ----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read(fileid, Float16, (7,)));
+a = map(ltoh, read(fileid, Int8, (7,)));
 close(fileid);
 
 Julia (version >= 1.0):
 -----------------------
 fileid = open("arrayvalues.bin","r");
-a = map(ltoh, read!(fileid, Array{Float16}(undef, 7)));
+a = map(ltoh, read!(fileid, Array{Int8}(undef, 7)));
 close(fileid);
+
+Mathematica:
+------------
+a = BinaryReadList["arrayvalues.bin", "Integer8", ByteOrdering -> -1];
+a = ArrayReshape[a, {7}];
+
+Maple:
+------
+a := FileTools[Binary][Read]("arrayvalues.bin", integer[1], byteorder=little, output=Array);
 

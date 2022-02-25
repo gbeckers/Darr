@@ -11,6 +11,7 @@ Development Version
   or ragged array can produce coding code for.
 - implement practical work around code to read complex arrays into plain
   Python; we produce separate real and imaginary arrays.
+- implement julia read code for ragged arrays
 
 Version 0.4.1
 -------------
