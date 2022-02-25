@@ -18,7 +18,7 @@ def readcodenumpymemmap(dra, varname='a'):
         k, position = 1, 'second'
     else:
         k, position = 0, 'first'
-    rca = f'{varname} = get_subarray({k})  # example to read {position} ' \
+    rca = f'# {varname} = get_subarray({k})  # example to read {position} ' \
           f'(k={k}) subarray\n'
     ## the mext is never going to happen as Darr is based on memmap
     ## comment out
@@ -53,7 +53,7 @@ def readcoder(dra, varname='a'):
     else:
         k, position = 1, 'first'
     rca =  f"# example to read {position} (k={k}) subarray:\n"
-    rca = f"{rca}# get_subarray({k})\n"
+    rca = f"{rca}# {varname} = get_subarray({k})\n"
     return f'{rci}{rcv}{rff}{rca}'
 
 def readcodematlab(dra, varname='a'):
@@ -79,7 +79,7 @@ def readcodematlab(dra, varname='a'):
     dims = len(dra._arrayinfo['atom'])*':,'
     rca = f"{rca}get_subarray = @(k) v({dims}i(1,k)+1:i(2,k));\n"
     rca =  f'{rca}% example to read {position} (k={k}) subarray:\n' \
-           f'% get_subarray({k})'
+           f'% {varname} = get_subarray({k});'
     return f'{rci}{rcv}{rca}\n'
 
 # not supporting versions < 1 anymore
@@ -110,7 +110,7 @@ def readcodejulia(dra, varname='a'):
     else:
         k, position = 1, 'first'
     rca =  f'# example to read {position} (k={k}) subarray:\n' \
-           f'# get_subarray({k})'
+           f'# {varname} = get_subarray({k})'
     return f'{rci}{rcv}{rff}{rca}\n'
 
 
