@@ -318,7 +318,7 @@ Quickly reading your array in a different language
 
 Darr automatically provides code snippets to read the array in different
 languages (e.g. Matlab, R, Julia, Mathematica) in the README that comes with
-it, but you can also get that code on-the-fly:
+it, but you can also get that code on-the-fly, e.g. for Mathematica:
 
 .. code:: python
 
@@ -326,8 +326,9 @@ it, but you can also get that code on-the-fly:
     a = BinaryReadList["arrayvalues.bin", "Real64", ByteOrdering -> -1];
     a = ArrayReshape[a, {2, 1024}];
 
-Just copy-paste the output code in, e.g., Mathematica, access you data from
-there.
+Just copy-paste the output code in Mathematica and access you data from there.
+
+See :doc:`Reading data in other environments <readcode>` for more information.
 
 To see which languages are supported, use the 'readcodelanguages' property:
 
@@ -345,4 +346,3 @@ To see which languages are supported, use the 'readcodelanguages' property:
      'numpy',
      'numpymemmap')
 
-See :doc:`Reading data in other environments <readcode>` for more information.
