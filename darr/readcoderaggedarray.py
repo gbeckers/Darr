@@ -9,17 +9,17 @@ def readcodenumpymemmap(dra, varname='a'):
                                  filepath='values/arrayvalues.bin',
                                  varname='v')
     rcv = ''.join(rcv.splitlines(keepends=True)[1:]) # get rid of import
-    rff = 'def get_subarray(seqno):\n' \
-          '    starti, endi = i[seqno]\n' \
+    rff = 'def get_subarray(k):\n' \
+          '    starti, endi = i[k]\n' \
           '    return v[starti:endi]\n'
     if len(dra) > 2:
-       j, position = 2, 'third'
+       k, position = 2, 'third'
     elif len(dra) == 2:
-        j, position = 1, 'second'
+        k, position = 1, 'second'
     else:
-        j, position = 0, 'first'
-    rca = f'{varname} = get_subarray({j})  # example to read {position} ' \
-          f'subarray\n'
+        k, position = 0, 'first'
+    rca = f'{varname} = get_subarray({k})  # example to read {position} ' \
+          f'(k={k}) subarray\n'
     ## the mext is never going to happen as Darr is based on memmap
     ## comment out
     # if (rci is None) or (rcv is None):
@@ -40,20 +40,20 @@ def readcoder(dra, varname='a'):
     rci = f"# read array of indices to be used on values array\n{rci}"
 
     rcv = f"# read array of values:\n{rcv}"
-    rff = 'get_subarray <- function(j){\n' \
-          '    starti = i[1,j]+1  # R starts counting from 1\n' \
-          '    endi = i[2,j]  # R has inclusive end index\n'
+    rff = 'get_subarray <- function(k){\n' \
+          '    starti = i[1,k]+1  # R starts counting from 1\n' \
+          '    endi = i[2,k]  # R has inclusive end index\n'
     commas = len(dra._arrayinfo['atom'])*','
     rff = f'{rff}    return (v[{commas}starti:endi])}}\n'
     rff = f"# create function to get subarrays:\n{rff}"
     if len(dra) > 2:
-       j, position = 3, 'third'
+       k, position = 3, 'third'
     elif len(dra) == 2:
-        j, position = 2, 'second'
+        k, position = 2, 'second'
     else:
-        j, position = 1, 'first'
-    rca =  f"# example to read {position} subarray:\n"
-    rca = f"{rca}# get_subarray({j})\n"
+        k, position = 1, 'first'
+    rca =  f"# example to read {position} (k={k}) subarray:\n"
+    rca = f"{rca}# get_subarray({k})\n"
     return f'{rci}{rcv}{rff}{rca}'
 
 def readcodematlab(dra, varname='a'):
@@ -78,7 +78,7 @@ def readcodematlab(dra, varname='a'):
           "% from the values array:\n"
     dims = len(dra._arrayinfo['atom'])*':,'
     rca = f"{rca}get_subarray = @(k) v({dims}i(1,k)+1:i(2,k));\n"
-    rca =  f'{rca}% example to read {position} subarray:\n' \
+    rca =  f'{rca}% example to read {position} (k={k}) subarray:\n' \
            f'% get_subarray({k})'
     return f'{rci}{rcv}{rca}\n'
 
@@ -109,7 +109,7 @@ def readcodejulia(dra, varname='a'):
         k, position = 2, 'second'
     else:
         k, position = 1, 'first'
-    rca =  f'# example to read {position} subarray:\n' \
+    rca =  f'# example to read {position} (k={k}) subarray:\n' \
            f'# get_subarray({k})'
     return f'{rci}{rcv}{rff}{rca}\n'
 
