@@ -142,7 +142,7 @@ class RaggedArray:
 
     def __repr__(self):
         return f'RaggedArray ({self.narrays} subarrays with atom shape '\
-                 '{self.atom}, {self.accessmode})'
+               f'{self.atom}, {self.accessmode})'
 
     __str__ = __repr__
 
@@ -438,6 +438,7 @@ def readcodetxt(ra):
     languages = (
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),
+        ("Julia (version >= 1.0):", "julia"),
         ("Matlab/Octave:", "matlab")
     )
     for heading, language in languages:

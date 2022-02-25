@@ -66,8 +66,8 @@ def readcodematlab(dra, varname='a'):
     if (rci is None) or (rcv is None):
         return None
     numtype = dra.dtype.name
-    rci = f"% read array of indices to be used on values array:\n{rci}"
-    rcv = f"% read array of {numtype} values:\n{rcv}"
+    rci = f"% read indice array, to be used on values array later:\n{rci}"
+    rcv = f"% read {numtype} values array:\n{rcv}"
     if len(dra) > 2:
        k, position = 3, 'third'
     elif len(dra) == 2:
@@ -82,11 +82,43 @@ def readcodematlab(dra, varname='a'):
            f'% s({k})'
     return f'{rci}{rcv}{rca}'
 
+# not supporting versions < 1 anymore
+def readcodejulia(dra, varname='a'):
+    rci = readcodearray.readcode(dra._indices, 'julia_ver1',
+                                 filepath='indices/arrayvalues.bin',
+                                 varname='i')
+    rcv = readcodearray.readcode(dra._values, 'julia_ver1',
+                                 filepath='values/arrayvalues.bin',
+                                 varname='v')
+    if (rci is None) or (rcv is None):
+        return None
+    numtype = dra.dtype.name
+    rci = f"# read indices array, to be used on values array later:\n{rci}"
+    rcv = f"# read {numtype} values array:\n{rcv}"
+
+    rff = 'function get_subarray(seqno)\n' \
+          '    starti = i[1,seqno]+1  # Julia starts counting from 1\n' \
+          '    endi = i[2,seqno]  # Julia has inclusive end index\n' \
+          '    v[:,starti:endi]\n' \
+          'end\n'
+    rff = f"# create an anonymous function that returns the k-th subarray\n" \
+          f"# from the values array:\n{rff}"
+    if   len(dra) > 2:
+       k, position = 3, 'third'
+    elif len(dra) == 2:
+        k, position = 2, 'second'
+    else:
+        k, position = 1, 'first'
+    rca =  f'# example to read {position} subarray:\n' \
+           f'# get_subarray({k})'
+    return f'{rci}{rcv}{rff}{rca}'
+
 
 readcodefunc = {
         'numpymemmap': readcodenumpymemmap,
         'matlab': readcodematlab,
-        'R': readcoder
+        'R': readcoder,
+        'julia': readcodejulia,
 }
 
 def readcode(dra, language, varname='a'):
