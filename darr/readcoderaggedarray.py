@@ -77,9 +77,9 @@ def readcodematlab(dra, varname='a'):
     rca = "% create an anonymous function that returns the k-th subarray\n" \
           "% from the values array:\n"
     dims = len(dra._arrayinfo['atom'])*':,'
-    rca = f"{rca}s = @(k) v({dims}i(1,k)+1:i(2,k));\n"
+    rca = f"{rca}get_subarray = @(k) v({dims}i(1,k)+1:i(2,k));\n"
     rca =  f'{rca}% example to read {position} subarray:\n' \
-           f'% s({k})'
+           f'% get_subarray({k})'
     return f'{rci}{rcv}{rca}\n'
 
 # not supporting versions < 1 anymore
