@@ -126,7 +126,7 @@ class RaggedArray:
                 README.txt file that is stored as part of the array ."""
         languages = []
         for lang in readcodefunc.keys():
-            if readcodefunc[lang](self) is not None:
+            if readcode(self, lang) is not None:
                 languages.append(lang)
         return tuple(sorted(languages))
 
