@@ -316,6 +316,7 @@ def readcodemaple(numtype, shape, endianness, filepath='arrayvalues.bin',
         return None
     ct = f'{varname} := FileTools[Binary][Read]("{filepath}", {typedescr}, ' \
          f'byteorder={endianness}, output=Array);\n'
+    ct += f'FileTools[Binary][Close]("{filepath}");\n'
     ndim = len(shape)
     if ndim > 1:
         shape = list(shape[::-1])
