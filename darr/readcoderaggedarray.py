@@ -169,7 +169,7 @@ def readcodemaple(dra, indicespath, valuespath, varname='a'):
     rff = f'# create a function that returns the k-th subarray\n' \
           f'# from the values array:\n' \
           f'getsubarray := proc (k::integer);\n' \
-          f'        v({dims} i(1,k) + 1 .. i(2,k));\n' \
+          f'    v({dims} i(1,k) + 1 .. i(2,k));\n' \
           f'end proc;\n' \
           f'# example to read {position} (k={k}) subarray:\n'\
           f'# {varname} = getsubarray({k});\n'
