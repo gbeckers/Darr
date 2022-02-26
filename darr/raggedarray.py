@@ -403,6 +403,7 @@ def readmetxt(ra):
                 'from zero, and end indices are non-inclusive.') + '\n\n\n'
     return txt
 
+
 def dimensionstxt(ra, firstnmax=5):
     end = min(len(ra), firstnmax)
     lengths = np.diff(ra._indices[:end], axis=-1).flatten()
@@ -416,10 +417,6 @@ def dimensionstxt(ra, firstnmax=5):
     if len(ra) > firstnmax:
         lines.append('    ...')
     return '\n'.join(lines)
-
-
-
-
 
 
 def readcodetxt(ra):

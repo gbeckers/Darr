@@ -45,10 +45,10 @@ Python with Numpy (memmap):
 import numpy as np
 i = np.memmap('indices/arrayvalues.bin', dtype='<i8', shape=(8, 2), order='C')
 v = np.memmap('values/arrayvalues.bin', dtype='<i1', shape=(26, 2), order='C')
-def get_subarray(seqno):
-    starti, endi = i[seqno]
+def get_subarray(k):
+    starti, endi = i[k]
     return v[starti:endi]
-a = get_subarray(2)  # example to read third subarray
+# a = get_subarray(2)  # example to read third (k=2) subarray
 
 R:
 --
@@ -63,12 +63,12 @@ v = readBin(con=fileid, what=integer(), n=52, size=1, signed=TRUE, endian="littl
 v = array(data=v, dim=c(2, 26), dimnames=NULL)
 close(fileid)
 # create function to get subarrays:
-get_subarray <- function(j){
-    starti = i[1,j]+1  # R starts counting from 1
-    endi = i[2,j]  # R has inclusive end index
+get_subarray <- function(k){
+    starti = i[1,k]+1  # R starts counting from 1
+    endi = i[2,k]  # R has inclusive end index
     return (v[,starti:endi])}
-# example to read third subarray:
-# get_subarray(3)
+# example to read third (k=3) subarray:
+# a = get_subarray(3)
 
 Julia (version >= 1.0):
 -----------------------
@@ -87,8 +87,8 @@ function get_subarray(k)
     endi = i[2,k]  # Julia has inclusive end index
     v[:,starti:endi]
 end
-# example to read third subarray:
-# get_subarray(3)
+# example to read third (k=3) subarray:
+# a = get_subarray(3)
 
 Matlab/Octave:
 --------------
@@ -102,7 +102,27 @@ v = fread(fileid, [2, 26], '*int8', 'ieee-le');
 fclose(fileid);
 % create an anonymous function that returns the k-th subarray
 % from the values array:
-s = @(k) v(:,i(1,k)+1:i(2,k));
-% example to read third subarray:
-% s(3)
+get_subarray = @(k) v(:,i(1,k)+1:i(2,k));
+% example to read third (k=3) subarray:
+% a = get_subarray(3);
+
+Mathematica:
+------------
+(* read indices array, to be used on values array later: *)
+i = BinaryReadList["indices/arrayvalues.bin", "Integer64", ByteOrdering -> -1];
+i = ArrayReshape[i, {8, 2}];
+(* read int8 values array: *)
+v = BinaryReadList["values/arrayvalues.bin", "Integer8", ByteOrdering -> -1];
+v = ArrayReshape[v, {26, 2}];
+(* create a function that returns the k-th subarray
+   from the values array *):
+getsubarray[k_?IntegerQ] := 
+    Module[{l},
+        l = k;
+        starti = i[[l,1]] + 1;
+        endi = i[[l,2]];
+        v[[starti;;endi]]]
+(* example to read third (k=3) subarray: *)
+(* a = getsubarray[3] *)
+
 

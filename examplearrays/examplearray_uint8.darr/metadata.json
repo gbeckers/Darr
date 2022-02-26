@@ -4,6 +4,6 @@
         9
     ],
     "comments": "This example array has metadata, which is stored in a separate JSON file. Metadata in Darr is a dictionary that can contain anything that is JSON serializable.",
-    "datetime": "20220225085809",
+    "datetime": "20220226092642",
     "samplingrate": 25000.0
 }

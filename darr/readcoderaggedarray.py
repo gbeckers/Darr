@@ -146,6 +146,35 @@ def readcodemathematica(dra, varname='a'):
           f'(* {varname} = getsubarray[{k}] *)\n'
     return f'{rci}{rcv}{rff}\n'
 
+def readcodemaple(dra, varname='a'):
+    numtype = dra.dtype.name
+    rci = readcodearray.readcode(dra._indices, 'maple',
+                                 filepath='indices/arrayvalues.bin',
+                                 varname='i')
+    rci = f"# read indices array, to be used on values array later:\n{rci}"
+    rcv = readcodearray.readcode(dra._values, 'maple',
+                                 filepath='values/arrayvalues.bin',
+                                 varname='v')
+    rcv = f"(# read {numtype} values array:\n{rcv}"
+    if (rci is None) or (rcv is None):
+        return None
+    if   len(dra) > 2:
+       k, position = 3, 'third'
+    elif len(dra) == 2:
+        k, position = 2, 'second'
+    else:
+        k, position = 1, 'first'
+    rff = f'# create a function that returns the k-th subarray\n' \
+          f'# from the values array:\n' \
+          f'getsubarray := proc (k);\n' \
+          f'        starti = i[[k,1]] + 1;\n' \
+          f'        endi = i[[k,2]];\n' \
+          f'        return v[[starti .. endi]]];\n' \
+          f'endproc;\n' \
+          f'# example to read {position} (k={k}) subarray:\n'\
+          f'# {varname} = getsubarray[{k}];\n'
+    return f'{rci}{rcv}{rff}\n'
+
 
 readcodefunc = {
         'julia': readcodejulia,
