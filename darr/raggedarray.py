@@ -439,7 +439,8 @@ def readcodetxt(ra):
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),
         ("Julia (version >= 1.0):", "julia"),
-        ("Matlab/Octave:", "matlab")
+        ("Matlab/Octave:", "matlab"),
+        ("Mathematica:", "mathematica")
     )
     for heading, language in languages:
         codetext = readcode(ra, language)
