@@ -21,6 +21,7 @@ languages to read the numeric information of a Darr array.
 # Same for Julia. Workaround code possible?
 
 import numpy as np
+from pathlib import Path
 
 def readcodedarr(numtype, shape, endianness, filepath='path_to_data_dir',
                   varname='a'):
@@ -392,7 +393,7 @@ readcodefunc = {
 }
 
 
-def readcode(da, language, filepath='arrayvalues.bin', varname='a'):
+def readcode(da, language, abspath=False, basepath=None, varname='a'):
     """Produces the code to read the Darr array `da` in a given programming
     language.
 
@@ -401,7 +402,12 @@ def readcode(da, language, filepath='arrayvalues.bin', varname='a'):
     da: Darr array
     language: str
         A supported language, such as 'julia', 'R', or 'matlab'
-
+    abspath: bool
+        Should the paths to the data files be absolute or not? Default:
+        True.
+    basepath: str or pathlib.Path or None
+        Path relative to which the binary array data file should be
+        provided. Default: None.
     Returns
     -------
     A string with code
@@ -413,6 +419,13 @@ def readcode(da, language, filepath='arrayvalues.bin', varname='a'):
     numtype = d['numtype']
     shape = d['shape']
     endianness = d['byteorder']
+    if abspath:
+        filepath = da.path.absolute()
+    elif basepath is not None:
+        filepath = Path(basepath) / da._datapath.name
+    else:
+        filepath = da._datapath
+    filepath = filepath.as_posix()
     return readcodefunc[language](numtype=numtype, shape=shape,
                                   endianness=endianness, filepath=filepath,
                                   varname=varname)

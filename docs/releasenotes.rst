@@ -12,6 +12,9 @@ Development Version
 - implement practical workaround code to read complex arrays into plain
   Python; we produce separate real and imaginary arrays.
 - implement Julia (version >= 1) read code for ragged arrays
+- implement Maple read code for ragged arrays
+- improve Maple read code arrays.
+- implement flexible paths read code functions
 
 Version 0.4.1
 -------------

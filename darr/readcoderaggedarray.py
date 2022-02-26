@@ -1,15 +1,16 @@
+from pathlib import Path
 from . import readcodearray
 
 # Row-major: Mathematica, Numpy
-# Column-major: Julia, Matlab, R
+# Column-major: Julia, Matlab, R, Maple
 
-def readcodenumpymemmap(dra, varname='a'):
+def readcodenumpymemmap(dra, indicespath, valuespath, varname='a', ):
     rci = readcodearray.readcode(dra._indices, 'numpymemmap',
-                                 filepath='indices/arrayvalues.bin',
-                                 varname='i')
+                                 varname='i',
+                                 basepath=indicespath)
     rcv = readcodearray.readcode(dra._values, 'numpymemmap',
-                                 filepath='values/arrayvalues.bin',
-                                 varname='v')
+                                 varname='v',
+                                 basepath=valuespath)
     rcv = ''.join(rcv.splitlines(keepends=True)[1:]) # get rid of import
     rff = 'def get_subarray(k):\n' \
           '    starti, endi = i[k]\n' \
@@ -30,13 +31,13 @@ def readcodenumpymemmap(dra, varname='a'):
     return f'{rci}{rcv}{rff}{rca}'
 
 
-def readcoder(dra, varname='a'):
+def readcoder(dra, indicespath, valuespath, varname='a'):
     rci = readcodearray.readcode(dra._indices, 'R',
-                                 filepath='indices/arrayvalues.bin',
-                                 varname='i')
+                                 varname='i',
+                                 basepath=indicespath)
     rcv = readcodearray.readcode(dra._values, 'R',
-                                 filepath='values/arrayvalues.bin',
-                                 varname='v')
+                                 varname='v',
+                                 basepath=valuespath)
     if (rci is None) or (rcv is None):
         return None
     rci = f"# read array of indices to be used on values array\n{rci}"
@@ -58,13 +59,13 @@ def readcoder(dra, varname='a'):
     rca = f"{rca}# {varname} = get_subarray({k})\n"
     return f'{rci}{rcv}{rff}{rca}'
 
-def readcodematlab(dra, varname='a'):
+def readcodematlab(dra, indicespath, valuespath, varname='a'):
     rci = readcodearray.readcode(dra._indices, 'matlab',
-                                 filepath='indices/arrayvalues.bin',
-                                 varname='i')
+                                 varname='i',
+                                 basepath=indicespath)
     rcv = readcodearray.readcode(dra._values, 'matlab',
-                                 filepath='values/arrayvalues.bin',
-                                 varname='v')
+                                 varname='v',
+                                 basepath=valuespath)
     if (rci is None) or (rcv is None):
         return None
     numtype = dra.dtype.name
@@ -85,13 +86,13 @@ def readcodematlab(dra, varname='a'):
     return f'{rci}{rcv}{rca}\n'
 
 # not supporting versions < 1 anymore
-def readcodejulia(dra, varname='a'):
+def readcodejulia(dra, indicespath, valuespath, varname='a'):
     rci = readcodearray.readcode(dra._indices, 'julia_ver1',
-                                 filepath='indices/arrayvalues.bin',
-                                 varname='i')
+                                 varname='i',
+                                 basepath=indicespath)
     rcv = readcodearray.readcode(dra._values, 'julia_ver1',
-                                 filepath='values/arrayvalues.bin',
-                                 varname='v')
+                                 varname='v',
+                                 basepath=valuespath)
     if (rci is None) or (rcv is None):
         return None
     numtype = dra.dtype.name
@@ -116,15 +117,15 @@ def readcodejulia(dra, varname='a'):
     return f'{rci}{rcv}{rff}{rca}\n'
 
 
-def readcodemathematica(dra, varname='a'):
+def readcodemathematica(dra, indicespath, valuespath, varname='a'):
     numtype = dra.dtype.name
     rci = readcodearray.readcode(dra._indices, 'mathematica',
-                                 filepath='indices/arrayvalues.bin',
-                                 varname='i')
+                                 varname='i',
+                                 basepath=indicespath)
     rci = f"(* read indices array, to be used on values array later: *)\n{rci}"
     rcv = readcodearray.readcode(dra._values, 'mathematica',
-                                 filepath='values/arrayvalues.bin',
-                                 varname='v')
+                                 varname='v',
+                                 basepath=valuespath)
     rcv = f"(* read {numtype} values array: *)\n{rcv}"
     if (rci is None) or (rcv is None):
         return None
@@ -146,16 +147,16 @@ def readcodemathematica(dra, varname='a'):
           f'(* {varname} = getsubarray[{k}] *)\n'
     return f'{rci}{rcv}{rff}\n'
 
-def readcodemaple(dra, varname='a'):
+def readcodemaple(dra, indicespath, valuespath, varname='a'):
     numtype = dra.dtype.name
     rci = readcodearray.readcode(dra._indices, 'maple',
-                                 filepath='indices/arrayvalues.bin',
-                                 varname='i')
+                                 varname='i',
+                                 basepath=indicespath)
     rci = f"# read indices array, to be used on values array later:\n{rci}"
     rcv = readcodearray.readcode(dra._values, 'maple',
-                                 filepath='values/arrayvalues.bin',
-                                 varname='v')
-    rcv = f"(# read {numtype} values array:\n{rcv}"
+                                 varname='v',
+                                 basepath=valuespath)
+    rcv = f"# read {numtype} values array:\n{rcv}"
     if (rci is None) or (rcv is None):
         return None
     if   len(dra) > 2:
@@ -164,27 +165,27 @@ def readcodemaple(dra, varname='a'):
         k, position = 2, 'second'
     else:
         k, position = 1, 'first'
+    dims = len(dra._arrayinfo['atom']) * '..,'
     rff = f'# create a function that returns the k-th subarray\n' \
           f'# from the values array:\n' \
-          f'getsubarray := proc (k);\n' \
-          f'        starti = i[[k,1]] + 1;\n' \
-          f'        endi = i[[k,2]];\n' \
-          f'        return v[[starti .. endi]]];\n' \
-          f'endproc;\n' \
+          f'getsubarray := proc (k::integer);\n' \
+          f'        v({dims} i(1,k) + 1 .. i(2,k));\n' \
+          f'end proc;\n' \
           f'# example to read {position} (k={k}) subarray:\n'\
-          f'# {varname} = getsubarray[{k}];\n'
-    return f'{rci}{rcv}{rff}\n'
+          f'# {varname} = getsubarray({k});\n'
+    return f'{rci}{rcv}{rff}'
 
 
 readcodefunc = {
         'julia': readcodejulia,
+        'maple': readcodemaple,
         'mathematica': readcodemathematica,
         'matlab': readcodematlab,
         'numpymemmap': readcodenumpymemmap,
         'R': readcoder,
 }
 
-def readcode(dra, language, varname='a'):
+def readcode(dra, language, basepath='', abspath=False, varname='a'):
     """Produces the code to read the Darr raggedarray `dra` in a given
     programming language.
 
@@ -193,6 +194,12 @@ def readcode(dra, language, varname='a'):
     dra: Darr raggedarray
     language: str
         A supported language, such as 'julia', 'R', or 'matlab'
+    abspath: bool
+        Should the paths to the data files be absolute or not? Default:
+        True.
+    basepath: str or pathlib.Path or None
+        Path relative to which the binary array data file should be
+        provided. Default: None.
 
     Returns
     -------
@@ -201,4 +208,14 @@ def readcode(dra, language, varname='a'):
     """
     if language not in readcodefunc:
         raise ValueError(f"'{language}' not supported ({readcodefunc.keys()})")
-    return readcodefunc[language](dra=dra, varname=varname)
+    if abspath:
+        ip = dra._indices.path.absolute()
+        vp = dra._values.path.absolute()
+    elif basepath is not None:
+        ip = Path(basepath) / dra._indicesdirname
+        vp = Path(basepath) / dra._valuesdirname
+    else:
+        ip = Path(dra._indicesdirname)
+        vp = Path(dra._valuesdirname)
+    return readcodefunc[language](dra=dra, varname=varname,
+                                  indicespath=ip, valuespath=vp)

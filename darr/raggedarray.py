@@ -213,7 +213,7 @@ class RaggedArray:
         self._update_arraydescr(len=len(self._indices),
                                 size=self._values.size)
 
-    def readcode(self, language):
+    def readcode(self, language, abspath=False, basepath=None):
         """Generate code to read the array in a different language.
 
         Note that this does not include reading the metadata, which is just
@@ -224,6 +224,12 @@ class RaggedArray:
         language: str
             One of the languages that are supported. Choose from:
             'matlab', 'numpymemmap', 'R'.
+        abspath: bool
+            Should the paths to the data files be absolute or not? Default:
+            True.
+        basepath: str or pathlib.Path or None
+            Path relative to which the binary array data file should be
+            provided. Default: None.
 
         Example
         -------
@@ -245,7 +251,8 @@ class RaggedArray:
         if language not in readcodefunc.keys():
             raise ValueError(f'Language "{language}" not supported, choose '
                              f'from {readcodefunc.keys()}')
-        return readcodefunc[language](self)
+        return readcode(self, language, basepath=basepath, abspath=abspath,
+                        varname='a')
 
     def archive(self, filepath=None, compressiontype='xz', overwrite=False):
         """Archive array data into a single compressed file.
@@ -436,6 +443,7 @@ def readcodetxt(ra):
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),
         ("Julia (version >= 1.0):", "julia"),
+        ("Maple:", "maple"),
         ("Matlab/Octave:", "matlab"),
         ("Mathematica:", "mathematica")
     )

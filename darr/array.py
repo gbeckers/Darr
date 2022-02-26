@@ -650,7 +650,7 @@ class Array:
                        accessmode=accessmode, metadata=metadata,
                        chunklen=chunklen, overwrite=overwrite)
 
-    def readcode(self, language):
+    def readcode(self, language, abspath=False, basepath=None):
         """Generate code to read the array in a different language.
 
         Note that this does not include reading the metadata, which is just
@@ -662,6 +662,12 @@ class Array:
             One of the languages that are supported. Choose from:
             'darr', 'idl', 'julia_ver0', 'julia_ver1', 'mathematica',
             'matlab', 'maple', 'numpy', 'numpymemmap', 'R'.
+        abspath: bool
+            Should the paths to the data files be absolute or not? Default:
+            True.
+        basepath: str or pathlib.Path or None
+            Path relative to which the binary array data file should be
+            provided. Default: None.
 
         Example
         -------
@@ -676,7 +682,8 @@ class Array:
         if language not in readcodefunc.keys():
             raise ValueError(f'Language "{language}" not supported, choose '
                              f'from {readcodefunc.keys()}')
-        return readcode(self, language=language)
+        return readcode(self, language=language, basepath=basepath,
+                        abspath=abspath)
 
     def archive(self, filepath=None, compressiontype='xz', overwrite=False):
         """Archive array data into a single compressed file.
