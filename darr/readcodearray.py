@@ -12,7 +12,7 @@ languages to read the numeric information of a Darr array.
 
 
 # Row-major: Mathematica, Numpy
-# Column-major: Julia, Matlab, R
+# Column-major: Julia, Matlab/Octave, R, Maple, IDL/GDL
 
 # Considerations
 # --------------

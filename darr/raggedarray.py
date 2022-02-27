@@ -442,6 +442,7 @@ def readcodetxt(ra):
     languages = (
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),
+        ("IDL/GDL", "idl"),
         ("Julia (version >= 1.0):", "julia"),
         ("Maple:", "maple"),
         ("Matlab/Octave:", "matlab"),

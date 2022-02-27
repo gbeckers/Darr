@@ -2,7 +2,13 @@ from pathlib import Path
 from . import readcodearray
 
 # Row-major: Mathematica, Numpy
-# Column-major: Julia, Matlab, R, Maple
+# Column-major: Julia, Matlab/Octave, R, Maple, IDL/GDL
+
+# start counting at 0: Python, IDL
+# start counting at 1: Julia, Mathematica, Matlab/Octave, R, Maple,
+
+# inclusive end index: Julia, Mathematica, Matlab/Octave, R, Maple, IDL/GDL
+# non-inclusive end index: Python
 
 def readcodenumpymemmap(dra, indicespath, valuespath, varname='a', ):
     rci = readcodearray.readcode(dra._indices, 'numpymemmap',
@@ -175,8 +181,43 @@ def readcodemaple(dra, indicespath, valuespath, varname='a'):
           f'# {varname} = getsubarray({k});\n'
     return f'{rci}{rcv}{rff}'
 
+# This has to be checked with IDL
+def readcodeidl(dra, indicespath, valuespath, varname='a'):
+    rci = readcodearray.readcode(dra._indices, 'idl',
+                                 varname='i',
+                                 basepath=indicespath)
+    rcv = readcodearray.readcode(dra._values, 'idl',
+                                 varname='v',
+                                 basepath=valuespath)
+    if (rci is None) or (rcv is None):
+        return None
+    numtype = dra.dtype.name
+    rci = f"; read indices array, to be used on values array later:\n{rci}"
+    rcv = f"; read {numtype} values array:\n{rcv}"
+    dims = len(dra._arrayinfo['atom']) * '*,'
+    rff = f'; NOTE: next function definition does not work in GDL (yet), \n' \
+          f';       put function in separate file instead and call\n' \
+          f'.compile\n' \
+          f'- FUNCTION getsubarray, k, i, v\n' \
+          f'-    starti = i[0,k] # IDL starts counting at 0\n' \
+          f'-    endi = i[1,k] - 1 # IDL has includive end index\n' \
+          f'-    RETURN, v[{dims}starti:endi]\n' \
+          f'- END\n'
+    rff = f"; create a function that returns the k-th subarray\n" \
+          f"; from the values array:\n{rff}"
+    if   len(dra) > 2:
+       k, position = 3, 'third'
+    elif len(dra) == 2:
+        k, position = 2, 'second'
+    else:
+        k, position = 1, 'first'
+    rca =  f'; example to read {position} (k={k}) subarray:\n' \
+           f'; {varname} = getsubarray({k})'
+    return f'{rci}{rcv}{rff}{rca}\n'
+
 
 readcodefunc = {
+        'idl': readcodeidl,
         'julia': readcodejulia,
         'maple': readcodemaple,
         'mathematica': readcodemathematica,
