@@ -200,7 +200,7 @@ def readcodeidl(dra, indicespath, valuespath, varname='a'):
           f'.compile\n' \
           f'- FUNCTION getsubarray, k, i, v\n' \
           f'-    starti = i[0,k] # IDL starts counting at 0\n' \
-          f'-    endi = i[1,k] - 1 # IDL has includive end index\n' \
+          f'-    endi = i[1,k] - 1 # IDL has inclusive end index\n' \
           f'-    RETURN, v[{dims}starti:endi]\n' \
           f'- END\n'
     rff = f"; create a function that returns the k-th subarray\n" \
