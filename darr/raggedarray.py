@@ -440,6 +440,7 @@ def readcodetxt(ra):
     s += wrap(f'Example code for reading the data') + '\n' + \
          wrap(f'=================================') + '\n\n'
     languages = (
+        ("Python with Darr:", "darr"),
         ("Python with Numpy (memmap):", "numpymemmap"),
         ("R:", "R"),
         ("IDL/GDL", "idl"),

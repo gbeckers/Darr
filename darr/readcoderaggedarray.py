@@ -10,6 +10,22 @@ from . import readcodearray
 # inclusive end index: Julia, Mathematica, Matlab/Octave, R, Maple, IDL/GDL
 # non-inclusive end index: Python
 
+def readcodedarr(dra, indicespath, valuespath, varname='a'):
+    if len(dra) > 2:
+       k, position = 2, 'third'
+    elif len(dra) == 2:
+        k, position = 1, 'second'
+    else:
+        k, position = 0, 'first'
+    ct = f"import darr\n" \
+         f"# path_to_data_dir is the directory that contains this README\n" \
+         f"{varname} = darr.RaggedArray(path='path_to_data_dir')\n" \
+         f"# example to read {position} (k={k}) subarray:\n" \
+         f"# a[2]\n"
+
+    return ct
+
+
 def readcodenumpymemmap(dra, indicespath, valuespath, varname='a', ):
     rci = readcodearray.readcode(dra._indices, 'numpymemmap',
                                  varname='i',
@@ -217,6 +233,7 @@ def readcodeidl(dra, indicespath, valuespath, varname='a'):
 
 
 readcodefunc = {
+        'darr' : readcodedarr,
         'idl': readcodeidl,
         'julia': readcodejulia,
         'maple': readcodemaple,
