@@ -12,29 +12,37 @@ environments. Keeping data universally readable and documented is a pillar of
 good scientific practice. More rationale for this approach is
 provided `here <https://darr.readthedocs.io/en/latest/rationale .html>`__.
 
+Under the hood, Darr uses NumPy's memory-mapped arrays, which is a widely
+used and tested way of working with disk-based numerical arrays. It has
+therefore full NumPy compatibility and efficient out-of-core read/write access
+to potentially very large arrays. To this, Darr adds functionality aimed at
+making your life as a data scientist easier, such as the ability to create
+arrays from iterators, append and truncate functionality, the support of
+ragged arrays, and the easy use of metadata. Most importantly, it does all the
+bookkeeping for you to keep your arrays fully documented, open, and widely
+readable.
+
 Flat binary files and (JSON) text files are accompanied by a README text file
 that explains how the array and metadata are stored. It also provides code for
-reading the array in a variety of current scientific data tools such as
-Python, R, Julia, IDL, Matlab, Maple, and Mathematica. It is trivially easy
-to share your data with others or with yourself when working in different
-computing environments, because it always contains clear documentation,
-including code to read it. No need to export anything or to provide
-elaborate explanation. No dependence on complicated formats or specialized
-tools. Self-documentation and code examples are automatically updated as you
-change your arrays when working with them.
-
-Darr uses NumPy memmory-mapped arrays under the hood, which you can
-access directly for full NumPy compatibility and efficient out-of-core
-read/write access to potentially very large arrays. In addition, Darr supports
-the possibility to append and truncate arrays, and the use of ragged arrays
-(still experimental).
+reading the array, including ragged arrays, in a variety of current scientific
+data tools such as Python, R, Julia, IDL, Matlab, Maple, and Mathematica. It
+is trivially easy to share your data with others or with yourself when working
+in different computing environments, because it always contains clear
+documentation, including code to read it. No need to export anything or to
+provide elaborate explanation. No dependence on complicated formats or
+specialized tools. Self-documentation and code examples are automatically
+updated as you change your arrays when working with them. E.g., did your
+colleague provide you with some algorithm in R or Matlab that you want to
+try out on your array data? No problem, just copy-paste of a few lines of
+code, and off you go exploring the same data files in a different computing
+environment.
 
 See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
-for a brief introduction, or the
-`documentation <http://darr.readthedocs.io/>`__ for more info.
+for a brief introduction, or the `documentation <http://darr.readthedocs
+.io/>`__ for more info.
 
-Darr is currently pre-1.0, still undergoing significant development. It is
-open source and freely available under the `New BSD License
+Darr is currently pre-1.0, still undergoing development. It is open source and
+freely available under the `New BSD License
 <https://opensource.org/licenses/BSD-3-Clause>`__ terms.
 
 Features
