@@ -21,12 +21,12 @@ def readcodedarr(dra, indicespath, valuespath, varname='a'):
          f"# path_to_data_dir is the directory that contains this README\n" \
          f"{varname} = darr.RaggedArray(path='path_to_data_dir')\n" \
          f"# example to read {position} (k={k}) subarray:\n" \
-         f"# a[2]\n"
+         f"# {varname}[2]\n"
 
     return ct
 
 
-def readcodenumpymemmap(dra, indicespath, valuespath, varname='a', ):
+def readcodenumpymemmap(dra, indicespath, valuespath, varname='sa', ):
     rci = readcodearray.readcode(dra._indices, 'numpymemmap',
                                  varname='i',
                                  basepath=indicespath)
@@ -53,7 +53,7 @@ def readcodenumpymemmap(dra, indicespath, valuespath, varname='a', ):
     return f'{rci}{rcv}{rff}{rca}'
 
 
-def readcoder(dra, indicespath, valuespath, varname='a'):
+def readcoder(dra, indicespath, valuespath, varname='sa'):
     rci = readcodearray.readcode(dra._indices, 'R',
                                  varname='i',
                                  basepath=indicespath)
@@ -81,7 +81,7 @@ def readcoder(dra, indicespath, valuespath, varname='a'):
     rca = f"{rca}# {varname} = get_subarray({k})\n"
     return f'{rci}{rcv}{rff}{rca}'
 
-def readcodematlab(dra, indicespath, valuespath, varname='a'):
+def readcodematlab(dra, indicespath, valuespath, varname='sa'):
     rci = readcodearray.readcode(dra._indices, 'matlab',
                                  varname='i',
                                  basepath=indicespath)
@@ -108,7 +108,7 @@ def readcodematlab(dra, indicespath, valuespath, varname='a'):
     return f'{rci}{rcv}{rca}\n'
 
 # not supporting versions < 1 anymore
-def readcodejulia(dra, indicespath, valuespath, varname='a'):
+def readcodejulia(dra, indicespath, valuespath, varname='sa'):
     rci = readcodearray.readcode(dra._indices, 'julia_ver1',
                                  varname='i',
                                  basepath=indicespath)
@@ -139,7 +139,7 @@ def readcodejulia(dra, indicespath, valuespath, varname='a'):
     return f'{rci}{rcv}{rff}{rca}\n'
 
 
-def readcodemathematica(dra, indicespath, valuespath, varname='a'):
+def readcodemathematica(dra, indicespath, valuespath, varname='sa'):
     numtype = dra.dtype.name
     rci = readcodearray.readcode(dra._indices, 'mathematica',
                                  varname='i',
@@ -169,7 +169,7 @@ def readcodemathematica(dra, indicespath, valuespath, varname='a'):
           f'(* {varname} = getsubarray[{k}] *)\n'
     return f'{rci}{rcv}{rff}\n'
 
-def readcodemaple(dra, indicespath, valuespath, varname='a'):
+def readcodemaple(dra, indicespath, valuespath, varname='sa'):
     numtype = dra.dtype.name
     rci = readcodearray.readcode(dra._indices, 'maple',
                                  varname='i',
@@ -198,7 +198,7 @@ def readcodemaple(dra, indicespath, valuespath, varname='a'):
     return f'{rci}{rcv}{rff}'
 
 # This has to be checked with IDL
-def readcodeidl(dra, indicespath, valuespath, varname='a'):
+def readcodeidl(dra, indicespath, valuespath, varname='sa'):
     rci = readcodearray.readcode(dra._indices, 'idl',
                                  varname='i',
                                  basepath=indicespath)
@@ -211,24 +211,16 @@ def readcodeidl(dra, indicespath, valuespath, varname='a'):
     rci = f"; read indices array, to be used on values array later:\n{rci}"
     rcv = f"; read {numtype} values array:\n{rcv}"
     dims = len(dra._arrayinfo['atom']) * '*,'
-    rff = f'; NOTE: next does not work in GDL (yet)\n'\
-          f'.compile\n' \
-          f'FUNCTION GETSUBARRAY, k, i, v\n' \
-          f'   starti = i[0,k] ; IDL starts counting at 0\n' \
-          f'   endi = i[1,k] - 1 ; IDL has inclusive end index\n' \
-          f'RETURN, v[{dims}starti:endi]\n' \
-          f'END\n'
-    rff = f"; create a function that returns the k-th subarray\n" \
-          f"; from the values array:\n{rff}"
+    rff = f"; example to get the k-th subarray from the values array:\n"
     if   len(dra) > 2:
        k, position = 2, 'third'
     elif len(dra) == 2:
         k, position = 1, 'second'
     else:
         k, position = 0, 'first'
-    rca =  f'; example to read {position} (k={k}) subarray:\n' \
-           f'; {varname} = GETSUBARRAY({k}, i, v)'
-    return f'{rci}{rcv}{rff}{rca}\n'
+    rca =  f'k = {k} ; set k to the subarray you want\n' \
+           f'{varname} =  v[{dims}i[0,k]:i[1,k]-1] ; get subarray\n'
+    return f'{rci}{rcv}{rff}{rca}'
 
 
 readcodefunc = {
@@ -242,7 +234,7 @@ readcodefunc = {
         'R': readcoder,
 }
 
-def readcode(dra, language, basepath='', abspath=False, varname='a'):
+def readcode(dra, language, basepath='', abspath=False):
     """Produces the code to read the Darr raggedarray `dra` in a given
     programming language.
 
@@ -274,5 +266,4 @@ def readcode(dra, language, basepath='', abspath=False, varname='a'):
     else:
         ip = Path(dra._indicesdirname)
         vp = Path(dra._valuesdirname)
-    return readcodefunc[language](dra=dra, varname=varname,
-                                  indicespath=ip, valuespath=vp)
+    return readcodefunc[language](dra=dra, indicespath=ip, valuespath=vp)

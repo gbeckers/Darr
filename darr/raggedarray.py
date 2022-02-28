@@ -251,8 +251,7 @@ class RaggedArray:
         if language not in readcodefunc.keys():
             raise ValueError(f'Language "{language}" not supported, choose '
                              f'from {readcodefunc.keys()}')
-        return readcode(self, language, basepath=basepath, abspath=abspath,
-                        varname='a')
+        return readcode(self, language, basepath=basepath, abspath=abspath)
 
     def archive(self, filepath=None, compressiontype='xz', overwrite=False):
         """Archive array data into a single compressed file.
