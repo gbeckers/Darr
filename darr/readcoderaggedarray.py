@@ -211,24 +211,23 @@ def readcodeidl(dra, indicespath, valuespath, varname='a'):
     rci = f"; read indices array, to be used on values array later:\n{rci}"
     rcv = f"; read {numtype} values array:\n{rcv}"
     dims = len(dra._arrayinfo['atom']) * '*,'
-    rff = f'; NOTE: next function definition does not work in GDL (yet), \n' \
-          f';       put function in separate file instead and call\n' \
+    rff = f'; NOTE: next does not work in GDL (yet)\n'\
           f'.compile\n' \
-          f'- FUNCTION getsubarray, k, i, v\n' \
-          f'-    starti = i[0,k] # IDL starts counting at 0\n' \
-          f'-    endi = i[1,k] - 1 # IDL has inclusive end index\n' \
-          f'-    RETURN, v[{dims}starti:endi]\n' \
-          f'- END\n'
+          f'FUNCTION GETSUBARRAY, k, i, v\n' \
+          f'   starti = i[0,k] ; IDL starts counting at 0\n' \
+          f'   endi = i[1,k] - 1 ; IDL has inclusive end index\n' \
+          f'RETURN, v[{dims}starti:endi]\n' \
+          f'END\n'
     rff = f"; create a function that returns the k-th subarray\n" \
           f"; from the values array:\n{rff}"
     if   len(dra) > 2:
-       k, position = 3, 'third'
+       k, position = 2, 'third'
     elif len(dra) == 2:
-        k, position = 2, 'second'
+        k, position = 1, 'second'
     else:
-        k, position = 1, 'first'
+        k, position = 0, 'first'
     rca =  f'; example to read {position} (k={k}) subarray:\n' \
-           f'; {varname} = getsubarray({k})'
+           f'; {varname} = GETSUBARRAY({k}, i, v)'
     return f'{rci}{rcv}{rff}{rca}\n'
 
 
