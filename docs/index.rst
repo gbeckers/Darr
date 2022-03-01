@@ -105,7 +105,8 @@ functions/methods may still change.
    :maxdepth: 2
    :caption: Contents:
 
-   tutorial
+   tutorialarray
+   tutorialraggedarray
    rationale
    readcode
    troubleshooting
