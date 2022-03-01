@@ -111,19 +111,24 @@ will produce code to read the data in R:
 .. code:: r
 
     # read array of indices to be used on values array
-    fileid = file("indices/arrayvalues.bin", "rb")
-    i = readBin(con=fileid, what=integer(), n=20, size=8, signed=TRUE, endian="little")
-    i = array(data=i, dim=c(2, 10), dimnames=NULL)
+    fileid <- file("indices/arrayvalues.bin", "rb")
+    i <- readBin(con=fileid, what=integer(), n=20, size=8, signed=TRUE, endian="little")
+    i <- array(data=i, dim=c(2, 10), dimnames=NULL)
     close(fileid)
     # read array of values:
-    fileid = file("values/arrayvalues.bin", "rb")
-    v = readBin(con=fileid, what=numeric(), n=45, size=4, signed=TRUE, endian="little")
+    fileid <- file("values/arrayvalues.bin", "rb")
+    v <- readBin(con=fileid, what=numeric(), n=45, size=4, signed=TRUE, endian="little")
     close(fileid)
     # create function to get subarrays:
     get_subarray <- function(k){
-        starti = i[1,k]+1  # R starts counting from 1
-        endi = i[2,k]  # R has inclusive end index
-        return (v[starti:endi])}
+        starti <- i[1,k] + 1  # R starts counting from 1
+        endi <- i[2,k]        # R has inclusive end index
+        if (starti > endi) {
+            return (c())  # empty vector
+        } else {
+            return (v[starti:endi])
+        }
+    }
     # example to read third (k=3) subarray:
     sa = get_subarray(3)
 
