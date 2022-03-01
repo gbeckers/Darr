@@ -67,7 +67,7 @@ Features
 -  **Minimal dependencies**, only `NumPy <http://www.numpy.org/>`__.
 -  Integrates easily with the `Dask <https://dask.pydata.org/en/latest/>`__
    library for out-of-core **computation on very large arrays**.
--  Supports **ragged arrays** (still experimental).
+-  Supports **ragged arrays**.
 
 Con's:
 
