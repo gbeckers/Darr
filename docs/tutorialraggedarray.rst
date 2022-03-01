@@ -123,8 +123,8 @@ will produce code to read the data in R:
     get_subarray <- function(k){
         starti <- i[1,k] + 1  # R starts counting from 1
         endi <- i[2,k]        # R has inclusive end index
-        if (starti > endi) {
-            return (c())  # empty vector
+        if (starti > endi) {  # subarray is empty
+            return (c())
         } else {
             return (v[starti:endi])
         }

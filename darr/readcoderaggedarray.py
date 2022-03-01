@@ -70,8 +70,8 @@ def readcoder(dra, indicespath, valuespath):
           f'    starti <- i[1,k] + 1  # R starts counting from 1\n' \
           f'    endi <- i[2,k]        # R has inclusive end index\n'
     if len(dra.atom) == 0:
-        rff += f'    if (starti > endi) {{\n' \
-               f'        return (c())  # empty vector\n' \
+        rff += f'    if (starti > endi) {{  # subarray is empty\n' \
+               f'        return (c())\n' \
                f'    }} else {{\n' \
                f'        return (v[starti:endi])\n' \
                f'    }}\n' \
