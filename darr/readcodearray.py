@@ -179,11 +179,11 @@ def readcoder(numtype, shape, endianness, filepath='arrayvalues.bin',
     what, size, signed = typedescr
     shape = shape[::-1]  # darr is always C order, R is F order
     n = np.product(shape)
-    ct = f'fileid = file("{filepath}", "rb")\n' \
-         f'{varname} = readBin(con=fileid, what={what}, n={n}, size={size}, ' \
+    ct = f'fileid <- file("{filepath}", "rb")\n' \
+         f'{varname} <- readBin(con=fileid, what={what}, n={n}, size={size}, ' \
          f'signed={signed}, endian="{endianness}")\n'
     if len(shape) > 1:
-        ct += f'{varname} = array(data={varname}, dim=c{shape}, ' \
+        ct += f'{varname} <- array(data={varname}, dim=c{shape}, ' \
             f'dimnames=NULL)\n'
     return ct + 'close(fileid)\n'
 

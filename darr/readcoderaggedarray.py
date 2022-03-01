@@ -67,8 +67,8 @@ def readcoder(dra, indicespath, valuespath):
     rcv = f'# read array of values:\n{rcv}'
     rff = f'# create function to get subarrays:\n' \
           f'get_subarray <- function(k){{\n' \
-          f'    starti = i[1,k] + 1  # R starts counting from 1\n' \
-          f'    endi = i[2,k]        # R has inclusive end index\n'
+          f'    starti <- i[1,k] + 1  # R starts counting from 1\n' \
+          f'    endi <- i[2,k]        # R has inclusive end index\n'
     if len(dra.atom) == 0:
         rff += f'    if (starti > endi) {{\n' \
                f'        return (c())  # empty vector\n' \
@@ -211,7 +211,7 @@ def readcodemaple(dra, indicespath, valuespath):
           f'sa = getsubarray({k});\n'
     return f'{rci}{rcv}{rff}'
 
-# This has to be checked with IDL
+# empty subarrays don't work with this method
 def readcodeidl(dra, indicespath, valuespath):
     rci = readcodearray.readcode(dra._indices, 'idl',
                                  varname='i',
