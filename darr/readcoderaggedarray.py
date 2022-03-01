@@ -53,7 +53,6 @@ def readcodenumpymemmap(dra, indicespath, valuespath):
     # else:
     return f'{rci}{rcv}{rff}{rca}'
 
-
 def readcoder(dra, indicespath, valuespath):
     rci = readcodearray.readcode(dra._indices, 'R',
                                  varname='i',
@@ -65,13 +64,27 @@ def readcoder(dra, indicespath, valuespath):
         return None
     rci = f"# read array of indices to be used on values array\n{rci}"
 
-    rcv = f"# read array of values:\n{rcv}"
-    rff = 'get_subarray <- function(k){\n' \
-          '    starti = i[1,k]+1  # R starts counting from 1\n' \
-          '    endi = i[2,k]  # R has inclusive end index\n'
-    commas = len(dra._arrayinfo['atom'])*','
-    rff = f'{rff}    return (v[{commas}starti:endi])}}\n'
-    rff = f"# create function to get subarrays:\n{rff}"
+    rcv = f'# read array of values:\n{rcv}'
+    rff = f'# create function to get subarrays:\n' \
+          f'get_subarray <- function(k){{\n' \
+          f'    starti = i[1,k] + 1  # R starts counting from 1\n' \
+          f'    endi = i[2,k]        # R has inclusive end index\n'
+    if len(dra.atom) == 0:
+        rff += f'    if (starti > endi) {{\n' \
+               f'        return (c())  # empty vector\n' \
+               f'    }} else {{\n' \
+               f'        return (v[starti:endi])\n' \
+               f'    }}\n' \
+               f'}}\n'
+    else:
+        commas = len(dra._arrayinfo['atom'])*','
+        emptydim = ",".join([str(d) for d in dra.atom] + ['0'])
+        rff += f'    if (starti > endi) {{\n' \
+               f'        return (array(numeric(),c({emptydim}))) # empty array\n' \
+               f'    }} else {{\n' \
+               f'        return (v[{commas}starti:endi])\n' \
+               f'    }}\n' \
+               f'}}\n'
     if len(dra) > 2:
        k, position = 3, 'third'
     elif len(dra) == 2:
