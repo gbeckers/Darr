@@ -439,28 +439,17 @@ def promptify_codetxt(codetxt, prompt=">>> "):
 shapeexplanationtextarray = \
      f'Notes on shape and indexing of arrays\n' \
      f'=====================================\n' + \
-wrap(f'The array format descriptions above are based on Python, which is a '
-     f'row-major language. This means that the last dimension in an '
-     f'array shape description, or in an index, is the one that varies most '
-     f'rapidly with memory address in (disk-based) memory. E.g. if an array '
-     f'`a` has a shape of (8,2) this means that in memory it consists of 8 '
-     f'consecutive length-2 arrays. Other languages, for example R, may be '
-     f'column-major, which means that the exact same memory layout is '
-     f'referred to has having a shape of (2,8). Indexing works accordingly, '
-     f'in Python the last part of the index refers to the length-2 '
-     f'dimension, whereas in R it refers to the length-8 dimension. Column-'
-     f'major languages are Python and Mathematics, row-major languages are '
-     f'Julia, Matlab/Octave, R, Maple, and IDL/GDL. The code examples above '
-     f'take this potential difference between Python and the other languages '
-     f'into account.\n')
+wrap(f'The array format description above is based on Python/Numpy '
+     f'conventions, which is row-major, and Darr arrays are always stored in a '
+     f'row-major memory layout on disk. This means that the *last* dimension '
+     f'in an array shape description or index is the one that varies most '
+     f'rapidly with memory address. Other languages, for example R, may use '
+     f'column-major shape description and indexing. This means that '
+     f'a Darr array with, e.g., shape (8,2) is referred to has having a '
+     f'(2,8) shape in R. Dimension order in indexing is thus also reversed.  '
+     f'Column-major languages are Python and Mathematica, row-major languages '
+     f'are Julia, Matlab/Octave, R, Maple, and IDL/GDL. The reading code '
+     f'examples provided for different languages above maintain the memory '
+     f'layout as it is on disk. In column-major languages array shapes and '
+     f'multidimensional indices are thus reversed.\n')
 
-shapeindexexplanationtextraggedarray = shapeexplanationtextarray + '\n' +  \
-wrap(f'Further, Python starts counting at 0. So the first subarray in a '
-     f'ragged array has index number 0. This is also true for IDL/GDL, but '
-     f'Julia, ' f'Mathematica, Matlab/Octave, R, and Maple start counting ' 
-     f'at 1, so the first subarray has index number 1. Finally, in Python '
-     f'indexing, the end index is non-inclusive. "a[0:2]" therefore returns '
-     f'a[0] and a[1], but not a[2]. However, all other languages for which '
-     f'reading code is provided, Julia, Mathematica, Matlab/Octave, R, '
-     f'Maple, and IDL/GDL ' f'have an inclusive ' f'end index. The reading '
-     f'code provide takes these difference into account.\n')

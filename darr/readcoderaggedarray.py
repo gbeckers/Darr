@@ -1,5 +1,7 @@
 from pathlib import Path
 from . import readcodearray
+from .readcodearray import shapeexplanationtextarray
+from .utils import wrap
 
 # Row-major: Mathematica, Numpy
 # Column-major: Julia, Matlab/Octave, R, Maple, IDL/GDL
@@ -282,3 +284,14 @@ def readcode(dra, language, basepath='', abspath=False):
         ip = Path(dra._indicesdirname)
         vp = Path(dra._valuesdirname)
     return readcodefunc[language](dra=dra, indicespath=ip, valuespath=vp)
+
+shapeindexexplanationtextraggedarray = shapeexplanationtextarray + '\n' +  \
+wrap(f'Further, Python starts counting at 0. So the first subarray in a '
+     f'ragged array has index number 0. This is also true for IDL/GDL, but '
+     f'Julia, Mathematica, Matlab/Octave, R, and Maple start counting ' 
+     f'at 1, so the first subarray has index number 1 in these languages. '
+     f'Finally, in Python indexing the end index is non-inclusive. E.g., '
+     f'a[0:2] returns a[0] and a[1], but not a[2]. However, all other '
+     f'languages for which reading code is provided, Julia, Mathematica, '
+     f'Matlab/Octave, R, Maple, and IDL/GDL have an inclusive end index. The '
+     f'reading code provided takes these difference into account.\n')
