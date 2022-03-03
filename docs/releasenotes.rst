@@ -16,6 +16,8 @@ Development Version
 - implement IDL read code for ragged arrays
 - improve Maple read code arrays
 - implement flexible paths read code functions
+- Array and RaggedArray README.txt files now contain explanation on row- vs
+  column-major, counting from 0/1, and in/exclusive end index.
 
 Version 0.4.1
 -------------

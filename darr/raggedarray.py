@@ -8,7 +8,8 @@ from .array import Array, asarray, check_accessmode, delete_array, \
     create_array, truncate_array
 from .datadir import DataDir, create_datadir
 from .metadata import MetaData
-from .readcoderaggedarray import readcode, readcodefunc
+from .readcoderaggedarray import readcode, readcodefunc, \
+    shapeindexexplanationtextraggedarray
 from .utils import wrap
 
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
@@ -453,7 +454,7 @@ def readcodetxt(ra):
         codetext = readcode(ra, language)
         if codetext is not None:
             s += f"{heading}\n{'-' * len(heading)}\n{codetext}\n"
-    return s
+    return f'{s}\n{shapeindexexplanationtextraggedarray}'
 
 
 def delete_raggedarray(ra):

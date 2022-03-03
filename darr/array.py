@@ -22,7 +22,7 @@ from pathlib import Path
 from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
-from .readcodearray import readcode, readcodefunc
+from .readcodearray import readcode, readcodefunc, shapeexplanationtextarray
 from .utils import fit_frames, wrap, check_accessmode, product, tempdirfile
 from ._version import get_versions
 
@@ -1208,7 +1208,8 @@ def readcodetxt(da):
         codetext = readcode(da, language)
         if codetext is not None:
             s += f"{heading}\n{'-'*len(heading)}\n{codetext}\n"
-    return s
+    return f'{s}\n{shapeexplanationtextarray}'
+
 
 
 def numtypedescriptiontxt(da):

@@ -437,19 +437,20 @@ def promptify_codetxt(codetxt, prompt=">>> "):
 
 
 shapeexplanationtextarray = \
-     f'Notes on shape and indexing of arrays\n' \
-     f'=====================================\n' + \
-wrap(f'The array format description above is based on Python/Numpy '
-     f'conventions, which is row-major, and Darr arrays are always stored in a '
-     f'row-major memory layout on disk. This means that the *last* dimension '
-     f'in an array shape description or index is the one that varies most '
-     f'rapidly with memory address. Other languages, for example R, may use '
-     f'column-major shape description and indexing. This means that '
-     f'a Darr array with, e.g., shape (8,2) is referred to has having a '
-     f'(2,8) shape in R. Dimension order in indexing is thus also reversed.  '
-     f'Column-major languages are Python and Mathematica, row-major languages '
-     f'are Julia, Matlab/Octave, R, Maple, and IDL/GDL. The reading code '
-     f'examples provided for different languages above maintain the memory '
-     f'layout as it is on disk. In column-major languages array shapes and '
-     f'multidimensional indices are thus reversed.\n')
+     f'Notes on dimensions and indexing of arrays\n' \
+     f'==========================================\n' + \
+wrap(f'Darr arrays are always stored on disk in a row-major memory layout. '
+     f'The data format description above is based on Python/Numpy '
+     f'conventions, which is also row-major. This means that the *last* '
+     f'dimension in an array dimensions (shape) description or index is the '
+     f'one that varies most rapidly with memory address. Other languages '
+     f'may use column-major shape description and indexing. This is the '
+     f'case for example in R in which a Darr/NumPy array with, e.g., '
+     f'dimensions (8,2) is referred to has having dimensions (2,8). Dimension '
+     f'order in indexing is thus also reversed. Column-major languages are: '
+     f'Python and Mathematica. Row-major languages are: Julia, Matlab/Octave, '
+     f'R, Maple, and IDL/GDL. The reading code examples provided for different '
+     f'languages above maintain the memory layout as it is on disk. In '
+     f'column-major languages array dimensions and multidimensional indices '
+    'are thus reversed from the array description under "Data format" above.\n')
 
