@@ -2,13 +2,19 @@
 languages to read the numeric information of a Darr array.
 
 """
-
+# Reading binary files:
+# ---------------------
 # mathematica: https://reference.wolfram.com/language/ref/BinaryRead.html
 # Octave: https://octave.org/doc/v4.2.0/Binary-I_002fO.html
 # Matlab: https://mathworks.com/help/matlab/ref/fread.html
 # R: https://www.rdocumentation.org/packages/base/versions/3.4.3/topics/readBin
 # Julia: https://docs.julialang.org/en/release-0.4/manual/integers-and- floating-point-numbers/
 # Maple: https://www.maplesoft.com/support/help/maple/view.aspx?path=FileTools%2FBinary%2FRead
+
+# Row- vs column major:
+# ---------------------
+# IDL https://www.l3harrisgeospatial.com/docs/columns__rows__and_array.html
+# Matlab https://nl.mathworks.com/help/coder/ug/what-are-column-major-and-row-major-representation-1.html
 
 
 # Row-major: Mathematica, Numpy
