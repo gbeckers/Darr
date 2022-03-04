@@ -34,8 +34,8 @@ specialized tools. Self-documentation and code examples are automatically
 updated as you change your arrays when working with them. E.g., did your
 colleague provide you with some algorithm in R or Matlab that you want to
 try out on your array data? No problem, just copy-paste of a few lines of
-code, and off you go exploring the same data files in a different computing
-environment.
+code from the documentation stored with the data, and off you go
+exploring the same data files in a different computing environment.
 
 See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
 for a brief introduction, or the `documentation <http://darr.readthedocs
