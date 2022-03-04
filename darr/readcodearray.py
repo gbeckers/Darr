@@ -453,7 +453,7 @@ wrap(f'Darr arrays are always stored on disk in a row-major memory layout. This 
      f'different language. This means that in column major languages, the '
      f'dimension axes will be *inversed*. This is the case for example in R '
      f'in which a Darr array with, e.g., dimensions (8,2) will have dimensions '
-     f'(2,8). Dimension order in indexing is thus also inversed. Column-major '
-     f'languages are: Python and Mathematica. Row-major languages are: Julia, '
-     f'Matlab/Octave, R, Maple, and IDL/GDL. \n')
+     f'(2,8). Dimension order in indexing is thus also inversed. Row-major '
+     f'languages are: Python and Mathematica. Columns-major languages are: '
+     f'Julia, Matlab/Octave, R, Maple, and IDL/GDL. \n')
 

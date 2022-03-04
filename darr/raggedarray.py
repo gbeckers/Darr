@@ -388,7 +388,9 @@ def readmetxt(ra):
     txt += dimtxt + dimensionstxt(ra, firstnmax=5) + '\n\n'
     txt += wrap(f'These index and shape numbers are based on Python indexing, '
                 f'which starts at 0, and array memory layout, which is '
-                f'row-major.') + '\n\n'
+                f'row-major. When using the code provided below to read '
+                f'subarrays, dimensions will be inversed in column-major '
+                f'languages (see Note below).') + '\n\n'
     txt += 'Description of storage on disk\n' \
            '==============================\n'
     txt += wrap('There are two subdirectories, "values" and "indices", each '
