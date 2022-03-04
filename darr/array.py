@@ -1191,6 +1191,13 @@ def readcodetxt(da):
     s = numtypedescriptiontxt(da)
     s += "Code snippets for reading the numeric data\n" \
          "==========================================\n\n"
+    if len(da.shape) > 1:
+        s += wrap(f"Note that the array is multi-dimensional, and stored "
+                  f"with a row-major memory layout. In column-major "
+                  f"languages (see Note below), the code provided here will "
+                  f"lead to an array that has its dimensions inversed "
+                  f"{da.shape[::-1]} with respect to the format description "
+                  f"above {da.shape}.") + '\n\n'
     languages = (
         ("Python:", 'python'),
         ("Python with Darr:", "darr"),
@@ -1208,7 +1215,10 @@ def readcodetxt(da):
         codetext = readcode(da, language)
         if codetext is not None:
             s += f"{heading}\n{'-'*len(heading)}\n{codetext}\n"
-    return f'{s}\n{shapeexplanationtextarray}'
+    if len(da.shape) > 1:
+        return f'{s}\n{shapeexplanationtextarray}'
+    else:
+        return f'{s}\n'
 
 
 
