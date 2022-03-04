@@ -445,18 +445,15 @@ def promptify_codetxt(codetxt, prompt=">>> "):
 shapeexplanationtextarray = \
      f'Notes on dimensions and indexing of arrays\n' \
      f'==========================================\n' + \
-wrap(f'Darr arrays are always stored on disk in a row-major memory layout. '
-     f'The data format description above is based on Python/Numpy '
-     f'conventions, which is also row-major. This means that the *last* '
-     f'dimension in an array dimensions (shape) description or index is the '
-     f'one that varies most rapidly with memory address. Other languages '
-     f'may use column-major shape description and indexing. This is the '
-     f'case for example in R in which a Darr/NumPy array with, e.g., '
-     f'dimensions (8,2) is referred to has having dimensions (2,8). Dimension '
-     f'order in indexing is thus also reversed. Column-major languages are: '
-     f'Python and Mathematica. Row-major languages are: Julia, Matlab/Octave, '
-     f'R, Maple, and IDL/GDL. The reading code examples provided for different '
-     f'languages above maintain the memory layout as it is on disk. In '
-     f'column-major languages array dimensions and multidimensional indices '
-    'are thus reversed from the array description under "Data format" above.\n')
+wrap(f'Darr arrays are always stored on disk in a row-major memory layout. This '
+     f'means that the *last* dimension is the one that varies most rapidly '
+     f'with memory address. However, in other languages arrays are based on '
+     f'column-major memory layout. To keep things efficient, the code examples '
+     f'above do not change the memory layout when reading the array in a '
+     f'different language. This means that in column major languages, the '
+     f'dimension axes will be *inversed*. This is the case for example in R '
+     f'in which a Darr array with, e.g., dimensions (8,2) will have dimensions '
+     f'(2,8). Dimension order in indexing is thus also inversed. Column-major '
+     f'languages are: Python and Mathematica. Row-major languages are: Julia, '
+     f'Matlab/Octave, R, Maple, and IDL/GDL. \n')
 
