@@ -431,7 +431,7 @@ def readcode(da, language, abspath=False, basepath=None, varname='a'):
     elif basepath is not None:
         filepath = Path(basepath) / da._datapath.name
     else:
-        filepath = da._datapath
+        filepath = Path(da._datapath.name)
     filepath = filepath.as_posix()
     return readcodefunc[language](numtype=numtype, shape=shape,
                                   endianness=endianness, filepath=filepath,
