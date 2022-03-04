@@ -1255,13 +1255,12 @@ def numtypedescriptiontxt(da):
         raise ValueError(f'arrayorder type "{arrayorder}" unknown')
     s = wrap("This directory contains a numeric array that is stored in an "
              "open and simple format. It should be easy to access the data in "
-             "most analysis environments. In Python, you can use the Darr "\
-             "library (https://pypi.org/project/darr/), which was used to "\
-             "create the data. Alternatively, you can access the data "
-             "directly using the code snippets below. If your language is "\
-             "not included, the full data format description should help.")\
-        + \
-        "\n\n\n"
+             "most analysis environments. The array can be read using the "
+             "NumPy-based Python library Darr (https://pypi.org/project/darr/), "
+             "which was used to create the data. Alternatively, you can access "
+             "the data directly using the code snippets below. If your "
+             "language is not included, the full data format description "
+             "should help.") + "\n\n"
     s+= f"Data format\n===========\n\n"
     s += wrap("The file 'arrayvalues.bin' contains the raw binary values of "
               "the numeric array, without header information, in the "

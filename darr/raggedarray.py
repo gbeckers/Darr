@@ -364,33 +364,34 @@ def readmetxt(ra):
                f'called a jagged array), which is a sequence of '
                f'subarrays that may be multidimensional and that '
                f'can vary in the length of their first dimension.') + ' \n\n'
-    txt += wrap(f'The ragged array can be read using the Python library Darr '
-                f'(https://pypi.org/project/darr/), which was used to '
-                f'create the data. If that is not available, you can '
-                f'use the code snippets below '
-                f'to read the data in a number of other environments. '
-                f'If code for your environment is not provided, use the '
-                f'description of how the data can be read in the '
-                f'next section.') + '\n\n'
+    txt += wrap(f'The ragged array can be read using the NumPy-based Python '
+                f'library Darr (https://pypi.org/project/darr/), which was '
+                f'used to create the data. If that is not available, you can '
+                f'use the code snippets below to read the data in a number of '
+                f'other environments. If code for your environment is not '
+                f'provided, use the description of how the data can be read '
+                f'in the next section.') + '\n\n'
     txt += 'Description of ragged array\n' \
-           '===========================\\nn'
+           '===========================\n\n'
     txt += wrap(f'This ragged array is a sequence of {n} '
                 f'subarrays, each of which is {ndsa + 1}-dimensional and '
                 f'can vary in the length of its first dimension. The array '
                 f'consists of {ra.dtype.name} numbers.') \
                 + ' \n\n'
+    dimtxt = f'The dimensions of the '
     if len(ra) > 5:
-        dimtxt = wrap(f'The shape of the first five subarrays is (subarray ' 
-                      f'index: shape):') + '\n\n'
-    else:
-        dimtxt = wrap(f'The shape of the subarrays is (subarray index: '
-                        'shape):') + '\n\n'
+        dimtxt += f'first five '
+    if len(ra) > 6:
+        dimtxt += f'and last '
+    dimtxt = wrap(f'{dimtxt}subarrays is (subarray index: dimensions):') + '\n\n'
     txt += dimtxt + dimensionstxt(ra, firstnmax=5) + '\n\n'
-    txt += wrap(f'These index and shape numbers are based on Python indexing, '
-                f'which starts at 0, and array memory layout, which is '
-                f'row-major. When using the code provided below to read '
-                f'subarrays, dimensions will be inversed in column-major '
-                f'languages (see Note below).') + '\n\n'
+    itxt = f'These index numbers are based on Python ' \
+           f'indexing, which starts at 0.'
+    if len(ra.atom) >0:
+        itxt = f'{itxt} Dimensions are based on row-major memory layout. When ' \
+               f'using the code provided below to read subarrays, dimensions ' \
+               f'will be inversed in column-major languages (see Note below).'
+    txt += wrap(itxt) + '\n\n'
     txt += 'Description of storage on disk\n' \
            '==============================\n\n'
     txt += wrap('There are two subdirectories, "values" and "indices", each '
@@ -424,8 +425,11 @@ def dimensionstxt(ra, firstnmax=5):
     lines = []
     for i, l in enumerate(lengths):
         lines.append(f'    {i}: ({l}, {astr}')
-    if len(ra) > firstnmax:
+    if len(ra) > (firstnmax + 1):
         lines.append('    ...')
+    if len(ra) > firstnmax:
+        lastdiff = np.diff(ra._indices[-1], axis=-1)[0]
+        lines.append(f'    {len(ra)-1}: ({lastdiff}, {astr}')
     return '\n'.join(lines)
 
 
