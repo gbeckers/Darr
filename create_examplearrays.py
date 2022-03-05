@@ -69,9 +69,9 @@ def create_raggedarrays(basepath='.'):
             ar = rarj
         else:
             ar = rar
-        _ = darr.asraggedarray(f'raggedarray_{numtype}.darr',
-                                ar, dtype=numtype, metadata=metadata,
-                                overwrite=True)
+        _ = darr.asraggedarray(basepath / f'raggedarray_{numtype}.darr',
+                               ar, dtype=numtype, metadata=metadata,
+                               overwrite=True)
 
 
 if __name__ == "__main__":
