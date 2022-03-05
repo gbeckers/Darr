@@ -290,7 +290,7 @@ class RaggedArray:
 # FIXME empty arrayiterable
 # TODO describe int32 vs int64 index
 def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
-                  accessmode='r+', indextype='int32', overwrite=False):
+                  accessmode='r+', indextype='int64', overwrite=False):
     path = Path(path)
     supportedindextypes = ('int32', 'int64', 'uint32', 'uint64')
     if not indextype in supportedindextypes:

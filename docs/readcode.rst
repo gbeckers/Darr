@@ -77,7 +77,7 @@ Compatibility read code numeric types in other environments
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 | int16      |  X  |   X   |   X   |      X      |   X    |   X   |   X    | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
-| int32      |  X  |   X   |   X   |      X      |   X    |   X   |   X    |X(1)
+| int32      |  X  |   X   |   X   |      X      |   X    |   X   |   X    |X(1)|
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 | int64      |  X  |   X   |   X   |      X      |   X    |   X   |   X    |    |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
@@ -125,8 +125,8 @@ Compatibility multidimensional arrays in other environments
 1-D : One-dimensional,
 N-D : Multi-dimensional
 
-Advice for maximizing efficient readabiliy
-------------------------------------------
+Advice for maximizing efficient readability
+-------------------------------------------
 
 - From the tables above it is clear that the following types are unproblematic
   in all languages: int16, int32, float32, float64, except that R doesn't
