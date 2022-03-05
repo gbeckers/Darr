@@ -288,9 +288,14 @@ class RaggedArray:
 
 
 # FIXME empty arrayiterable
+# TODO describe int32 vs int64 index
 def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
-                  accessmode='r+', overwrite=False):
+                  accessmode='r+', indextype='int32', overwrite=False):
     path = Path(path)
+    supportedindextypes = ('int32', 'int64', 'uint32', 'uint64')
+    if not indextype in supportedindextypes:
+        raise ValueError(f'`indextype` {indextype} not one of '
+                         f'{supportedindextypes}')
     if not hasattr(arrayiterable, 'next'):
         arrayiterable = (a for a in arrayiterable)
     bd = create_datadir(path=path, overwrite=overwrite)
@@ -302,7 +307,7 @@ def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
                        accessmode='r+', overwrite=overwrite)
     firstindices = [[0, len(firstarray)]]
     indicesda = asarray(path=indicespath, array=firstindices,
-                        dtype=np.int64, accessmode='r+',
+                        dtype=indextype, accessmode='r+',
                         overwrite=overwrite)
     valueslen = firstindices[0][1]
     indiceslen = 1
