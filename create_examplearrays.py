@@ -1,12 +1,15 @@
 import numpy as np
 import time
 import darr
+from pathlib import Path
 from darr.numtype import numtypesdescr
 
 def datetimestring():
     return time.strftime('%Y%m%d%H%M%S')
 
-def create_arrays():
+def create_arrays(basepath='.'):
+    basepath = Path(basepath) / 'examplearrays' / 'arrays'
+    basepath.mkdir(parents=True, exist_ok=True)
     metadata = {
         "channels": [
             0,
@@ -26,8 +29,8 @@ def create_arrays():
             a = car
         else:
             a = ar
-        darr.asarray(f'examplearray_{numtype}.darr', a, dtype=numtype,
-                     metadata=metadata, overwrite=True)
+        darr.asarray(basepath / f'array_{numtype}_2D.darr', a,
+                     dtype=numtype, metadata=metadata, overwrite=True)
     ar = [1, 3, 5, 7, 9, 11, 13]
     car = np.array(ar, dtype='complex128') + 1.3j
     for numtype in numtypesdescr.keys():
@@ -35,10 +38,12 @@ def create_arrays():
             a = car
         else:
             a = ar
-        ar = darr.asarray(f'examplearray_{numtype}_1D.darr', a,
-                          dtype=numtype, metadata=metadata, overwrite=True)
+        darr.asarray(basepath / f'array_{numtype}_1D.darr', a,
+                     dtype=numtype, metadata=metadata, overwrite=True)
 
-def create_raggedarrays():
+def create_raggedarrays(basepath='.'):
+    basepath = Path(basepath) / 'examplearrays' / 'raggedarrays'
+    basepath.mkdir(parents=True, exist_ok=True)
     metadata = {
         "channels": [
             0,
@@ -64,7 +69,7 @@ def create_raggedarrays():
             ar = rarj
         else:
             ar = rar
-        _ = darr.asraggedarray(f'exampleraggedarray_{numtype}.darr',
+        _ = darr.asraggedarray(f'raggedarray_{numtype}.darr',
                                 ar, dtype=numtype, metadata=metadata,
                                 overwrite=True)
 
