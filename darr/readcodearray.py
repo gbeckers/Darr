@@ -427,7 +427,7 @@ def readcode(da, language, abspath=False, basepath=None, varname='a'):
     shape = d['shape']
     endianness = d['byteorder']
     if abspath:
-        filepath = da.path.absolute()
+        filepath = da.path.absolute().resolve()
     elif basepath is not None:
         filepath = Path(basepath) / da._datapath.name
     else:

@@ -275,8 +275,8 @@ def readcode(dra, language, basepath='', abspath=False):
     if language not in readcodefunc:
         raise ValueError(f"'{language}' not supported ({readcodefunc.keys()})")
     if abspath:
-        ip = dra._indices.path.absolute()
-        vp = dra._values.path.absolute()
+        ip = dra._indices.path.absolute().resolve()
+        vp = dra._values.path.absolute().resolve()
     elif basepath is not None:
         ip = Path(basepath) / dra._indicesdirname
         vp = Path(basepath) / dra._valuesdirname
