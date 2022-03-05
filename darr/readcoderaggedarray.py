@@ -160,13 +160,13 @@ def readcodemathematica(dra, indicespath, valuespath):
     rci = readcodearray.readcode(dra._indices, 'mathematica',
                                  varname='i',
                                  basepath=indicespath)
-    rci = f"(* read indices array, to be used on values array later: *)\n{rci}"
     rcv = readcodearray.readcode(dra._values, 'mathematica',
                                  varname='v',
                                  basepath=valuespath)
-    rcv = f"(* read {numtype} values array: *)\n{rcv}"
     if (rci is None) or (rcv is None):
         return None
+    rci = f"(* read indices array, to be used on values array later: *)\n{rci}"
+    rcv = f"(* read {numtype} values array: *)\n{rcv}"
     if   len(dra) > 2:
        k, position = 3, 'third'
     elif len(dra) == 2:
@@ -190,13 +190,13 @@ def readcodemaple(dra, indicespath, valuespath):
     rci = readcodearray.readcode(dra._indices, 'maple',
                                  varname='i',
                                  basepath=indicespath)
-    rci = f"# read indices array, to be used on values array later:\n{rci}"
     rcv = readcodearray.readcode(dra._values, 'maple',
                                  varname='v',
                                  basepath=valuespath)
-    rcv = f"# read {numtype} values array:\n{rcv}"
     if (rci is None) or (rcv is None):
         return None
+    rci = f"# read indices array, to be used on values array later:\n{rci}"
+    rcv = f"# read {numtype} values array:\n{rcv}"
     if   len(dra) > 2:
        k, position = 3, 'third'
     elif len(dra) == 2:
