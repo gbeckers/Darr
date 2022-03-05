@@ -2,7 +2,7 @@ import numpy as np
 import time
 import darr
 from pathlib import Path
-from darr.numtype import numtypesdescr
+from darr.numtype import numtypesdescr, minmaxints
 
 def datetimestring():
     return time.strftime('%Y%m%d%H%M%S')
@@ -32,11 +32,15 @@ def create_arrays(basepath='.'):
         darr.asarray(basepath / f'array_{numtype}_2D.darr', a,
                      dtype=numtype, metadata=metadata, overwrite=True)
     # 1D
-    ar = [1, 3, 5, 7, 9, 11, 14] # sums to 50
+    ar = [1, 3, 5, 7, 9, 11, 14] # 0:7 sums to 50
     car = np.array(ar, dtype='complex128') + 2.0j
     for numtype in numtypesdescr.keys():
         if numtype.startswith('complex'):
             a = car
+        elif 'int' in numtype:
+            imin, imax = minmaxints[numtype]
+            a = ar[:]
+            a.extend([imin,imax])
         else:
             a = ar
         darr.asarray(basepath / f'array_{numtype}_1D.darr', a,
@@ -84,13 +88,20 @@ def create_codefile_array_idl(arraydirpath):
             code = code[:-1] # get rid of EOL
             allcode.append(f'; {arraypath.name}')
             allcode.append(code)
-            allcode.append(f'; next should sum to {np.sum(ar)}')
-            allcode.append(f'TOTAL(a)')
-            if len(ar.shape)>1:
+            if len(ar.shape) > 1: #2D
+                allcode.append(f'; next should sum to {np.sum(ar)}')
+                allcode.append(f'TOTAL(a)')
                 allcode.append(f'; next should sum to {np.sum(ar[:,0])}')
                 allcode.append(f'TOTAL(a[0,*])\n')
                 allcode.append(f'; next should sum to {np.sum(ar[:, 1])}')
                 allcode.append(f'TOTAL(a[1,*])\n')
+            else: # 1D
+                allcode.append(f'; next should sum to {np.sum(ar[:7])}')
+                allcode.append(f'TOTAL(a[0:6])')
+                if 'int' in ar.dtype.name:
+                    allcode.append(f'; next should be {ar[7:]}')
+                    allcode.append(f'a[7:*]')
+
     return '\n'.join(allcode)
 
 def create_codefile_array_r(arraydirpath):
@@ -102,15 +113,68 @@ def create_codefile_array_r(arraydirpath):
             code = code[:-1] # get rid of EOL
             allcode.append(f'# {arraypath.name}')
             allcode.append(code)
-            allcode.append(f'# next should sum to {np.sum(ar)}')
-            allcode.append(f'sum(a)')
-            if len(ar.shape)>1:
+            if len(ar.shape) > 1: # 2d
+                allcode.append(f'# next should sum to {np.sum(ar)}')
+                allcode.append(f'sum(a)')
                 allcode.append(f'# next should sum to {np.sum(ar[:,0])}')
                 allcode.append(f'sum(a[1,])\n')
                 allcode.append(f'# next should sum to {np.sum(ar[:, 1])}')
                 allcode.append(f'sum(a[2,])\n')
+            else: # 1D
+                allcode.append(f'# next should sum to {np.sum(ar[:7])}')
+                allcode.append(f'sum(a[1:7])')
+                if 'int' in ar.dtype.name:
+                    allcode.append(f'# next should be {ar[7:]}')
+                    allcode.append(f'a[8:9]')
     return '\n'.join(allcode)
 
+def create_codefile_array_matlab(arraydirpath):
+    allcode = []
+    for arraypath in Path(arraydirpath).glob('*.darr'):
+        ar = darr.Array(arraypath)
+        code = ar.readcode('matlab', abspath=True)
+        if code is not None:
+            code = code[:-1] # get rid of EOL
+            allcode.append(f'# {arraypath.name}')
+            allcode.append(code)
+            if len(ar.shape) > 1: # 2d
+                allcode.append(f'# next should sum to {np.sum(ar)}')
+                allcode.append(f'sum(a(:))')
+                allcode.append(f'# next should sum to {np.sum(ar[:,0])}')
+                allcode.append(f'sum(a(1,:))\n')
+                allcode.append(f'# next should sum to {np.sum(ar[:, 1])}')
+                allcode.append(f'sum(a(2,:))\n')
+            else: # 1D
+                allcode.append(f'# next should sum to {np.sum(ar[:7])}')
+                allcode.append(f'sum(a(1:7))')
+                if 'int' in ar.dtype.name:
+                    allcode.append(f'# next should be {ar[7:]}')
+                    allcode.append(f'a(8:9)')
+    return '\n'.join(allcode)
+
+def create_codefile_array_julia(arraydirpath):
+    allcode = []
+    for arraypath in Path(arraydirpath).glob('*.darr'):
+        ar = darr.Array(arraypath)
+        code = ar.readcode('julia_ver1', abspath=True)
+        if code is not None:
+            code = code[:-1] # get rid of EOL
+            allcode.append(f'# {arraypath.name}')
+            allcode.append(code)
+            if len(ar.shape) > 1: # 2d
+                allcode.append(f'# next should sum to {np.sum(ar)}')
+                allcode.append(f'print(sum(a[:]))')
+                allcode.append(f'# next should sum to {np.sum(ar[:,0])}')
+                allcode.append(f'print(sum(a[1,:]))\n')
+                allcode.append(f'# next should sum to {np.sum(ar[:, 1])}')
+                allcode.append(f'print(sum(a[2,:]))\n')
+            else: # 1D
+                allcode.append(f'# next should sum to {np.sum(ar[:7])}')
+                allcode.append(f'print(sum(a[1:7]))')
+                if 'int' in ar.dtype.name:
+                    allcode.append(f'# next should be {ar[7:]}')
+                    allcode.append(f'print(a[8:9])')
+    return '\n'.join(allcode)
 
 
 if __name__ == "__main__":
