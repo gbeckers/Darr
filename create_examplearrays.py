@@ -81,12 +81,34 @@ def create_codefile_array_idl(arraydirpath):
         ar = darr.Array(arraypath)
         code = ar.readcode('idl', abspath=True)
         if code is not None:
+            code = code[:-1] # get rid of EOL
             allcode.append(f'; {arraypath.name}')
             allcode.append(code)
+            allcode.append(f'; next should sum to {np.sum(ar)}')
             allcode.append(f'TOTAL(a)')
             if len(ar.shape)>1:
+                allcode.append(f'; next should sum to {np.sum(ar[:,0])}')
                 allcode.append(f'TOTAL(a[0,*])\n')
+                allcode.append(f'; next should sum to {np.sum(ar[:, 1])}')
                 allcode.append(f'TOTAL(a[1,*])\n')
+    return '\n'.join(allcode)
+
+def create_codefile_array_r(arraydirpath):
+    allcode = []
+    for arraypath in Path(arraydirpath).glob('*.darr'):
+        ar = darr.Array(arraypath)
+        code = ar.readcode('R', abspath=True)
+        if code is not None:
+            code = code[:-1] # get rid of EOL
+            allcode.append(f'# {arraypath.name}')
+            allcode.append(code)
+            allcode.append(f'# next should sum to {np.sum(ar)}')
+            allcode.append(f'sum(a)')
+            if len(ar.shape)>1:
+                allcode.append(f'# next should sum to {np.sum(ar[:,0])}')
+                allcode.append(f'sum(a[1,])\n')
+                allcode.append(f'# next should sum to {np.sum(ar[:, 1])}')
+                allcode.append(f'sum(a[2,])\n')
     return '\n'.join(allcode)
 
 

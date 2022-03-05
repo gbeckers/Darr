@@ -89,7 +89,7 @@ Compatibility read code numeric types in other environments
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 | uint64     |  X  |   X   |       |      X      |   X    |   X   |   X    | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
-| float16    |     |   X   |       |             |   X*   |   X   |        | X  |
+| float16    |     |   X   |       |             |   X*   |   X   |        |    |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
 | float32    |  X  |   X   |   X   |      X      |   X    |   X   |   X    | X  |
 +------------+-----+-------+-------+-------------+--------+-------+--------+----+
@@ -133,7 +133,9 @@ Advice for maximizing efficient readabiliy
 
 - All unsigned integers are not supported in Maple.
 
-- float16 is not widely supported, but it is supported by the main modern,
-  open source computing packages: Julia, Python with Numpy, and R. Matlab
-  can read it using a temporary array and type casting, which can be
-  problematic when arrays are very large and RAM is limited.
+- float16 is not widely supported, but it is supported by two modern,
+  open source computing packages: Julia and Python with Numpy. It is best
+  avoided it and use float32, unless there are disk space concerns. Matlab
+  can read it indirectly, using a temporary array and type casting, which can be
+  problematic when arrays are very large and RAM is limited. Octave does not
+  support it (yet).
