@@ -105,7 +105,7 @@ X : fully supported, i.e. efficient code can read the array data directly.
 *: type natively supported, but reading code requires workaround that may be
 less efficient in terms of memory use, depending on use.
 
-**: not natively supported, but practical work around code is provided.
+**: not natively supported, but practical workaround code is provided.
 
 Compatibility multidimensional arrays in other environments
 -----------------------------------------------------------
