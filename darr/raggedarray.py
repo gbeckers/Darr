@@ -345,7 +345,7 @@ def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
 
 
 def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
-                       accessmode='r+', overwrite=False):
+                       accessmode='r+', indextype='int32', overwrite=False):
     if not hasattr(atom, '__len__'):
         raise TypeError(f'shape "{atom}" is not a sequence of dimensions.\n'
                         f'If you want just a list of 1-dimensional arrays, '
@@ -353,7 +353,8 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
     shape = [0] + list(atom)
     ar = np.zeros(shape, dtype=dtype)
     ra = asraggedarray(path=path, arrayiterable=[ar], metadata=metadata,
-                        accessmode=accessmode, overwrite=overwrite)
+                       accessmode=accessmode, indextype=indextype,
+                       overwrite=overwrite)
     # the current ragged array has one element, which is an empty array
     # but we want an empty ragged array => we should get rid of the indices
     create_array(path=ra._indicespath, shape=(0,2), dtype=np.int64,
