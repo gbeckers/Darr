@@ -57,8 +57,8 @@ Note that R does not represent the minimum of an int32, -2147483648. R has
 -2147483647 as the mimimum value of an int32. It will represent -2147483648
 it as NA.
 
-Compatibility of ragged arrays
-------------------------------
+Compatibility of ragged arrays in R
+-----------------------------------
 Default settings when creating RaggedArrays are chosen to maximize wide
 readability. For example, index arrays that are used under the hood to find
 subarrays have a signed integer type because that is most compatible with other
