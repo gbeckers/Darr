@@ -18,6 +18,10 @@ Development Version
 - implement flexible paths read code functions
 - Array and RaggedArray README.txt files now contain explanation on row- vs
   column-major, counting from 0/1, and in/exclusive end index.
+- RaggedArrays supports empty subarrays in R
+- Default index type for Ragged Arrays now int32 for compatibility with R.
+- implemented functions that allow for easier testing compatibility other
+  laguages.
 
 Version 0.4.1
 -------------
