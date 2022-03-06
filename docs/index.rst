@@ -109,6 +109,7 @@ functions/methods may still change.
    tutorialraggedarray
    rationale
    readcode
+   readability
    troubleshooting
    contributing
    testing

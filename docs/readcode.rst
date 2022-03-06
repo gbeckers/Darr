@@ -124,35 +124,3 @@ Compatibility multidimensional arrays in other environments
 
 1-D : One-dimensional,
 N-D : Multi-dimensional
-
-Advice for maximizing efficient readability
--------------------------------------------
-
-- From the tables above it is clear that the following types are unproblematic
-  in all languages: int16, int32, float32, float64, except that R doesn't
-  read the minimum value of an int32 (-2147483648) correctly. If possible, use
-  these types.
-
-- Complex128 is relatively well supported, except for Maple. It needs
-  workaround code that is less efficient in Matlab and plain Python.
-
-- All unsigned integers are not supported in Maple. R only supports unsigned
-  integers that are 8 or 16 bits.
-
-- float16 is not widely supported, but it is supported by two modern,
-  open source computing packages: Julia and Python with Numpy. It is best
-  avoided it and use float32, unless there are disk space concerns. Matlab
-  can read it indirectly, using a temporary array and type casting, which can be
-  problematic when arrays are very large and RAM is limited. Octave does not
-  support it (yet).
-
-Minimum and maximum values for integers
----------------------------------------
-- int8: 8-bit signed integer, -128 to 127
-- int16: 16‐bit signed integer, -32768 to 32767
-- int32: 32‐bit signed integer, -2147483648 to 2147483647
-- int64: 64‐bit signed integer, -9223372036854775808 to 9223372036854775807
-- uint8: 8‐bit unsigned integer, 0 to 255
-- uint16: 16‐bit unsigned integer, 0 to 65535
-- uint32: 32‐bit unsigned integer, 0 to 4294967295
-- uint64: 64‐bit unsigned integer, 0 to 18446744073709551615
