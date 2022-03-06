@@ -1,5 +1,5 @@
-Maximizing wide readability of your data
-========================================
+Maximizing readability of your data
+===================================
 
 The purpose of Darr is to make numeric array data as widely and as easily
 readable as possible through automatic self-documentation that includes code

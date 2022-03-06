@@ -67,6 +67,9 @@ To see which languages are supported, use the 'readcodelanguages' property:
 Example arrays with code for all numeric types can be found `here
 <https://github.com/gbeckers/Darr/tree/master/examplearrays>`__.
 
+If you want to maximize readability, see
+:doc:`Maximizing readability of your data <readability>`
+
 Compatibility read code numeric types in other environments
 -----------------------------------------------------------
 
@@ -126,3 +129,4 @@ Compatibility multidimensional arrays in other environments
 
 1-D : One-dimensional,
 N-D : Multi-dimensional
+
