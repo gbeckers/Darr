@@ -13,10 +13,9 @@ The page :doc:`Reading data in other environments <readcode>` provides a
 table on compatibility of numeric types and languages. From this a number of
 observations follow:
 
-- From the tables above it is clear that the following types are unproblematic
-  in all languages: int16, int32, float32, float64, except that R represents
-  the minimum value of an int32 (-2147483648) as NA. If possible, use one
-  of these types.
+- The following types are unproblematic in all languages: int16, int32,
+  float32, float64, except that R represents the minimum value of an
+  int32 (-2147483648) as NA. If possible, use one of these types.
 
 - Complex128 is relatively well supported, except for Maple. In Matlab and
   plain Python reading code is provided but it is workaround code that is

@@ -102,10 +102,12 @@ Compatibility read code numeric types in other environments
 
 X : fully supported, i.e. efficient code can read the array data directly.
 
-*: type natively supported, but reading code requires workaround that may be
-less efficient in terms of memory use, depending on use.
+*: type natively supported, but cannot be read directly from file. Reading
+code provides workaround solution that may be less efficient in terms of memory
+use, depending on use.
 
-**: not natively supported, but practical workaround code is provided.
+**: complex numbers not natively supported, but practical workaround code is
+provided so that real and imaginary parts are represented in separate arrays.
 
 (1) : int32 is supported in R, but it won't read the minimum value of an
 int32 (-2147483648) correctly. It will read it as NA. -2147483647 and higher is
