@@ -158,11 +158,12 @@ def readcodematlab_float16(shape, endianness,
     ct = f"fileid = fopen('{filepath}');\n"
 
 
-
+# R does not support int64 but will read it OK for values that are valid for
+# int32: -2147483647 to 2147483647
 typedescr_r = {'int8': ('integer()', 1, 'TRUE'),
                'int16': ('integer()', 2, 'TRUE'),
                'int32': ('integer()', 4, 'TRUE'),
-               'int64': None,
+               'int64': ('integer()', 8, 'TRUE'),
                'uint8': ('integer()', 1, 'FALSE'),
                'uint16': ('integer()', 2, 'FALSE'),
                'uint32': None,
@@ -178,7 +179,9 @@ endianness_r = {'little': 'little',
                 'big': 'big'}
 
 def readcoder(numtype, shape, endianness, filepath='arrayvalues.bin',
-              varname='a'):
+              varname='a', ignoreint64=False):
+    if numtype == 'int64' and not ignoreint64:
+        return None
     typedescr = typedescr_r[numtype]
     if typedescr is None:
         return None
@@ -400,7 +403,7 @@ readcodefunc = {
 }
 
 
-def readcode(da, language, abspath=False, basepath=None, varname='a'):
+def readcode(da, language, abspath=False, basepath=None, varname='a',**kwargs):
     """Produces the code to read the Darr array `da` in a given programming
     language.
 
@@ -435,7 +438,7 @@ def readcode(da, language, abspath=False, basepath=None, varname='a'):
     filepath = filepath.as_posix()
     return readcodefunc[language](numtype=numtype, shape=shape,
                                   endianness=endianness, filepath=filepath,
-                                  varname=varname)
+                                  varname=varname, **kwargs)
 
 
 def promptify_codetxt(codetxt, prompt=">>> "):

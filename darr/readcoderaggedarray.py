@@ -56,14 +56,21 @@ def readcodenumpymemmap(dra, indicespath, valuespath):
     return f'{rci}{rcv}{rff}{rca}'
 
 def readcoder(dra, indicespath, valuespath):
+    # We allow for int64 index arrays, even though R is not fully compatible.
+    # It will only read it correctly for positive values up to 2147483647. So
+    # values arrays may not be larger in size than that.
     rci = readcodearray.readcode(dra._indices, 'R',
                                  varname='i',
-                                 basepath=indicespath)
+                                 basepath=indicespath,
+                                 ignoreint64=True)
     rcv = readcodearray.readcode(dra._values, 'R',
                                  varname='v',
                                  basepath=valuespath)
     if (rci is None) or (rcv is None):
         return None
+    if dra._indices.dtype.name == 'int64':
+        if dra._values.size > 2147483647: # larger than can be represented in int32
+            return None
     rci = f"# read array of indices to be used on values array\n{rci}"
 
     rcv = f'# read array of values:\n{rcv}'

@@ -34,7 +34,9 @@ observations follow:
 - If compatibility with R is important to you, have a good look at the table
   in :doc:`Reading data in other environments <readcode>`. Despite all its
   merits, R is quite limited in the numeric types that it can read and handle.
-  It is quite surprising that it doesn't even support int64.
+  It is surprising that it doesn't even support int64. In Python, int64
+  is the default for integers so if you create an array without specifying
+  that it should be int32, it will be int64 and not readable in R.
 
 To help deciding on numeric type, the minimum and maximum values that are
 possible for integer types are listed below.
@@ -58,16 +60,17 @@ it as NA.
 Compatibility of ragged arrays
 ------------------------------
 Default settings when creating RaggedArrays are chosen to maximize wide
-readability. For example, index arrays are a signed integer type because that
-is most compatible with other languages, even though in Darr/NumPy an
-unsigned integer would be more space efficient. Further, we chose for int32
-instead of int64 because, bizarrely, R does not support int64 and we like
-compatibility with R because of its large user base and it being open and
-free. However, int32 indices will not support the use of very large ragged
-arrays (see listing below). If you are going to use very large ragged arrays,
-set the `indextype` parameter to 'int64' upon creation. 'Very large' means
-more than 2147483647 values. For some reference, that corresponds to, e.g.,
-6 .7 hours of uncompressed audio recording or 22 minutes of 64-channel
-electrical brain activity recording at 25 kHz. As soon as R starts supporting
-int64, the default index type will become int64, but for now this is something
-to be aware of.
+readability. For example, index arrays that are used under the hood to find
+subarrays have a signed integer type because that is most compatible with other
+languages, even though in Darr/NumPy an unsigned integer would be more space
+efficient. Darr chooses int64 as the default even though, bizarrely, R does not
+support int64. R does support int32, but that would limit the size of Darr
+ragged arrays to the extent that is impractical for some use cases. On the
+other hand we'd like compatibility with R as much as possible because of its
+large user base and it being open and free. For this reason R reading code
+is generated for ragged arrays with int64 index arrays. Despite that R does not
+officially support the type, it will read them correctly if the values are not
+outsize of the int32 range. Darr will thus generate R code for ragged arrays
+that are compatible, which are the ones that have values based on a
+R-compatible type (int8, int16, int32, float32, float64, complex128), and that
+is not larger than 2147483647 in size.
