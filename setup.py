@@ -9,37 +9,36 @@ if sys.version_info < (3,6):
 long_description = \
 """
 Darr is a Python science library for disk-based NumPy arrays that persist in
-a format that is simple, self-documented and tool-independent.
-It enables you to work efficiently with potentially very large arrays, while
-keeping your data easily accessible from a wide range of computing
-environments. Keeping data universally readable and documented is a pillar of
-good scientific practice. More rationale for this approach is
-provided `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
+a format that is simple, self-documented and tool-independent. It enables you
+to work efficiently with potentially very large arrays, while keeping your data
+easily accessible from a wide range of computing environments. Every array
+is documented with code to read itself in languages such as R, Julia, IDL,
+Matlab, Maple, and Mathematica, or in Python/Numpy without Darr. Keeping data
+universally readable and documented is a pillar of good scientific practice.
+More rationale for this approach is provided
+`here <https://darr.readthedocs.io/en/latest/rationale .html>`__.
 
 Under the hood, Darr uses NumPy's memory-mapped arrays, which is a widely
 used and tested way of working with disk-based numerical arrays. It has
 therefore full NumPy compatibility and efficient out-of-core read/write access
-to potentially very large arrays. To this, Darr adds functionality aimed at
-making your life as a data scientist easier, such as the ability to create
-arrays from iterators, append and truncate functionality, the support of
-ragged arrays, and the easy use of metadata. Most importantly, it does all the
+to potentially very large arrays. What Darr adds is that it does all the
 bookkeeping for you to keep your arrays fully documented, open, and widely
-readable.
+readable. Further, Darr adds functionality to make your life as a data
+scientist easier in other ways, such as the support for ragged arrays, the
+ability to create arrays from iterators, append and truncate functionality,
+and the easy use of metadata.
 
 Flat binary files and (JSON) text files are accompanied by a README text file
-that explains how the array and metadata are stored. It also provides code for
-reading the array, including ragged arrays, in a variety of current scientific
-data tools such as Python, R, Julia, IDL, Matlab, Maple, and Mathematica. It
-is trivially easy to share your data with others or with yourself when working
-in different computing environments, because it always contains clear
-documentation, including code to read it. No need to export anything or to
-provide elaborate explanation. No dependence on complicated formats or
-specialized tools. Self-documentation and code examples are automatically
-updated as you change your arrays when working with them. E.g., did your
-colleague provide you with some algorithm in R or Matlab that you want to
-try out on your array data? No problem, just copy-paste of a few lines of
-code from the documentation stored with the data, and off you go
-exploring the same data files in a different computing environment.
+that explains how the array and metadata are stored. It is trivially easy to
+share your data with others or with yourself when working in different
+computing environments because it always contains clear documentation,
+including code to read it. Does your colleague want to try out an interesting
+algorithm in R or Matlab on your array data?  No need to export anything or to
+provide elaborate explanation. A copy-paste of a few lines of code from the
+documentation stored with the data is sufficient. No dependence on complicated
+formats or specialized libraries. Self-documentation and code examples are
+automatically updated as you change your arrays when working with them.
+
 
 See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
 for a brief introduction, or the
