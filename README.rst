@@ -25,7 +25,8 @@ ability to create arrays from iterators, append and truncate functionality,
 and the easy use of metadata.
 
 Flat binary files and (JSON) text files are accompanied by a README text file
-that explains how the array and metadata are stored (`see example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_float64.darr>`__).
+that explains how the array and metadata are stored (`see example arrays
+<https://github.com/gbeckers/Darr/tree/master/examplearrays/>`__).
 It is trivially easy to share your data with others or with yourself when
 working in different computing environments because it always contains clear
 documentation, including code to read it. Does your colleague want to try out
