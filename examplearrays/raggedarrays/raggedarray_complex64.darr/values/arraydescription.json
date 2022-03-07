@@ -1,0 +1,12 @@
+{
+    "arrayorder": "C",
+    "byteorder": "little",
+    "darrobject": "Array",
+    "darrversion": "0.5.0",
+    "dtypedescr": "<c8",
+    "numtype": "complex64",
+    "shape": [
+        26,
+        2
+    ]
+}

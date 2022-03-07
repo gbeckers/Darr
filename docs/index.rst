@@ -29,16 +29,16 @@ ability to create arrays from iterators, append and truncate functionality,
 and the easy use of metadata.
 
 Flat binary files and (JSON) text files are accompanied by a README text file
-that explains how the array and metadata are stored. It is trivially easy to
-share your data with others or with yourself when working in different
-computing environments because it always contains clear documentation,
-including code to read it. Does your colleague want to try out an interesting
-algorithm in R or Matlab on your array data?  No need to export anything or to
-provide elaborate explanation. A copy-paste of a few lines of code from the
-documentation stored with the data is sufficient. No dependence on complicated
-formats or specialized libraries. Self-documentation and code examples are
-automatically updated as you change your arrays when working with them.
-
+that explains how the array and metadata are stored (`see example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_float64.darr>`__).
+It is trivially easy to share your data with others or with yourself when
+working in different computing environments because it always contains clear
+documentation, including code to read it. Does your colleague want to try out
+an interesting algorithm in R or Matlab on your array data?  No need to export
+anything or to provide elaborate explanation. A copy-paste of a few lines of
+code from the documentation stored with the data is sufficient. No dependence
+on complicated formats or specialized libraries. Self-documentation and code
+examples are automatically updated as you change your arrays when working
+with them.
 See this `tutorial <https://darr.readthedocs.io/en/latest/tutorial.html>`__
 for a brief introduction.
 
