@@ -241,9 +241,11 @@ def readcodeidl(dra, indicespath, valuespath):
     rcv = f"; read {numtype} values array:\n{rcv}"
     dims = len(dra._arrayinfo['atom']) * '*,'
     rff = f"; example to get the {position} (k={k}) subarray from the values " \
-          f"array:\n"
-    rca =  f'k = {k} ; set k to the subarray you want\n' \
-           f'sa =  v[{dims}i[0,k]:i[1,k]-1] ; get subarray\n'
+          f"array,\n"
+    rca =  f'; but set k to get the subarray number you want:\n' \
+           f'k = {k} \n' \
+           f'; expression below sets sa variable to subarray\n' \
+           f'IF i[0,k] EQ i[1,k] THEN sa=[] ELSE sa=v[{dims}i[0,k]:i[1,k]-1]\n'
     return f'{rci}{rcv}{rff}{rca}'
 
 
