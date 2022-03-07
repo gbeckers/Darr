@@ -1,8 +1,8 @@
 Release notes
 =============
 
-Development Version
--------------------
+Version 0.5.0
+-------------
 - implement read code for complex types in Matlab/Octave (which cannot do
   this directly).
 - implement read code for float16 type in Matlab (which cannot do
@@ -18,7 +18,7 @@ Development Version
 - implement flexible paths read code functions
 - Array and RaggedArray README.txt files now contain explanation on row- vs
   column-major, counting from 0/1, and in/exclusive end index.
-- RaggedArrays supports empty subarrays in R
+- RaggedArrays supports empty subarrays in R and IDL
 - Default index type for Ragged Arrays now int32 for compatibility with R.
 - implemented functions that allow for easier testing compatibility other
   laguages.
