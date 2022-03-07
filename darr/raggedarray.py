@@ -18,9 +18,31 @@ __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
 # TODO needs doc
 # TODO an open_array method
 class RaggedArray:
-    """
-    Disk-based sequence of arrays that may have a variable length in maximally
-    one dimension.
+    """Instantiate a Darr ragged array from disk.
+
+    A ragged array is a sequence of subarrays that may have a variable
+    length of their first dimension only. A Darr ragged array corresponds to a
+    directory containing 1) a Darr array called 'values' in which all
+    subarrays have been concatenated along their first dimension. 2) a Darr
+    array called 'indices', which is two-dimensional an hold the indices to
+    obtain the subarrays from the values array. 3) a text file (JSON format)
+    describing the numeric type, array size and length, and other format
+    information, and 4) a README text file documenting the data format,
+    including code to read the array data in other programming languages.
+
+    A RaggedArray can be indexed with an integer to get the subarrays as NumPy
+    arrays.
+
+    Parameters
+    ----------
+    path : str or pathlib.Path
+        Path to disk-based array directory.
+    accessmode : {'r', 'r+'}, default 'r'
+       File access mode of the darr data. `r` means read-only, `r+` means
+       read-write. `w` does not exist. To create new darr arrays, potentially
+       overwriting an other one, use the `asarray` or `create_array`
+       functions.
+
 
     """
     _valuesdirname = 'values'
@@ -90,7 +112,7 @@ class RaggedArray:
 
     @property
     def narrays(self):
-        """Numpy data type of the array values.
+        """number of subarrays in the RaggedArray.
 
         """
         return self._indices.shape[0]
@@ -117,14 +139,14 @@ class RaggedArray:
 
     @property
     def size(self):
-        """Total number of values in the data array."""
+        """Total number of values in the ragged array."""
         return int(self._values._size)
 
     @property
     def readcodelanguages(self):
         """Tuple of the languages that the `readcode` method can produce
-                reading code for. Code in these languages is also included in the
-                README.txt file that is stored as part of the array ."""
+        reading code for. Code in these languages is also included in the
+        README.txt file that is stored as part of the array ."""
         languages = []
         for lang in readcodefunc.keys():
             if readcode(self, lang) is not None:
@@ -164,16 +186,64 @@ class RaggedArray:
 
 
     def append(self, array):
+        """Append array-like objects to the ragged array.
+
+        The shape of the data and the darr must be compliant. The length of
+        its first axis may vary, but if the are more axes, these should
+        have the same lengths as all other subarrays (which is the `atom` of
+        the raged array). When appending data repeatedly it is more efficient
+        to use `iterappend`.
+
+
+        Parameters
+        ----------
+        array: array-like object
+            This can be a numpy array, a sequence that can be converted into a
+            numpy array.
+
+        Returns
+        -------
+            None
+
+        """
         self._append(array)
         self._update_readmetxt()
         self._update_arraydescr(len=len(self._indices),
                                 size=self._values.size)
 
-    def copy(self, path, accessmode='r', overwrite=False):
+    def copy(self, path, dtype=None, accessmode='r', overwrite=False):
+        """Copy darr to a different path, potentially changing its dtype.
+
+        The copying is performed in chunks to avoid RAM memory overflow for
+        very large darr arrays.
+
+        Parameters
+        ----------
+        path: str or pathlib.Path
+        dtype: <dtype, None>
+            Numpy data type of the copy. Default is None, which corresponds to
+            the dtype of the darr to be copied.
+        accessmode: {'r', 'r+'}, default 'r'
+            File access mode of the darr data of the returned Darr
+            object. `r` means read-only, `r+` means read-write.
+        overwrite: (True, False), optional
+            Overwrites existing darr data if it exists. Note that a
+            darr path is a directory. If that directory contains
+            additional files, these will not be removed and an OSError is
+            raised. Default is `False`.
+
+        Returns
+        -------
+        Array
+           copy of the darr array
+
+        """
         arrayiterable = (self[i] for i in range(len(self)))
         metadata = dict(self.metadata)
+        if dtype is None:
+            dtype = self.dtype
         return asraggedarray(path=path, arrayiterable=arrayiterable,
-                             dtype=self.dtype, metadata=metadata,
+                             dtype=dtype, metadata=metadata,
                              accessmode=accessmode, overwrite=overwrite)
 
     @contextmanager
@@ -184,6 +254,20 @@ class RaggedArray:
 
     def iter_arrays(self, startindex=0, endindex=None, stepsize=1,
                  accessmode=None):
+        """Iterate over ragged array yielding subarrays.
+
+        startindex: <int, None>
+            Start index value.
+            Default is None, which means to start at the beginning.
+        endindex: <int, None>
+            End index value.
+            Default is None, which means to end at the end.
+        stepsize: <int, None>
+            Size of the shift per iteration across the first axis.
+            Default is None, which means that `stepsize` equals `chunklen`.
+
+        """
+
         if endindex is None:
             endindex = self.narrays
         with self._view(accessmode=accessmode):
@@ -288,9 +372,46 @@ class RaggedArray:
 
 
 # FIXME empty arrayiterable
-# TODO describe int32 vs int64 index
 def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
                   accessmode='r+', indextype='int64', overwrite=False):
+    """Creates an empty RaggedArray.
+
+        Parameters
+        ----------
+        path : str or pathlib.Path
+            Path to disk-based array directory.
+        arrayiterable: iterator yielding array-like objects
+            This can be a numpy array, a sequence that can be converted into a
+            numpy array, or an iterator that yields such objects. The latter
+            will be concatenated along the first dimension.
+        dtype : dtype, optional
+            The type of the `darr`. Default is 'float64'
+        metadata: {None, dict}
+            Dictionary with metadata to be saved in a separate JSON file. Default
+            None
+        accessmode : {'r', 'r+'}, default 'r'
+           File access mode of the darr data. `r` means read-only, `r+` means
+           read-write. `w` does not exist. To create new darr arrays, potentially
+           overwriting an other one, use the `asarray` or `create_array`
+           functions.
+        indextype : dtype, optional
+            The dtype of the index array underlying the disk-based ragged array
+            format. Defaults to 'int64'. But other possibilities are int8','uint8',
+            'int16', 'uint16', 'int32', 'uint32', 'int64'. This determines the
+            maximum length of the ragged array, but also how compatible the
+            array is with other languages.
+        overwrite: <True, False>, optional
+            Overwrites existing darr data if it exists. Note that a darr
+            paths is a directory. If that directory contains additional files,
+            these will not be removed and an OSError is raised.
+            Default is `False`.
+
+        Returns
+        -------
+        RaggedArray
+            A Darr RaggedArray instance.
+
+        """
     path = Path(path)
     supportedindextypes = ('int8','uint8', 'int16', 'uint16', 'int32',
                            'uint32', 'int64')
@@ -346,6 +467,45 @@ def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
 
 def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
                        accessmode='r+', indextype='int64', overwrite=False):
+    """Creates an empty RaggedArray.
+
+    Parameters
+    ----------
+    path : str or pathlib.Path
+        Path to disk-based array directory.
+    atom: tuple
+        shape of the subarray dimensions, except the first dimension.
+        Default is (), meaning that the ragged array consists of
+        one-dimensional subarrays. If subarrays, e.g., have a second and
+        third dimension of length 4 and 7, the atom would be (4,7).
+    dtype : dtype, optional
+        The type of the `darr`. Default is 'float64'
+    metadata: {None, dict}
+        Dictionary with metadata to be saved in a separate JSON file. Default
+        None
+    accessmode : {'r', 'r+'}, default 'r'
+       File access mode of the darr data. `r` means read-only, `r+` means
+       read-write. `w` does not exist. To create new darr arrays, potentially
+       overwriting an other one, use the `asarray` or `create_array`
+       functions.
+    indextype : dtype, optional
+        The dtype of the index array underlying the disk-based ragged array
+        format. Defaults to 'int64'. But other possibilities are int8','uint8',
+        'int16', 'uint16', 'int32', 'uint32', 'int64'. This determines the
+        maximum length of the ragged array, but also how compatible the
+        array is with other languages.
+    overwrite: <True, False>, optional
+        Overwrites existing darr data if it exists. Note that a darr
+        paths is a directory. If that directory contains additional files,
+        these will not be removed and an OSError is raised.
+        Default is `False`.
+
+    Returns
+    -------
+    RaggedArray
+        A Darr RaggedArray instance.
+
+    """
     if not hasattr(atom, '__len__'):
         raise TypeError(f'shape "{atom}" is not a sequence of dimensions.\n'
                         f'If you want just a list of 1-dimensional arrays, '
@@ -476,7 +636,7 @@ def delete_raggedarray(ra):
 
     Parameters
     ----------
-    path: path to data directory
+    ra: RaggedArray or path to RaggedArray to be deleted.
 
     """
     try:

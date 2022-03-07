@@ -46,8 +46,8 @@ class Array:
     A darr array corresponds to a directory containing 1) a binary file with
     the raw numeric array values, 2) a text file (json format) describing the
     numeric type, array shape, and other format information, 3) a README text
-    file documenting the data format, including examples of how to read the
-    data in Python or Matlab.
+    file documenting the data format, including code to read the array data
+    in other languages.
 
     Parameters
     ----------
@@ -558,8 +558,8 @@ class Array:
 
     def iterchunks(self, chunklen, stepsize=None, startindex=None,
                    endindex=None, include_remainder=True, accessmode=None):
-        """Iterate over data array of the darr yielding chunks of a
-        given length and with a given stepsize.
+        """Iterate over array array yielding chunks of a given length and with
+        a given stepsize.
 
         This method keeps the underlying data file open during iteration,
         and is therefore relatively fast.
