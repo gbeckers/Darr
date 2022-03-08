@@ -20,15 +20,41 @@ __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
 class RaggedArray:
     """Instantiate a Darr ragged array from disk.
 
-    A ragged array is a sequence of subarrays that may have a variable
-    length of their first dimension only. A Darr ragged array corresponds to a
-    directory containing 1) a Darr array called 'values' in which all
-    subarrays have been concatenated along their first dimension. 2) a Darr
-    array called 'indices', which is two-dimensional an hold the indices to
-    obtain the subarrays from the values array. 3) a text file (JSON format)
-    describing the numeric type, array size and length, and other format
-    information, and 4) a README text file documenting the data format,
-    including code to read the array data in other programming languages.
+    A ragged array is a sequence of subarrays that may be multidimesional,
+    with the restriction that their dimensional shape is the same except for
+    their first axis. In the simplest case it is a sequence of variable-length
+    one-dimensional subarrays, e.g.:
+
+    [[1,2],
+     [3,4,5],
+     [6],
+     [7,8,9,10]]
+
+    , but the subarrays can also be multidimensional, e.g.:
+
+    [[[1,2],[3,4]],
+     [[5,6],[7,8],[9,10]],
+     [[11,12]],
+     [[13,14],[15,16]]]
+
+     In the latter case they are they are two-dimensional, and the length of
+     their second axis is fixed: length 2. The atom shape of the array is
+     said to be (2,). If subarrays were four-dimensional their atom shape
+     could be, e.g. (2,7,5), and their dimensionality (N,2,7,5), where N is
+     an integer. In Darr N can also be zero.
+
+     Ragged arrays are often used for time series data that has been
+     collected in multiple episodes of varying duration, although other use
+     cases exist.
+
+    On disk, a Darr ragged array corresponds to a directory containing 1) a
+    Darr array called 'values' in which all subarrays have been concatenated
+    along their first dimension. 2) a Darr array called 'indices', which is
+    two-dimensional an hold the indices to obtain the subarrays from the values
+    array. 3) a text file (JSON format) describing the numeric type, array size
+    and length, and other format information, and 4) a README text file
+    documenting the data format, including code to read the array data in other
+    programming languages.
 
     A RaggedArray can be indexed with an integer to get the subarrays as NumPy
     arrays.
@@ -42,6 +68,15 @@ class RaggedArray:
        read-write. `w` does not exist. To create new darr arrays, potentially
        overwriting an other one, use the `asarray` or `create_array`
        functions.
+
+    Examples
+    --------
+    >>> import darr
+    >>> ra = darr.asraggedarray('test.darr', [[1,2],[1,2,3,4],[5,6,7]], dtype='int32')
+    >>> ra
+    RaggedArray (3 subarrays with atom shape (), r+)
+    >>> ra[1] # will return a NumPy array
+    array([1, 2, 3, 4], dtype=int32)
 
 
     """
@@ -290,7 +325,8 @@ class RaggedArray:
             None
 
         """
-        # TODO refactor such that info files are not updated at each append?
+        # TODO refactor such that info in index and values array files are not
+        # updated at each append
         with self._view():
             for a in arrayiterable:
                 self._append(a)
@@ -339,7 +375,7 @@ class RaggedArray:
         return readcode(self, language, basepath=basepath, abspath=abspath)
 
     def archive(self, filepath=None, compressiontype='xz', overwrite=False):
-        """Archive array data into a single compressed file.
+        """Archive ragged array data into a single compressed file.
 
         Parameters
         ----------
@@ -523,7 +559,6 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
     return RaggedArray(ra.path, accessmode=accessmode)
 
 # TODO, simplify explanation if subarrays are 1-dimensional
-# TODO add readcode for more languages
 def readmetxt(ra):
     n = len(ra)
     ndsa  = len(ra.atom)
