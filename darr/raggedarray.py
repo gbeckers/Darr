@@ -23,29 +23,29 @@ class RaggedArray:
     A ragged array is a sequence of subarrays that may be multidimesional,
     with the restriction that their dimensional shape is the same except for
     their first axis. In the simplest case it is a sequence of variable-length
-    one-dimensional subarrays, e.g.:
+    one-dimensional subarrays, e.g.::
 
-    [[1,2],
-     [3,4,5],
-     [6],
-     [7,8,9,10]]
+        [[1,2],
+         [3,4,5],
+         [6],
+         [7,8,9,10]]
 
-    , but the subarrays can also be multidimensional, e.g.:
+    , but the subarrays can also be multidimensional, e.g.::
 
-    [[[1,2],[3,4]],
-     [[5,6],[7,8],[9,10]],
-     [[11,12]],
-     [[13,14],[15,16]]]
+        [[[1,2],[3,4]],
+         [[5,6],[7,8],[9,10]],
+         [[11,12]],
+         [[13,14],[15,16]]]
 
-     In the latter case they are they are two-dimensional, and the length of
-     their second axis is fixed: length 2. The atom shape of the array is
-     said to be (2,). If subarrays were four-dimensional their atom shape
-     could be, e.g. (2,7,5), and their dimensionality (N,2,7,5), where N is
-     an integer. In Darr N can also be zero.
+    In the latter case they are they are two-dimensional, and the length of
+    their second axis is fixed: length 2. The atom shape of the array is
+    said to be (2,). If subarrays were four-dimensional their atom shape
+    could be, e.g. (2,7,5), and their dimensionality (N,2,7,5), where N is
+    an integer. In Darr N can also be zero.
 
-     Ragged arrays are often used for time series data that has been
-     collected in multiple episodes of varying duration, although other use
-     cases exist.
+    Ragged arrays are often used for time series data that has been
+    collected in multiple episodes of varying duration, although other use
+    cases exist.
 
     On disk, a Darr ragged array corresponds to a directory containing 1) a
     Darr array called 'values' in which all subarrays have been concatenated
@@ -75,6 +75,8 @@ class RaggedArray:
     >>> ra = darr.asraggedarray('test.darr', [[1,2],[1,2,3,4],[5,6,7]], dtype='int32')
     >>> ra
     RaggedArray (3 subarrays with atom shape (), r+)
+    >>> del ra
+    >>> ra = darr.RaggedArray('test.darr')
     >>> ra[1] # will return a NumPy array
     array([1, 2, 3, 4], dtype=int32)
 
