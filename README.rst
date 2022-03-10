@@ -10,7 +10,7 @@ to work efficiently with potentially very large arrays, while keeping your data
 easily accessible from a wide range of computing environments. Every array
 is documented with code to read itself in languages such as R, Julia, IDL,
 Matlab, Maple, and Mathematica, or in Python/Numpy without Darr
-(see `example here
+(see `example
 <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_int32_2D.darr>`__). Keeping data universally readable and documented
 is a pillar of good scientific practice. More rationale for this approach is provided
 `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
