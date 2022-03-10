@@ -76,7 +76,10 @@ Array data is stored on disk in a folder, containing a flat binary file
 ('arraydescription.json'), with information on the array dimensionality,
 layout and numeric type. It also contains a 'README.txt' file explaining
 the data format as well as providing instructions on how to read the
-array using other tools. For example, it provides the code to read the
+array using other tools (see `example
+<https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_int32_2D.darr>`__).
+
+For example, it provides the code to read the
 array in `Octave <https://www.gnu.org/software/octave/>`__/Matlab:
 
 .. code:: octave

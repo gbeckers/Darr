@@ -99,8 +99,9 @@ Reading code for other computing languages
 ------------------------------------------
 
 Like Arrays, RaggedArrays have a README.txt file containing explanation and
-reading code for many scientific computing languages. This code can also be
-produced on the fly, for a fast copy-paste into, say, R:
+reading code for many scientific computing languages (see `example
+<https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_int32_2D.darr>`__). This code can also be produced on the fly, for a fast copy-paste
+into, say, R:
 
 .. code:: python
 
