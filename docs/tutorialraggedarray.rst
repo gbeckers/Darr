@@ -1,10 +1,6 @@
 Tutorial RaggedArray
 ====================
 
-.. contents:: Table of Contents
-    :depth: 3
-
-
 Look at the :doc:`general tutorial <tutorialarray>` for Arrays first, if you
 haven't done so.
 

@@ -1,11 +1,7 @@
 Tutorial
 ========
 
-.. contents:: Table of Contents
-    :depth: 3
-
 .. _access:
-
 Accessing an existing array
 ---------------------------
 Darr arrays are represented on disk by a folder with some files in it. Use
