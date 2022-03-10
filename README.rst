@@ -9,10 +9,11 @@ a format that is simple, self-documented and tool-independent. It enables you
 to work efficiently with potentially very large arrays, while keeping your data
 easily accessible from a wide range of computing environments. Every array
 is documented with code to read itself in languages such as R, Julia, IDL,
-Matlab, Maple, and Mathematica, or in Python/Numpy without Darr. Keeping data
-universally readable and documented is a pillar of good scientific practice.
-More rationale for this approach is provided
-`here <https://darr.readthedocs.io/en/latest/rationale .html>`__.
+Matlab, Maple, and Mathematica, or in Python/Numpy without Darr
+(see `example here
+<https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_int32_2D.darr>`__). Keeping data universally readable and documented
+is a pillar of good scientific practice. More rationale for this approach is provided
+`here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
 Under the hood, Darr uses NumPy's memory-mapped arrays, which is a widely
 used and tested way of working with disk-based numerical arrays. It has
