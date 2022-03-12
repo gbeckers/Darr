@@ -10,28 +10,26 @@ long_description = \
 """|Github CI Status| |Appveyor Status| |PyPi version| |Conda Forge|
 |Codecov Badge| |Docs Status| |Zenodo Badge| |PyUp Badge|
 
-Darr is a Python science library for disk-based NumPy arrays that persist in
-a format that is simple, self-documented and tool-independent. It enables you
-to work efficiently with potentially very large arrays, while keeping your data
-easily accessible from a wide range of computing environments. Every array
-is documented with code to read itself in languages such as R, Julia, IDL,
-Matlab, Maple, and Mathematica, or in Python/Numpy without Darr
-(see `example 
-<https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_int32_2D.darr>`__). 
-Keeping data universally readable and documented is a pillar of good scientific 
-practice. More rationale for this approach is provided
-`here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
-
+Darr is a Python library for disk-based NumPy arrays that persist in a format
+that is simple, self-documented and tool-independent. It keeps your data 
+easily accessible from a wide range of computing environments. Every
+array is automatically documented, and includes code to read itself in
+languages such as R, Julia, IDL, Matlab, Maple, and Mathematica, or in
+Python/Numpy without Darr (see `example
+<https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays
+/array_int32_2D.darr>`__). Keeping data universally readable and documented is 
+a pillar of good scientific practice. More rationale for this approach is 
+provided `here 
+<https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
 Under the hood, Darr uses NumPy's memory-mapped arrays, which is a widely
-used and tested way of working with disk-based numerical arrays. It has
-therefore full NumPy compatibility and efficient out-of-core read/write access
-to potentially very large arrays. What Darr adds is that it does all the
-bookkeeping for you to keep your arrays fully documented, open, and widely
-readable. Further, Darr adds functionality to make your life as a data
-scientist easier in other ways, such as the support for ragged arrays, the
-ability to create arrays from iterators, append and truncate functionality,
-and the easy use of metadata.
+used and tested way of working efficiently with disk-based numerical arrays. It
+has therefore full NumPy compatibility and efficient out-of-core read/write 
+access to potentially very large arrays. What Darr adds is that it does all the
+book keeping for you to keep your arrays fully documented, open, and widely
+readable. Further, Darr adds functionality to make your life easier in other 
+ways, such as the support for ragged arrays, the ability to create arrays 
+from iterators, append and truncate functionality, and the easy use of metadata.
 
 Flat binary files and (JSON) text files are accompanied by a README text file
 that explains how the array and metadata are stored. It is trivially easy to
