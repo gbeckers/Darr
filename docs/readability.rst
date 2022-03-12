@@ -14,8 +14,7 @@ table on compatibility of numeric types and languages. From this, a number of
 conclusions can be drawn:
 
 - The following types are unproblematic in all languages: int16, int32,
-  float32, float64, except that R represents the minimum value of an
-  int32 (-2147483648) as NA. If possible, use one of these types.
+  float32, float64. If possible, use one of these types.
 
 - Complex128 is relatively well supported, except for Maple. In Matlab and
   plain Python reading code is provided but it is workaround code that is
@@ -24,10 +23,10 @@ conclusions can be drawn:
 - All unsigned integers are not supported in Maple. R only supports unsigned
   integers that are 8 or 16 bits.
 
-- float16 is not widely supported, but it is supported by two modern,
+- Float16 is not widely supported, but it is supported by two modern,
   open source computing packages: Julia and Python with Numpy. It is best
   avoided. Use float32, unless there are disk space concerns. Matlab can read
-  it indirectly, using a temporary array and type casting, which can be
+  float16 indirectly, using a temporary array and type casting, which can be
   problematic when arrays are very large and RAM is limited. Octave does not
   support it (yet).
 
@@ -53,9 +52,10 @@ Minimum and maximum values for integers
 - uint32: 32‐bit unsigned integer, 0 to 4294967295
 - uint64: 64‐bit unsigned integer, 0 to 18446744073709551615
 
-Note that R does not represent the minimum of an int32, -2147483648. R has
--2147483647 as the mimimum value of an int32. It will represent -2147483648
-it as NA.
+.. Note::
+    For some reason R does not represent the minimum of an int32, -2147483648. R
+    has -2147483647 as the mimimum value of an int32. It will represent
+    the number -2147483648 as *NA*.
 
 Compatibility of ragged arrays in R
 -----------------------------------
