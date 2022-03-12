@@ -11,19 +11,21 @@ when using different tools for different types of analyses, or just when
 trying to quickly read the data you worked on a few years ago without having
 the software at hand to do so.
 
-In many cases life as a scientist is a lot easier if data is stored in a way
-that is simple and self-explanatory. You want to be able to use the data
-without complications in different environments without having to install
-special libraries or having to look up things. You also want to share data
-without any hassle with your colleagues, who work with, say, R instead of
-Python. Sometimes you want to try out an algorithm that someone wrote in
-Matlab, but you do not want to export large amounts of data into some
-different format, or even spend time on figuring out how to do this.
+And the thing is, often your data just exists of (multi-dimensional) arrays of
+numbers with some metadata, which in itself does not have to be represented in
+a complex and cryptic way. Life as a scientist is a lot easier if such data
+were stored in a way that is simple and self-explanatory. This allows you and
+others to use the data without complications in different environments without
+having to install special libraries or having to look up things. It would also
+enable you to share data without any hassle with your colleagues, who work
+with, say, R instead of Python. Sometimes you want to try out an algorithm that
+someone wrote in Matlab, but you do not want to export large amounts of data
+into some different format, or even spend time on figuring out how to do this.
 Often, these things could be, and should be, simple and painless, but
 unfortunately they often are not (see this
 `blog by Cyrille Rossant <http://cyrille.rossant.net/moving-away-hdf5/>`__
-that echos my own experiences). As a result, data that is difficult to read
-will be read less, which is an impediment to scientific progress. This is
+that echos my own experiences). Data that is difficult to read will be read
+less, and, as a result, will be an impediment to scientific progress. This is
 why Darr was created.
 
 First objective of Darr
@@ -31,9 +33,9 @@ First objective of Darr
 
 The first objective of Darr is to provide an easy way of working with
 with numeric data arrays and metadata, without having to worry about the
-things above. Data are persistent on disk in a self-explaining way, making
-them trivially easy to access in different analysis environments without
-needing additional explanation of how data is stored.
+things above. Data are persistent on disk in a tool-independent way and
+include documention, making it trivially easy to access in different analysis
+environments.
 
 Darr stores the numeric array data in a flat binary file (i.e. no header).
 This is a future-proof way of storing numeric data, as long as clear
