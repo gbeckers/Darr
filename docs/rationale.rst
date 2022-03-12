@@ -21,12 +21,14 @@ enable you to share data without any hassle with your colleagues, who work
 with, say, R instead of Python. Sometimes you want to try out an algorithm that
 someone wrote in Matlab, but you do not want to export large amounts of data
 into some different format, or even spend time on figuring out how to do this.
-Often, these things could be, and should be, simple and painless, but
-unfortunately they often are not (see this
+Indeed, why export gigabytes of data for just to yield the exact same data
+but now with a slightly different header? Often, these things could be, and
+should be, simple and painless, but unfortunately they often are not (see this
 `blog by Cyrille Rossant <http://cyrille.rossant.net/moving-away-hdf5/>`__
-that echos my own experiences). Data that is difficult to read will be read
-less, and, as a result, will be an impediment to scientific progress. This is
-why Darr was created.
+that echos my own experiences).
+
+Data that is difficult to read will be read less, and, as a result, will be an
+impediment to scientific progress. This is why Darr was created.
 
 First objective of Darr
 -----------------------
