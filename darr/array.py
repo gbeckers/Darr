@@ -1189,11 +1189,11 @@ def readcodetxt(da):
     """
 
     s = numtypedescriptiontxt(da)
-    s += "Code snippets for reading the numeric data\n" \
-         "==========================================\n\n"
+    s += "Code for reading the numeric data\n" \
+         "=================================\n\n"
     if len(da.shape) > 1:
-        s += wrap(f"Note that the array is multi-dimensional, and stored "
-                  f"with a row-major memory layout. In column-major "
+        s += wrap(f"Note that the array is {len(da.shape)}-dimensional and "
+                  f"stored with a row-major memory layout. In column-major "
                   f"languages (see Note below), the code provided here will "
                   f"lead to an array that has its dimensions inversed "
                   f"{da.shape[::-1]} with respect to the format description "
@@ -1253,15 +1253,15 @@ def numtypedescriptiontxt(da):
                           'with memory address'
     else:
         raise ValueError(f'arrayorder type "{arrayorder}" unknown')
-    s = wrap("This directory contains a numeric array that is stored in an "
-             "open and simple format. It should be easy to access the data in "
-             "most analysis environments. The array can be read using the "
-             "NumPy-based Python library Darr (https://pypi.org/project/darr/), "
-             "which was used to create the data. Alternatively, you can access "
-             "the data directly using the code snippets below. If your "
-             "language is not included, the full data format description "
-             "should help.") + "\n\n"
-    s+= f"Data format\n===========\n\n"
+    s = wrap("This directory stores a numeric array in an open and simple "
+             "format that is universally readable (Darr, see: "
+             "https://pypi.org/project/darr/). It is easiest to read the "
+             "array data using the code provided below for a number "
+             "of popular analysis environments. If your language is not "
+             "included, the data format description specifies all information "
+             "needed to read the data.") + "\n\n"
+    s+= f"Data format description" \
+        f"\n=======================\n\n"
     s += wrap("The file 'arrayvalues.bin' contains the raw binary values of "
               "the numeric array, without header information, in the "
               "following format:") + "\n\n"
@@ -1273,8 +1273,8 @@ def numtypedescriptiontxt(da):
         s += f"  Array dimensions: {shape}\n"
     if ismultid:  # we include arrayorder info only if array is multidimensional
         s += f"  Array order layout:  {arrayorder} ({arrayorderdescr})\n"
-    s += wrap("\nThese details are also stored in JSON format in the separate "
-              "UTF-8 text file, 'arraydescription.json'.") + "\n\n"
+    s += wrap("\nThis information is also stored in JSON format in the "
+              "separate UTF-8 text file, 'arraydescription.json'.") + "\n\n"
     if len(da.metadata) > 0:
         s += wrap("The file 'metadata.json' contains metadata in JSON UTF-8 "\
                   "text format.") + "\n\n\n"
