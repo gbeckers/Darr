@@ -3,11 +3,12 @@ Maximizing readability of your data
 
 The purpose of Darr is to make numeric array data as widely and as easily
 readable as possible through automatic self-documentation, which includes code
-for reading in other languages. Darr is NumPy-based and therefore supports
-many numeric types: int8, uint8, int16, uint16, int32, uint32, int64, uint64,
-float16, float32, float64, complex64 and complex128. Not all of those types
-are supported in other languages though, so your choice of the numeric type
-of your data influences how widely readable it is.
+for reading the data in many scientific computing languages. Darr is
+NumPy-based and therefore supports many numeric types: int8, uint8, int16,
+uint16, int32, uint32, int64, uint64, float16, float32, float64, complex64
+and complex128. Not all of those types are supported in other languages
+though, so your choice of the numeric type of your data influences how widely
+readable it is.
 
 The page :doc:`Reading data in other environments <readcode>` provides a
 table on compatibility of numeric types and languages. From this, a number of

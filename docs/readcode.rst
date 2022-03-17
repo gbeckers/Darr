@@ -2,11 +2,11 @@ Reading data in other environments
 ==================================
 
 The most important feature that makes Darr stand out for scientific use, is
-that it is self-documented and includes code to read the array in many other
-analysis platforms. This maximizes the chances that your data will be
+that it is self-documented and includes code to read the array in many
+analysis environments. This maximizes the chances that your data will be
 accessible to anyone for a long time to come. In most cases, a quick
-copy-paste from the README.txt file will suffice to read your array data in
-other scientific computing environments.
+copy-paste of a code snippet from the README.txt file will suffice to read your
+array data.
 
 Currently, Darr arrays provide read code examples for:
 
