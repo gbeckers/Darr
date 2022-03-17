@@ -135,8 +135,8 @@ Memory layout of multi-dimensional arrays
 
 Darr multi-dimensional arrays are based on a row-major memory layout, which
 means the last dimension is the one that varies most rapidly with memory
-address on disk. However, in some languages arrays are based on column-
-major memory layout. To keep things efficient, the code snippets Darr
+address on disk. However, in some languages arrays are based on  a column-major
+memory layout. To keep things efficient, the code snippets Darr
 generates for reading the data above do not change the memory layout when
 reading the array in a different language. This means that in column-major
 languages, the dimension axes will be *inversed*.
