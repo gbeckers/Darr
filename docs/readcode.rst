@@ -134,13 +134,20 @@ Memory layout of multi-dimensional arrays
 -----------------------------------------
 
 Darr multi-dimensional arrays are based on a row-major memory layout, which
-means the last dimension is the one that varies most rapidly with memory
-address on disk. However, in some languages arrays are based on  a column-major
-memory layout. To keep things efficient, the code snippets Darr
-generates for reading the data above do not change the memory layout when
-reading the array in a different language. This means that in column-major
-languages, the dimension axes will be *inversed*.
+means that elements from the last (rightmost) dimension or index are
+contiguous and vary most rapidly with memory address on disk. However, in some
+languages arrays are based on a column-major memory layout, which means that
+elements from the first (leftmost) dimension or index are contiguous and vary
+most rapidly with memory address on disk. To keep reading efficient, the
+code snippets that Darr generates for reading the data above do not change the
+memory layout when reading the array in a different language. This means that
+in column-major languages, the dimension and index axes will be *inversed*
+with respect to the Darr/NumPy convention.
 
 Row-major languages are: Mathematica and Python.
 
 Columns-major languages are: IDL/GDL, Julia, Maple, Matlab/Octave, and R.
+
+E.g., if one reads an array that is described as having dimensions (8,3,5), the
+reading code will lead to an array having dimension (5,3,8) in Matlab and
+other column-major languages.
