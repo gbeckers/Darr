@@ -454,7 +454,7 @@ wrap(f'The dimensions stated in the format description above are based on a '
      f'arrays are based on column-major memory layout. To keep things '
      f'efficient, the code examples above do not change the memory layout '\
      f'when reading the array in a different language. This means that in '
-     'column-major languages, the dimension axes will be *inversed*. Row-major '
+     'column-major languages, the dimension axes will be *reversed*. Row-major '
      f'languages are: Python and Mathematica. Columns-major languages are: '
      f'Julia, Matlab/Octave, R, Maple, and IDL/GDL. \n')
 

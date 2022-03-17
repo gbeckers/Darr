@@ -141,7 +141,7 @@ elements from the first (leftmost) dimension or index are contiguous and vary
 most rapidly with memory address on disk. To keep reading efficient, the
 code snippets that Darr generates for reading the data above do not change the
 memory layout when reading the array in a different language. This means that
-in column-major languages, the dimension and index axes will be *inversed*
+in column-major languages, the dimension and index axes will be *reversed*
 with respect to the Darr/NumPy convention.
 
 Row-major languages are: Mathematica and Python.
@@ -169,6 +169,12 @@ Read the same array in Matlab using the code snippet in the arrays README.txt:
     > fileid = fopen('test.darr/arrayvalues.bin');
     > a = fread(fileid, [4, 2], '*int64', 'ieee-le');
     > fclose(fileid);
+
+Now look at its dimensionality, it is reversed, as are the indexing axis. And
+a Darr/NumPy row is returned as a column:
+
+.. code:: matlab
+
     > size(a)
     ans =
       4   2
