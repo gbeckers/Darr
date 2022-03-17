@@ -150,7 +150,7 @@ Columns-major languages are: IDL/GDL, Julia, Maple, Matlab/Octave, and R.
 
 E.g., if one reads an array that is described as having dimensions (2,4), the
 reading code will lead to an array having dimension (4,2) in Matlab and
-other column-major languages. To get the same data from
+other column-major languages.
 
 In Darr, create an array consisting of 2 rows and 4 columns:
 
@@ -170,7 +170,7 @@ Read the same array in Matlab using the code snippet in the arrays README.txt:
     > a = fread(fileid, [4, 2], '*int64', 'ieee-le');
     > fclose(fileid);
 
-Now look at its dimensionality, it is reversed, as are the indexing axis. And
+Now look at its dimensionality, it is reversed, as are the indexing axes. And
 a Darr/NumPy row is returned as a column:
 
 .. code:: matlab
