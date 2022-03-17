@@ -148,6 +148,36 @@ Row-major languages are: Mathematica and Python.
 
 Columns-major languages are: IDL/GDL, Julia, Maple, Matlab/Octave, and R.
 
-E.g., if one reads an array that is described as having dimensions (8,3,5), the
-reading code will lead to an array having dimension (5,3,8) in Matlab and
+E.g., if one reads an array that is described as having dimensions (8,3), the
+reading code will lead to an array having dimension (3,8) in Matlab and
 other column-major languages.
+
+In Darr:
+
+.. code:: python
+
+    >>> a = darr.asarray('test.darr', [[1,2,3,4],[5,6,7,8]])
+    >>> a.shape
+    (2,4)
+    >>> a[0,:]
+    array([1, 2, 3, 4])
+
+Read the same array in Matlab using the code snippet in the arrays README.txt:
+
+.. code:: matlab
+
+    > fileid = fopen('test.darr/arrayvalues.bin');
+    > a = fread(fileid, [4, 2], '*int64', 'ieee-le');
+    > fclose(fileid);
+    > size(a)
+    ans =
+      4   2
+    > a(:,1) # matlab starts counting from 1
+    ans =
+      1
+      2
+      3
+      4
+
+
+
