@@ -10,20 +10,20 @@ array data.
 
 Currently, Darr arrays provide read code examples for:
 
+- IDL/GDL
+- Julia (version < 1.0)
+- Julia (version >= 1.0)
+- Mathematica
+- Matlab/Octave
+- Maple
 - Python with just standard library
 - Python with Darr library
 - Python with Numpy library
 - Python with Numpy, based on memmap for very large arrays
 - R
-- Matlab/Octave
-- Julia (version < 1.0)
-- Julia (version >= 1.0)
-- IDL/GDL
-- Mathematica
-- Maple
 
-For example, for an 810 by 23 unsigned int32 array, the README.txt will
-provide a code snippet to read the array data in Julia:
+For example, for an 810 by 23 unsigned int32 little endian array, the README.txt
+will provide a code snippet to read the array data in Julia:
 
 .. code:: julia
 
