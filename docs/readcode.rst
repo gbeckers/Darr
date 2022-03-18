@@ -178,12 +178,48 @@ a Darr/NumPy row is returned as a column:
     > size(a)
     ans =
       4   2
+    > a
+    a =
+
+      1  5
+      2  6
+      3  7
+      4  8
+
     > a(:,1) # matlab starts counting from 1
     ans =
       1
       2
       3
       4
+
+If you want the dimension and index order in Matlab (and other column-major
+languages) to be the same as in NumPy/Darr, you need to transpose the array
+after reading it:
+
+.. code:: matlab
+
+    > a = a'
+    > size(a)
+    ans =
+
+       2   4
+
+    > a
+    a =
+
+      1  2  3  4
+      5  6  7  8
+
+    > a(1,:)
+    ans =
+
+      1  2  3  4
+
+However, it may be that the original memory layout was chosen for efficiency
+reasons, and hence for large arrays it may be better not to transpose the
+array, and just reverse all indexing operations.
+
 
 
 
