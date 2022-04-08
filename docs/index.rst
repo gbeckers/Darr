@@ -49,25 +49,24 @@ open source and freely available under the `New BSD License
 Features
 --------
 
--  Disk-persistent array data is directly accessible through `NumPy
-   indexing <https://numpy.org/doc/stable/reference/arrays.indexing.html>`__.
--  Works with **data arrays larger than RAM**.
 -  Data is stored purely based on flat binary and text files, maximizing
-   **tool independence**.
--  Data is automatically documented and includes a README text file with
-   **human-readable explanation** of how the data is stored.
--  README includes **examples of how to read the array** in a number of popular
-   data analysis environments, such as Python (without Darr), R, Julia,
-   Octave/Matlab, GDL/IDL, and Mathematica (see `example array <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_int32_2D.darr>`__).
--  Data is easily **appendable**.
--  **Many numeric types** are supported: (u)int8-(u)int64, float16-float64,
-   complex64, complex128.
--  Easy use of **metadata**, stored in a separate
+   universal readability.
+-  Automatic self-documention, including copy-paste ready code snippets for
+   reading the array in a number of popular data analysis environments, such as
+   Python (without Darr), R, Julia, Octave/Matlab, GDL/IDL, and Mathematica
+   (see `example array
+   <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_int32_2D.darr>`__).
+-  Disk-persistent array data is directly accessible through `NumPy
+   indexing <https://numpy.org/doc/stable/reference/arrays.indexing.html>`__
+   and may be larger than RAM and that is easily appendable.
+-  Supports ragged arrays.
+-  Easy use of metadata, stored in a widely readable separate
    `JSON <https://en.wikipedia.org/wiki/JSON>`__ text file.
--  **Minimal dependencies**, only `NumPy <http://www.numpy.org/>`__.
+-  Many numeric types are supported: (u)int8-(u)int64, float16-float64,
+   complex64, complex128.
 -  Integrates easily with the `Dask <https://dask.pydata.org/en/latest/>`__
-   library for out-of-core **computation on very large arrays**.
--  Supports **ragged arrays**.
+   library for out-of-core computation on very large arrays.
+-  Minimal dependencies, only `NumPy <http://www.numpy.org/>`__.
 
 Con's:
 
