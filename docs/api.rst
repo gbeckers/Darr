@@ -28,6 +28,7 @@ Creating arrays
 
 .. autofunction:: darr.asarray
 .. autofunction:: darr.create_array
+.. autofunction:: darr.create_temparray
 
 Deleting arrays
 ---------------
