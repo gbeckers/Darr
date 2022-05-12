@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Master
+------
+- allow for numpy datetime64 values in metadata
+
 Version 0.5.0
 -------------
 - implement read code for complex types in Matlab/Octave (which cannot do

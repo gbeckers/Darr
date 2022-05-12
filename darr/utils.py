@@ -38,6 +38,8 @@ class DDJSONEncoder(json.JSONEncoder):
             return int(obj)
         elif isinstance(obj, np.floating):
             return float(obj)
+        elif isinstance(obj, np.datetime64):
+            return str(obj)
         elif isinstance(obj, np.ndarray):
             return obj.tolist()
         elif hasattr(obj, 'decode'):
