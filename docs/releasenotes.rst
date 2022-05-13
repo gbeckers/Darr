@@ -3,7 +3,7 @@ Release notes
 
 Master
 ------
-- allow for numpy datetime64 values in metadata
+- automatically convert numpy datetime64 to str in json metadata
 
 Version 0.5.0
 -------------
