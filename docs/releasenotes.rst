@@ -1,8 +1,8 @@
 Release notes
 =============
 
-Master
-------
+Version 0.5.1
+-------------
 - automatically convert numpy datetime64 to str in json metadata
 
 Version 0.5.0
