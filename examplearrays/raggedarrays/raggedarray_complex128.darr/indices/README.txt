@@ -1,13 +1,11 @@
-This directory contains a numeric array that is stored in an open and simple
-format. It should be easy to access the data in most analysis environments.
-The array can be read using the NumPy-based Python library Darr
-(https://pypi.org/project/darr/), which was used to create the data.
-Alternatively, you can access the data directly using the code snippets below.
-If your language is not included, the full data format description should
-help.
+This directory stores a numeric array in an open and simple format that is
+universally readable (Darr, see: https://pypi.org/project/darr/). It is
+easiest to read the array data using the code provided below for a number of
+popular analysis environments. If your language is not included, the data
+format description specifies all information needed to read the data.
 
-Data format
-===========
+Data format description
+=======================
 
 The file 'arrayvalues.bin' contains the raw binary values of the numeric
 array, without header information, in the following format:
@@ -17,13 +15,13 @@ array, without header information, in the following format:
   Array dimensions: (9, 2)
   Array order layout:  C (Row-major; last dimension varies most rapidly with memory address)
 
-These details are also stored in JSON format in the separate UTF-8 text file,
-'arraydescription.json'.
+This information is also stored in JSON format in the separate UTF-8 text
+file, 'arraydescription.json'.
 
-Code snippets for reading the numeric data
-==========================================
+Code for reading the numeric data
+=================================
 
-Note that the array is multi-dimensional, and stored with a row-major memory
+Note that the array is 2-dimensional and stored with a row-major memory
 layout. In column-major languages (see Note below), the code provided here
 will lead to an array that has its dimensions inversed (2, 9) with respect to
 the format description above (9, 2).
@@ -87,6 +85,6 @@ memory layout where the *last* dimension is the one that varies most rapidly
 with memory address. However, in some languages arrays are based on column-
 major memory layout. To keep things efficient, the code examples above do not
 change the memory layout when reading the array in a different language. This
-means that in column-major languages, the dimension axes will be *inversed*.
+means that in column-major languages, the dimension axes will be *reversed*.
 Row-major languages are: Python and Mathematica. Columns-major languages are:
 Julia, Matlab/Octave, R, Maple, and IDL/GDL.

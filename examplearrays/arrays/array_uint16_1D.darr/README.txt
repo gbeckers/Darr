@@ -1,13 +1,11 @@
-This directory contains a numeric array that is stored in an open and simple
-format. It should be easy to access the data in most analysis environments.
-The array can be read using the NumPy-based Python library Darr
-(https://pypi.org/project/darr/), which was used to create the data.
-Alternatively, you can access the data directly using the code snippets below.
-If your language is not included, the full data format description should
-help.
+This directory stores a numeric array in an open and simple format that is
+universally readable (Darr, see: https://pypi.org/project/darr/). It is
+easiest to read the array data using the code provided below for a number of
+popular analysis environments. If your language is not included, the data
+format description specifies all information needed to read the data.
 
-Data format
-===========
+Data format description
+=======================
 
 The file 'arrayvalues.bin' contains the raw binary values of the numeric
 array, without header information, in the following format:
@@ -16,14 +14,14 @@ array, without header information, in the following format:
   Byte order: little (most-significant byte last)
   Array length: 9
 
-These details are also stored in JSON format in the separate UTF-8 text file,
-'arraydescription.json'.
+This information is also stored in JSON format in the separate UTF-8 text
+file, 'arraydescription.json'.
 
 The file 'metadata.json' contains metadata in JSON UTF-8 text format.
 
 
-Code snippets for reading the numeric data
-==========================================
+Code for reading the numeric data
+=================================
 
 Python:
 -------
