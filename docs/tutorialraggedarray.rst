@@ -35,19 +35,14 @@ In the last case, the two-dimensional subarrays have a variable-length first
 axis, but a fixed length second axis of 2. It is said to have an 'atom'
 shape of (2,).
 
-You might think that the above list of lists in Python is sufficient to
-represent ragged arrays, but computationally this is very inefficient when
-arrays are large. For the same reason people use NumPy arrays instead of Python
-lists.
-
 Numpy does not natively support *ragged* arrays, but they are often used in
 science, which is why formats like HDF5 and Zarr do support them, and Darr
-does too. Often encountered use cases include (multidimensional) data that
+does so too. Often-encountered use cases include (multidimensional) data that
 has been recorded intermittently, think of acoustic monitoring where
 only interesting sound events of varying duration are saved, or
-event-related episodes in long-term neural recordings. An alternative would
-be to save each subarray in a separate file, but this can become unwieldy
-and inefficient when the size of the subarrays is comparatively small and their
+event-related episodes in long-term neural recordings. You could save each
+subarray in a separate file, but this may become unwieldy and inefficient
+when the size of the subarrays is comparatively small and their
 number very high.
 
 Creating a RaggedArray
