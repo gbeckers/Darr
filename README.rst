@@ -9,8 +9,7 @@ simple and self-documented, and makes them easily accessible from a wide range
 of computing environments. Arrays are automatically kept up-to-date with a
 full explanation of how data is stored, which includes code to read itself
 in languages such as R, Julia, IDL, Matlab, Maple, and Mathematica, or in
-Python/Numpy without Darr (see
-`example
+Python/Numpy without Darr (see `example
 <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays
 /array_int32_2D.darr>`__). Keeping data universally readable and documented is
 a pillar of good scientific practice, and a good idea in general. More
