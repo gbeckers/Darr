@@ -46,6 +46,10 @@ To read it in RAM completely, just index to get the whole thing:
     array([[1., 2., 3., ..., 97., 98., 99.],
            [0., 0., 0., ..., 0., 0., 0.]])
 
+There is no 'close' function because, despite its name,  the 'open' function
+used above does not really keep any files open. Darr opens and automatically
+closes files under the hood when needed. The
+
 .. _creating:
 
 Creating an array from a NumPy array or a sequence
