@@ -48,7 +48,7 @@ To read it in RAM completely, just index to get the whole thing:
 
 There is no 'close' function because, despite its name,  the 'open' function
 used above does not really keep any files open. Darr opens and automatically
-closes files under the hood when needed. The
+closes files under the hood when needed.
 
 .. _creating:
 
