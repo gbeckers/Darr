@@ -34,9 +34,9 @@ conclusions can be drawn:
 - If compatibility with R is important to you, have a good look at the table
   in :doc:`Reading data in other environments <readcode>`. Despite all its
   merits, R is quite limited in the numeric types that it can read and handle.
-  For example it doesn't support int64 (!). In Python, int64 is the default for
-  integers so if you create an array without specifying that it should be
-  int32, it will be int64 and not readable in R.
+  For example it doesn't support int64 (!). Darr/NumPy int64 arrays are not
+  readable in R (but see below how this sometimes can be circumvented for
+  RaggedArrays).
 
 To help deciding on numeric type, the minimum and maximum values that are
 possible for integer types are listed below.
@@ -45,13 +45,13 @@ Minimum and maximum values for integers
 ---------------------------------------
 
 - int8: 8-bit signed integer, -128 to 127
-- int16: 16‐bit signed integer, -32768 to 32767
-- int32: 32‐bit signed integer, -2147483648 to 2147483647
-- int64: 64‐bit signed integer, -9223372036854775808 to 9223372036854775807
+- int16: 16‐bit signed integer, -32,768 to 32,767
+- int32: 32‐bit signed integer, -2,147,483,648 to 2,147,483,647
+- int64: 64‐bit signed integer, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807
 - uint8: 8‐bit unsigned integer, 0 to 255
-- uint16: 16‐bit unsigned integer, 0 to 65535
-- uint32: 32‐bit unsigned integer, 0 to 4294967295
-- uint64: 64‐bit unsigned integer, 0 to 18446744073709551615
+- uint16: 16‐bit unsigned integer, 0 to 65,535
+- uint32: 32‐bit unsigned integer, 0 to 4,294,967,295
+- uint64: 64‐bit unsigned integer, 0 to 18,446,744,073,709,551,615
 
 .. Note::
     For some reason R does not represent the minimum of an int32, -2147483648. R
