@@ -1,6 +1,11 @@
 Release notes
 =============
 
+Develop repo
+------------
+- `open` function that returns or Arrays and RaggedArray depending on what
+  the path contains.
+
 Version 0.5.1
 -------------
 - automatically convert numpy datetime64 to str in json metadata

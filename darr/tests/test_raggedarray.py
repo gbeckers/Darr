@@ -2,6 +2,7 @@ import os
 import unittest
 import numpy as np
 import tempfile
+import darr
 from numpy.testing import assert_equal, assert_array_equal
 from pathlib import Path
 from darr.raggedarray import create_raggedarray, asraggedarray, \
@@ -10,6 +11,29 @@ from darr.readcoderaggedarray import readcode
 
 from darr.utils import tempdirfile
 from .test_array import DarrTestCase
+
+class RaggedArrayIndexing(DarrTestCase):
+
+    def setUp(self):
+        self.temparpath = Path(tempfile.mkdtemp()) / 'testra.darr'
+        self.tempar = create_raggedarray(self.temparpath, atom=(),
+                                         dtype='float64')
+        self.input = np.array([[1,2,3,4],[4,5,6,7]], dtype='float64')
+        self.tempar.iterappend(self.input)
+        self.tempnonarpath = tempfile.mkdtemp(dir=None)
+
+    def tearDown(self):
+        delete_raggedarray(self.tempar)
+
+    def test_openfromexistingpath(self):
+        darr.open(path=self.temparpath)
+
+    def test_instantiatefromexistingpath(self):
+        RaggedArray(path=self.temparpath)
+
+    def test_instantiatefromnonexistingpath(self):
+       with self.assertRaises(OSError):
+            RaggedArray(path=self.tempnonarpath)
 
 
 class CreateRaggedArray(DarrTestCase):
