@@ -1195,7 +1195,7 @@ def readcodetxt(da):
         s += wrap(f"Note that the array is {len(da.shape)}-dimensional and "
                   f"stored with a row-major memory layout. In column-major "
                   f"languages (see Note below), the code provided here will "
-                  f"lead to an array that has its dimensions inversed "
+                  f"lead to an array that has its dimensions reversed "
                   f"{da.shape[::-1]} with respect to the format description "
                   f"above {da.shape}.") + '\n\n'
     languages = (
