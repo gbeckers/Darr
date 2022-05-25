@@ -148,7 +148,7 @@ Row-major languages are: Mathematica and Python.
 
 Columns-major languages are: IDL/GDL, Julia, Maple, Matlab/Octave, and R.
 
-E.g., if one reads an array that is has dimensions (2,4) in Darr/NumPy, the
+E.g., if one reads an array that has dimensions (2,4) in Darr/NumPy, the
 reading code will lead to an array having dimension (4,2) in Matlab and
 other column-major languages.
 
