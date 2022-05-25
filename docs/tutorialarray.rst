@@ -17,17 +17,18 @@ folder holds 3-4 files that contain all data and documentation.
     └── README.txt (file)
 
 
-To work with this array in Darr, just assign it to a variable as follows:
+To work with this array in Darr, just open and assign it to a variable as
+follows:
 
 .. code:: python
 
     >>> import darr
-    >>> a = darr.Array('data.darr')
+    >>> a = darr.open('data.darr')
     >>> a
     darr array([[1., 2., 3., ..., 97., 98., 99.],
                 [0., 0., 0., ..., 0., 0., 0.]]) (r)
 
-Note that in creating the vaiable '*a*' above, the array data is **not** read
+Note that in creating the variable '*a*' above, the array data is **not** read
 into RAM. It can potentially be very large and remains on disk. It will only
 be read into RAM as a NumPy array after indexing '*a*'.
 
