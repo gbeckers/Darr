@@ -15,8 +15,20 @@ the folder path ('data.darr' in the example) for access:
     darr array([[1., 2., 3., ..., 97., 98., 99.],
                 [0., 0., 0., ..., 0., 0., 0.]]) (r)
 
-Note that the array data is **not** read into RAM. It remains on disk, and
-will only be (partly) read into RAM as a NumPy array after indexing it.
+On disk, the 'data.darr' folder holds 3-4 files that contain all data and
+documentation.
+
+::
+
+    data.darr
+    ├── arraydescription.json
+    ├── arrayvalues.bin
+    ├── metadata.json
+    ├── README.txt
+
+Note that in creating the vaiable *a* above, the array data is **not** read
+into RAM. It can potentially be very large and remains on disk. It will only
+be (partly) read into RAM as a NumPy array after indexing it.
 
 .. code:: python
 
