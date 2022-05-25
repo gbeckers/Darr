@@ -29,7 +29,7 @@ To work with this array in Darr, just assign it to a variable as follows:
 
 Note that in creating the vaiable '*a*' above, the array data is **not** read
 into RAM. It can potentially be very large and remains on disk. It will only
-be read into RAM as a NumPy array after indexing *a*.
+be read into RAM as a NumPy array after indexing '*a*'.
 
 .. code:: python
 
@@ -40,21 +40,10 @@ To read it in RAM completely, just index to get the whole thing:
 
 .. code:: python
 
-    >>> b = a[:]
-    >>> b # this returns a normal numpy array
+    >>> b = a[:] # this returns a normal numpy array
+    >>> b
     array([[1., 2., 3., ..., 97., 98., 99.],
            [0., 0., 0., ..., 0., 0., 0.]])
-
-To overwrite (part of) the data or append or truncate the data (see below how
-to do this), set the 'accesmode' argument to 'r+'.
-
-.. code:: python
-
-    >>> a = darr.Array('data.darr', accessmode='r+')
-
-Any changes in the size of the array in the metadata (see below) will
-directly lead to changes on disk, including the documentation in the
-README.txt file.
 
 .. _creating:
 
@@ -209,6 +198,7 @@ be writable first:
     >>> a
     darr array([[ 1.,  2.,  1., ...,  1.,  1.,  1.],
                 [ 1.,  2.,  1., ...,  1.,  1.,  1.]]) (r+)
+
 
 .. _efficientio:
 
