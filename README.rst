@@ -17,14 +17,13 @@ rationale for a tool-independent approach to numeric array storage is provided
 `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
 Under the hood, Darr uses NumPy memory-mapped arrays, which is a widely
-established, tested and trusted way of working with disk-based numerical
-arrays, and which makes Darr fully NumPy compatible. This enables efficient
-out-of-core read/write access to potentially very large arrays. What Darr adds
-is that it automatically keeps your arrays fully documented, open, and thus
-widely readable. Further, Darr adds functionality to make your life easier
-in other ways, such as the support for ragged arrays, the ability to create
-arrays from iterators, append and truncate functionality, and the easy use
-of metadata.
+established and trusted way of working with disk-based numerical arrays, and
+which makes Darr fully NumPy compatible. This enables efficient out-of-core
+read/write access to potentially very large arrays. What Darr adds is that it
+automatically keeps your arrays fully documented, open, and thus widely
+readable. Further, Darr adds functionality to make your life easier in other
+ways, such as the support for ragged arrays, the ability to create arrays from
+iterators, append and truncate functionality, and the easy use of metadata.
 
 Flat binary files and (JSON) text files are accompanied by a README text file
 that explains how the array and metadata are stored (`see example arrays

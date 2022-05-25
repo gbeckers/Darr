@@ -16,10 +16,24 @@ the folder path ('data.darr' in the example) for access:
                 [0., 0., 0., ..., 0., 0., 0.]]) (r)
 
 Note that the array data is **not** read into RAM. It remains on disk, and
-will be (partly) read into RAM as a numpy array only after indexing it.
+will only be (partly) read into RAM as a NumPy array after indexing it.
 
-If you intend to overwrite (part of) the data or append data (see below how)
-you need to specify that and set 'accesmode' to 'r+'.
+.. code:: python
+
+    >>> a[0,1:4] # returns part of the darr array as a numpy array
+    array([2., 3., 4.])
+
+If you want to read it in RAM completely, just index to get the whole thing:
+
+.. code:: python
+
+    >>> b = a[:]
+    >>> b # this returns a normal numpy array
+    array([[1., 2., 3., ..., 97., 98., 99.],
+           [0., 0., 0., ..., 0., 0., 0.]])
+
+If you intend to overwrite (part of) the data or append data (see below how
+to do this) you need to specify that and set the 'accesmode' argument to 'r+'.
 
 .. code:: python
 
@@ -45,7 +59,8 @@ iterables.
 Creating an array from scratch
 ------------------------------
 Use the 'create_array' function. Particularly useful if you want to create a
-gigantic array that does not fit in RAM memory.
+gigantic array that does not fit in RAM memory so that creating a NumPy
+array first is not possible.
 
 .. code:: python
 
