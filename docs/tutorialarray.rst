@@ -44,12 +44,17 @@ If you want to read it in RAM completely, just index to get the whole thing:
     array([[1., 2., 3., ..., 97., 98., 99.],
            [0., 0., 0., ..., 0., 0., 0.]])
 
-If you intend to overwrite (part of) the data or append data (see below how
-to do this) you need to specify that and set the 'accesmode' argument to 'r+'.
+If you intend to overwrite (part of) the data or append or truncate the data
+(see below how to do this) you need to specify that and set the 'accesmode'
+argument to 'r+'.
 
 .. code:: python
 
     >>> a = darr.Array('data.darr', accessmode='r+')
+
+Any changes in the size of the array in the metadata (see below) will
+directly lead to changes on disk, including the documentation in the
+README.txt file.
 
 .. _creating:
 
@@ -72,7 +77,7 @@ Creating an array from scratch
 ------------------------------
 Use the 'create_array' function. Particularly useful if you want to create a
 gigantic array that does not fit in RAM memory so that creating a NumPy
-array first is not possible.
+array first is not possible. The example here uses a small array:
 
 .. code:: python
 
