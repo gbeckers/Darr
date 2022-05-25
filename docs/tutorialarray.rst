@@ -4,8 +4,20 @@ Tutorial
 .. _access:
 Accessing an existing array
 ---------------------------
-Darr arrays are represented on disk by a folder with some files in it. Use
-the folder path ('data.darr' in the example) for access:
+Darr arrays are represented on disk by a folder with some files in it.
+Assume we received an array called 'data.darr'.On disk, the 'data.darr'
+folder holds 3-4 files that contain all data and documentation.
+
+::
+
+    data.darr (folder)
+    ├── arraydescription.json (file)
+    ├── arrayvalues.bin (file)
+    ├── metadata.json (file, optional)
+    └── README.txt (file)
+
+
+To work with this array in Darr, just assign it to a variable as follows:
 
 .. code:: python
 
@@ -15,27 +27,16 @@ the folder path ('data.darr' in the example) for access:
     darr array([[1., 2., 3., ..., 97., 98., 99.],
                 [0., 0., 0., ..., 0., 0., 0.]]) (r)
 
-On disk, the 'data.darr' folder holds 3-4 files that contain all data and
-documentation.
-
-::
-
-    data.darr
-    ├── arraydescription.json
-    ├── arrayvalues.bin
-    ├── metadata.json
-    ├── README.txt
-
-Note that in creating the vaiable *a* above, the array data is **not** read
+Note that in creating the vaiable '*a*' above, the array data is **not** read
 into RAM. It can potentially be very large and remains on disk. It will only
-be (partly) read into RAM as a NumPy array after indexing it.
+be read into RAM as a NumPy array after indexing *a*.
 
 .. code:: python
 
     >>> a[0,1:4] # returns part of the darr array as a numpy array
     array([2., 3., 4.])
 
-If you want to read it in RAM completely, just index to get the whole thing:
+To read it in RAM completely, just index to get the whole thing:
 
 .. code:: python
 
@@ -44,9 +45,8 @@ If you want to read it in RAM completely, just index to get the whole thing:
     array([[1., 2., 3., ..., 97., 98., 99.],
            [0., 0., 0., ..., 0., 0., 0.]])
 
-If you intend to overwrite (part of) the data or append or truncate the data
-(see below how to do this) you need to specify that and set the 'accesmode'
-argument to 'r+'.
+To overwrite (part of) the data or append or truncate the data (see below how
+to do this), set the 'accesmode' argument to 'r+'.
 
 .. code:: python
 
@@ -144,7 +144,8 @@ See :doc:`Reading data in other environments <readcode>` for more information on
 the languages that Darr can generate read code snippets for.
 
 Note that this way Darr arrays are widely and easily readable without Darr or
-Python, but the easiest of course is still to use Darr if that is available.
+Python, but the easiest for manipulation the data and metadata, it is of
+course easier to use Darr if that is available.
 
 .. _fromnumpy:
 
@@ -220,12 +221,6 @@ array so as to open and close the underlying files only once:
 .. code:: python
 
     >>> with a.open_array():
-    ...     a[0,0] = 3.
-    ...     a[0,2] = 4.
-    ...     a[1,[0,2,-1]] = 5.
-    >>> a
-    darr array([[ 3.,  2.,  4., ...,  1.,  1.,  1.],
-                [ 5.,  2.,  5., ...,  1.,  1.,  5.]]) (r+)
     ...     a[0,0] = 3.
     ...     a[0,2] = 4.
     ...     a[1,[0,2,-1]] = 5.
@@ -377,3 +372,8 @@ To see which languages are supported, use the 'readcodelanguages' property:
      'numpy',
      'numpymemmap')
 
+Ragged Arrays
+-------------
+
+See :doc:`Tutorial RaggedArray <tutorialraggedarray>` for more
+information.
