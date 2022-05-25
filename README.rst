@@ -5,11 +5,11 @@ Darr
 |Codecov Badge| |Docs Status| |Zenodo Badge| |PyUp Badge|
 
 Darr is a Python library that stores NumPy arrays on disk in a way that is
-simple and self-documented, and makes them easily accessible from a wide range
-of computing environments. Arrays are automatically kept up-to-date with a
-full explanation of how data is stored, which includes code to read itself
-in languages such as R, Julia, IDL, Matlab, Maple, and Mathematica, or in
-Python/Numpy without Darr (see `example
+simple and self-documented, which makes them easily accessible from a wide
+range of computing environments. Arrays are automatically kept up-to-date
+with a full explanation of how data is stored, including code to read
+itself in languages such as R, Julia, IDL, Matlab, Maple, and Mathematica,
+or in Python/Numpy without Darr (see `example
 <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays
 /array_int32_2D.darr>`__). Keeping data universally readable and documented is
 a pillar of good scientific practice, and a good idea in general. More
@@ -29,11 +29,11 @@ of metadata.
 Flat binary files and (JSON) text files are accompanied by a README text file
 that explains how the array and metadata are stored (`see example arrays
 <https://github.com/gbeckers/Darr/tree/master/examplearrays/>`__).
-It is trivially easy to share your data with others or with yourself when
-working in different computing environments because it always contains clear
+It is trivially easy to share your arrays with others or with yourself when
+working in different computing environments because they always contains clear
 documentation of the specific data at hand, including code to read it.
 Does your colleague want to try out an interesting algorithm in R or Matlab
-on your array data?  No need to export anything or to provide elaborate
+on your arrays?  No need to export anything or to provide elaborate
 explanation. No dependence on complicated formats or specialized libraries.
 No looking up things. A copy-paste of a few lines of code from the
 documentation stored with the data is sufficient. Self-documentation and code
