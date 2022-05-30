@@ -5,7 +5,7 @@ Tutorial
 Accessing an existing array
 ---------------------------
 Darr arrays are represented on disk by a folder with some files in it.
-Assume we received an array called 'data.darr'.On disk, the 'data.darr'
+Assume we received an array called 'data.darr'. On disk, the 'data.darr'
 folder holds 3-4 files that contain all data and documentation.
 
 ::
