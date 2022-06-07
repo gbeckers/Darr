@@ -5,6 +5,7 @@ Develop repo
 ------------
 - `open` function that returns or Arrays and RaggedArray depending on what
   the path contains.
+- adhere to new standard version parsing with packaging module
 
 Version 0.5.1
 -------------

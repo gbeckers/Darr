@@ -10,13 +10,14 @@ array from disk, use **delete_array**.
 
 """
 # TODO replace distutils (is deprecated) with packaging
-import distutils.version
 import json
 import os
 import sys
 import warnings
 import numpy as np
+
 from contextlib import contextmanager
+from packaging import version
 from pathlib import Path
 
 from .datadir import DataDir, create_datadir
@@ -298,8 +299,8 @@ class Array:
             m = f". Could not read array description from "\
                 f"'{self._arraydescrpath}. '"
             raise type(e)(str(e) + m).with_traceback(sys.exc_info()[2])
-        vfile = distutils.version.LooseVersion(d['darrversion'])
-        vlib = distutils.version.LooseVersion(self._formatversion)
+        vfile = version.Version(d['darrversion'])
+        vlib = version.Version(self._formatversion)
         # for now, in alpha stage, we do not recommend the use of newer files
         # with older libraries
         if not vlib >= vfile:
