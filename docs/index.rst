@@ -9,47 +9,51 @@ Darr
 |Github CI Status| |Appveyor Status| |PyPi version| |Conda Forge|
 |Codecov Badge| |Docs Status| |Zenodo Badge| |PyUp Badge|
 
-Darr is a Python library for disk-based NumPy arrays that persist in a format
-that is simple, self-documented and tool-independent. It keeps your data
-easily accessible from a wide range of computing environments. Every
-array is automatically documented, and includes code to read itself in
-languages such as R, Julia, IDL, Matlab, Maple, and Mathematica, or in
-Python/Numpy without Darr (see `example
+Darr is a Python library that stores NumPy arrays on disk in a way that is
+simple and self-documented, which makes them easily accessible from a wide
+range of computing environments. Arrays are automatically kept up-to-date
+with a full explanation of how data is stored, including code to read
+itself in languages such as R, Julia, IDL, Matlab, Maple, and Mathematica,
+or in Python/Numpy without Darr (see `example
 <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays
 /array_int32_2D.darr>`__). Keeping data universally readable and documented is
-a pillar of good scientific practice. More rationale for this approach is
-provided :doc:`here <rationale>`.
+a pillar of good scientific practice, and a good idea in general. More
+rationale for a tool-independent approach to numeric array storage is provided
+:doc:`here <rationale>`.
 
 Under the hood, Darr uses NumPy memory-mapped arrays, which is a widely
-established, tested and trusted way of working with disk-based numerical
-arrays, and which makes Darr fully NumPy compatible. It enables efficient
-out-of-core read/write access to potentially very large arrays. What Darr adds
-is that it automatically keeps your arrays fully documented, open, and thus
-widely readable. Further, Darr adds functionality to make your life easier
-in other ways, such as the support for ragged arrays, the ability to create
-arrays from iterators, append and truncate functionality, and the easy use
-of metadata.
+established and trusted way of working with disk-based numerical arrays, and
+which makes Darr fully NumPy compatible. This enables efficient out-of-core
+read/write access to potentially very large arrays. What Darr adds is that it
+automatically keeps your arrays fully documented, open, and thus widely
+readable. Further, Darr adds functionality to make your life easier in other
+ways, such as the support for ragged arrays, the ability to create arrays from
+iterators, append and truncate functionality, and the easy use of metadata.
 
 Flat binary files and (JSON) text files are accompanied by a README text file
 that explains how the array and metadata are stored (`see example arrays
 <https://github.com/gbeckers/Darr/tree/master/examplearrays/>`__).
-It is trivially easy to share your data with others or with yourself when
-working in different computing environments because it always contains clear
-documentation, including code to read it. Does your colleague want to try out
-an interesting algorithm in R or Matlab on your array data?  No need to export
-anything or to provide elaborate explanation. A copy-paste of a few lines of
-code from the documentation stored with the data is sufficient. No dependence
-on complicated formats or specialized libraries. Self-documentation and code
+It is trivially easy to share your arrays with others or with yourself when
+working in different computing environments because they always contains clear
+documentation of the specific data at hand, including code to read it.
+Does your colleague want to try out an interesting algorithm in R or Matlab
+on your arrays?  No need to export anything or to provide elaborate
+explanation. No dependence on complicated formats or specialized libraries.
+No looking up things. A copy-paste of a few lines of code from the
+documentation stored with the data is sufficient. Self-documentation and code
 examples are automatically updated as you change your arrays when working
 with them.
 
-Darr is currently pre-1.0, still undergoing significant development. It is
-open source and freely available under the `New BSD License
+See this `tutorial <https://darr.readthedocs.io/en/latest/tutorialarray.html>`__
+for a brief introduction, or the
+`documentation <http://darr.readthedocs.io/>`__ for more info.
+
+Darr is currently pre-1.0, still undergoing development. It is open source and
+freely available under the `New BSD License
 <https://opensource.org/licenses/BSD-3-Clause>`__ terms.
 
 Features
 --------
-
 -  Data is stored purely based on flat binary and text files, maximizing
    universal readability.
 -  Automatic self-documention, including copy-paste ready code snippets for
@@ -71,8 +75,7 @@ Features
 
 Con's:
 
--  **No compression**, although compression for archiving purposes is
-   supported.
+-  No compression, although compression for archiving purposes is supported.
 
 Darr depends on Python 3.6 or higher and NumPy 1.12 or higher.
 
@@ -125,7 +128,7 @@ Indices and tables
    :target: https://github.com/gbeckers/Darr/actions/workflows/python_package.yml
 .. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
    :target: https://ci.appveyor.com/project/gbeckers/darr
-.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.5.1-orange.svg
+.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.5.2-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Conda Forge| image:: https://anaconda.org/conda-forge/darr/badges/version.svg
    :target: https://anaconda.org/conda-forge/darr

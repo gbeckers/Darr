@@ -1,11 +1,12 @@
 Release notes
 =============
 
-Develop repo
-------------
+Version 0.5.2
+-------------
 - `open` function that returns or Arrays and RaggedArray depending on what
   the path contains.
-- adhere to new standard version parsing with packaging module
+- adhere to new standard version parsing with packaging module, preventing
+  warning messages.
 
 Version 0.5.1
 -------------
