@@ -111,8 +111,8 @@ setuptools.setup(
     license='BSD-3',
     author='Gabriel J.L. Beckers',
     author_email='gabriel@gbeckers.nl',
-    description='Memory-mapped numeric arrays, based on a '\
-                'format that is self-explanatory and tool-independent',
+    description='Stores NumPy arrays in a way that is self-documented '\
+                'and tool-independent.',
     long_description=long_description,
     long_description_content_type="text/x-rst",
     python_requires='>=3.6',
