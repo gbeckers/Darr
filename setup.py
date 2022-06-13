@@ -80,7 +80,7 @@ See the `documentation <http://darr.readthedocs.io/>`__ for more information.
    :target: https://github.com/gbeckers/Darr/actions/workflows/python_package.yml
 .. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
    :target: https://ci.appveyor.com/project/gbeckers/darr
-.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.5.1-orange.svg
+.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.5.2-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Conda Forge| image:: https://anaconda.org/conda-forge/darr/badges/version.svg
    :target: https://anaconda.org/conda-forge/darr
@@ -116,7 +116,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/x-rst",
     python_requires='>=3.6',
-    install_requires=['numpy'],
+    install_requires=['numpy', 'packaging'],
     data_files = [("", ["LICENSE"])],
     classifiers=[
         "Programming Language :: Python :: 3",
