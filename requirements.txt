@@ -1,2 +1,2 @@
 numpy==1.23.0
-packaging
+packaging==21.3
