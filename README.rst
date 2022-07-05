@@ -4,6 +4,10 @@ Darr
 |Github CI Status| |Appveyor Status| |PyPi version| |Conda Forge|
 |Codecov Badge| |Docs Status| |Zenodo Badge| |PyUp Badge|
 
+*Warning*: **experimental branch to develop VarDimArrays, which can be seen
+as a sequence of arrays that may be variable in shape and number of
+dimensions**
+
 Darr is a Python library that stores NumPy arrays on disk in a way that is
 simple and self-documented, which makes them easily accessible from a wide
 range of computing environments. Arrays are automatically kept up-to-date
