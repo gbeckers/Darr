@@ -215,12 +215,14 @@ class RaggedArray:
         self._datadir._write_jsondict(filename=self._arraydescrfilename,
                                       d=self._arrayinfo, overwrite=True)
 
+    # TODO this can be made more efficient by using _append on self._values
+    #  and self._indices and returning length increases
+
     def _append(self, array):
         size = len(array)
         endindex = self._values.shape[0]
         self._values.append(np.asarray(array, dtype=self.dtype))
         self._indices.append([[endindex, endindex + size]])
-
 
     def append(self, array):
         """Append array-like objects to the ragged array.
