@@ -120,11 +120,8 @@ class VarDimArray:
             raise TypeError("Only integers can be used for indexing " \
                             "RaggedArrays, which '{}' is not".format(item))
         indicesandshape = self._indicesandshapes[item]
-        print(indicesandshape)
         index = slice(*indicesandshape[:2])
-        print(index)
         shape = indicesandshape[2:]
-        print(shape)
         return self._values[index].reshape(shape)
 
     def __len__(self):
