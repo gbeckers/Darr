@@ -1,5 +1,6 @@
 from .array import *
 from .raggedarray import *
+from .vardimarray import *
 from .datadir import DataDir, create_datadir
 from .tests import test
 
