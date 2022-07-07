@@ -8,7 +8,7 @@ from .array import Array, asarray, check_accessmode, create_array, delete_array
 from .raggedarray import RaggedArray, asraggedarray, delete_raggedarray
 from .datadir import DataDir, create_datadir
 from .metadata import MetaData
-from .readcoderaggedarray import readcode, readcodefunc
+from .readcodevardimarray import readcode, readcodefunc
 from .utils import wrap
 
 __all__ = ['VarDimArray', 'asvardimarray', 'create_vardimarray',
@@ -119,7 +119,7 @@ class VarDimArray:
     def __getitem__(self, item):
         if not np.issubdtype(type(item), np.integer):
             raise TypeError("Only integers can be used for indexing " \
-                            "RaggedArrays, which '{}' is not".format(item))
+                            "VarDimArrays, which '{}' is not".format(item))
         indicesandshape = self._indicesandshapes[item]
         index = slice(*indicesandshape[:2])
         shape = indicesandshape[2:]
@@ -135,7 +135,7 @@ class VarDimArray:
     __str__ = __repr__
 
     def _update_readmetxt(self):
-        txt = readcodetxt(self)
+        txt = readmetxt(self)
         self._datadir._write_txt(self._readmefilename, txt, overwrite=True)
 
     def _update_arraydescr(self, **kwargs):
@@ -150,7 +150,6 @@ class VarDimArray:
         self._values.append(array.flatten())
         self._indicesandshapes.append([endindex, endindex + size] \
                                        + list(array.shape))
-
 
     def append(self, array):
         """Append array-like objects to the ragged array.
@@ -267,45 +266,6 @@ class VarDimArray:
         self._update_arraydescr(len=len(self._indicesandshapes),
                                 size=self._values.size)
 
-    def readcode(self, language, abspath=False, basepath=None):
-        """Generate code to read the array in a different language.
-
-        Note that this does not include reading the metadata, which is just
-        based on a text file in JSON format.
-
-        Parameters
-        ----------
-        language: str
-            One of the languages that are supported. Choose from:
-            'matlab', 'numpymemmap', 'R'.
-        abspath: bool
-            Should the paths to the data files be absolute or not? Default:
-            True.
-        basepath: str or pathlib.Path or None
-            Path relative to which the binary array data file should be
-            provided. Default: None.
-
-        Example
-        -------
-        >>> import darr
-        >>> a = darr.asraggedarray('test.darr', [[1],[2,3],[4,5,6],[7,8,9,10]], overwrite=True)
-        >>> print(a.readcode('matlab'))
-        fileid = fopen('indices/arrayvalues.bin');
-        i = fread(fileid, [2, 4], '*int64', 'ieee-le');
-        fclose(fileid);
-        fileid = fopen('values/arrayvalues.bin');
-        v = fread(fileid, 10, '*int32', 'ieee-le');
-        fclose(fileid);
-        % example to read third subarray
-        startindex = i(1,3) + 1;  % matlab starts counting from 1
-        endindex = i(2,3);  % matlab has inclusive end index
-        a = v(startindex:endindex);
-
-        """
-        if language not in readcodefunc.keys():
-            raise ValueError(f'Language "{language}" not supported, choose '
-                             f'from {readcodefunc.keys()}')
-        return readcode(self, language, basepath=basepath, abspath=abspath)
 
     def archive(self, filepath=None, compressiontype='xz', overwrite=False):
         """Archive ragged array data into a single compressed file.
@@ -481,7 +441,17 @@ def create_vardimarray(path, dtype='float64', metadata=None,
     return VarDimArray(vda.path, accessmode=accessmode)
 
 def readmetxt(vda):
-    txt = wrap("NOT IMPLEMENTED YET\n")
+    txt = wrap("This directory hold data for a VarDimArray, which is an "
+               "experimental type of Darr array.") + ' \n\n'
+    txt += wrap("A VarDimArray can be seen as a sequence of subarrays, "
+                "each of which may have a variable number of dimensions that "
+                "can be variable in length. In essence it is a sequence of "
+                "ND-arrays that can have arbitrary shapes.") + ' \n\n'
+    txt += wrap("VarDimArrays are still experimental, so an elaborate "
+                "description is not yet provided. On disk, the array is saved "
+                "as a combination of a Darr Array that holds the values and "
+                "a Darr RaggedArray that holds information on the location "
+                "and shape of each subarray in the values array.")
     return txt
 
 def readcodetxt(vda):
