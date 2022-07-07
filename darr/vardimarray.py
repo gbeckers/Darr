@@ -43,7 +43,7 @@ class VarDimArray:
         arrayinfo['size'] = self._values.size
         arrayinfo['numtype'] = self._values._arrayinfo['numtype']
         arrayinfo['darrversion'] = VarDimArray._formatversion
-        arrayinfo['darrobject'] = 'RaggedArray'
+        arrayinfo['darrobject'] = 'VarDimArray'
         self._arrayinfo = arrayinfo
 
     @property
