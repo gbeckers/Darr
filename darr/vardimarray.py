@@ -4,14 +4,15 @@ from contextlib import contextmanager
 import numpy as np
 from ._version import get_versions
 
-from .array import Array, asarray, check_accessmode, create_array
-from .raggedarray import RaggedArray, asraggedarray
+from .array import Array, asarray, check_accessmode, create_array, delete_array
+from .raggedarray import RaggedArray, asraggedarray, delete_raggedarray
 from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .readcoderaggedarray import readcode, readcodefunc
 from .utils import wrap
 
-__all__ = ['VarDimArray', 'asvardimarray', 'create_vardimarray']
+__all__ = ['VarDimArray', 'asvardimarray', 'create_vardimarray',
+           'delete_vardimarray']
 
 
 class VarDimArray:
@@ -486,3 +487,36 @@ def readmetxt(vda):
 def readcodetxt(vda):
     txt = wrap("NOT IMPLEMENTED YET\n")
     return txt
+
+def delete_vardimarray(vda):
+    """
+    Delete Darr vardim array data from disk.
+
+    Parameters
+    ----------
+    vda: RaggedArray or path to VarDimArray to be deleted.
+
+    """
+    try:
+        if not isinstance(vda, VarDimArray):
+            vda = VarDimArray(vda, accessmode='r+')
+    except:
+        raise TypeError(f"'{vda}' not recognized as a Darr vardim array")
+    if not vda.accessmode == 'r+':
+        raise OSError('Darr ragged array is read-only; set accessmode to '
+                      '"r+" to change')
+    for fn in vda._protectedfiles:
+        path = vda.path.joinpath(fn)
+        if path.exists() and not path.is_dir():
+            path.unlink()
+    delete_array(vda._values)
+    delete_raggedarray(vda._indicesandshapes)
+    try:
+        vda._path.rmdir()
+    except OSError as error:
+        message = f"Error: could not fully delete Darr vardim array " \
+                  f"directory " \
+                  f"'{vda.path}'. It may contain additional files that are " \
+                  f"not part of the darr. If so, these should be removed " \
+                  f"manually."
+        raise OSError(message) from error
