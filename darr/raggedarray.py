@@ -353,11 +353,11 @@ class RaggedArray:
                 vli, ili = self._append(a, fdv, fdi, vlen+vlenincr)
                 vlenincr += vli
                 ilenincr += ili
-            self._values._update_len(lenincrease=vlenincr)
-            self._indices._update_len(lenincrease=ilenincr)
-            self._update_readmetxt()
-            self._update_arraydescr(len=len(self._indices),
-                                    size=self._values.size)
+        self._values._update_len(lenincrease=vlenincr)
+        self._indices._update_len(lenincrease=ilenincr)
+        self._update_arraydescr(len=len(self._indices),
+                                size=self._values.size)
+        self._update_readmetxt()
 
     def readcode(self, language, abspath=False, basepath=None):
         """Generate code to read the array in a different language.
