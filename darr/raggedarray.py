@@ -1,6 +1,6 @@
 from pathlib import Path
 from contextlib import contextmanager
-
+import warnings
 import numpy as np
 from ._version import get_versions
 
@@ -218,11 +218,13 @@ class RaggedArray:
     # TODO this can be made more efficient by using _append on self._values
     #  and self._indices and returning length increases
 
-    def _append(self, array):
+    def _append(self, array, fdv, fdi, vlen):
         size = len(array)
-        endindex = self._values.shape[0]
-        self._values.append(np.asarray(array, dtype=self.dtype))
-        self._indices.append([[endindex, endindex + size]])
+        #endindex = self._values._memmap.shape[0]
+        vlenincr = self._values._append(np.asarray(array, dtype=self.dtype),
+                                        fdv)
+        ilenincr = self._indices._append([[vlen, vlen + size]], fdi)
+        return (vlenincr, ilenincr)
 
     def append(self, array):
         """Append array-like objects to the ragged array.
@@ -245,10 +247,14 @@ class RaggedArray:
             None
 
         """
-        self._append(array)
-        self._update_readmetxt()
-        self._update_arraydescr(len=len(self._indices),
-                                size=self._values.size)
+        with self.open_arrays() as ((iv, vv), (fdv, fdi)):
+            vlen = self._values.shape[0]
+            vlenincr, ilenincr = self._append(array, fdv, fdi, vlen)
+            self._values._update_len(lenincrease=vlenincr)
+            self._indices._update_len(lenincrease=ilenincr)
+            self._update_readmetxt()
+            self._update_arraydescr(len=len(self._indices),
+                                    size=self._values.size)
 
     def copy(self, path, dtype=None, accessmode='r', overwrite=False):
         """Copy darr to a different path, potentially changing its dtype.
@@ -287,9 +293,18 @@ class RaggedArray:
 
     @contextmanager
     def _view(self, accessmode=None):
+        warnings.warn("The use of the `_view` method is deprecated in "
+                      "versions of Darr >= 0.6 Use `open_arrays` instead.",
+                      FutureWarning)
         with self._indices._open_array(accessmode=accessmode) as (iv, _), \
              self._values._open_array(accessmode=accessmode) as (vv, _):
             yield iv, vv
+
+    @contextmanager
+    def open_arrays(self, accessmode=None):
+        with self._indices._open_array(accessmode=accessmode) as (iv, fdi), \
+                self._values._open_array(accessmode=accessmode) as (vv, fdv):
+            yield (iv, vv), (fdv, fdi)
 
     def iter_arrays(self, startindex=0, endindex=None, stepsize=1,
                  accessmode=None):
@@ -309,7 +324,7 @@ class RaggedArray:
 
         if endindex is None:
             endindex = self.narrays
-        with self._view(accessmode=accessmode):
+        with self.open_arrays(accessmode=accessmode):
             for i in range(startindex, endindex, stepsize):
                 yield np.array(self[i], copy=True)
 
@@ -329,14 +344,20 @@ class RaggedArray:
             None
 
         """
-        # TODO refactor such that info in index and values array files are not
-        # updated at each append
-        with self._view():
+
+        with self.open_arrays() as ((iv, vv), (fdv, fdi)):
+            vlenincr = 0
+            ilenincr = 0
+            vlen = self._values.shape[0]
             for a in arrayiterable:
-                self._append(a)
-        self._update_readmetxt()
+                vli, ili = self._append(a, fdv, fdi, vlen+vlenincr)
+                vlenincr += vli
+                ilenincr += ili
+        self._values._update_len(lenincrease=vlenincr)
+        self._indices._update_len(lenincrease=ilenincr)
         self._update_arraydescr(len=len(self._indices),
                                 size=self._values.size)
+        self._update_readmetxt()
 
     def readcode(self, language, abspath=False, basepath=None):
         """Generate code to read the array in a different language.

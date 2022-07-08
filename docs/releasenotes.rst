@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Development version
+-------------------
+- `iterappend` method of RaggedArray more efficient, faster.
+
 Version 0.5.2
 -------------
 - `open` function that returns or Arrays and RaggedArray depending on what

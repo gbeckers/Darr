@@ -112,7 +112,6 @@ class RaggedArrayIndexing(DarrTestCase):
     def test_nonvalidindex(self):
         self.assertRaises(TypeError, self.tempar.__getitem__, 2.0)
 
-
     def test_iterarrays(self):
         ars = [a for a in self.tempar.iter_arrays()]
         self.assertArrayIdentical(ars[0], self.input[0])
