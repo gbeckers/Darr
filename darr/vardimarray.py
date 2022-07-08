@@ -5,7 +5,7 @@ import numpy as np
 from ._version import get_versions
 
 from .array import Array, asarray, check_accessmode, create_array, delete_array
-from .raggedarray import RaggedArray, asraggedarray, delete_raggedarray
+from .raggedarray import RaggedArray, asraggedarray, delete_raggedarray, create_raggedarray
 from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .readcodevardimarray import readcode, readcodefunc
@@ -143,13 +143,43 @@ class VarDimArray:
         self._datadir._write_jsondict(filename=self._arraydescrfilename,
                                       d=self._arrayinfo, overwrite=True)
 
-    def _append(self, array):
+    def _append(self, array, valfd, isaindfdv, isavalfd, vallen,
+                isavallen):
+        """Private method that appends data but does not update attributes
+        and info/readme files.
+
+        Parameters
+        ----------
+        array
+        valfd: file descriptor
+            File with array values.
+        isaindfdv: file descriptor
+            File with indicesandshapes array indices.
+        isavalfd: file descriptor
+            File with indicesandshapes array values.
+        vallen: int
+            The current length of the values array.
+        isavallen: int
+            The current length of the indicesandshapes values arrays
+
+        Returns
+        -------
+
+        """
         array = np.asarray(array, dtype=self.dtype)
-        size = array.size
-        endindex = self._values.shape[0]
-        self._values.append(array.flatten())
-        self._indicesandshapes.append([endindex, endindex + size] \
-                                       + list(array.shape))
+        shape = array.shape
+        # append values to values array
+        vlenincr = self._values._append(array.flatten(),
+                                        valfd)
+        # append index and shape info to indicesandshapes raggedarray
+        print(isavallen, array.size, shape)
+        indshape = [isavallen, isavallen+array.size] + list(shape)
+        print(indshape)
+        isavallenincr, isaindlenincr = \
+            self._indicesandshapes._append(array=indshape, fdv=isavalfd,
+                                           fdi=isaindfdv,
+                                           vlen=isavallen)
+        return (vlenincr, isavallenincr, isaindlenincr)
 
     def append(self, array):
         """Append array-like objects to the ragged array.
@@ -172,10 +202,28 @@ class VarDimArray:
             None
 
         """
-        self._append(array)
-        self._update_readmetxt()
+        with self.open_arrays() as ((isaindmm, isavalmm),
+                                    (isaindfdv, isavalfd),
+                                    (valmm, valfd)):
+            vallen = self._values.shape[0]
+            isavallen = self._indicesandshapes._values.shape[0]
+            (vlenincr, isavallenincr, isaindlenincr) = \
+                self._append(array=array, valfd=valfd, isaindfdv=isaindfdv,
+                             isavalfd=isavalfd, vallen=vallen,
+                             isavallen=isavallen)
+        self._values._update_len(lenincrease=vlenincr)
+        self._values._update_arrayinfo()
+        self._values._update_readmetxt()
+        self._indicesandshapes._values._update_len(lenincrease=isavallenincr)
+        self._indicesandshapes._values._update_arrayinfo()
+        self._indicesandshapes._values._update_readmetxt()
+        self._indicesandshapes._indices._update_len(lenincrease=isaindlenincr)
+        self._indicesandshapes._indices._update_arrayinfo()
+        self._indicesandshapes._indices._update_readmetxt()
         self._update_arraydescr(len=len(self._indicesandshapes),
                                 size=self._values.size)
+        self._update_readmetxt()
+
 
     def copy(self, path, dtype=None, accessmode='r', overwrite=False):
         """Copy vardimarray to a different path, potentially changing its
@@ -219,6 +267,13 @@ class VarDimArray:
                 self._values._open_array(accessmode=accessmode) as (vv, _):
             yield iv, vv
 
+    @contextmanager
+    def open_arrays(self, accessmode=None):
+        with self._indicesandshapes.open_arrays(accessmode=accessmode) as \
+                ((isaindmm, isavalmm), (isavalfd, isaindfdv)), \
+                self._values._open_array(accessmode=accessmode) as (valmm, valfd):
+            yield (isaindmm, isavalmm), (isaindfdv, isavalfd), (valmm, valfd)
+
     def iter_arrays(self, startindex=0, endindex=None, stepsize=1,
                  accessmode=None):
         """Iterate over vardim array yielding subarrays.
@@ -257,14 +312,35 @@ class VarDimArray:
             None
 
         """
-        # TODO refactor such that info in index and values array files are not
-        # updated at each append
-        with self._view():
+        with self.open_arrays() as ((isaindmm, isavalmm),
+                                    (isaindfdv, isavalfd),
+                                    (valmm, valfd)):
+            totvlenincr = 0
+            totisavallenincr = 0
+            totisaindlenincr = 0
+            vallen = self._values.shape[0]
+            isavallen = self._indicesandshapes._values.shape[0]
             for a in arrayiterable:
-                self._append(a)
-        self._update_readmetxt()
+                (vlenincr, isavallenincr, isaindlenincr) = \
+                    self._append(array=a, valfd=valfd,
+                                 isaindfdv=isaindfdv,
+                                 isavalfd=isavalfd, vallen=vallen+totvlenincr,
+                                 isavallen=isavallen+totisavallenincr)
+                totvlenincr += vlenincr
+                totisavallenincr += isavallenincr
+                totisaindlenincr += isaindlenincr
+        self._values._update_len(lenincrease=totvlenincr)
+        self._values._update_arrayinfo()
+        self._values._update_readmetxt()
+        self._indicesandshapes._values._update_len(lenincrease=totisavallenincr)
+        self._indicesandshapes._values._update_arrayinfo()
+        self._indicesandshapes._values._update_readmetxt()
+        self._indicesandshapes._indices._update_len(lenincrease=totisaindlenincr)
+        self._indicesandshapes._indices._update_arrayinfo()
+        self._indicesandshapes._indices._update_readmetxt()
         self._update_arraydescr(len=len(self._indicesandshapes),
                                 size=self._values.size)
+        self._update_readmetxt()
 
 
     def archive(self, filepath=None, compressiontype='xz', overwrite=False):
@@ -359,21 +435,6 @@ def asvardimarray(path, arrayiterable, dtype=None, metadata=None,
                               arrayiterable=firstindicesandshape,
                               dtype=indextype, accessmode='r+',
                               overwrite=overwrite)
-    valueslen = firstarray.size
-    with valuesda._open_array(accessmode='r+') as (_, avfd), \
-         indshapera._view(accessmode='r+'):
-        for array in arrayiterable:
-            array = np.asarray(array)
-            # append subarray values to value darr array
-            lenincreasevalues = valuesda._append(array.flatten(), fd=avfd)
-            # append indicesshape
-            starti, endi = valueslen, valueslen + lenincreasevalues
-            indshape = [starti, endi] + list(array.shape)
-            indshapera.append(indshape)
-            valueslen += lenincreasevalues
-
-    valuesda._update_len(lenincrease=valueslen-firstarray.size)
-    valuesda._update_readmetxt()
     datainfo = {}
     datainfo['len'] = len(indshapera)
     datainfo['size'] = valuesda.size
@@ -389,8 +450,8 @@ def asvardimarray(path, arrayiterable, dtype=None, metadata=None,
     elif metadatapath.exists():  # no metadata but file exists, remove it
         metadatapath.unlink()
     vda = VarDimArray(path=path, accessmode=accessmode)
-    vda._update_readmetxt()
-    return VarDimArray(path=path, accessmode=accessmode)
+    vda.iterappend(arrayiterable)
+    return vda
 
 
 def create_vardimarray(path, dtype='float64', metadata=None,
@@ -435,8 +496,8 @@ def create_vardimarray(path, dtype='float64', metadata=None,
                        overwrite=overwrite)
     # the current ragged array has one element, which is an empty array
     # but we want an empty ragged array => we should get rid of the indices
-    create_array(path=vda._indicesandshapes._indicespath,
-                 shape=(0,2), dtype=np.int64, overwrite=True)
+    create_raggedarray(path=vda._indicesandshapespath,
+                 atom=(), dtype=np.int64, overwrite=True)
     vda._update_arraydescr(len=0, size=0)
     return VarDimArray(vda.path, accessmode=accessmode)
 
