@@ -14,6 +14,8 @@ def open(path, accessmode='r'):
         return Array(path=path, accessmode=accessmode)
     elif arraytype == 'RaggedArray':
         return RaggedArray(path=path, accessmode=accessmode)
+    elif arraytype == 'VarDimArray':
+        return VarDimArray(path=path, accessmode=accessmode)
     else:
         raise ValueError(f"'{arraytype}' not supported in this version of "
                          f"Darr ({__version__}) ")
