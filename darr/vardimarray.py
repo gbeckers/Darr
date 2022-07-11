@@ -172,9 +172,7 @@ class VarDimArray:
         vlenincr = self._values._append(array.flatten(),
                                         valfd)
         # append index and shape info to indicesandshapes raggedarray
-        print(isavallen, array.size, shape)
-        indshape = [isavallen, isavallen+array.size] + list(shape)
-        print(indshape)
+        indshape = [vallen, vallen+array.size] + list(shape)
         isavallenincr, isaindlenincr = \
             self._indicesandshapes._append(array=indshape, fdv=isavalfd,
                                            fdi=isaindfdv,
