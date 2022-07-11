@@ -310,30 +310,30 @@ class VarDimArray:
             None
 
         """
+
         with self.open_arrays() as ((isaindmm, isavalmm),
                                     (isaindfdv, isavalfd),
                                     (valmm, valfd)):
-            totvlenincr = 0
-            totisavallenincr = 0
-            totisaindlenincr = 0
+
             vallen = self._values.shape[0]
             isavallen = self._indicesandshapes._values.shape[0]
+            isaindlen = self._indicesandshapes._indices.shape[0]
             for a in arrayiterable:
                 (vlenincr, isavallenincr, isaindlenincr) = \
                     self._append(array=a, valfd=valfd,
                                  isaindfdv=isaindfdv,
-                                 isavalfd=isavalfd, vallen=vallen+totvlenincr,
-                                 isavallen=isavallen+totisavallenincr)
-                totvlenincr += vlenincr
-                totisavallenincr += isavallenincr
-                totisaindlenincr += isaindlenincr
-        self._values._update_len(lenincrease=totvlenincr)
+                                 isavalfd=isavalfd, vallen=vallen,
+                                 isavallen=isavallen)
+                vallen += vlenincr
+                isavallen += isavallenincr
+                isaindlen += isaindlenincr
+        self._values._update_len(lenincrease=vallen)
         self._values._update_arrayinfo()
         self._values._update_readmetxt()
-        self._indicesandshapes._values._update_len(lenincrease=totisavallenincr)
+        self._indicesandshapes._values._update_len(lenincrease=isavallen)
         self._indicesandshapes._values._update_arrayinfo()
         self._indicesandshapes._values._update_readmetxt()
-        self._indicesandshapes._indices._update_len(lenincrease=totisaindlenincr)
+        self._indicesandshapes._indices._update_len(lenincrease=isaindlen)
         self._indicesandshapes._indices._update_arrayinfo()
         self._indicesandshapes._indices._update_readmetxt()
         self._update_arraydescr(len=len(self._indicesandshapes),
