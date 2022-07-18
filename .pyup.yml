@@ -1,8 +1,0 @@
-update: insecure
-
-requirements:
-  - requirements.txt
-
-schedule: "every week"
-
-search: False
