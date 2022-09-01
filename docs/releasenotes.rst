@@ -1,9 +1,13 @@
 Release notes
 =============
 
-Development version
--------------------
+Version 0.5.4
+--------------
 - `iterappend` method of RaggedArray more efficient, faster.
+
+Version 0.5.2
+-------------
+- fixed packaging dependency.
 
 Version 0.5.2
 -------------

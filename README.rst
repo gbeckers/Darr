@@ -2,7 +2,7 @@ Darr
 ====
 
 |Github CI Status| |Appveyor Status| |PyPi version| |Conda Forge|
-|Codecov Badge| |Docs Status| |Zenodo Badge| |PyUp Badge|
+|Codecov Badge| |Docs Status| |Zenodo Badge|
 
 Darr is a Python library for disk-based Numpy arrays that are self-documented
 to make them easily and universally readable. Universal readability is a
@@ -124,7 +124,7 @@ Beckers
    :target: https://github.com/gbeckers/Darr/actions/workflows/python_package.yml
 .. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
    :target: https://ci.appveyor.com/project/gbeckers/darr
-.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.5.3-orange.svg
+.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.5.4-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Conda Forge| image:: https://anaconda.org/conda-forge/darr/badges/version.svg
    :target: https://anaconda.org/conda-forge/darr
@@ -136,9 +136,6 @@ Beckers
 .. |Codacy Badge| image:: https://api.codacy.com/project/badge/Grade/c0157592ce7a4ecca5f7d8527874ce54
    :alt: Codacy Badge
    :target: https://app.codacy.com/app/gbeckers/Darr?utm_source=github.com&utm_medium=referral&utm_content=gbeckers/Darr&utm_campaign=Badge_Grade_Dashboard
-.. |PyUp Badge| image:: https://pyup.io/repos/github/gbeckers/Darr/shield.svg
-   :target: https://pyup.io/repos/github/gbeckers/Darr/
-   :alt: Updates
 .. |Zenodo Badge| image:: https://zenodo.org/badge/151593293.svg
    :target: https://zenodo.org/badge/latestdoi/151593293
 .. |Codecov Badge| image:: https://codecov.io/gh/gbeckers/Darr/branch/master/graph/badge.svg?token=BBV0WDIUSJ
