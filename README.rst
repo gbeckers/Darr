@@ -5,7 +5,7 @@ Darr
 |Codecov Badge| |Docs Status| |Zenodo Badge|
 
 Darr is a Python science library for working efficiently with potentially very
-large Numpy arrays that persist on disk in an open format and that are
+large Numpy arrays that persist on disk in an open format, and that are
 self-documented to make them universally readible. Universal readability is a
 pillar of good scientific practice, but also generally a good idea for anyone
 who wants to flexibly move between analysis environments, who wants to save
