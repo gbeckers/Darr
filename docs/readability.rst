@@ -62,16 +62,16 @@ Compatibility of ragged arrays in R
 -----------------------------------
 When creating RaggedArrays, default settings are chosen so as to maximize wide
 readability. For example, index arrays that are used under the hood to find
-subarrays have a signed integer type because that is most compatible with other
-languages, even though in Darr/NumPy itself an unsigned integer would be more
-space efficient. There is a prominent exception though: int64 is not
-supported by R. R does support int32, but choosing that for indices in
-Darr RaggedArrays that would limit their size to the extent that it would be
-impractical for some use cases. On the other hand, we'd like compatibility
-with R as much as possible because of its large user base and it being open
-and free. Fortunately, despite that R does not officially support the type, it
-will read int64 correctly if values do not exceed the int32 range. Darr will
-thus generate R code for ragged arrays when they are compatible, which is
-the case if they have have values based on a R-compatible type (int8, int16,
-int32, float32, float64, complex128), and are not larger than 2147483647 in
-size.
+subarrays have a signed integer type (int64) because that is most compatible
+with other languages, even though in Darr/NumPy itself an unsigned integer
+(uint64) would be more space efficient. There is a prominent exception
+though: int64 is not supported by R. R does support int32, but choosing that
+for indices in Darr RaggedArrays would limit their size to the extent that
+it would be impractical for some use cases. On the other hand, we'd like
+compatibility with R as much as possible because of its large user base and
+it being open and free. Fortunately, despite that R does not officially
+support the type, it will read int64 correctly if values do not exceed the
+int32 range. Darr will thus generate R code for ragged arrays when they are
+compatible, which is the case if they have have values based on a
+R-compatible type (int8, int16, int32, float32, float64, complex128), and
+are not larger than 2147483647 in size.
