@@ -62,7 +62,8 @@ Features
 -  Easy and efficient appending of data.
 -  Supports ragged arrays.
 -  Easy use of metadata, stored in a widely readable separate
-   `JSON <https://en.wikipedia.org/wiki/JSON>`__ text file.
+   JSON text file (`see example
+   <https://darr.readthedocs.io/en/latest/tutorialarray.html#metadata>`__).
 -  Many numeric types are supported: (u)int8-(u)int64, float16-float64,
    complex64, complex128.
 -  Integrates easily with the `Dask <https://dask.pydata.org/en/latest/>`__
