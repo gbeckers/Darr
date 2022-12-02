@@ -1,5 +1,5 @@
-Tutorial
-========
+Tutorial Array
+==============
 
 .. _access:
 Accessing an existing array
