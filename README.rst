@@ -59,7 +59,7 @@ Features
 -  Disk-persistent array data is directly accessible through `NumPy
    indexing <https://numpy.org/doc/stable/reference/arrays.indexing.html>`__
    and may be larger than RAM
--  Easy and efficient appending of data.
+-  Easy and efficient appending of data (`see example <https://darr.readthedocs.io/en/latest/tutorialarray.html#appending-data>`__).
 -  Supports ragged arrays.
 -  Easy use of metadata, stored in a widely readable separate
    JSON text file (`see example
