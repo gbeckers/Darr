@@ -73,6 +73,57 @@ def readcodenumpymemmap(numtype, shape, endianness, filepath='arrayvalues.bin',
           f"shape={shape}, order='C')\n"
     return ct
 
+
+endianness_scilab = {'little': 'l',
+                     'big': 'b'}
+
+readfunc_scilab = {'int8': 'mgeti',
+                    'int16': 'mgeti',
+                    'int32': 'mgeti',
+                    'int64': 'mgeti',
+                    'uint8': 'mgeti',
+                    'uint16': 'mgeti',
+                    'uint32': 'mgeti',
+                    'uint64': 'mgeti',
+                    'float16': None,
+                    'float32': 'mget',
+                    'float64': 'mget',
+                    'complex64': '_special_case_',
+                    'complex128': '_special_case_',}
+
+typedescr_scilab = {'int8': 'c',
+                    'int16': 's',
+                    'int32': 'i',
+                    'int64': 'l',
+                    'uint8': 'uc',
+                    'uint16': 'us',
+                    'uint32': 'ui',
+                    'uint64': 'ul',
+                    'float16': None,
+                    'float32': 'f',
+                    'float64': 'd',
+                    'complex64': '_special_case_',
+                    'complex128': '_special_case_',
+                   }
+
+def readcodescilab(numtype, shape, endianness,filepath='arrayvalues.bin',
+                   varname='a'):
+    typedescr = typedescr_scilab[numtype]
+    if typedescr is None:
+        return None
+    binformat = typedescr + endianness_scilab[endianness]
+    shape = list(shape)[::-1]  # darr is always C order, Scilab is F order
+    size = np.product(shape)
+    ndim = len(shape)
+    readfunc = readfunc_scilab[numtype] # either mget or mgeti
+    ct =  f'fileid = mopen("{filepath}", "rb");\n' # open file
+    ct += f'{varname} = {readfunc}({size}, "{binformat}", fileid);\n' # read array
+    if ndim > 1:
+        ct += f'{varname} = matrix({varname}, {shape});\n'
+    ct += f'mclose(fileid);\n'
+    return ct
+
+
 typedescr_matlab = {'int8': 'int8',
                     'int16': 'int16',
                     'int32': 'int32',
@@ -86,7 +137,7 @@ typedescr_matlab = {'int8': 'int8',
                     'float64': 'float64',
                     'complex64': '_special_case_',
                     'complex128': '_special_case_',
-                   }
+                    }
 
 endianness_matlab = {'little': 'ieee-le',
                      'big': 'ieee-be'}
@@ -387,7 +438,6 @@ def readcodepython(numtype, shape, endianness, filepath='arrayvalues.bin',
     return ct
 
 
-
 readcodefunc = {
         'darr': readcodedarr,
         'idl': readcodeidl,
@@ -400,6 +450,7 @@ readcodefunc = {
         'numpymemmap': readcodenumpymemmap,
         'python': readcodepython,
         'R': readcoder,
+        'scilab': readcodescilab,
 }
 
 
@@ -456,5 +507,5 @@ wrap(f'The dimensions stated in the format description above are based on a '
      f'when reading the array in a different language. This means that in '
      'column-major languages, the dimension axes will be *reversed*. Row-major '
      f'languages are: Python and Mathematica. Columns-major languages are: '
-     f'Julia, Matlab/Octave, R, Maple, and IDL/GDL. \n')
+     f'Julia, Scilab, Matlab/Octave, R, Maple, and IDL/GDL. \n')
 
