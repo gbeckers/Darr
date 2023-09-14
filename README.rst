@@ -13,8 +13,9 @@ data for the longer term, or who wants to share data with others without
 spending much time on figuring out how the receiver can read it. As you work
 with you arrays, Darr arrays are automatically kept up to date with a complete
 and human-readable explanation of how the data is stored, as well as
-copy-paste-ready code to read the array in languages such as R, Julia, IDL,
-Matlab, Maple, and Mathematica, or in Python/Numpy without Darr (see `example
+copy-paste-ready code to read the array in languages such as R, Julia,
+Scilab, IDL, Matlab, Maple, and Mathematica, or in Python/Numpy without Darr
+(see `example
 <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_int32_2D.darr>`__).
 More rationale for a tool-independent approach to numeric array storage is
 provided `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
