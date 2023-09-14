@@ -53,7 +53,8 @@ Features
    universal readability.
 -  Automatic self-documention, including copy-paste ready code snippets for
    reading the array in a number of popular data analysis environments, such as
-   Python (without Darr), R, Julia, Octave/Matlab, GDL/IDL, and Mathematica
+   Python (without Darr), R, Julia, Scilab, Octave/Matlab, GDL/IDL, and
+   Mathematica
    (see `example array
    <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_int32_2D.darr>`__).
 -  Disk-persistent array data is directly accessible through `NumPy
