@@ -104,6 +104,34 @@ def readcoder(dra, indicespath, valuespath):
            f"sa = getsubarray({k})\n"
     return f'{rci}{rcv}{rff}{rca}'
 
+
+def readcodescilab(dra, indicespath, valuespath, varname='sa'):
+    rci = readcodearray.readcode(dra._indices, 'scilab',
+                                 varname='i',
+                                 basepath=indicespath)
+    rcv = readcodearray.readcode(dra._values, 'scilab',
+                                 varname='v',
+                                 basepath=valuespath)
+    if (rci is None) or (rcv is None):
+        return None
+    numtype = dra.dtype.name
+    rci = f"/* read indice array, to be used on values array later: */\n{rci}"
+    rcv = f"/* read {numtype} values array: */\n{rcv}"
+    if len(dra) > 2:
+       k, position = 3, 'third'
+    elif len(dra) == 2:
+        k, position = 2, 'second'
+    else:
+        k, position = 1, 'first'
+    dims = len(dra._arrayinfo['atom']) * ':,'
+    rca = f'/* create an anonymous function that returns the k-th subarray */\n' \
+          f'/* from the values array: */\n' \
+          f'deff("sa = getsubarray(k)", "sa = v({dims}i(1,k)+1:i(2,k))")\n' \
+          f'/* example to read {position} (k={k}) subarray: */\n' \
+          f'sa = getsubarray({k});'
+    return f'{rci}{rcv}{rca}\n'
+
+
 def readcodematlab(dra, indicespath, valuespath, varname='sa'):
     rci = readcodearray.readcode(dra._indices, 'matlab',
                                  varname='i',
@@ -258,6 +286,7 @@ readcodefunc = {
         'matlab': readcodematlab,
         'numpymemmap': readcodenumpymemmap,
         'R': readcoder,
+        'scilab': readcodescilab,
 }
 
 def readcode(dra, language, basepath='', abspath=False):
@@ -298,11 +327,11 @@ def readcode(dra, language, basepath='', abspath=False):
 shapeindexexplanationtextraggedarray = shapeexplanationtextarray + '\n\n' +  \
 wrap(f'Further, Python starts counting at 0. So the first subarray in a '
      f'ragged array has index number 0. This is also true for IDL/GDL. '
-     f'However, Julia, Mathematica, Matlab/Octave, R, and Maple start '
+     f'However, Julia, Scilab, Mathematica, Matlab/Octave, R, and Maple start '
      f'counting at 1, so the first subarray has index number 1 in these '
      f'languages. Finally, in Python indexing the end index is '
      f'non-inclusive. E.g., a[0:2] returns a[0] and a[1], but not a[2]. '
      f'However, all other languages for which reading code is provided, Julia, '
-     f'Mathematica, Matlab/Octave, R, Maple, and IDL/GDL have an inclusive '
-     f'end index. The reading code provided takes these differences into '
-     f'account.\n')
+     f'Scilab, Mathematica, Matlab/Octave, R, Maple, and IDL/GDL have an '
+     f'inclusive end index. The reading code provided takes these differences '
+     f'into account.\n')
