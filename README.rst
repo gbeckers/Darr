@@ -4,19 +4,31 @@ Darr
 |Github CI Status| |Appveyor Status| |PyPi version| |Conda Forge|
 |Codecov Badge| |Docs Status| |Zenodo Badge|
 
-Darr is a Python science library for working efficiently with potentially very
-large Numpy arrays that persist on disk in an open format, and that are
-self-documented to make them universally readible. Universal readability is a
-pillar of good scientific practice, but also generally a good idea for anyone
-who wants to flexibly move between analysis environments, who wants to save
-data for the longer term, or who wants to share data with others without
-spending much time on figuring out how the receiver can read it. As you work
-with you arrays, Darr arrays are automatically kept up to date with a complete
-and human-readable explanation of how the data is stored, as well as
-copy-paste-ready code to read the array in languages such as R, Julia,
-Scilab, IDL, Matlab, Maple, and Mathematica, or in Python/Numpy without Darr
+Darr is a Python science library that allows you to work with potentially
+very large, disk-based Numpy arrays that are self-documented, and that can
+be read in many other popular languages for data analysis with minimal
+effort.
+
+Universal readability of data is a pillar of good scientific practice. It is
+also generally a good idea for anyone who wants to flexibly move between
+analysis environments, who wants to save data for the longer term, or who
+wants to share data with others without spending much time on figuring out
+and/or explaining how the receiver can read it. As you work with you darr
+array, its documentation is automatically kept up to date, including a
+complete and human-readable description, as well as code to read the array
+in popular languages such as R, Julia, Scilab, IDL, Matlab, Maple, and
+Mathematica, or in Python/Numpy without Darr
 (see `example
 <https://github.com/gbeckers/Darr/tree/master/examplearrays/arrays/array_int32_2D.darr>`__).
+A quick copy-paste of code from the array documentation is in most cases all
+that is needed to read your data in, e.g. R or Matlab. No need to export
+anything, make notes, or to provide elaborate explanation. No dependence on
+complicated formats or specialized libraries. No looking up things.
+
+In essence, Darr makes it trivially easy to share your numerical arrays with
+others or with yourself when working in different computing environments,
+and makes them future-proof by providing documentation.
+
 More rationale for a tool-independent approach to numeric array storage is
 provided `here <https://darr.readthedocs.io/en/latest/rationale.html>`__.
 
@@ -26,19 +38,10 @@ which makes Darr fully NumPy compatible. This enables efficient out-of-core
 read/write access to potentially very large arrays. In addition to
 automatic documentation, Darr adds other functionality to NumPy's memmap,
 such as easy appending and truncating data, support for ragged arrays,
-the ability to create arrays from iterators, and easy use of metadata.
-
-Flat binary files and (JSON) text files are accompanied by a README text file
+the ability to create arrays from iterators, and easy use of metadata. Flat
+binary files and (JSON) text files are accompanied by a README text file
 that explains how the array and metadata are stored (`see example arrays
 <https://github.com/gbeckers/Darr/tree/master/examplearrays/>`__).
-It is trivially easy to share your arrays with others or with yourself when
-working in different computing environments because they always contains clear
-documentation of the specific data at hand, including code to read it.
-Does your colleague want to try out an interesting algorithm in R or Matlab
-on your arrays?  No need to export anything or to provide elaborate
-explanation. No dependence on complicated formats or specialized libraries.
-No looking up things. A copy-paste of a few lines of code from the
-documentation stored with the data is sufficient.
 
 See this `tutorial <https://darr.readthedocs.io/en/latest/tutorialarray.html>`__
 for a brief introduction, or the
@@ -80,7 +83,7 @@ Installation
 ------------
 
 Darr officially depends on Python 3.9 or higher. Older versions may work
-(probably > 3.6) but are not tested anymore.
+(probably >= 3.6) but are not tested.
 
 Install Darr from PyPI::
 
