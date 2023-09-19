@@ -79,7 +79,8 @@ Con's:
 Installation
 ------------
 
-Darr depends on Python 3.6 or higher and NumPy 1.12 or higher.
+Darr officially depends on Python 3.9 or higher. Older versions may work
+(probably > 3.6) but are not tested anymore.
 
 Install Darr from PyPI::
 
@@ -119,7 +120,7 @@ If Darr is not exactly what you are looking for, have a look at these projects:
 
 
 
-Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2022, Gabriël
+Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2023, Gabriël
 Beckers
 
 .. |Github CI Status| image:: https://github.com/gbeckers/Darr/actions/workflows/python_package.yml/badge.svg

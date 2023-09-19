@@ -79,7 +79,8 @@ Con's:
 
 -  No compression, although compression for archiving purposes is supported.
 
-Darr depends on Python 3.6 or higher and NumPy 1.12 or higher.
+Darr officially depends on Python 3.9 or higher. Older versions may work
+(probably > 3.6) but are not tested anymore.
 
 Install Darr from PyPI::
 
@@ -148,5 +149,5 @@ Indices and tables
    :target: https://codecov.io/gh/gbeckers/Darr
 
 
-Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2022, Gabriël
+Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2023, Gabriël
 Beckers
