@@ -77,8 +77,8 @@ Features
    library for out-of-core computation on very large arrays.
 -  Minimal dependencies, only `NumPy <http://www.numpy.org/>`__.
 
-Con's:
-
+Drawbacks
+---------
 -  No compression, although compression for archiving purposes is supported.
 
 Darr officially depends on Python 3.9 or higher. Older versions may work
