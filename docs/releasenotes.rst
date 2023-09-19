@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Upcoming Version 0.5.5
+----------------------
+- implement read code for Scilab.
+
 Version 0.5.4
 --------------
 - `iterappend` method of RaggedArray more efficient, faster.
