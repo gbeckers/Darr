@@ -4,6 +4,7 @@ build:
   os: "ubuntu-22.04"
   tools:
     python: "3.9"
+    pydata-sphinx-theme: "0.14.1"
 
 python:
   install:
