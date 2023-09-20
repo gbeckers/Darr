@@ -111,6 +111,10 @@ def readcodescilab(numtype, shape, endianness,filepath='arrayvalues.bin',
     typedescr = typedescr_scilab[numtype]
     if typedescr is None:
         return None
+    elif numtype.startswith('complex'):  # cannot be read directly by matlab
+        return readcodescilab_complex(numtype=numtype, shape=shape,
+                                      endianness=endianness, filepath=filepath,
+                                      varname=varname)
     binformat = typedescr + endianness_scilab[endianness]
     shape = list(shape)[::-1]  # darr is always C order, Scilab is F order
     size = np.product(shape)
@@ -121,6 +125,30 @@ def readcodescilab(numtype, shape, endianness,filepath='arrayvalues.bin',
     if ndim > 1:
         ct += f'{varname} = matrix({varname}, {shape});\n'
     ct += f'mclose(fileid);\n'
+    return ct
+
+def readcodescilab_complex(numtype, shape, endianness,
+                           filepath='arrayvalues.bin',
+                           varname='a'):
+
+    """Save as a float array with real and imaginary pairs on a created
+    length-2 last axis"""
+
+    if numtype=='complex128':
+        numtype = 'float64'
+    elif numtype == 'complex64':
+        numtype = 'float32'
+    else:
+        raise ValueError(f"numtype '{numtype}' not a complex64 or complex128")
+    ndim = len(shape)
+    # readcode for normal floats with last axis twice the size
+    newshape = list(shape) + [2]
+    ct =  readcodescilab(numtype=numtype, shape=newshape,
+                         endianness=endianness,
+                         filepath=filepath, varname=varname)
+    dimstr = ",:" * ndim
+    ct += f'{varname} = complex(squeeze({varname}(1{dimstr})),squeeze' \
+          f'({varname}(2{dimstr})));'
     return ct
 
 
