@@ -120,13 +120,13 @@ major memory layout. To keep things efficient, the code examples above do not
 change the memory layout when reading the array in a different language. This
 means that in column-major languages, the dimension axes will be *reversed*.
 Row-major languages are: Python and Mathematica. Columns-major languages are:
-Julia, Matlab/Octave, R, Maple, and IDL/GDL.
+Julia, Scilab, Matlab/Octave, R, Maple, and IDL/GDL.
 
 Further, Python starts counting at 0. So the first subarray in a ragged array
-has index number 0. This is also true for IDL/GDL. However, Julia,
+has index number 0. This is also true for IDL/GDL. However, Julia, Scilab,
 Mathematica, Matlab/Octave, R, and Maple start counting at 1, so the first
 subarray has index number 1 in these languages. Finally, in Python indexing
 the end index is non-inclusive. E.g., a[0:2] returns a[0] and a[1], but not
 a[2]. However, all other languages for which reading code is provided, Julia,
-Mathematica, Matlab/Octave, R, Maple, and IDL/GDL have an inclusive end index.
-The reading code provided takes these differences into account.
+Scilab, Mathematica, Matlab/Octave, R, Maple, and IDL/GDL have an inclusive
+end index. The reading code provided takes these differences into account.

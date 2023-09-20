@@ -148,7 +148,7 @@ def readcodescilab_complex(numtype, shape, endianness,
                          filepath=filepath, varname=varname)
     dimstr = ",:" * ndim
     ct += f'{varname} = complex(squeeze({varname}(1{dimstr})),squeeze' \
-          f'({varname}(2{dimstr})));'
+          f'({varname}(2{dimstr})));\n'
     return ct
 
 

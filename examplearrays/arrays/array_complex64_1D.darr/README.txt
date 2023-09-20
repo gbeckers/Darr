@@ -51,6 +51,14 @@ Python with Numpy (memmap):
 import numpy as np
 a = np.memmap('arrayvalues.bin', dtype='<c8', shape=(7,), order='C')
 
+Scilab:
+-------
+fileid = mopen("arrayvalues.bin", "rb");
+a = mget(14, "fl", fileid);
+a = matrix(a, [2, 7]);
+mclose(fileid);
+a = complex(squeeze(a(1,:)),squeeze(a(2,:)));
+
 Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');

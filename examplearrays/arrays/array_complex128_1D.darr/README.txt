@@ -57,6 +57,14 @@ fileid <- file("arrayvalues.bin", "rb")
 a <- readBin(con=fileid, what=complex(), n=7, size=16, signed=TRUE, endian="little")
 close(fileid)
 
+Scilab:
+-------
+fileid = mopen("arrayvalues.bin", "rb");
+a = mget(14, "dl", fileid);
+a = matrix(a, [2, 7]);
+mclose(fileid);
+a = complex(squeeze(a(1,:)),squeeze(a(2,:)));
+
 Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');

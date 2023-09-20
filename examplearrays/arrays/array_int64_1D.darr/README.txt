@@ -46,6 +46,12 @@ Python with Numpy (memmap):
 import numpy as np
 a = np.memmap('arrayvalues.bin', dtype='<i8', shape=(9,), order='C')
 
+Scilab:
+-------
+fileid = mopen("arrayvalues.bin", "rb");
+a = mgeti(9, "ll", fileid);
+mclose(fileid);
+
 Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');

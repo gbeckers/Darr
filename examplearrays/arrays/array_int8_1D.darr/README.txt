@@ -52,6 +52,12 @@ fileid <- file("arrayvalues.bin", "rb")
 a <- readBin(con=fileid, what=integer(), n=9, size=1, signed=TRUE, endian="little")
 close(fileid)
 
+Scilab:
+-------
+fileid = mopen("arrayvalues.bin", "rb");
+a = mgeti(9, "cl", fileid);
+mclose(fileid);
+
 Matlab/Octave:
 --------------
 fileid = fopen('arrayvalues.bin');
