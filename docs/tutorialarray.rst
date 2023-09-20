@@ -138,8 +138,8 @@ See :doc:`Reading data in other environments <readcode>` for more information on
 the languages that Darr can generate read code snippets for.
 
 Note that this way Darr arrays are widely and easily readable without Darr or
-Python, but the easiest for manipulation the data and metadata, it is of
-course easier to use Darr if that is available.
+Python, but the easiest for manipulation the data and metadata is of
+course to use Darr if that is available.
 
 .. _fromnumpy:
 
@@ -147,7 +147,10 @@ course easier to use Darr if that is available.
 Creating an array from an iterable
 ----------------------------------
 Sometimes you have something that produces values in chunks. Say output from
-a filter over a long signal. The 'asarray' method reads iterables:
+a filter over a long signal. Or, in a measurement situation, some recording
+instrument that yields values.
+
+The 'asarray' method reads iterables:
 
 .. code:: python
 
