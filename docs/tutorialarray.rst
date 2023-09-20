@@ -370,7 +370,8 @@ To see which languages are supported, use the 'readcodelanguages' property:
      'mathematica',
      'matlab',
      'numpy',
-     'numpymemmap')
+     'numpymemmap',
+     'scilab')
 
 Ragged Arrays
 -------------

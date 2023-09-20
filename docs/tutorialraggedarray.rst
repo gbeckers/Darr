@@ -138,7 +138,15 @@ To see which languages are supported:
 .. code:: python
 
 >>> ra2.readcodelanguages
-    ('R', 'darr', 'idl', 'julia', 'maple', 'mathematica', 'matlab', 'numpymemmap')
+    ('R',
+     'darr',
+     'idl',
+     'julia',
+     'maple',
+     'mathematica',
+     'matlab',
+     'numpymemmap',
+     'scilab')
 
 
 
