@@ -231,10 +231,11 @@ def readcodematlab_complex(numtype, shape, endianness,
     ct += "fclose(fileid);\n"
     return ct + f"{varname} = complex(re, im);\n"
 
-def readcodematlab_float16(shape, endianness,
-                           filepath='arrayvalues.bin',
-                           varname='a'):
-    ct = f"fileid = fopen('{filepath}');\n"
+## Don't think we use next anymore
+# def readcodematlab_float16(shape, endianness,
+#                            filepath='arrayvalues.bin',
+#                            varname='a'):
+#     ct = f"fileid = fopen('{filepath}');\n"
 
 
 # R does not support int64 but will read it OK for values that are valid for
