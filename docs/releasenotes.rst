@@ -1,8 +1,8 @@
 Release notes
 =============
 
-Upcoming Version 0.5.5
-----------------------
+Version 0.5.5
+-------------
 - implement read code for Scilab.
 - pydata sphinx theme doc.
 
