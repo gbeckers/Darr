@@ -80,7 +80,7 @@ Drawbacks
 ---------
 - No compression, although compression for archiving purposes is supported.
 - Array storages uses multiple files as binary data is separated from text
-documentation and metadata.
+  documentation and metadata.
 
 Installation
 ------------

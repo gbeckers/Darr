@@ -85,7 +85,7 @@ Drawbacks
 ---------
 - No compression, although compression for archiving purposes is supported.
 - Array storages uses multiple files as binary data is separated from text
-documentation and metadata.
+  documentation and metadata.
 
 Darr officially depends on Python 3.9 or higher. Older versions may work
 (probably >= 3.6) but are not tested anymore.
