@@ -26,10 +26,10 @@ conclusions can be drawn:
 
 - Float16 is not widely supported, but it is supported by two modern,
   open source computing packages: Julia and Python with Numpy. It is best
-  avoided. Use float32, unless there are disk space concerns. Matlab can read
-  float16 indirectly, using a temporary array and type casting, which can be
-  problematic when arrays are very large and RAM is limited. Octave does not
-  support it (yet).
+  avoided from a compatibility perspective. Use float32, unless there are disk
+  space concerns. Matlab can read float16 indirectly, using a temporary array
+  and type casting, which can be problematic when arrays are very large and
+  RAM is limited. Octave does not support it (yet).
 
 - If compatibility with R is important to you, have a good look at the table
   in :doc:`Reading data in other environments <readcode>`. Despite all its
