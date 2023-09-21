@@ -37,7 +37,7 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.napoleon']
 
 
-issues_github_path = "gbeckers/Darr"
+issues_github_path = "https://github.com/gbeckers/Darr"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -98,7 +98,6 @@ html_theme = "pydata_sphinx_theme"
 #
 html_theme_options = {
     "use_edit_page_button": True,
-    "github_url": "https:/github.com/gbeckers/Darr",
     "collapse_navigation": True,
 }
 
