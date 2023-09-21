@@ -10,12 +10,12 @@ long_description = \
 """|Github CI Status| |Appveyor Status| |PyPi version| |Conda Forge|
 |Codecov Badge| |Docs Status| |Zenodo Badge|
 
-Darr is a Python science library that allows you to work efficiently with 
-potentially very large, disk-based Numpy arrays that are self-documented. 
-Documentation includes copy-paste ready code to read arrays in many popular 
-data science languages such as R, Julia, Scilab, IDL, Matlab, Maple, and 
-Mathematica, or in Python/Numpy without Darr. Without exporting 
-them and with minimal effort.
+Darr is a Python science library that allows you to work efficiently with
+potentially very large, disk-based Numpy arrays that are widely readable and
+self-documented. Documentation includes copy-paste ready code to read arrays
+in many popular data science languages such as R, Julia, Scilab, IDL, 
+Matlab, Maple, and Mathematica, or in Python/Numpy without Darr. Without 
+exporting them and with minimal effort.
 
 Universal readability of data is a pillar of good scientific practice. It is
 also generally a good idea for anyone who wants to flexibly move between
