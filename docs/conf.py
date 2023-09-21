@@ -97,8 +97,17 @@ html_theme = "pydata_sphinx_theme"
 # documentation.
 #
 html_theme_options = {
+    "use_edit_page_button": True,
     "github_url": "https:/github.com/gbeckers/Darr",
     "collapse_navigation": True,
+}
+
+html_context = {
+    "display_github": True,
+    "github_user": "gbeckers",
+    "github_repo": "Darr",
+    "github_version": "master",
+    "doc_path": "docs"
 }
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
