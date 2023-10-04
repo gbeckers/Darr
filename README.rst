@@ -44,7 +44,7 @@ the ability to create arrays from iterators, and easy use of metadata. When
 you change the size of your array, its documentation is automatically
 kept up to date. Flat binary files and (JSON) text files are accompanied by
 a README text file that explains how the array and metadata are stored (`see
- example arrays <https://github.com/gbeckers/Darr/tree/master/examplearrays/>`__).
+example arrays <https://github.com/gbeckers/Darr/tree/master/examplearrays/>`__).
 
 See this `tutorial <https://darr.readthedocs.io/en/latest/tutorialarray.html>`__
 for a brief introduction, or the
