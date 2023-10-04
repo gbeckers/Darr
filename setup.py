@@ -84,11 +84,17 @@ Features
    library for out-of-core computation on very large arrays.
 -  Minimal dependencies, only `NumPy <http://www.numpy.org/>`__.
 
-Drawbacks
----------
+Limitations
+-----------
+- No `structured (record) arrays <https://numpy.org/doc/stable/user/basics.rec.html>`__
+  supported yet, just
+  `ndarrays <https://numpy.org/doc/stable/reference/arrays.ndarray.html>`__
+- No string data, just numeric.
 - No compression, although compression for archiving purposes is supported.
-- Array storages uses multiple files as binary data is separated from text 
-  documentation and metadata.
+- Uses multiple files per array, as binary data is separated from text
+  documentation and metadata. This can be a disadvantage in terms of storage
+  space if you have very many very small arrays.
+
 
 See the `documentation <http://darr.readthedocs.io/>`__ for more information.
 
