@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Version 0.6.0
+-------------
+- make compatible with numpy 2
+
 Version 0.5.5
 -------------
 - implement read code for Scilab.

@@ -131,14 +131,14 @@ If Darr is not exactly what you are looking for, have a look at these projects:
 
 
 
-Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2023, Gabriël
+Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2024, Gabriël
 Beckers
 
 .. |Github CI Status| image:: https://github.com/gbeckers/Darr/actions/workflows/python_package.yml/badge.svg
    :target: https://github.com/gbeckers/Darr/actions/workflows/python_package.yml
 .. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
    :target: https://ci.appveyor.com/project/gbeckers/darr
-.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.5.5-orange.svg
+.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.6.0-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Conda Forge| image:: https://anaconda.org/conda-forge/darr/badges/version.svg
    :target: https://anaconda.org/conda-forge/darr
