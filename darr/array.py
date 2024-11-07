@@ -458,7 +458,7 @@ class Array:
             raise TypeError("'arrayiterable' is not iterable")
         self.check_arraywriteable()
         arrayiterable = iter(arrayiterable)
-        if np.product(self._shape) == 0:
+        if np.prod(self._shape) == 0:
             # numpy cannot write to a fd of an empty file.
             # Hence we overwrite the file. It is not beautiful but it works.
             array = self._checkarrayforappend(next(arrayiterable))
@@ -1076,7 +1076,7 @@ def create_temparray(shape, dtype='float64', fill=None, fillfunc=None,
     >>> import numpy as np
     >>> with darr.create_temparray(shape=(5,2)) as a:
         a[:] = 3
-        b = np.product(a)
+        b = np.prod(a)
     created temporary directory C://Users/Gabriel/AppData/Local/Temp/tmpc8z0alnh
     removed temporary directory C://Users/Gabriel/AppData/Local/Temp/tmpc8z0alnh
 

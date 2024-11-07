@@ -117,7 +117,7 @@ def readcodescilab(numtype, shape, endianness,filepath='arrayvalues.bin',
                                       varname=varname)
     binformat = typedescr + endianness_scilab[endianness]
     shape = list(shape)[::-1]  # darr is always C order, Scilab is F order
-    size = np.product(shape)
+    size = np.prod(shape)
     ndim = len(shape)
     readfunc = readfunc_scilab[numtype] # either mget or mgeti
     ct =  f'fileid = mopen("{filepath}", "rb");\n' # open file
@@ -181,7 +181,7 @@ def readcodematlab(numtype, shape, endianness,filepath='arrayvalues.bin',
                                       varname=varname)
     endianness = endianness_matlab[endianness]
     shape = list(shape)[::-1]  # darr is always C order, Matlab is F order
-    size = np.product(shape)
+    size = np.prod(shape)
     ndim = len(shape)
     ct = f"fileid = fopen('{filepath}');\n"
     if ndim == 1:
@@ -210,7 +210,7 @@ def readcodematlab_complex(numtype, shape, endianness,
         raise ValueError(f"numtype '{numtype}' not a complex64 or complex128")
     endianness = endianness_matlab[endianness]
     shape = list(shape)[::-1]  # darr is always C order, Matlab is F order
-    size = np.product(shape)
+    size = np.prod(shape)
     ndim = len(shape)
     ct = f"fileid = fopen('{filepath}');\n"
     for subvarname, offset in zip(('re', 'im'),(0, skip)):
@@ -268,7 +268,7 @@ def readcoder(numtype, shape, endianness, filepath='arrayvalues.bin',
     endianness = endianness_r[endianness]
     what, size, signed = typedescr
     shape = shape[::-1]  # darr is always C order, R is F order
-    n = np.product(shape)
+    n = np.prod(shape)
     ct = f'fileid <- file("{filepath}", "rb")\n' \
          f'{varname} <- readBin(con=fileid, what={what}, n={n}, size={size}, ' \
          f'signed={signed}, endian="{endianness}")\n'
