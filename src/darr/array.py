@@ -905,7 +905,7 @@ def asarray(path, array, dtype=None, accessmode='r',
     datapath = path.joinpath(Array._datafilename)
     arraylen = firstchunk.shape[0]
 
-    if waituntilfileisfree():
+    if waituntilfileisfree(datapath):
         with open(datapath, 'wb') as df:
             firstchunk.tofile(df)
             for chunk in chunkiter:
