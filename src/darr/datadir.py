@@ -5,7 +5,7 @@ import numpy as np
 from pathlib import Path
 from contextlib import contextmanager
 
-from .utils import filesha256, write_jsonfile
+from .utils import filesha256, write_jsonfile, waituntilfileisfree
 
 class DataDir(object):
     """A directory for managing data. Has methods for reading
@@ -121,8 +121,11 @@ class DataDir(object):
 
     def read_txt(self, filename):
         path = self._path.joinpath(filename)
-        with open(path, 'r') as fp:
-            return fp.read()
+        if waituntilfileisfree(path):
+            with open(path, 'r') as fp:
+                return fp.read()
+        else:
+            raise PermissionError(f'File "{path}" is locked')
 
     def sha256checksums(self):
         checksums = {}
@@ -164,10 +167,13 @@ class DataDir(object):
         """
         self._check_writeprotected(filename=filename, accessmode=accessmode)
         filepath = self.path / filename
-        with open(file=filepath, mode=accessmode, buffering=buffering,
-                  encoding=encoding, errors=errors, newline=newline,
-                  closefd=closefd) as f:
-            yield f
+        if waituntilfileisfree(filepath):
+            with open(file=filepath, mode=accessmode, buffering=buffering,
+                      encoding=encoding, errors=errors, newline=newline,
+                      closefd=closefd) as f:
+                yield f
+        else:
+            raise PermissionError(f'File "{filepath}" is locked')
 
     def archive(self, filepath=None, compressiontype='xz', overwrite=False):
         """Archive disk-based data into a single compressed file.

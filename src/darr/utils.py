@@ -68,8 +68,11 @@ def write_jsonfile(path, data, sort_keys=True, indent=4, ensure_ascii=True,
         raise TypeError(s)
     else:
         # utf-8 is ascii compatible
-        with open(path, 'w', encoding='utf-8') as fp:
-            fp.write(json_string)
+        if waituntilfileisfree(path):
+            with open(path, 'w', encoding='utf-8') as fp:
+                fp.write(json_string)
+        else:
+            raise PermissionError(f"Unable to write to '{path}'")
 
 
 def fit_frames(totallen, chunklen, steplen=None):
@@ -112,12 +115,15 @@ def fit_frames(totallen, chunklen, steplen=None):
 def filesha256(filepath, blocksize=2 ** 20):
     """Compute the checksum of a file."""
     m = hashlib.sha256()
-    with open(filepath, 'rb') as f:
-        while True:
-            buf = f.read(blocksize)
-            if not buf:
-                break
-            m.update(buf)
+    if waituntilfileisfree(filepath):
+        with open(filepath, 'rb') as f:
+            while True:
+                buf = f.read(blocksize)
+                if not buf:
+                    break
+                m.update(buf)
+    else:
+        raise PermissionError(f"Unable to read from '{filepath}'")   
     return m.hexdigest()
 
 def wrap(s):

@@ -904,13 +904,19 @@ def asarray(path, array, dtype=None, accessmode='r',
     bd = create_datadir(path=path, overwrite=overwrite)
     datapath = path.joinpath(Array._datafilename)
     arraylen = firstchunk.shape[0]
-    with open(datapath, 'wb') as df:
-        firstchunk.tofile(df)
-        for chunk in chunkiter:
-            if chunk.ndim == 0:
-                chunk = np.array(chunk, ndmin=1, dtype=dtype)
-            chunk.astype(dtype).tofile(df)  # is always C order
-            arraylen += chunk.shape[0]
+
+    if waituntilfileisfree():
+        with open(datapath, 'wb') as df:
+            firstchunk.tofile(df)
+            for chunk in chunkiter:
+                if chunk.ndim == 0:
+                    chunk = np.array(chunk, ndmin=1, dtype=dtype)
+                chunk.astype(dtype).tofile(df)  # is always C order
+                arraylen += chunk.shape[0]
+    else:
+        raise PermissionError(f"Cannot write to '{datapath}'. "
+                              f"Please make sure that the file is not "
+                              f"open in another process.")
     shape = list(firstchunk.shape)
     shape[0] = arraylen
     datainfo = arraynumtypeinfo(firstchunk)
