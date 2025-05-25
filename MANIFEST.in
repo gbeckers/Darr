@@ -1,3 +1,0 @@
-include versioneer.py
-include diskarray/_version.py
-include darr/_version.py

@@ -23,6 +23,12 @@ follows:
 .. code:: python
 
     >>> import darr
+        >>> a = src.open('data.darr')
+        >>> a
+        darr array([[1., 2., 3., ..., 97., 98., 99.],
+                    [0., 0., 0., ..., 0., 0., 0.]]) (r)
+
+    Note that in creating the variable '*a*' above, the array data is
     >>> a = darr.open('data.darr')
     >>> a
     darr array([[1., 2., 3., ..., 97., 98., 99.],
@@ -76,6 +82,13 @@ array first is not possible. The example here uses a small array:
 .. code:: python
 
     >>> import darr
+        >>> b = src.create_array('b.darr', shape=(2,1024))
+        >>> b
+        darr array([[0., 0., 0., ..., 0., 0., 0.],
+                    [0., 0., 0., ..., 0., 0., 0.]]) (r+)
+
+    The default is to fill the array with zeros (of type float64) but this
+    can be changed by the 'fill' and 'fillfunc' parameters. See the api.
     >>> b = darr.create_array('b.darr', shape=(2,1024))
     >>> b
     darr array([[0., 0., 0., ..., 0., 0., 0.],
