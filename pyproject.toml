@@ -37,4 +37,8 @@ Homepage = "https://github.com/gbeckers/Darr"
 Repository = "https://github.com/gbeckers/Darr.git"
 Documentation = "https://darr.readthedocs.io/en/latest/"
 
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
 

@@ -5,12 +5,12 @@ import shutil
 
 import numpy as np
 
-from ..src import asarray, create_array, create_datadir, Array, \
-    truncate_array, delete_array, open
-from ..src.array import numtypedescriptiontxt, AppendDataError
-from ..src.numtype import numtypesdescr
+from src.darr import open
+from src.darr.array import asarray, create_array, create_datadir, Array, \
+    truncate_array, delete_array, numtypedescriptiontxt, AppendDataError
+from src.darr.numtype import numtypesdescr
 
-from ..src.utils import tempdir, tempdirfile
+from src.darr.utils import tempdir, tempdirfile
 
 
 # TODO clean up overwrite parameters, not necessary anymore

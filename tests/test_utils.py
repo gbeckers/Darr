@@ -3,8 +3,8 @@ import json
 import numpy as np
 import shutil
 from pathlib import Path
-from darr.utils import fit_frames, write_jsonfile, product
-from darr.utils import tempdir, tempdirfile
+from src.darr.utils import fit_frames, write_jsonfile, product
+from src.darr.utils import tempdir, tempdirfile
 
 
 class Product(unittest.TestCase):

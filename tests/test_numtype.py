@@ -1,5 +1,5 @@
 import unittest
-from darr.numtype import arrayinfotodtype
+from src.darr.numtype import arrayinfotodtype
 
 corrinfo = {'arrayorder': 'C',
             'byteorder': 'little',
