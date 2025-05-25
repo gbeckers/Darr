@@ -24,7 +24,8 @@ from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode, readcodefunc, shapeexplanationtextarray
-from .utils import fit_frames, wrap, check_accessmode, product, tempdirfile
+from .utils import (fit_frames, wrap, check_accessmode, product, tempdirfile,
+                    waituntilfileisfree)
 from ._version import get_versions
 
 
@@ -210,24 +211,28 @@ class Array:
                 # we must do it like this instead of providing a filename
                 # to np.mmemap, otherwise accessing temporary dirs on 
                 # windows will fail
-                with open(file=self._datapath, mode=filemode) as fd:
-                    self._valuesfd = fd
-                    d = self._arrayinfo
-                    dtypedescr = arrayinfotodtype(d)
-                    if product(d['shape']) == 0:  # empty file/array
-                        self._memmap = np.zeros(d['shape'], dtype=dtypedescr,
-                                                order=d['arrayorder'])
-                    else:
-                        self._memmap = np.memmap(filename=fd,
-                                                 mode=memmapmode,
-                                                 shape=d['shape'],
-                                                 dtype=dtypedescr,
-                                                 order=d['arrayorder'])
-                    yield self._memmap, self._valuesfd
+                if waituntilfileisfree(self._datapath):
+                    with open(file=self._datapath, mode=filemode) as fd:
+                        self._valuesfd = fd
+                        d = self._arrayinfo
+                        dtypedescr = arrayinfotodtype(d)
+                        if product(d['shape']) == 0:  # empty file/array
+                            self._memmap = np.zeros(d['shape'], dtype=dtypedescr,
+                                                    order=d['arrayorder'])
+                        else:
+                            self._memmap = np.memmap(filename=fd,
+                                                     mode=memmapmode,
+                                                     shape=d['shape'],
+                                                     dtype=dtypedescr,
+                                                     order=d['arrayorder'])
+                        yield self._memmap, self._valuesfd
+                else:
+                    raise
             except Exception:
                 raise
             finally:
                 if hasattr(self._memmap, '_mmap'):
+                    self._memmap.flush() # not sure if needed
                     self._memmap._mmap.close() # *may need this for Windows*
                 self._valuesfd.close()
                 self._memmap = None
