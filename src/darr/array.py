@@ -26,7 +26,6 @@ from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode, readcodefunc, shapeexplanationtextarray
 from .utils import (fit_frames, wrap, check_accessmode, product, tempdirfile,
                     waituntilfileisfree)
-from ._version import get_versions
 
 
 # Design considerations
@@ -69,7 +68,7 @@ class Array:
     _protectedfiles = {_arraydescrfilename, _datafilename,
                        _readmefilename,
                        _metadatafilename}
-    _formatversion = get_versions()['version']
+    _formatversion = '0.6.1'
 
     def __init__(self, path, accessmode='r'):
         self._datadir = DataDir(path=path,

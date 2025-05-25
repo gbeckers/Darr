@@ -2,7 +2,6 @@ from pathlib import Path
 from contextlib import contextmanager
 import warnings
 import numpy as np
-from ._version import get_versions
 
 from .array import Array, asarray, check_accessmode, delete_array, \
     create_array, truncate_array
@@ -90,7 +89,7 @@ class RaggedArray:
     _protectedfiles = {_valuesdirname, _indicesdirname,
                        _readmefilename, _metadatafilename,
                        _arraydescrfilename}
-    _formatversion = get_versions()['version']
+    _formatversion = _formatversion = '0.6.1'
 
     def __init__(self, path, accessmode='r'):
 
