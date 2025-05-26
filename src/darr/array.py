@@ -67,7 +67,7 @@ class Array:
     _protectedfiles = {_arraydescrfilename, _datafilename,
                        _readmefilename,
                        _metadatafilename}
-    _formatversion = '0.6.2'
+    _formatversion = '0.6.3'
 
     def __init__(self, path, accessmode='r'):
         self._datadir = DataDir(path=path,

@@ -89,7 +89,7 @@ class RaggedArray:
     _protectedfiles = {_valuesdirname, _indicesdirname,
                        _readmefilename, _metadatafilename,
                        _arraydescrfilename}
-    _formatversion = _formatversion = '0.6.2'
+    _formatversion = _formatversion = '0.6.3'
 
     def __init__(self, path, accessmode='r'):
 

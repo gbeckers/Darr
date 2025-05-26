@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name='darr'
-version='0.6.2'
+version='0.6.3'
 requires-python = ">=3.9"
 authors = [
   {name = "Gabriel Beckers", email = "g.j.l.beckers@uu.nl"},

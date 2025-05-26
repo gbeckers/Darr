@@ -1,7 +1,7 @@
 Release notes
 =============
 
-Version 0.6.2
+Version 0.6.3
 -------------
 - correct packaging mistake in 0.6.1
 
