@@ -214,3 +214,22 @@ def waituntilfileisfree(path, timeout=10, interval=0.5):
             if time.time() - start_time > timeout:
                 return False  # Timeout exceeded
             time.sleep(interval)
+
+
+def compare_versionstrings(v1, v2):
+    """Compare two version strings."""
+    parts1 = [int(p) for p in v1.split('.')]
+    parts2 = [int(p) for p in v2.split('.')]
+
+    # Normalize length by padding with zeros
+    max_len = max(len(parts1), len(parts2))
+    parts1 += [0] * (max_len - len(parts1))
+    parts2 += [0] * (max_len - len(parts2))
+
+    # Compare parts
+    for p1, p2 in zip(parts1, parts2):
+        if p1 < p2:
+            return -1  # v1 < v2
+        elif p1 > p2:
+            return 1  # v1 > v2
+    return 0  # equal

@@ -1,6 +1,6 @@
-from src.darr.array import *
-from src.darr.raggedarray import *
-from src.darr.datadir import DataDir, create_datadir
+from .array import *
+from .raggedarray import *
+from .datadir import DataDir, create_datadir
 
 def open(path, accessmode='r'):
     dd = DataDir(path)

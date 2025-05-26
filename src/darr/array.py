@@ -17,7 +17,6 @@ import warnings
 import numpy as np
 
 from contextlib import contextmanager
-from packaging import version
 from pathlib import Path
 
 from .datadir import DataDir, create_datadir
@@ -25,7 +24,7 @@ from .metadata import MetaData
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode, readcodefunc, shapeexplanationtextarray
 from .utils import (fit_frames, wrap, check_accessmode, product, tempdirfile,
-                    waituntilfileisfree)
+                    waituntilfileisfree, compare_versionstrings)
 
 
 # Design considerations
@@ -303,11 +302,11 @@ class Array:
             m = f". Could not read array description from "\
                 f"'{self._arraydescrpath}. '"
             raise type(e)(str(e) + m).with_traceback(sys.exc_info()[2])
-        vfile = version.Version(d['darrversion'])
-        vlib = version.Version(self._formatversion)
-        # for now, in alpha stage, we do not recommend the use of newer files
+        vfile = d['darrversion']
+        vlib = self._formatversion
+        # for now, in beta stage, we do not recommend the use of newer files
         # with older libraries
-        if not vlib >= vfile:
+        if compare_versionstrings(vlib, vfile) == -1:
             warnings.warn(f"Format version of file ({d['darrversion']}) "
                           f"is newer than your version of Darr "
                           f"{self._formatversion}. At this stage this is not "
