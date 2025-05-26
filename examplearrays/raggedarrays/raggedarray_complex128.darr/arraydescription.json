@@ -3,7 +3,7 @@
         2
     ],
     "darrobject": "RaggedArray",
-    "darrversion": "0.5.5+0.gbf45bc1.dirty",
+    "darrversion": "0.6.0",
     "len": 9,
     "numtype": "complex128",
     "size": 52
