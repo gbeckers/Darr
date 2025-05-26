@@ -6,8 +6,8 @@
 Darr
 ====
 
-|Github CI Status| |Appveyor Status| |PyPi version| |Conda Forge|
-|Codecov Badge| |Docs Status| |Zenodo Badge|
+|Github CI Status| |PyPi version| |Conda Forge| |Codecov Badge| |Docs Status|
+|Zenodo Badge|
 
 Darr is a Python science library that allows you to work efficiently with
 potentially very large, disk-based Numpy arrays that are widely readable and
@@ -142,8 +142,6 @@ Indices and tables
 
 .. |Github CI Status| image:: https://github.com/gbeckers/Darr/actions/workflows/python_package.yml/badge.svg
    :target: https://github.com/gbeckers/Darr/actions/workflows/python_package.yml
-.. |Appveyor Status| image:: https://ci.appveyor.com/api/projects/status/github/gbeckers/darr?svg=true
-   :target: https://ci.appveyor.com/project/gbeckers/darr
 .. |PyPi version| image:: https://img.shields.io/badge/pypi-0.6.0-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Conda Forge| image:: https://anaconda.org/conda-forge/darr/badges/version.svg
@@ -162,5 +160,5 @@ Indices and tables
    :target: https://codecov.io/gh/gbeckers/Darr
 
 
-Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2023, Gabriël
+Darr is BSD licensed (BSD 3-Clause License). (c) 2017-2025, Gabriël
 Beckers
