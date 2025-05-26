@@ -42,3 +42,6 @@ pythonpath = [
   "src"
 ]
 
+[tool.hatch.build]
+exclude = [".venv"]
+
