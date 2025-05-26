@@ -5,11 +5,11 @@ import tempfile
 import darr
 from numpy.testing import assert_equal, assert_array_equal
 from pathlib import Path
-from darr.raggedarray import create_raggedarray, asraggedarray, \
+from src.darr.raggedarray import create_raggedarray, asraggedarray, \
     delete_raggedarray, truncate_raggedarray, RaggedArray, create_datadir
-from darr.readcoderaggedarray import readcode
+from src.darr.readcoderaggedarray import readcode
 
-from darr.utils import tempdirfile
+from src.darr.utils import tempdirfile
 from .test_array import DarrTestCase
 
 class RaggedArrayIndexing(DarrTestCase):

@@ -1,5 +1,5 @@
 [run]
-source = darr
+source = src
 
 [report]
 omit =

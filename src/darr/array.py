@@ -24,8 +24,8 @@ from .datadir import DataDir, create_datadir
 from .metadata import MetaData
 from .numtype import arrayinfotodtype, arraynumtypeinfo, numtypesdescr
 from .readcodearray import readcode, readcodefunc, shapeexplanationtextarray
-from .utils import fit_frames, wrap, check_accessmode, product, tempdirfile
-from ._version import get_versions
+from .utils import (fit_frames, wrap, check_accessmode, product, tempdirfile,
+                    waituntilfileisfree)
 
 
 # Design considerations
@@ -68,7 +68,7 @@ class Array:
     _protectedfiles = {_arraydescrfilename, _datafilename,
                        _readmefilename,
                        _metadatafilename}
-    _formatversion = get_versions()['version']
+    _formatversion = '0.6.1'
 
     def __init__(self, path, accessmode='r'):
         self._datadir = DataDir(path=path,
@@ -210,24 +210,28 @@ class Array:
                 # we must do it like this instead of providing a filename
                 # to np.mmemap, otherwise accessing temporary dirs on 
                 # windows will fail
-                with open(file=self._datapath, mode=filemode) as fd:
-                    self._valuesfd = fd
-                    d = self._arrayinfo
-                    dtypedescr = arrayinfotodtype(d)
-                    if product(d['shape']) == 0:  # empty file/array
-                        self._memmap = np.zeros(d['shape'], dtype=dtypedescr,
-                                                order=d['arrayorder'])
-                    else:
-                        self._memmap = np.memmap(filename=fd,
-                                                 mode=memmapmode,
-                                                 shape=d['shape'],
-                                                 dtype=dtypedescr,
-                                                 order=d['arrayorder'])
-                    yield self._memmap, self._valuesfd
+                if waituntilfileisfree(self._datapath):
+                    with open(file=self._datapath, mode=filemode) as fd:
+                        self._valuesfd = fd
+                        d = self._arrayinfo
+                        dtypedescr = arrayinfotodtype(d)
+                        if product(d['shape']) == 0:  # empty file/array
+                            self._memmap = np.zeros(d['shape'], dtype=dtypedescr,
+                                                    order=d['arrayorder'])
+                        else:
+                            self._memmap = np.memmap(filename=fd,
+                                                     mode=memmapmode,
+                                                     shape=d['shape'],
+                                                     dtype=dtypedescr,
+                                                     order=d['arrayorder'])
+                        yield self._memmap, self._valuesfd
+                else:
+                    raise
             except Exception:
                 raise
             finally:
                 if hasattr(self._memmap, '_mmap'):
+                    self._memmap.flush() # not sure if needed
                     self._memmap._mmap.close() # *may need this for Windows*
                 self._valuesfd.close()
                 self._memmap = None
@@ -899,13 +903,19 @@ def asarray(path, array, dtype=None, accessmode='r',
     bd = create_datadir(path=path, overwrite=overwrite)
     datapath = path.joinpath(Array._datafilename)
     arraylen = firstchunk.shape[0]
-    with open(datapath, 'wb') as df:
-        firstchunk.tofile(df)
-        for chunk in chunkiter:
-            if chunk.ndim == 0:
-                chunk = np.array(chunk, ndmin=1, dtype=dtype)
-            chunk.astype(dtype).tofile(df)  # is always C order
-            arraylen += chunk.shape[0]
+
+    if waituntilfileisfree(datapath):
+        with open(datapath, 'wb') as df:
+            firstchunk.tofile(df)
+            for chunk in chunkiter:
+                if chunk.ndim == 0:
+                    chunk = np.array(chunk, ndmin=1, dtype=dtype)
+                chunk.astype(dtype).tofile(df)  # is always C order
+                arraylen += chunk.shape[0]
+    else:
+        raise PermissionError(f"Cannot write to '{datapath}'. "
+                              f"Please make sure that the file is not "
+                              f"open in another process.")
     shape = list(firstchunk.shape)
     shape[0] = arraylen
     datainfo = arraynumtypeinfo(firstchunk)

@@ -5,11 +5,12 @@ import shutil
 
 import numpy as np
 
-import darr
-from darr.array import asarray, create_array, create_datadir, Array, \
-    numtypesdescr, truncate_array, delete_array, AppendDataError, \
-    numtypedescriptiontxt
-from darr.utils import tempdir, tempdirfile
+from src.darr import open
+from src.darr.array import asarray, create_array, create_datadir, Array, \
+    truncate_array, delete_array, numtypedescriptiontxt, AppendDataError
+from src.darr.numtype import numtypesdescr
+
+from src.darr.utils import tempdir, tempdirfile
 
 
 # TODO clean up overwrite parameters, not necessary anymore
@@ -287,7 +288,7 @@ class TestArray(DarrTestCase):
         Array(path=self.temparpath)
 
     def test_openfromexistingpath(self):
-        darr.open(path=self.temparpath)
+        open(path=self.temparpath)
 
     def test_instantiatefromnonexistingpath(self):
        with self.assertRaises(OSError):

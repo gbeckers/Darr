@@ -1,6 +1,12 @@
 Release notes
 =============
 
+Version 0.6.1
+-------------
+- test if files are accessible for Windows
+- restructure package structure
+- simplify testing
+
 Version 0.6.0
 -------------
 - make compatible with numpy 2

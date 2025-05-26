@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling >= 1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name='darr'
+version='0.6.1'
+requires-python = ">=3.9"
+authors = [
+  {name = "Gabriel Beckers", email = "g.j.l.beckers@uu.nl"},
+]
+description = 'Stores NumPy arrays in a way that is self-documented and tool-independent.'
+license = "BSD-3-Clause"
+keywords = [ "data-science", "science", "r", "scilab", "matlab", "array",
+    "data-storage", "julia", "mathematica", "numeric", "idl",
+    "interoperability", "octave", "maple", "data-sharing", "ragged-array",
+    "jagged-array"]
+classifiers=[
+        "Programming Language :: Python :: 3",
+        "Operating System :: OS Independent",
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Education',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: Science/Research',
+]
+dependencies = [
+    "numpy"
+]
+
+[project.readme]
+file = "README.rst"
+content-type = "text/x-rst"
+
+[project.urls]
+Homepage = "https://github.com/gbeckers/Darr"
+Repository = "https://github.com/gbeckers/Darr.git"
+Documentation = "https://darr.readthedocs.io/en/latest/"
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
+

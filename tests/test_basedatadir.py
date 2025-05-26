@@ -1,8 +1,8 @@
 # This is for backward compatibility, module should disappear.
 
 import unittest
-from darr.basedatadir import BaseDataDir, create_basedatadir
-from darr.utils import tempdir
+from src.darr.basedatadir import BaseDataDir, create_basedatadir
+from src.darr.utils import tempdir
 
 
 class TestCreateBaseDataDir(unittest.TestCase):

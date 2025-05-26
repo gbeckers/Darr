@@ -1,10 +1,6 @@
-from .array import *
-from .raggedarray import *
-from .datadir import DataDir, create_datadir
-from .tests import test
-
-from . import _version
-__version__ = _version.get_versions()['version']
+from src.darr.array import *
+from src.darr.raggedarray import *
+from src.darr.datadir import DataDir, create_datadir
 
 def open(path, accessmode='r'):
     dd = DataDir(path)
@@ -15,5 +11,4 @@ def open(path, accessmode='r'):
         return RaggedArray(path=path, accessmode=accessmode)
     else:
         raise ValueError(f"'{arraytype}' not supported in this version of "
-                         f"Darr ({__version__}) ")
-
+                         f"Darr")

@@ -2,6 +2,8 @@ import hashlib
 import textwrap
 import json
 import numpy as np
+import time
+import os
 from pathlib import Path
 from functools import reduce
 from operator import mul
@@ -66,8 +68,11 @@ def write_jsonfile(path, data, sort_keys=True, indent=4, ensure_ascii=True,
         raise TypeError(s)
     else:
         # utf-8 is ascii compatible
-        with open(path, 'w', encoding='utf-8') as fp:
-            fp.write(json_string)
+        if waituntilfileisfree(path):
+            with open(path, 'w', encoding='utf-8') as fp:
+                fp.write(json_string)
+        else:
+            raise PermissionError(f"Unable to write to '{path}'")
 
 
 def fit_frames(totallen, chunklen, steplen=None):
@@ -110,12 +115,15 @@ def fit_frames(totallen, chunklen, steplen=None):
 def filesha256(filepath, blocksize=2 ** 20):
     """Compute the checksum of a file."""
     m = hashlib.sha256()
-    with open(filepath, 'rb') as f:
-        while True:
-            buf = f.read(blocksize)
-            if not buf:
-                break
-            m.update(buf)
+    if waituntilfileisfree(filepath):
+        with open(filepath, 'rb') as f:
+            while True:
+                buf = f.read(blocksize)
+                if not buf:
+                    break
+                m.update(buf)
+    else:
+        raise PermissionError(f"Unable to read from '{filepath}'")   
     return m.hexdigest()
 
 def wrap(s):
@@ -168,3 +176,41 @@ def tempdirfile(dirname=None, keep=False, report=False):
             else:
                 verb = 'removed'
             print(f'{verb} temporary directory {tempdirname}')
+
+
+
+
+def waituntilfileisfree(path, timeout=10, interval=0.5):
+    """
+    Waits until a file is free for access or a specified timeout is reached.
+
+    This function repeatedly attempts to open a file in append mode, checking if it is
+    locked or in use by another process. If the file becomes available, the function
+    returns `True`. If the specified timeout duration is exceeded without the file
+    becoming available, the function returns `False`. The check intervals can be
+    configured using the `interval` parameter.
+
+    Parameters
+    ----------
+    path : str
+        The file path to check for availability.
+    timeout : float, optional, default=10
+        The maximum time (in seconds) to wait for the file to become available.
+    interval : float, optional, default=0.5
+        The time (in seconds) to wait between successive attempts to access the file.
+
+    Returns
+    -------
+    bool
+        Returns `True` if the file becomes available for access within the specified
+        timeout duration, otherwise `False`.
+    """
+    start_time = time.time()
+    while True:
+        try:
+            with open(path, 'a'):
+                return True  # File is available
+        except PermissionError:
+            if time.time() - start_time > timeout:
+                return False  # Timeout exceeded
+            time.sleep(interval)
