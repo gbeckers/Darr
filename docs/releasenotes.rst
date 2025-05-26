@@ -1,6 +1,10 @@
 Release notes
 =============
 
+Version 0.6.2
+-------------
+- correct packaging mistake in 0.6.1
+
 Version 0.6.1
 -------------
 - test if files are accessible for Windows

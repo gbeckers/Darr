@@ -142,7 +142,7 @@ Indices and tables
 
 .. |Github CI Status| image:: https://github.com/gbeckers/Darr/actions/workflows/python_package.yml/badge.svg
    :target: https://github.com/gbeckers/Darr/actions/workflows/python_package.yml
-.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.6.0-orange.svg
+.. |PyPi version| image:: https://img.shields.io/badge/pypi-0.6.2-orange.svg
    :target: https://pypi.org/project/darr/
 .. |Conda Forge| image:: https://anaconda.org/conda-forge/darr/badges/version.svg
    :target: https://anaconda.org/conda-forge/darr
