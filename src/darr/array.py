@@ -167,6 +167,23 @@ class Array:
                 languages.append(lang)
         return tuple(sorted(languages))
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
+    def close(self):
+        """Explicitly close file handles and memory maps"""
+        if self._memmap is not None:
+            if hasattr(self._memmap, '_mmap'):
+                self._memmap.flush()  # not sure if needed
+                self._memmap._mmap.close()  # *may need this for Windows*
+            self._memmap = None
+        if self._valuesfd is not None:
+            self._valuesfd.close()
+            self._valuesfd = None
+
     def __getitem__(self, index):
         with self._open_array() as (ar, _):
             values = np.array(ar[index], copy=True)
@@ -229,12 +246,7 @@ class Array:
             except Exception:
                 raise
             finally:
-                if hasattr(self._memmap, '_mmap'):
-                    self._memmap.flush() # not sure if needed
-                    self._memmap._mmap.close() # *may need this for Windows*
-                self._valuesfd.close()
-                self._memmap = None
-                self._valuesfd = None
+                self.close()
 
     @contextmanager
     def open(self, accessmode=None):
