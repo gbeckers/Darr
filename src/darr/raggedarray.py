@@ -205,6 +205,16 @@ class RaggedArray:
 
     __str__ = __repr__
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
+    def close(self):
+        self._indices.close()
+        self._values.close()
+
     def _update_readmetxt(self):
         txt = readcodetxt(self)
         self._datadir._write_txt(self._readmefilename, txt, overwrite=True)
