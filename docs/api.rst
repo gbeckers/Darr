@@ -5,13 +5,6 @@ Darr API Documentation
 .. contents:: :local:
    :depth: 2
 
-Two types of numeric data structures are supported:
-
-* toplevelfunctions_
-* arrays_
-* raggedarrays_
-
-.. automodule:: darr.array
 
 .. _toplevelfunctions:
 
