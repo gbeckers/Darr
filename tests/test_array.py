@@ -5,7 +5,7 @@ import shutil
 
 import numpy as np
 
-from src.darr import open
+from src.darr import link, open
 from src.darr.array import asarray, create_array, create_datadir, Array, \
     truncate_array, delete_array, numtypedescriptiontxt, AppendDataError
 from src.darr.numtype import numtypesdescr
@@ -287,8 +287,12 @@ class TestArray(DarrTestCase):
     def test_instantiatefromexistingpath(self):
         Array(path=self.temparpath)
 
-    def test_openfromexistingpath(self):
-        open(path=self.temparpath)
+    def test_linkfromexistingpath(self):
+        link(path=self.temparpath)
+
+    def test_opendeprecationwarning(self):
+        with self.assertWarns(FutureWarning):
+            open(path=self.temparpath)
 
     def test_instantiatefromnonexistingpath(self):
        with self.assertRaises(OSError):

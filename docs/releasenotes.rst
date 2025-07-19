@@ -1,6 +1,12 @@
 Release notes
 =============
 
+Develop
+-------
+- deprecate `open`, use `link` instead to instantiate Darr objects from disk
+  arra data
+
+
 Version 0.6.3
 -------------
 - correct packaging mistake in 0.6.1
