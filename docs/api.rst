@@ -14,7 +14,7 @@ Top level functions
 Linking arrays
 --------------
 
-..autofunction::darr.link
+.. autofunction:: darr.link
 
 Creating arrays
 ---------------
@@ -40,20 +40,21 @@ Truncating arrays
 .. autofunction:: darr.truncate_raggedarray
 
 
+
+
+Array Classes
+=============
+
 .. _arrays:
-
 Arrays
-======
-
+------
 .. autoclass:: darr.Array
    :members:
    :inherited-members:
 
 .. _raggedarrays:
-
 Ragged Arrays
-=============
-
+-------------
 .. autoclass:: darr.RaggedArray
    :members:
    :inherited-members:
