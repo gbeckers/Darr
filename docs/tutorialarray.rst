@@ -23,16 +23,10 @@ follows:
 .. code:: python
 
     >>> import darr
-        >>> a = src.open('data.darr')
+        >>> a = darr.open('data.darr')
         >>> a
         darr array([[1., 2., 3., ..., 97., 98., 99.],
                     [0., 0., 0., ..., 0., 0., 0.]]) (r)
-
-    Note that in creating the variable '*a*' above, the array data is
-    >>> a = darr.open('data.darr')
-    >>> a
-    darr array([[1., 2., 3., ..., 97., 98., 99.],
-                [0., 0., 0., ..., 0., 0., 0.]]) (r)
 
 Note that in creating the variable '*a*' above, the array data is **not** read
 into RAM. It can potentially be very large and remains on disk. It will only
