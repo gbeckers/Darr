@@ -224,27 +224,26 @@ class Array:
         else:
             try:
                 # we must do it like this instead of providing a filename
-                # to np.mmemap, otherwise accessing temporary dirs on 
+                # to np.mmemap, otherwise accessing temporary dirs on
                 # windows will fail
-                if waituntilfileisfree(self._datapath):
-                    with open(file=self._datapath, mode=filemode) as fd:
-                        self._valuesfd = fd
-                        d = self._arrayinfo
-                        dtypedescr = arrayinfotodtype(d)
-                        if product(d['shape']) == 0:  # empty file/array
-                            self._memmap = np.zeros(d['shape'], dtype=dtypedescr,
-                                                    order=d['arrayorder'])
-                        else:
-                            self._memmap = np.memmap(filename=fd,
-                                                     mode=memmapmode,
-                                                     shape=d['shape'],
-                                                     dtype=dtypedescr,
-                                                     order=d['arrayorder'])
-                        yield self._memmap, self._valuesfd
-                else:
-                    raise
-            except Exception:
-                raise
+                if not waituntilfileisfree(self._datapath):
+                    raise PermissionError(
+                        f"Cannot access '{self._datapath}'. Please make sure "
+                        f"that the file is not open in another process.")
+                with open(file=self._datapath, mode=filemode) as fd:
+                    self._valuesfd = fd
+                    d = self._arrayinfo
+                    dtypedescr = arrayinfotodtype(d)
+                    if product(d['shape']) == 0:  # empty file/array
+                        self._memmap = np.zeros(d['shape'], dtype=dtypedescr,
+                                                order=d['arrayorder'])
+                    else:
+                        self._memmap = np.memmap(filename=fd,
+                                                 mode=memmapmode,
+                                                 shape=d['shape'],
+                                                 dtype=dtypedescr,
+                                                 order=d['arrayorder'])
+                    yield self._memmap, self._valuesfd
             finally:
                 self.close()
 
@@ -323,19 +322,13 @@ class Array:
                           f"is newer than your version of Darr "
                           f"{self._formatversion}. At this stage this is not "
                           f"guaranteed to work", UserWarning)
-        try:
-            d['shape'] = tuple(d['shape'])  # json does not have tuples
-            if not all(isinstance(d, int) for d in d['shape']):  # all ints?
-                raise TypeError(f"'{d['shape']}' is not a valid array shape")
-        except TypeError:
-            raise
+        d['shape'] = tuple(d['shape'])  # json does not have tuples
+        if not all(isinstance(d, int) for d in d['shape']):  # all ints?
+            raise TypeError(f"'{d['shape']}' is not a valid array shape")
         d['dtypedescr'] = arrayinfotodtype(d)
-        try:
-            if d['arrayorder'] not in {'C', 'F'}:
-                raise ValueError(
-                    f"'{d['arrayorder']}' is not a valid numpy arrayorder")
-        except Exception:
-            raise
+        if d['arrayorder'] not in {'C', 'F'}:
+            raise ValueError(
+                f"'{d['arrayorder']}' is not a valid numpy arrayorder")
         return d
 
     def _check_arrayinfoconsistency(self):

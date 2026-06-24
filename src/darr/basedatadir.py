@@ -5,7 +5,7 @@ from .datadir import DataDir, create_datadir
 
 def warn():
     warnings.warn("The use of `BaseDataDir` is deprecated in "
-                  "versions of Darr > 2.2. Use `DataDir`, and its "
+                  "versions of Darr >= 0.3. Use `DataDir`, and its "
                   "associated function `create_datadir` instead.",
                   FutureWarning)
 

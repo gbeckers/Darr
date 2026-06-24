@@ -35,7 +35,7 @@ def link(path: str, accessmode: str = 'r') -> Union[Array, RaggedArray]:
 # Alias for link() function, deprecated
 def open(path: str, accessmode: str = 'r') -> Union[Array, RaggedArray]:
     warnings.warn("The use of `open` is deprecated in "
-                  "versions of Darr >= 1.0 Use the `link`function instead.",
+                  "versions of Darr >= 0.6. Use the `link` function instead.",
                   FutureWarning)
     return link(
         path=path,

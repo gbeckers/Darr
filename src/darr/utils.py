@@ -208,7 +208,12 @@ def waituntilfileisfree(path, timeout=10, interval=0.5):
     start_time = time.time()
     while True:
         try:
-            with open(path, 'a'):
+            # open in read-binary so we do not create the file as a side
+            # effect when it does not exist; a missing file is considered
+            # 'free' (open/read elsewhere will raise the appropriate error)
+            if not os.path.exists(path):
+                return True
+            with open(path, 'rb'):
                 return True  # File is available
         except PermissionError:
             if time.time() - start_time > timeout:
