@@ -118,6 +118,28 @@ class TestDataDir(unittest.TestCase):
             self.assertRaises(OSError, bd.delete_files, (('test.dat',)))
 
 
+class TestCopy(unittest.TestCase):
+
+    def test_copycontents(self):
+        with tempdir() as dirname:
+            src = DataDir(dirname)
+            src.write_jsondict('test1.json', {'a': 1})
+            src.write_txt('test2.txt', 'hello')
+            dst = Path(dirname) / 'copy'
+            newdd = src.copy(dst)
+            self.assertIsInstance(newdd, DataDir)
+            self.assertEqual(newdd.path, dst)
+            self.assertDictEqual(newdd.read_jsondict('test1.json'), {'a': 1})
+            self.assertEqual(newdd.read_txt('test2.txt'), 'hello')
+
+    def test_copytoexistingdstraises(self):
+        with tempdir() as dirname:
+            src = DataDir(dirname)
+            dst = Path(dirname) / 'copy'
+            dst.mkdir()
+            self.assertRaises(OSError, src.copy, dst)
+
+
 class TestArchiving(unittest.TestCase):
 
     def test_archive(self):

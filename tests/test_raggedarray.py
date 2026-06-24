@@ -165,6 +165,10 @@ class ClassAsRaggedArray(unittest.TestCase):
             assert_array_equal(dal[1], na[1])
             self.assertDictEqual(dict(dal.metadata), md)
 
+    def test_emptyarrayiterable(self):
+        with tempdirfile() as filename:
+            self.assertRaises(ValueError, asraggedarray, filename, [])
+
 
 class ClassCopyRaggedArray(unittest.TestCase):
 
@@ -232,6 +236,13 @@ class RaggedArrayTruncate(DarrTestCase):
             ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
                                dtype='int64')
             self.assertRaises(TypeError, truncate_raggedarray, ra, 'a')
+
+    def test_truncatenumpyintindex(self):
+        with tempdirfile() as filename:
+            ra = asraggedarray(path=filename, arrayiterable=[[0,1],[2],[3,4]],
+                               dtype='int64')
+            truncate_raggedarray(ra, np.int64(2))
+            self.assertEqual(len(ra), 2)
 
     def test_truncateindextoohigh(self):
         with tempdirfile() as filename:

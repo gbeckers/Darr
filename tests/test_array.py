@@ -62,6 +62,25 @@ class AsArray(DarrTestCase):
         ndarray = np.arange(24).reshape(4, 2, 3)
         self.check_arrayequaltoasarray(ndarray)
 
+    def test_asarraygeneratorconsistenttrailingshape(self):
+        def gen():
+            yield [[1, 2], [3, 4]]
+            yield [[5, 6]]
+        dar = asarray(path=self.tempdirname1, array=gen(), overwrite=True)
+        self.assertArrayIdentical(dar[:], np.array([[1, 2], [3, 4], [5, 6]],
+                                                   dtype=dar.dtype))
+
+    def test_asarraygeneratormismatchedtrailingshape(self):
+        def gen():
+            yield [[1, 2], [3, 4]]
+            yield [[5, 6, 7]]
+        with self.assertRaises(ValueError):
+            asarray(path=self.tempdirname1, array=gen(), overwrite=True)
+
+    def test_asarrayzerononfirstaxis(self):
+        ndarray = np.zeros((5, 0), dtype='float64')
+        self.check_arrayequaltoasarray(ndarray)
+
     def test_asarrayonedimensionallist(self):
         ndarray = [1, 2, 3, 4]
         self.check_arrayequaltoasarray(ndarray)
@@ -205,6 +224,11 @@ class CreateDiskArray(DarrTestCase):
 
     def test_threedimensional(self):
         shape = (4, 2, 3)
+        ndarray = np.zeros(shape, dtype='float64')
+        self.check_arrayequaltocreatearray(ndarray=ndarray, shape=shape)
+
+    def test_zerononfirstaxis(self):
+        shape = (5, 0)
         ndarray = np.zeros(shape, dtype='float64')
         self.check_arrayequaltocreatearray(ndarray=ndarray, shape=shape)
 
@@ -684,6 +708,45 @@ class TestOpenFile(DarrTestCase):
 
 
 
+class TestEquality(DarrTestCase):
+
+    def test_equalcontent(self):
+        with tempdirfile() as f1, tempdirfile() as f2:
+            a = asarray(path=f1, array=[1, 2, 3])
+            b = asarray(path=f2, array=[1, 2, 3])
+            self.assertTrue(a == b)
+            self.assertFalse(a != b)
+
+    def test_differentvalues(self):
+        with tempdirfile() as f1, tempdirfile() as f2:
+            a = asarray(path=f1, array=[1, 2, 3])
+            b = asarray(path=f2, array=[1, 2, 9])
+            self.assertFalse(a == b)
+            self.assertTrue(a != b)
+
+    def test_differentshape(self):
+        with tempdirfile() as f1, tempdirfile() as f2:
+            a = asarray(path=f1, array=[1, 2, 3])
+            b = asarray(path=f2, array=[1, 2])
+            self.assertFalse(a == b)
+
+    def test_equaltoarraylike(self):
+        with tempdirfile() as f1:
+            a = asarray(path=f1, array=[1, 2, 3])
+            self.assertTrue(a == [1, 2, 3])
+            self.assertTrue(a == np.array([1, 2, 3]))
+
+    def test_notequaltononarraylike(self):
+        with tempdirfile() as f1:
+            a = asarray(path=f1, array=[1, 2, 3])
+            self.assertFalse(a == 'foo')
+
+    def test_unhashable(self):
+        with tempdirfile() as f1:
+            a = asarray(path=f1, array=[1, 2, 3])
+            self.assertRaises(TypeError, hash, a)
+
+
 class TruncateData(DarrTestCase):
 
     def test_truncate1d(self):
@@ -717,6 +780,14 @@ class TruncateData(DarrTestCase):
             a = np.array([0, 1, 2, 3, 4], dtype='int64')
             dar = asarray(path=filename, array=a, accessmode='r+')
             self.assertRaises(TypeError, truncate_array, dar, 'a')
+
+    def test_truncatenumpyintindex(self):
+        with tempdirfile() as filename:
+            a = np.array([0, 1, 2, 3, 4], dtype='int64')
+            dar = asarray(path=filename, array=a, accessmode='r+')
+            truncate_array(dar, np.int64(2))
+            self.assertArrayIdentical(dar[:],
+                                      np.array([0, 1], dtype=dar.dtype))
 
     def test_truncateindextoohigh(self):
         with tempdirfile() as filename:

@@ -14,8 +14,6 @@ from .utils import wrap
 __all__ = ['RaggedArray', 'asraggedarray', 'create_raggedarray',
            'delete_raggedarray', 'truncate_raggedarray']
 
-# TODO needs doc
-# TODO an open_array method
 class RaggedArray:
     """Instantiate a Darr ragged array from disk.
 
@@ -223,9 +221,6 @@ class RaggedArray:
         self._arrayinfo.update(kwargs)
         self._datadir._write_jsondict(filename=self._arraydescrfilename,
                                       d=self._arrayinfo, overwrite=True)
-
-    # TODO this can be made more efficient by using _append on self._values
-    #  and self._indices and returning length increases
 
     def _append(self, array, fdv, fdi, vlen):
         size = len(array)
@@ -441,7 +436,6 @@ class RaggedArray:
                                      overwrite=overwrite)
 
 
-# FIXME empty arrayiterable
 def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
                   accessmode='r+', indextype='int64', overwrite=False):
     """Creates an empty RaggedArray.
@@ -490,8 +484,15 @@ def asraggedarray(path, arrayiterable, dtype=None, metadata=None,
                          f'{supportedindextypes}')
     if not hasattr(arrayiterable, 'next'):
         arrayiterable = (a for a in arrayiterable)
+    try:
+        first = next(arrayiterable)
+    except StopIteration:
+        raise ValueError(
+            "'arrayiterable' is empty; the subarray shape and dtype cannot be "
+            "inferred. To create an empty ragged array use 'create_raggedarray' "
+            "with an explicit 'atom' shape instead.")
     bd = create_datadir(path=path, overwrite=overwrite)
-    firstarray = np.asarray(next(arrayiterable), dtype=dtype)
+    firstarray = np.asarray(first, dtype=dtype)
     dtype = firstarray.dtype
     valuespath = bd.path.joinpath(RaggedArray._valuesdirname)
     indicespath = bd.path.joinpath(RaggedArray._indicesdirname)
@@ -596,17 +597,17 @@ def create_raggedarray(path, atom=(), dtype='float64', metadata=None,
 def readmetxt(ra):
     n = len(ra)
     ndsa  = len(ra.atom)
-    txt = wrap(f'This directory stores a numeric ragged array (also '
-               f'called a jagged array), which is a sequence of '
-               f'subarrays that may be multidimensional and that '
-               f'can vary in the length of their first dimension.') + ' \n\n'
-    txt += wrap(f'The ragged array can be read using the NumPy-based Python '
-                f'library Darr (https://pypi.org/project/darr/), which was '
-                f'used to create the data. If that is not available, you can '
-                f'use the code snippets below to read the data in a number of '
-                f'other environments. If code for your environment is not '
-                f'provided, use the description of how the data can be read '
-                f'in the next section.') + '\n\n'
+    txt = wrap('This directory stores a numeric ragged array (also '
+               'called a jagged array), which is a sequence of '
+               'subarrays that may be multidimensional and that '
+               'can vary in the length of their first dimension.') + ' \n\n'
+    txt += wrap('The ragged array can be read using the NumPy-based Python '
+                'library Darr (https://pypi.org/project/darr/), which was '
+                'used to create the data. If that is not available, you can '
+                'use the code snippets below to read the data in a number of '
+                'other environments. If code for your environment is not '
+                'provided, use the description of how the data can be read '
+                'in the next section.') + '\n\n'
     txt += 'Description of ragged array\n' \
            '===========================\n\n'
     txt += wrap(f'This ragged array is a sequence of {n} '
@@ -614,15 +615,15 @@ def readmetxt(ra):
                 f'can vary in the length of its first dimension. The array '
                 f'consists of {ra.dtype.name} numbers.') \
                 + ' \n\n'
-    dimtxt = f'The dimensions of the '
+    dimtxt = 'The dimensions of the '
     if len(ra) > 5:
-        dimtxt += f'first five '
+        dimtxt += 'first five '
     if len(ra) > 6:
-        dimtxt += f'and last '
+        dimtxt += 'and last '
     dimtxt = wrap(f'{dimtxt}subarrays is (subarray index: dimensions):') + '\n\n'
     txt += dimtxt + dimensionstxt(ra, firstnmax=5) + '\n\n'
-    itxt = f'These index numbers are based on Python ' \
-           f'indexing, which starts at 0.'
+    itxt = 'These index numbers are based on Python ' \
+           'indexing, which starts at 0.'
     if len(ra.atom) >0:
         itxt = f'{itxt} Dimensions are based on row-major memory layout. When ' \
                f'using the code provided below to read subarrays, dimensions ' \
@@ -680,8 +681,8 @@ def readcodetxt(ra):
     """
 
     s = readmetxt(ra)
-    s += wrap(f'Example code for reading the data') + '\n' + \
-         wrap(f'=================================') + '\n\n'
+    s += wrap('Example code for reading the data') + '\n' + \
+         wrap('=================================') + '\n\n'
     languages = (
         ("Python with Darr:", "darr"),
         ("Python with Numpy (memmap):", "numpymemmap"),
@@ -712,7 +713,7 @@ def delete_raggedarray(ra):
     try:
         if not isinstance(ra, RaggedArray):
             ra = RaggedArray(ra, accessmode='r+')
-    except:
+    except Exception:
         raise TypeError(f"'{ra}' not recognized as a Darr ragged array")
 
     if not ra.accessmode == 'r+':
@@ -754,8 +755,7 @@ def truncate_raggedarray(ra, index):
             ra = RaggedArray(ra, accessmode='r+')
     except Exception:
         raise TypeError(f"'{ra}' not recognized as a darr Ragged Array")
-    # FIXME allow for numpy ints
-    if not isinstance(index, int):
+    if not isinstance(index, (int, np.integer)):
         raise TypeError(f"'index' should be an int (is {type(index)})")
     with ra._indices._open_array() as (mmap, _):
         newlen = len(mmap[:index])

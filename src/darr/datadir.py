@@ -148,7 +148,6 @@ class DataDir(object):
         if accessmode != 'r' and filename in self._protectedpaths:
             raise OSError(f'Cannot modify protected file "{filename}"')
 
-    # FIXME overwrite parameter?
     @contextmanager
     def open_file(self, filename, accessmode='r', buffering=-1, encoding=None,
                   errors=None, newline=None, closefd=True):
@@ -157,7 +156,9 @@ class DataDir(object):
         opened for reading (mode='r').
 
         This method is a thin wrapper of the that of the Python 'open'
-        function. The parameters are therefore the same.
+        function. The parameters are therefore the same. Whether an existing
+        file is overwritten, appended to, or left untouched is determined by
+        `accessmode` (e.g. 'w', 'a', 'x'), just as with the builtin `open`.
 
         Examples
         --------
@@ -218,7 +219,6 @@ class DataDir(object):
             tf.add(self.path, arcname=self.path.name)
         return Path(filepath)
 
-    # TODO tests for this function
     def copy(self, dst):
         if Path(dst).exists():
             raise OSError(f"'{dst}' already exist")

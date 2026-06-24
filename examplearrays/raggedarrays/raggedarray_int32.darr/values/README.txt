@@ -10,7 +10,7 @@ Data format description
 The file 'arrayvalues.bin' contains the raw binary values of the numeric
 array, without header information, in the following format:
 
-  Numeric type: 32‐bit signed integer (range: -2147483648 to 2147483647)
+  Numeric type: 32-bit signed integer (range: -2147483648 to 2147483647)
   Byte order: little (most-significant byte last)
   Array dimensions: (26, 2)
   Array order layout:  C (Row-major; last dimension varies most rapidly with memory address)

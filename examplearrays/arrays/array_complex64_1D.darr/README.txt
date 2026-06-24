@@ -10,7 +10,7 @@ Data format description
 The file 'arrayvalues.bin' contains the raw binary values of the numeric
 array, without header information, in the following format:
 
-  Numeric type: 64-bit IEEE single‐precision complex number, represented by two 32 - bit floats (real and imaginary components)
+  Numeric type: 64-bit IEEE single-precision complex number, represented by two 32-bit floats (real and imaginary components)
   Byte order: little (most-significant byte last)
   Array length: 7
 

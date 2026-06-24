@@ -9,7 +9,6 @@ disk can be accessed through the **Array** constructor. To remove a Darr
 array from disk, use **delete_array**.
 
 """
-# TODO replace distutils (is deprecated) with packaging
 import json
 import os
 import sys
@@ -39,7 +38,6 @@ __all__ = ['Array', 'asarray', 'create_array', 'create_temparray',
 class AppendDataError(Exception):
     pass
 
-#TODO __eq__ method
 class Array:
     """Instantiate a Darr array from disk.
 
@@ -196,6 +194,25 @@ class Array:
 
     def __len__(self):
         return self._shape[0]
+
+    def __eq__(self, other):
+        """Whole-array content equality.
+
+        Returns ``True`` if `other` is array-like with the same shape as this
+        array and all elements are equal, else ``False``. This is a single
+        bool, not an elementwise comparison; use ``self[:] == other`` for the
+        latter.
+        """
+        if isinstance(other, Array):
+            other = other[:]
+        with self._open_array() as (ar, _):
+            return bool(np.array_equal(ar, other))
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    # content equality makes the array unhashable, like numpy arrays and lists
+    __hash__ = None
 
     def __repr__(self):
         with self._open_array() as (ar, fd):
@@ -770,8 +787,13 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
         raise ValueError("either 'fill' or 'fillfunc' should be provided, "
                          "not both")
     if chunklen is None:
-        chunklen = max((80 * 1024 ** 2) // (product(shape[1:]) *
-                                            dtype.itemsize), 1)
+        rowsize = product(shape[1:]) * dtype.itemsize
+        # rowsize is 0 if a non-first axis has length 0; the array holds no
+        # data, so a single chunk covering the whole first axis is fine
+        if rowsize == 0:
+            chunklen = max(shape[0], 1)
+        else:
+            chunklen = max((80 * 1024 ** 2) // rowsize, 1)
     nchunks, restlen = divmod(shape[0], chunklen)
     chunkshape = [chunklen] + list(shape[1:])
     chunk = np.empty(chunkshape, dtype=dtype)
@@ -790,8 +812,13 @@ def _fillgenerator(shape, dtype='float64', fill=0., fillfunc=None,
 def _archunkgenerator(array, dtype=None, chunklen=None):
     if chunklen is None:  # we try to make a reasonable guess
         if hasattr(array, 'shape') and hasattr(array, 'dtype'):
-            chunklen = (80 * 1024 ** 2) // (product(array.shape[1:]) *
-                                                array.dtype.itemsize)
+            rowsize = product(array.shape[1:]) * array.dtype.itemsize
+            # rowsize is 0 if a non-first axis has length 0; the array holds
+            # no data, so a single chunk over the whole first axis is fine
+            if rowsize == 0:
+                chunklen = max(array.shape[0], 1)
+            else:
+                chunklen = (80 * 1024 ** 2) // rowsize
         else:
             chunklen = 1024 ** 2
     chunklen = max(chunklen, 1)
@@ -805,7 +832,7 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
         # may be numpy array or sequence
         totallen = len(array)
         if totallen == 0:
-            yield array.astype(dtype)
+            yield np.asarray(array, dtype=dtype)
         else:
             nchunks, _, remainder = fit_frames(totallen=totallen,
                                                chunklen=chunklen)
@@ -821,7 +848,6 @@ def _archunkgenerator(array, dtype=None, chunklen=None):
             f"cannot convert object of type '{type(array)}' to an array")
 
 
-# FIXME what it iter produces a different first dimension?
 def asarray(path, array, dtype=None, accessmode='r',
             metadata=None, chunklen=None, overwrite=False):
     """Save an array or array generator as a Darr array to file system path.
@@ -908,12 +934,19 @@ def asarray(path, array, dtype=None, accessmode='r',
     datapath = path.joinpath(Array._datafilename)
     arraylen = firstchunk.shape[0]
 
+    trailingshape = firstchunk.shape[1:]
     if waituntilfileisfree(datapath):
         with open(datapath, 'wb') as df:
             firstchunk.tofile(df)
             for chunk in chunkiter:
                 if chunk.ndim == 0:
                     chunk = np.array(chunk, ndmin=1, dtype=dtype)
+                if chunk.shape[1:] != trailingshape:
+                    raise ValueError(
+                        f"shape of a subsequent chunk {chunk.shape} is not "
+                        f"compatible with that of the first chunk "
+                        f"{firstchunk.shape}; all chunks must have the same "
+                        f"shape except for their first dimension")
                 chunk.astype(dtype).tofile(df)  # is always C order
                 arraylen += chunk.shape[0]
     else:
@@ -944,7 +977,6 @@ def asarray(path, array, dtype=None, accessmode='r',
     return d
 
 
-# FIXME non-first axis len 0
 def create_array(path, shape, dtype='float64', fill=None, fillfunc=None,
                  accessmode='r+', chunklen=None, metadata=None,
                  overwrite=False):
@@ -1177,7 +1209,7 @@ def truncate_array(a, index):
     except Exception:
         raise TypeError(f"'{a}' not recognized as a darr Array")
     a.check_arraywriteable()
-    if not isinstance(index, int):
+    if not isinstance(index, (int, np.integer)):
         raise TypeError(f"'index' should be an int (is {type(index)})")
     with a._open_array() as (mmap, _):
         newlen = len(mmap[:index])
@@ -1276,8 +1308,8 @@ def numtypedescriptiontxt(da):
              "of popular analysis environments. If your language is not "
              "included, the data format description specifies all information "
              "needed to read the data.") + "\n\n"
-    s+= f"Data format description" \
-        f"\n=======================\n\n"
+    s += "Data format description" \
+         "\n=======================\n\n"
     s += wrap("The file 'arrayvalues.bin' contains the raw binary values of "
               "the numeric array, without header information, in the "
               "following format:") + "\n\n"

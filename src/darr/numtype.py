@@ -15,24 +15,24 @@ minmaxints = {
 
 numtypesdescr = {
     'int8': '8-bit signed integer (range: -128 to 127)',
-    'int16': '16‐bit signed integer (range: -32768 to 32767)',
-    'int32': '32‐bit signed integer (range: -2147483648 to 2147483647)',
-    'int64': '64‐bit signed integer (range: -9223372036854775808 to '
+    'int16': '16-bit signed integer (range: -32768 to 32767)',
+    'int32': '32-bit signed integer (range: -2147483648 to 2147483647)',
+    'int64': '64-bit signed integer (range: -9223372036854775808 to '
              '9223372036854775807)',
-    'uint8': '8‐bit unsigned integer (range: 0 to 255)',
-    'uint16': '16‐bit unsigned integer (range: 0 to 65535)',
-    'uint32': '32‐bit unsigned integer (range: 0 to 4294967295)',
-    'uint64': '64‐bit unsigned integer (range: 0 to 18446744073709551615)',
+    'uint8': '8-bit unsigned integer (range: 0 to 255)',
+    'uint16': '16-bit unsigned integer (range: 0 to 65535)',
+    'uint32': '32-bit unsigned integer (range: 0 to 4294967295)',
+    'uint64': '64-bit unsigned integer (range: 0 to 18446744073709551615)',
     'float16': '16-bit half precision float (sign bit, 5 bits exponent, 10 '
                'bits mantissa)',
     'float32': '32-bit IEEE single precision float (sign bit, 8 bits exponent, '
                '23 bits mantissa)',
     'float64': '64-bit IEEE double precision float (sign bit, 11 bits '
                'exponent, 52 bits mantissa)',
-    'complex64': '64-bit IEEE single‐precision complex number, represented by '
-                 'two 32 - bit floats (real and imaginary components)',
-    'complex128': '128-bit IEEE double‐precision complex number, represented '
-                  'by two 64 - bit floats (real and imaginary components)',
+    'complex64': '64-bit IEEE single-precision complex number, represented by '
+                 'two 32-bit floats (real and imaginary components)',
+    'complex128': '128-bit IEEE double-precision complex number, represented '
+                  'by two 64-bit floats (real and imaginary components)',
 }
 
 

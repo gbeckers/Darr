@@ -10,7 +10,7 @@ Data format description
 The file 'arrayvalues.bin' contains the raw binary values of the numeric
 array, without header information, in the following format:
 
-  Numeric type: 64‐bit signed integer (range: -9223372036854775808 to 9223372036854775807)
+  Numeric type: 64-bit signed integer (range: -9223372036854775808 to 9223372036854775807)
   Byte order: little (most-significant byte last)
   Array length: 9
 

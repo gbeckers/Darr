@@ -83,40 +83,40 @@ class MetaData:
         """D.keys() -> a set-like object providing a view on D's keys"""
         return self._read().keys()
 
-    # FIXME remove overlap with popitem
-    def pop(self, *args):
-        """D.pop(k[,d]) -> v, remove specified key and return the corresponding
-        value. If key is not found, d is returned if given, otherwise KeyError
-        is raised
-        """
+    def _check_writeable(self):
         if self._accessmode == 'r':
             raise OSError("metadata not writeable; change 'accessmode' to "
                           "'r+'")
-        metadata = self._read()
-        val = metadata.pop(*args)
+
+    def _save(self, metadata):
+        """Write `metadata` to disk, or delete the file (and run the
+        creation/deletion callback) if `metadata` is empty."""
         if metadata:
             write_jsonfile(self.path, data=metadata, sort_keys=True,
                            ensure_ascii=True, overwrite=True)
         else:
             self._path.unlink()
             self._callatfilecreationordeletion()
+
+    def pop(self, *args):
+        """D.pop(k[,d]) -> v, remove specified key and return the corresponding
+        value. If key is not found, d is returned if given, otherwise KeyError
+        is raised
+        """
+        self._check_writeable()
+        metadata = self._read()
+        val = metadata.pop(*args)
+        self._save(metadata)
         return val
 
     def popitem(self):
         """D.pop() -> k, v, returns and removes an arbitrary element (key,
         value) pair from the dictionary.
         """
-        if self._accessmode == 'r':
-            raise OSError("metadata not writeable; change 'accessmode' to "
-                          "'r+'")
+        self._check_writeable()
         metadata = self._read()
         key, val = metadata.popitem()
-        if metadata:
-            write_jsonfile(self.path, data=metadata, sort_keys=True,
-                           ensure_ascii=True, overwrite=True)
-        else:
-            self._path.unlink()
-            self._callatfilecreationordeletion()
+        self._save(metadata)
         return key, val
 
     def values(self):
@@ -148,9 +148,7 @@ class MetaData:
         {'samplingrate': 22050, 'starttime': '2017-08-31T17:00:00'}
 
         """
-        if self._accessmode == 'r':
-            raise OSError("metadata not writeable; change 'accessmode' to "
-                          "'r+'")
+        self._check_writeable()
         metadata = self._read()
         metadata.update(*arg, **kwargs)
 

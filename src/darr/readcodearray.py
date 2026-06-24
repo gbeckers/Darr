@@ -124,7 +124,7 @@ def readcodescilab(numtype, shape, endianness,filepath='arrayvalues.bin',
     ct += f'{varname} = {readfunc}({size}, "{binformat}", fileid);\n' # read array
     if ndim > 1:
         ct += f'{varname} = matrix({varname}, {shape});\n'
-    ct += f'mclose(fileid);\n'
+    ct += 'mclose(fileid);\n'
     return ct
 
 def readcodescilab_complex(numtype, shape, endianness,
@@ -448,7 +448,7 @@ def readcodepython(numtype, shape, endianness, filepath='arrayvalues.bin',
     if numtype.startswith('complex'):
         size *= 2 # we split real and imaginary numbers
     typedescr = f"{endianness}{size}{typeletter}"
-    ct = f"import array\nimport struct\n"
+    ct = "import array\nimport struct\n"
     if numtype.startswith('complex'):
         fptype = {'f': 'float', 'd': 'double' }[typeletter]
         ct += f"# file holds complex values but we need to read them as" \
@@ -522,19 +522,19 @@ def readcode(da, language, abspath=False, basepath=None, varname='a',**kwargs):
 
 
 def promptify_codetxt(codetxt, prompt=">>> "):
-    return "\n".join([f"{prompt}{l}" for l in codetxt.splitlines()]) + '\n'
+    return "\n".join([f"{prompt}{line}" for line in codetxt.splitlines()]) + '\n'
 
 
 shapeexplanationtextarray = \
-     f'Notes on dimensions and indexing of arrays\n' \
-     f'==========================================\n\n' + \
-wrap(f'The dimensions stated in the format description above are based on a '
-     f'row-major memory layout where the *last* dimension is the one that '
-     f'varies most rapidly with memory address. However, in some languages '
-     f'arrays are based on column-major memory layout. To keep things '
-     f'efficient, the code examples above do not change the memory layout '\
-     f'when reading the array in a different language. This means that in '
+     'Notes on dimensions and indexing of arrays\n' \
+     '==========================================\n\n' + \
+wrap('The dimensions stated in the format description above are based on a '
+     'row-major memory layout where the *last* dimension is the one that '
+     'varies most rapidly with memory address. However, in some languages '
+     'arrays are based on column-major memory layout. To keep things '
+     'efficient, the code examples above do not change the memory layout '
+     'when reading the array in a different language. This means that in '
      'column-major languages, the dimension axes will be *reversed*. Row-major '
-     f'languages are: Python and Mathematica. Columns-major languages are: '
-     f'Julia, Scilab, Matlab/Octave, R, Maple, and IDL/GDL. \n')
+     'languages are: Python and Mathematica. Columns-major languages are: '
+     'Julia, Scilab, Matlab/Octave, R, Maple, and IDL/GDL. \n')
 

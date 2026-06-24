@@ -74,17 +74,17 @@ def readcoder(dra, indicespath, valuespath):
     rci = f"# read array of indices to be used on values array\n{rci}"
 
     rcv = f'# read array of values:\n{rcv}'
-    rff = f'# create function to get subarrays:\n' \
-          f'getsubarray <- function(k){{\n' \
-          f'    starti <- i[1,k] + 1  # R starts counting from 1\n' \
-          f'    endi <- i[2,k]        # R has inclusive end index\n'
+    rff = '# create function to get subarrays:\n' \
+          'getsubarray <- function(k){\n' \
+          '    starti <- i[1,k] + 1  # R starts counting from 1\n' \
+          '    endi <- i[2,k]        # R has inclusive end index\n'
     if len(dra.atom) == 0:
-        rff += f'    if (starti > endi) {{  # subarray is empty\n' \
-               f'        return (c())\n' \
-               f'    }} else {{\n' \
-               f'        return (v[starti:endi])\n' \
-               f'    }}\n' \
-               f'}}\n'
+        rff += '    if (starti > endi) {  # subarray is empty\n' \
+               '        return (c())\n' \
+               '    } else {\n' \
+               '        return (v[starti:endi])\n' \
+               '    }\n' \
+               '}\n'
     else:
         commas = len(dra._arrayinfo['atom'])*','
         emptydim = ",".join([str(d) for d in dra.atom] + ['0'])
@@ -325,13 +325,13 @@ def readcode(dra, language, basepath='', abspath=False):
 
 
 shapeindexexplanationtextraggedarray = shapeexplanationtextarray + '\n\n' +  \
-wrap(f'Further, Python starts counting at 0. So the first subarray in a '
-     f'ragged array has index number 0. This is also true for IDL/GDL. '
-     f'However, Julia, Scilab, Mathematica, Matlab/Octave, R, and Maple start '
-     f'counting at 1, so the first subarray has index number 1 in these '
-     f'languages. Finally, in Python indexing the end index is '
-     f'non-inclusive. E.g., a[0:2] returns a[0] and a[1], but not a[2]. '
-     f'However, all other languages for which reading code is provided, Julia, '
-     f'Scilab, Mathematica, Matlab/Octave, R, Maple, and IDL/GDL have an '
-     f'inclusive end index. The reading code provided takes these differences '
-     f'into account.\n')
+wrap('Further, Python starts counting at 0. So the first subarray in a '
+     'ragged array has index number 0. This is also true for IDL/GDL. '
+     'However, Julia, Scilab, Mathematica, Matlab/Octave, R, and Maple start '
+     'counting at 1, so the first subarray has index number 1 in these '
+     'languages. Finally, in Python indexing the end index is '
+     'non-inclusive. E.g., a[0:2] returns a[0] and a[1], but not a[2]. '
+     'However, all other languages for which reading code is provided, Julia, '
+     'Scilab, Mathematica, Matlab/Octave, R, Maple, and IDL/GDL have an '
+     'inclusive end index. The reading code provided takes these differences '
+     'into account.\n')

@@ -131,53 +131,29 @@ def wrap(s):
 
 
 
-#TODO avoid double code in next two functions; and do we really need both
-# after switching to shutil for removinf dirtree?
 @contextmanager
 def tempdir(dirname='.', keep=False, report=False):
     """Yields a temporary directory which is removed when context is closed."""
+    tempdirname = tf.mkdtemp(dir=dirname)
+    if report:
+        print(f'created temporary directory {tempdirname}')
     try:
-        tempdirname = tf.mkdtemp(dir=dirname)
-        if report:
-            print('created tempdir {}'.format(tempdirname))
         yield Path(tempdirname)
-    except:
-        raise
     finally:
         if not keep:
             shutil.rmtree(tempdirname)
         if report:
-            if keep:
-                verb = 'kept'
-            else:
-                verb = 'removed'
+            verb = 'kept' if keep else 'removed'
             print(f'{verb} temporary directory {tempdirname}')
+
 
 @contextmanager
 def tempdirfile(dirname=None, keep=False, report=False):
     """Yields a filename "tempfile" in a temporary directory which is
     removed when context is closed. Note that the directory is created,
     but the file "tempfile" not."""
-    tempdirname = None
-    try:
-        tempdirname = tf.mkdtemp(dir=dirname)
-        if report:
-            print(f'created temporary directory {tempdirname}')
-        tempfilename = Path(tempdirname) / "tempfile"
-        yield tempfilename
-    except:
-        raise
-    finally:
-        if not keep:
-            shutil.rmtree(tempdirname)
-        if report:
-            if keep:
-                verb = 'kept'
-            else:
-                verb = 'removed'
-            print(f'{verb} temporary directory {tempdirname}')
-
-
+    with tempdir(dirname=dirname, keep=keep, report=report) as tempdirname:
+        yield tempdirname / "tempfile"
 
 
 def waituntilfileisfree(path, timeout=10, interval=0.5):
