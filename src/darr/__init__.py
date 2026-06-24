@@ -1,5 +1,4 @@
 from typing import Union
-import warnings
 from .array import *
 from .raggedarray import *
 from .datadir import DataDir, create_datadir
@@ -36,13 +35,3 @@ def open(path: str, accessmode: str = 'r') -> Union[Array, RaggedArray]:
     else:
         raise ValueError(f"'{arraytype}' not supported in this version of "
                          f"Darr")
-
-# Alias for open() function, deprecated
-def link(path: str, accessmode: str = 'r') -> Union[Array, RaggedArray]:
-    warnings.warn("The use of `link` is deprecated in "
-                  "versions of Darr >= 0.6. Use the `open` function instead.",
-                  FutureWarning)
-    return open(
-        path=path,
-        accessmode=accessmode,
-    )

@@ -3,8 +3,8 @@ Release notes
 
 Develop
 -------
-- `open` is the canonical function to instantiate Darr objects from disk-based
-  array data; `link` is kept as a deprecated alias
+- `open` is the function to instantiate Darr objects from disk-based array
+  data
 
 
 Version 0.6.3
