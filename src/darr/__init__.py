@@ -5,8 +5,13 @@ from .raggedarray import *
 from .datadir import DataDir, create_datadir
 
 
-def link(path: str, accessmode: str = 'r') -> Union[Array, RaggedArray]:
-    """Instantiate a Darr object linked to disk based array data.
+def open(path: str, accessmode: str = 'r') -> Union[Array, RaggedArray]:
+    """Open disk-based Darr array data for access.
+
+    Instantiates the appropriate Darr object (Array or RaggedArray, detected
+    automatically from the stored array description) through which the
+    disk-based data can be read and, depending on `accessmode`, written using
+    numpy indexing. No data is loaded into memory.
 
     Parameters
     ----------
@@ -32,12 +37,12 @@ def link(path: str, accessmode: str = 'r') -> Union[Array, RaggedArray]:
         raise ValueError(f"'{arraytype}' not supported in this version of "
                          f"Darr")
 
-# Alias for link() function, deprecated
-def open(path: str, accessmode: str = 'r') -> Union[Array, RaggedArray]:
-    warnings.warn("The use of `open` is deprecated in "
-                  "versions of Darr >= 0.6. Use the `link` function instead.",
+# Alias for open() function, deprecated
+def link(path: str, accessmode: str = 'r') -> Union[Array, RaggedArray]:
+    warnings.warn("The use of `link` is deprecated in "
+                  "versions of Darr >= 0.6. Use the `open` function instead.",
                   FutureWarning)
-    return link(
+    return open(
         path=path,
         accessmode=accessmode,
     )

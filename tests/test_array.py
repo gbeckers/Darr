@@ -311,12 +311,12 @@ class TestArray(DarrTestCase):
     def test_instantiatefromexistingpath(self):
         Array(path=self.temparpath)
 
-    def test_linkfromexistingpath(self):
-        link(path=self.temparpath)
+    def test_openfromexistingpath(self):
+        open(path=self.temparpath)
 
-    def test_opendeprecationwarning(self):
+    def test_linkdeprecationwarning(self):
         with self.assertWarns(FutureWarning):
-            open(path=self.temparpath)
+            link(path=self.temparpath)
 
     def test_instantiatefromnonexistingpath(self):
        with self.assertRaises(OSError):
