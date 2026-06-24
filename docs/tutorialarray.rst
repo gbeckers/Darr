@@ -72,10 +72,10 @@ array first is not possible. The example here uses a small array:
 .. code:: python
 
     >>> import darr
-        >>> b = src.create_array('b.darr', shape=(2,1024))
-        >>> b
-        darr array([[0., 0., 0., ..., 0., 0., 0.],
-                    [0., 0., 0., ..., 0., 0., 0.]]) (r+)
+    >>> b = src.create_array('b.darr', shape=(2,1024))
+    >>> b
+    darr array([[0., 0., 0., ..., 0., 0., 0.],
+                [0., 0., 0., ..., 0., 0., 0.]]) (r+)
 
 The default is to fill the array with zeros (of type float64) but this
 can be changed by the 'fill' and 'fillfunc' parameters. See the api.
