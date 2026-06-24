@@ -11,10 +11,10 @@ Darr API Documentation
 Top level functions
 ===================
 
-Linking arrays
+Opening arrays
 --------------
 
-.. autofunction:: darr.link
+.. autofunction:: darr.open
 
 Creating arrays
 ---------------

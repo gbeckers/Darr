@@ -18,12 +18,12 @@ folder holds 3-4 files that contain all data and documentation.
 
 
 To work with this array in Darr, just assign it to a variable using the
-`link` function as follows:
+`open` function as follows:
 
 .. code:: python
 
     >>> import darr
-        >>> a = darr.link('data.darr')
+        >>> a = darr.open('data.darr')
         >>> a
         darr array([[1., 2., 3., ..., 97., 98., 99.],
                     [0., 0., 0., ..., 0., 0., 0.]]) (r)
